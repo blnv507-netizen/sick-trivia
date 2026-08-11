@@ -44,6 +44,40 @@ const START_DELAY = 5000; // بداية موحّدة — وقت كافي يوص�
 const REVEAL_SEC = 14;   // الانتقال التلقائي بعد النتيجة
 const EVENT_SEC = 12;    // الانتقال التلقائي بعد شاشة الحدث
 
+
+/* ---------- شرح كل فئة (يظهر قبل بداية السؤال) ---------- */
+const INTRO_SEC = 12;
+const CAT_INFO = {
+  "أعلام": { icon: "🏳️", desc: "بيطلع لك علم مرسوم، وتكتب اسم الدولة صاحبته. انتبه — فيه أعلام متشابهة ومقلوبة!" },
+  "شكل ورسم": { icon: "📐", desc: "رسمة علمية أو هندسية (عدسة، دائرة كهربائية، مثلث، رسم بياني) وتستنتج منها الجواب." },
+  "مين البوس؟": { icon: "🗡️", desc: "نوصف لك بوس من ألعاب السولز بمكانه وحركاته وترتيبه — بدون ما نذكر اسمه. وأنت تعرفه." },
+  "وين المكان؟": { icon: "🗺️", desc: "نوصف لك منطقة داخل لعبة بمعالمها وجوّها، وتقول لنا وش اسمها." },
+  "مين قالها؟": { icon: "💬", desc: "عبارة مشهورة من لعبة أو مسلسل، وتقول لنا مين قائلها." },
+  "وش الغرض؟": { icon: "⚔️", desc: "نوصف لك سلاح أو أداة بوظيفتها وشكلها، وتسمّيها." },
+  "الرابط المشترك": { icon: "🔗", desc: "نعطيك ثلاثة أشياء، وتكتشف وش الشي اللي يجمعهم." },
+  "قبل ولا بعد؟": { icon: "🎯", desc: "أسئلة ترتيب زمني — أيهما صدر أول، ومين تجي قبل مين." },
+  "إيموجي": { icon: "😀", desc: "لعبة أو فيلم مكتوب بالإيموجي بس، وتحزره." },
+  "دليلين": { icon: "🕵️", desc: "دليلين ما لهم علاقة ببعض ظاهريًا، بس يتقاطعون على جواب واحد." },
+  "الأغرب": { icon: "🎲", desc: "أربعة أشياء وواحد منهم شاذ عن الباقي — لاقِه." },
+  "لو كنت مكانك": { icon: "🧠", desc: "مواقف داخل الألعاب: وش يصير لو سويت كذا؟ أسئلة عن الميكانيكيات مو الأسماء." },
+  "بوسات السولز": { icon: "☠️", desc: "بوسات من إلدن رينق ودارك سولز وبلودبورن وسيكيرو ولايز أوف بي ونايترين وخازان." },
+  "لور السولز": { icon: "📜", desc: "قصص وخلفيات عوالم السولز — الآلهة والمدن والأحداث اللي وراء اللعب." },
+  "سولز لايك": { icon: "🎮", desc: "الاستوديوهات وتواريخ الإصدار والميكانيكيات عبر ألعاب السولز لايك كلها." },
+  "أوفرواتش": { icon: "🔫", desc: "الأبطال وأسماءهم الحقيقية وجنسياتهم وقصة اللعبة." },
+  "أزياء الشخصيات": { icon: "👕", desc: "نوصف لك لبس شخصية بالتفصيل، وتخمّن مين هي." },
+  "ألعاب فيديو": { icon: "🕹️", desc: "أسئلة عامة عن الألعاب: شركات، خرائط، شخصيات، وتواريخ." },
+  "رياضيات": { icon: "➗", desc: "عمليات حسابية تتولّد جديدة كل مرة. التصحيح فوري — لا فيه اجتهاد بالإجابة." },
+  "فيزياء": { icon: "⚛️", desc: "وحدات وقوانين ومفاهيم فيزيائية." },
+  "علوم": { icon: "🔬", desc: "أحياء وكيمياء وفلك ومعلومات علمية عامة." },
+  "عام": { icon: "🌍", desc: "ثقافة عامة متنوعة — أرقام وحقائق وأشياء تعرفها بالفطرة." },
+  "رياضة": { icon: "⚽", desc: "كرة قدم وأولمبياد وأرقام قياسية وأندية." },
+  "أفلام ومسلسلات": { icon: "🎬", desc: "أفلام ومسلسلات ومخرجين وشخصيات." },
+  "تاريخ": { icon: "🏛️", desc: "أحداث ومعارك وشخصيات تاريخية، إسلامية وعالمية." },
+  "جغرافيا": { icon: "🗻", desc: "دول وعواصم وجبال وبحار وأرقام عن الكوكب." },
+  "تقنية": { icon: "💻", desc: "شركات ومؤسسين واختصارات وتواريخ من عالم التقنية." },
+};
+const catInfo = (c) => CAT_INFO[c] || { icon: "❓", desc: "أسئلة متنوعة من هذي الفئة." };
+
 /* ---------- الأحداث ---------- */
 const EVENTS = [
   { id: "double",   icon: "✖️2", name: "دبل النقاط",  desc: "هذا السؤال نقاطه مضاعفة! لا تفوّتها" },
@@ -298,6 +332,28 @@ const BANK = [
   { cat: "تقنية", d: 3, q: "وش اسم أول قمر صناعي أُطلق إلى الفضاء؟", a: "سبوتنيك" },
   { cat: "تقنية", d: 3, q: "وش اسم الشبكة الأمريكية اللي سبقت الإنترنت؟", a: "أربانت" },
 
+  // ============ أسئلة صور (مرسومة داخل اللعبة) ============
+  { cat: "أعلام", d: 1, q: "وش الدولة صاحبة هذا العلم؟", a: "اليابان", alt: ["Japan"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#ffffff\"/><circle cx=\"60\" cy=\"40\" r=\"22\" fill=\"#BC002D\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 1, q: "وش الدولة صاحبة العلم المرسوم؟", a: "فرنسا", alt: ["France"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#0055A4\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FFFFFF\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#EF4135\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 1, q: "وش الدولة صاحبة هذا العلم الثلاثي؟", a: "إيطاليا", alt: ["Italy"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#009246\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FFFFFF\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#CE2B37\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 1, q: "وش الدولة صاحبة هذا العلم الأفقي؟", a: "ألمانيا", alt: ["Germany"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" fill=\"#000000\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" fill=\"#DD0000\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" fill=\"#FFCE00\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 2, q: "وش الدولة صاحبة هذا العلم؟ (أحمر وأبيض وأزرق)", a: "هولندا", alt: ["Netherlands"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" fill=\"#AE1C28\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" fill=\"#FFFFFF\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" fill=\"#21468B\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 2, q: "وش الدولة صاحبة هذا العلم؟ (أسود وأصفر وأحمر)", a: "بلجيكا", alt: ["Belgium"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#000000\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FAE042\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#ED2939\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 2, q: "وش الدولة صاحبة هذا العلم؟ (أخضر وأبيض وبرتقالي)", a: "أيرلندا", alt: ["Ireland"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#169B62\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FFFFFF\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#FF883E\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 2, q: "وش الدولة صاحبة هذا العلم؟ (أخضر وأبيض وأخضر)", a: "نيجيريا", alt: ["Nigeria"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#008751\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FFFFFF\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#008751\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 2, q: "وش الدولة صاحبة هذا العلم؟ (أزرق فوق أصفر)", a: "أوكرانيا", alt: ["Ukraine"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"40\" y=\"0\" fill=\"#0057B7\"/><rect width=\"120\" height=\"40\" y=\"40\" fill=\"#FFD700\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "انتبه للترتيب — وش الدولة؟ (أبيض فوق أحمر)", a: "بولندا", alt: ["Poland"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"40\" y=\"0\" fill=\"#FFFFFF\"/><rect width=\"120\" height=\"40\" y=\"40\" fill=\"#DC143C\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "انتبه للترتيب — وش الدولة؟ (أحمر فوق أبيض)", a: "إندونيسيا", alt: ["Indonesia"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"40\" y=\"0\" fill=\"#CE1126\"/><rect width=\"120\" height=\"40\" y=\"40\" fill=\"#FFFFFF\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "وش الدولة صاحبة هذا العلم الإسكندنافي؟ (أصفر على أزرق)", a: "السويد", alt: ["Sweden"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#006AA7\"/><rect x=\"36\" y=\"0\" width=\"14\" height=\"80\" fill=\"#FECC00\"/><rect x=\"0\" y=\"33\" width=\"120\" height=\"14\" fill=\"#FECC00\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "وش الدولة صاحبة هذا العلم الإسكندنافي؟ (أبيض على أحمر)", a: "الدنمارك", alt: ["Denmark"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#C60C30\"/><rect x=\"36\" y=\"0\" width=\"14\" height=\"80\" fill=\"#FFFFFF\"/><rect x=\"0\" y=\"33\" width=\"120\" height=\"14\" fill=\"#FFFFFF\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "وش الدولة صاحبة هذا العلم؟ (صليب أبيض بمنتصف أحمر)", a: "سويسرا", alt: ["Switzerland"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#D52B1E\"/><rect x=\"52\" y=\"18\" width=\"16\" height=\"44\" fill=\"#fff\"/><rect x=\"38\" y=\"32\" width=\"44\" height=\"16\" fill=\"#fff\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "شكل ورسم", d: 1, q: "وش نوع العدسة المرسومة؟", a: "محدبة", alt: ["convex", "محدب"], svg: "<svg viewBox=\"0 0 200 110\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M100 12 Q128 55 100 98 Q72 55 100 12 Z\" fill=\"#2EC4A6\" opacity=\"0.35\" stroke=\"#2EC4A6\" stroke-width=\"2.5\"/><g stroke=\"var(--sand)\" stroke-width=\"2\"><line x1=\"10\" y1=\"30\" x2=\"92\" y2=\"30\"/><line x1=\"10\" y1=\"55\" x2=\"92\" y2=\"55\"/><line x1=\"10\" y1=\"80\" x2=\"92\" y2=\"80\"/><line x1=\"108\" y1=\"32\" x2=\"178\" y2=\"55\"/><line x1=\"108\" y1=\"55\" x2=\"178\" y2=\"55\"/><line x1=\"108\" y1=\"78\" x2=\"178\" y2=\"55\"/></g><circle cx=\"178\" cy=\"55\" r=\"4\" fill=\"#F0A32F\"/></svg>" },
+  { cat: "شكل ورسم", d: 2, q: "الدائرة الكهربائية المرسومة: توصيل على التوالي ولا على التوازي؟", a: "التوازي", alt: ["parallel", "توازي"], svg: "<svg viewBox=\"0 0 200 110\" xmlns=\"http://www.w3.org/2000/svg\"><g stroke=\"var(--sand)\" stroke-width=\"2.5\" fill=\"none\"><path d=\"M20 20 H180 V90 H20 Z\"/><path d=\"M70 20 V90\"/><path d=\"M130 20 V90\"/></g><g fill=\"#F0A32F\"><rect x=\"58\" y=\"48\" width=\"24\" height=\"14\" rx=\"3\"/><rect x=\"118\" y=\"48\" width=\"24\" height=\"14\" rx=\"3\"/></g><circle cx=\"20\" cy=\"55\" r=\"5\" fill=\"#D9494F\"/></svg>" },
+  { cat: "شكل ورسم", d: 2, q: "أي موجة ترددها أعلى: العليا (الخضراء) ولا السفلى (البرتقالية)؟", a: "العليا", alt: ["الخضراء", "الأولى", "فوق"], svg: "<svg viewBox=\"0 0 200 110\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M10 32 q7.5 -16 15 0 t15 0 t15 0 t15 0 t15 0 t15 0 t15 0 t15 0 t15 0 t15 0\" fill=\"none\" stroke=\"#2EC4A6\" stroke-width=\"2.5\"/><path d=\"M10 82 q22.5 -26 45 0 t45 0 t45 0 t45 0\" fill=\"none\" stroke=\"#F0A32F\" stroke-width=\"2.5\"/></svg>" },
+  { cat: "شكل ورسم", d: 2, q: "مثلث قائم الزاوية ضلعاه 3 و 4 — كم طول الوتر؟", a: "5", alt: ["خمسة"], svg: "<svg viewBox=\"0 0 200 120\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"40,100 40,30 145,100\" fill=\"#2EC4A6\" opacity=\"0.2\" stroke=\"#2EC4A6\" stroke-width=\"2.5\"/><rect x=\"40\" y=\"88\" width=\"12\" height=\"12\" fill=\"none\" stroke=\"var(--sand)\" stroke-width=\"2\"/><text x=\"26\" y=\"68\" fill=\"var(--sand)\" font-size=\"16\" font-family=\"sans-serif\">3</text><text x=\"88\" y=\"116\" fill=\"var(--sand)\" font-size=\"16\" font-family=\"sans-serif\">4</text><text x=\"100\" y=\"58\" fill=\"#F0A32F\" font-size=\"18\" font-family=\"sans-serif\">?</text></svg>" },
+  { cat: "شكل ورسم", d: 3, q: "مثلث زاويتاه 65 و 45 — كم الزاوية الثالثة؟", a: "70", alt: ["سبعين"], svg: "<svg viewBox=\"0 0 200 120\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"30,100 170,100 105,25\" fill=\"#F0A32F\" opacity=\"0.18\" stroke=\"#F0A32F\" stroke-width=\"2.5\"/><text x=\"36\" y=\"92\" fill=\"var(--sand)\" font-size=\"15\" font-family=\"sans-serif\">65°</text><text x=\"138\" y=\"92\" fill=\"var(--sand)\" font-size=\"15\" font-family=\"sans-serif\">45°</text><text x=\"96\" y=\"50\" fill=\"#2EC4A6\" font-size=\"18\" font-family=\"sans-serif\">?</text></svg>" },
+  { cat: "شكل ورسم", d: 3, q: "الأعمدة تمثل مبيعات 4 أرباع — كم الفرق بين الأعلى والأدنى؟", a: "30", alt: ["ثلاثين"], svg: "<svg viewBox=\"0 0 200 120\" xmlns=\"http://www.w3.org/2000/svg\"><g stroke=\"var(--sand)\" stroke-width=\"2\"><line x1=\"22\" y1=\"12\" x2=\"22\" y2=\"100\"/><line x1=\"22\" y1=\"100\" x2=\"185\" y2=\"100\"/></g><g fill=\"#2EC4A6\"><rect x=\"36\" y=\"60\" width=\"26\" height=\"40\"/><rect x=\"74\" y=\"40\" width=\"26\" height=\"60\"/><rect x=\"112\" y=\"25\" width=\"26\" height=\"75\"/><rect x=\"150\" y=\"55\" width=\"26\" height=\"45\"/></g><g fill=\"var(--sand)\" font-size=\"11\" font-family=\"sans-serif\"><text x=\"40\" y=\"55\">40</text><text x=\"78\" y=\"35\">60</text><text x=\"116\" y=\"20\">70</text><text x=\"154\" y=\"50\">45</text></g></svg>" },
+  { cat: "شكل ورسم", d: 3, q: "وش اسم الشكل الهندسي المرسوم حسب عدد أضلاعه؟", a: "سداسي", alt: ["hexagon", "مسدس"], svg: "<svg viewBox=\"0 0 200 130\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"100,18 145,44 145,96 100,122 55,96 55,44\" fill=\"#D9494F\" opacity=\"0.22\" stroke=\"#D9494F\" stroke-width=\"2.5\"/></svg>" },
   // ============ مين البوس؟ (من السياق مو من الاسم) ============
   { cat: "مين البوس؟", d: 1, q: "أول ما تطلع للعالم المفتوح بإلدن رينق، فارس ذهبي على حصان يذبحك بأول خمس دقايق — مين؟", a: "Tree Sentinel", alt: ["حارس الشجرة","تري سنتينل"] },
   { cat: "مين البوس؟", d: 1, q: "أول جدار حقيقي يوقفك بإلدن رينق، يقفز بالهوا ويرمي مطرقة ضوء ويقول لك طموحك أحمق — مين؟", a: "Margit", alt: ["مارغيت"] },
@@ -802,6 +858,7 @@ const genPid = () => "p" + Math.random().toString(36).slice(2, 8);
 const MAX_SLOTS = 8;
 const roomKey = (c) => `fz:room:${c}`;
 const slotKey = (c, s) => `fz:s${s}:${c}`;   // مفتاح ثابت لكل لاعب — ما نحتاج list()
+const qKey = (q) => (q.q || "") + "|" + (q.a || "");
 const isEventSlot = (idx) => idx > 0 && idx % 3 === 2;
 const INVENTIVE = ["أعلام", "شكل ورسم", "مين البوس؟", "وين المكان؟", "مين قالها؟", "وش الغرض؟",
   "الرابط المشترك", "قبل ولا بعد؟", "إيموجي", "دليلين", "الأغرب", "لو كنت مكانك"];
@@ -887,7 +944,7 @@ export default function App() {
 
   // نبض العدّاد — يشتغل فقط أثناء السؤال (سلاسة أعلى بباقي الشاشات)
   useEffect(() => {
-    if (!view || !["question", "reveal", "event", "catpick"].includes(view.phase)) return;
+    if (!view || !["question", "reveal", "event", "catpick", "intro"].includes(view.phase)) return;
     const fast = view.phase === "question";
     const t = setInterval(() => setTick((x) => x + 1), fast ? 100 : 300);
     return () => clearInterval(t);
@@ -911,16 +968,16 @@ export default function App() {
     let pool = [];
     if (cfg.src.mine) pool = pool.concat(myq.filter((q) => q.cat === cat).map((q) => ({ type: "typed", ...q })));
     if (cfg.src.bank) pool = pool.concat(BANK.filter((b) => b.cat === cat).map((b) => ({ type: "typed", ...b })));
-    pool = pool.filter((q) => !h.used.has(q.q));
+    pool = pool.filter((q) => !h.used.has(qKey(q)));
     let cand = pool.filter((q) => q.d === dT);
     if (!cand.length) cand = pool;
     if (!cand.length && cfg.src.ai) {
-      try { const g = await genTyped([cat], 1); if (g.length) cand = g.filter((q) => !h.used.has(q.q)); } catch (e) { /* fallback */ }
+      try { const g = await genTyped([cat], 1); if (g.length) cand = g.filter((q) => !h.used.has(qKey(q))); } catch (e) { /* fallback */ }
     }
-    if (!cand.length) cand = BANK.map((b) => ({ type: "typed", ...b })).filter((q) => !h.used.has(q.q));
+    if (!cand.length) cand = BANK.map((b) => ({ type: "typed", ...b })).filter((q) => !h.used.has(qKey(q)));
     if (!cand.length) cand = [genMathQ(dT)];
     const q = cand[Math.floor(Math.random() * cand.length)];
-    h.used.add(q.q);
+    h.used.add(qKey(q));
     return { ...q, pts: scale(q.d) || 400 };
   }
 
@@ -1013,7 +1070,7 @@ export default function App() {
         totalPlayers: Object.keys(h.players).length,
       } : null,
       updatedAt: Date.now(),
-      q: h.phase === "question" && q ? { q: q.q, pts: q.pts, d: q.d, cat: q.cat, dur: durFor(h) } : null,
+      q: h.phase === "question" && q ? { q: q.q, svg: q.svg || null, pts: q.pts, d: q.d, cat: q.cat, dur: durFor(h) } : null,
     };
     setView(pub); // تحديث فوري للشاشة ثم الحفظ بالخلفية
     await jset(roomKey(h.code), pub);
@@ -1026,7 +1083,7 @@ export default function App() {
     const iv = setInterval(async () => {
       const h = hostRef.current;
       if (!h || busy) return;
-      if (!["lobby", "question", "catpick", "event", "reveal"].includes(h.phase)) return;
+      if (!["lobby", "question", "catpick", "event", "reveal", "intro"].includes(h.phase)) return;
       busy = true;
       try {
         // ترشيد الطلبات: مسح شامل نادر، وبعده نقرأ الخانات المشغولة فقط
@@ -1075,6 +1132,9 @@ export default function App() {
         // انتقال تلقائي عشان ما ينتظر أحد الهوست
         if (h.autoNext !== false && h.phase === "reveal" && Date.now() - (h.stageStart || 0) > REVEAL_SEC * 1000) {
           await advanceTo(h.qIndex + 1); busy = false; return;
+        }
+        if (h.autoNext !== false && h.phase === "intro" && Date.now() - (h.stageStart || 0) > INTRO_SEC * 1000) {
+          await afterIntro(); busy = false; return;
         }
         if (h.autoNext !== false && h.phase === "event" && Date.now() - (h.stageStart || 0) > EVENT_SEC * 1000) {
           await beginQuestion(h.qIndex); busy = false; return;
@@ -1129,12 +1189,23 @@ export default function App() {
       ]);
     } catch (e) { q = null; }
     if (!q) {
-      const pool = BANK.filter((b) => !h.used.has(b.q));
+      const pool = BANK.filter((b) => !h.used.has(qKey(b)));
       const pick = (pool.length ? pool : BANK)[Math.floor(Math.random() * (pool.length || BANK.length))];
-      h.used.add(pick.q);
+      h.used.add(qKey(pick));
       q = { type: "typed", ...pick, pts: PTS[pick.d] || 400 };
     }
     h.questions[h.qIndex] = q;
+    // شاشة شرح الفئة قبل ما يبدأ السؤال
+    h.phase = "intro";
+    h.stageStart = Date.now();
+    await broadcast();
+    rerender();
+  }
+
+  // بعد شاشة شرح الفئة: نكمل للحدث أو للسؤال مباشرة
+  async function afterIntro() {
+    const h = hostRef.current;
+    if (!h || h.phase !== "intro") return;
     if (isEventSlot(h.qIndex)) {
       h.currentEvent = pickEvent(h);
       if (h.currentEvent.id === "roulette") h.rolled = rnd(1, 10) * 100;
@@ -1231,7 +1302,7 @@ export default function App() {
     h.stageStart = Date.now();
     h.reveal = {
       grant: grantInfo,
-      correctText: q.a, qText: q.q, results, pts: effPts, event: ev || null,
+      correctText: q.a, qText: q.q, qSvg: q.svg || null, results, pts: effPts, event: ev || null,
       rolled: ev && ev.id === "roulette" ? effPts : null, steal: stealInfo,
     };
     h.phase = "reveal";
@@ -1575,6 +1646,8 @@ export default function App() {
     .evSplash{text-align:center; padding:30px 0 10px;}
     .evIcon{font-size:72px; line-height:1;}
     .evName{font-family:'Lalezar',cursive; font-size:44px; color:var(--amber); margin-top:8px;}
+    .introDesc{color:var(--sand); font-size:17px; line-height:1.9; margin-top:14px;
+      background:var(--sur); border:1px solid var(--line); border-radius:16px; padding:16px; text-align:center;}
     .evDesc{color:var(--sand); font-size:18px; margin-top:6px; line-height:1.7;}
     .rrow{display:flex; align-items:center; justify-content:space-between; background:var(--sur2);
       border-radius:12px; padding:12px 14px; margin-top:8px;}
@@ -1601,6 +1674,9 @@ export default function App() {
       padding:12px; font-size:16px; font-weight:700; text-align:center; margin-top:10px;}
     .voteTicks{display:block; color:var(--teal); font-size:15px; letter-spacing:2px; margin-top:4px;}
     .voterNames{display:block; color:var(--dim); font-size:11px; letter-spacing:0; font-weight:400; margin-top:2px;}
+    .qImg{background:var(--sur2); border:1.5px solid var(--line); border-radius:14px; padding:14px;
+      display:flex; justify-content:center; align-items:center; margin-bottom:4px;}
+    .qImg svg{width:100%; max-width:260px; height:auto; display:block;}
     .cdNum{font-family:'Lalezar',cursive; font-size:96px; line-height:1; color:var(--amber);
       animation:cdPop .5s cubic-bezier(.2,1.5,.4,1);}
     @keyframes cdPop{0%{transform:scale(.4); opacity:0;}60%{transform:scale(1.15);}100%{transform:scale(1); opacity:1;}}
@@ -1923,6 +1999,35 @@ export default function App() {
     </div>
   );
 
+  const CatIntro = () => {
+    const cat = view.chosenCat;
+    if (!cat) return null;
+    const info = catInfo(cat);
+    const left = view.autoNext ? Math.max(0, Math.ceil(INTRO_SEC - (Date.now() - (view.stageStart || 0)) / 1000)) : null;
+    return (
+      <div className="wrap">
+        <div className="meta">
+          <span className="qcount">سؤال {view.qIndex + 1} / {view.total}</span>
+        </div>
+        <div className="evSplash pop">
+          <div className="evIcon">{info.icon}</div>
+          <div className="evName" style={{ fontSize: 38 }}>{cat}</div>
+          <p className="introDesc">{info.desc}</p>
+        </div>
+        <Sadu />
+        {role === "host" ? (
+          <button className="btn btn-red" onClick={afterIntro}>
+            فهمت — ابدأ {left !== null ? "(" + left + ")" : ""}
+          </button>
+        ) : (
+          <p style={{ textAlign: "center", color: "var(--dim)" }} className="pulse">
+            {left !== null ? `يبدأ بعد ${left} ث…` : "ننتظر الهوست…"}
+          </p>
+        )}
+      </div>
+    );
+  };
+
   const EventSplash = () => {
     const ev = view.event;
     if (!ev) return null;
@@ -2004,11 +2109,14 @@ export default function App() {
           ) : blindHidden ? (
             <div className="hiddenQ">👻 السؤال اختفى! اكتب من ذاكرتك</div>
           ) : (
-            <p className="qtext" style={{
+            <div style={{
               filter: foggy ? "blur(5px)" : "none",
               transform: has("mirror") ? "scaleX(-1)" : "none",
               transition: "filter .3s ease",
-            }}>{q.q}</p>
+            }}>
+              {q.svg && <div className="qImg" dangerouslySetInnerHTML={{ __html: q.svg }} />}
+              <p className="qtext">{q.q}</p>
+            </div>
           )}
           <input className="inp" value={typedText} disabled={answered || remain <= 0 || locked || cancelled}
             onChange={(e) => setTypedText(e.target.value)}
@@ -2062,6 +2170,7 @@ export default function App() {
           </div>
         )}
         <div className="card">
+          {r.qSvg && <div className="qImg" style={{ marginBottom: 10 }} dangerouslySetInnerHTML={{ __html: r.qSvg }} />}
           <p style={{ color: "var(--dim)", fontSize: 14 }}>{r.qText}</p>
           <div style={{ height: 10 }} />
           <div className="correctBox">الجواب: {r.correctText}</div>
@@ -2168,6 +2277,7 @@ export default function App() {
         view.phase === "lobby" ? Lobby() :
         view.phase === "catpick" ? CatPick() :
         view.phase === "prep" ? Prep() :
+        view.phase === "intro" ? CatIntro() :
         view.phase === "event" ? EventSplash() :
         view.phase === "question" || view.phase === "closing" ? Question() :
         view.phase === "reveal" ? Reveal() :
