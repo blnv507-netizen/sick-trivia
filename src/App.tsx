@@ -109,8 +109,8 @@ const POWERUPS = [
     desc: "لو الفريق الثاني غلط بسؤاله الجاي، ينخصم منه نص قيمة السؤال" },
   { id: "rest",   icon: "🛑", name: "استريح",      uses: 1, when: "board",
     desc: "توقف لاعبًا من الفريق الثاني عن المشاركة بالسؤال الجاي" },
-  { id: "trap",   icon: "🪤", name: "الفخ",        uses: 1, when: "question",
-    desc: "تحوّل السؤال للفريق الثاني — ولو غلط ينخصم منه" },
+  { id: "trap",   icon: "🪤", name: "الفخ",        uses: 1, when: "board",
+    desc: "السؤال الجاي: لو جاوبه الفريق الثاني غلط ينخصم منه نص القيمة" },
 ];
 const puById = (id) => POWERUPS.find((p) => p.id === id);
 const freshPowerUps = () => {
@@ -167,16 +167,16 @@ const BANK = [
   { cat: "خمّن اللعبة", d: 2, q: "من أي لعبة هذي الزاوية؟", a: "Overwatch", alt: ["أوفرواتش"], img: "/img/ow-map.jpg", zoom: { s: 3, x: 30, y: 40 } },
   { cat: "خمّن اللعبة", d: 3, q: "خمّن اللعبة من هذي التفصيلة؟", a: "Elden Ring", alt: ["إلدن رينق"], img: "/img/er-1.jpg", zoom: { s: 3.5, x: 65, y: 25 } },
   // ---- الأعلام (كلها مرسومة) ----
-  { cat: "أعلام", d: 3, q: "انتبه: أزرق وأصفر وأحمر عمودي — تشاد ولا رومانيا؟ (هذا الأزرق الغامق)", a: "تشاد", alt: ["Chad"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#002664\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FECB00\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#C60C30\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "وش الدولة صاحبة هذا العلم؟", a: "تشاد", alt: ["Chad"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#002664\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FECB00\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#C60C30\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
   { cat: "أعلام", d: 3, q: "نفس ألوان تشاد لكن الأزرق أفتح — أي دولة أوروبية؟", a: "رومانيا", alt: ["Romania"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#002B7F\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FCD116\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#CE1126\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 3, q: "أحمر فوق أبيض بنسبة مربعة — موناكو ولا إندونيسيا؟ (الأعرض)", a: "إندونيسيا", alt: ["Indonesia"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"40\" y=\"0\" fill=\"#CE1126\"/><rect width=\"120\" height=\"40\" y=\"40\" fill=\"#FFFFFF\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 3, q: "أخضر وأبيض وبرتقالي عمودي — أيرلندا ولا ساحل العاج؟ (الأخضر على السارية)", a: "أيرلندا", alt: ["Ireland"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#169B62\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FFFFFF\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#FF883E\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 3, q: "برتقالي وأبيض وأخضر عمودي — معكوس أيرلندا تمامًا؟", a: "ساحل العاج", alt: ["Ivory Coast", "كوت ديفوار"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#FF883E\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FFFFFF\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#169B62\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 3, q: "أحمر وأبيض وأزرق أفقي — هولندا ولا لوكسمبورغ؟ (الأزرق غامق)", a: "هولندا", alt: ["Netherlands"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" fill=\"#AE1C28\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" fill=\"#FFFFFF\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" fill=\"#21468B\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 3, q: "أبيض وأزرق وأحمر أفقي — روسيا ولا سلوفينيا بدون شعار؟", a: "روسيا", alt: ["Russia"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" fill=\"#FFFFFF\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" fill=\"#0039A6\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" fill=\"#D52B1E\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 3, q: "أحمر وأبيض وأحمر أفقي — النمسا ولا لاتفيا؟ (الأحمر فاقع والشريط متساوي)", a: "النمسا", alt: ["Austria"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" fill=\"#ED2939\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" fill=\"#FFFFFF\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" fill=\"#ED2939\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 3, q: "أخضر وأصفر وأحمر عمودي بلا نجمة — مالي ولا غينيا؟ (الأخضر على السارية)", a: "مالي", alt: ["Mali"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#14B53A\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FCD116\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#CE1126\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 3, q: "أحمر وأصفر وأخضر عمودي — معكوس مالي؟", a: "غينيا", alt: ["Guinea"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#CE1126\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FCD116\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#009460\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "وش الدولة صاحبة هذا العلم؟", a: "إندونيسيا", alt: ["Indonesia"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"40\" y=\"0\" fill=\"#CE1126\"/><rect width=\"120\" height=\"40\" y=\"40\" fill=\"#FFFFFF\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "وش الدولة صاحبة هذا العلم؟", a: "أيرلندا", alt: ["Ireland"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#169B62\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FFFFFF\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#FF883E\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "وش الدولة صاحبة هذا العلم؟", a: "ساحل العاج", alt: ["Ivory Coast", "كوت ديفوار"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#FF883E\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FFFFFF\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#169B62\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "وش الدولة صاحبة هذا العلم؟", a: "هولندا", alt: ["Netherlands"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" fill=\"#AE1C28\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" fill=\"#FFFFFF\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" fill=\"#21468B\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "وش الدولة صاحبة هذا العلم؟", a: "روسيا", alt: ["Russia"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" fill=\"#FFFFFF\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" fill=\"#0039A6\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" fill=\"#D52B1E\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "وش الدولة صاحبة هذا العلم؟", a: "النمسا", alt: ["Austria"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" fill=\"#ED2939\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" fill=\"#FFFFFF\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" fill=\"#ED2939\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "وش الدولة صاحبة هذا العلم؟", a: "مالي", alt: ["Mali"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#14B53A\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FCD116\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#CE1126\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "وش الدولة صاحبة هذا العلم؟", a: "غينيا", alt: ["Guinea"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#CE1126\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FCD116\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#009460\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
   { cat: "أعلام", d: 2, q: "علم عنابي وأبيض بتسع أسنان مثلثة — أي دولة خليجية؟", a: "قطر", alt: ["Qatar"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#8A1538\"/><rect width=\"34\" height=\"80\" fill=\"#fff\"/><polygon points=\"34,0 46,4.4 34,8.9 46,13.3 34,17.8 46,22.2 34,26.7 46,31.1 34,35.6 46,40 34,44.4 46,48.9 34,53.3 46,57.8 34,62.2 46,66.7 34,71.1 46,75.6 34,80\" fill=\"#fff\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
   { cat: "أعلام", d: 3, q: "علم أحمر وأبيض بخمس أسنان مثلثة — أي دولة خليجية؟", a: "البحرين", alt: ["Bahrain"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#CE1126\"/><rect width=\"38\" height=\"80\" fill=\"#fff\"/><polygon points=\"38,0 54,8 38,16 54,24 38,32 54,40 38,48 54,56 38,64 54,72 38,80\" fill=\"#fff\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
   { cat: "أعلام", d: 3, q: "أحمر عمودي على السارية وثلاثة خطوط أخضر وأبيض وأسود — أي دولة؟", a: "الإمارات", alt: ["الامارات", "UAE"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" x=\"30\" fill=\"#00732F\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" x=\"30\" fill=\"#fff\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" x=\"30\" fill=\"#000\"/><rect width=\"30\" height=\"80\" fill=\"#FF0000\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
@@ -184,31 +184,31 @@ const BANK = [
   { cat: "أعلام", d: 3, q: "أخضر وأبيض وأسود أفقي بمثلث أحمر — أي دولة عربية؟", a: "السودان", alt: ["Sudan"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" fill=\"#D21034\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" fill=\"#fff\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" fill=\"#000\"/><polygon points=\"0,0 40,40 0,80\" fill=\"#007229\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
   { cat: "أعلام", d: 3, q: "أحمر وأبيض وأسود أفقي مع شكل أخضر منحرف على السارية — أي دولة؟", a: "الكويت", alt: ["Kuwait"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" fill=\"#007A3D\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" fill=\"#fff\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" fill=\"#CE1126\"/><polygon points=\"0,0 30,26.7 30,53.3 0,80\" fill=\"#000\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
   { cat: "أعلام", d: 3, q: "أحمر بمثلث أبيض على السارية وخنجر وسيفان — أي دولة عربية؟", a: "عمان", alt: ["Oman", "عُمان"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#DB161B\"/><rect x=\"30\" width=\"90\" height=\"26.7\" fill=\"#fff\"/><rect x=\"30\" y=\"53.3\" width=\"90\" height=\"26.7\" fill=\"#008000\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 3, q: "أصفر عريض فوق وأزرق وأحمر — كولومبيا ولا الإكوادور؟ (بلا شعار)", a: "كولومبيا", alt: ["Colombia"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"40\" y=\"0\" fill=\"#FCD116\"/><rect width=\"120\" height=\"20\" y=\"40\" fill=\"#003893\"/><rect width=\"120\" height=\"20\" y=\"60\" fill=\"#CE1126\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "وش الدولة صاحبة هذا العلم؟", a: "كولومبيا", alt: ["Colombia"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"40\" y=\"0\" fill=\"#FCD116\"/><rect width=\"120\" height=\"20\" y=\"40\" fill=\"#003893\"/><rect width=\"120\" height=\"20\" y=\"60\" fill=\"#CE1126\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
   { cat: "أعلام", d: 3, q: "أصفر وأزرق وأحمر متساوية أفقيًا — أي دولة جنوب أمريكية؟", a: "فنزويلا", alt: ["Venezuela"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" fill=\"#FCD116\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" fill=\"#00247D\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" fill=\"#CF142B\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
   { cat: "أعلام", d: 3, q: "أحمر وأبيض وأحمر عمودي — أي دولة جنوب أمريكية؟", a: "بيرو", alt: ["Peru"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#D91023\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FFFFFF\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#D91023\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
   { cat: "أعلام", d: 3, q: "أزرق وأبيض وأزرق أفقي بشمس ذهبية بالمنتصف — أي دولة؟", a: "الأرجنتين", alt: ["الارجنتين", "Argentina"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" fill=\"#74ACDF\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" fill=\"#FFFFFF\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" fill=\"#74ACDF\"/><circle cx=\"60\" cy=\"40\" r=\"9\" fill=\"#F6B40E\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 3, q: "صليب أبيض على أزرق — فنلندا ولا اليونان؟", a: "فنلندا", alt: ["Finland"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#FFFFFF\"/><rect x=\"36\" y=\"0\" width=\"14\" height=\"80\" fill=\"#003580\"/><rect x=\"0\" y=\"33\" width=\"120\" height=\"14\" fill=\"#003580\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "وش الدولة صاحبة هذا العلم؟", a: "فنلندا", alt: ["Finland"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#FFFFFF\"/><rect x=\"36\" y=\"0\" width=\"14\" height=\"80\" fill=\"#003580\"/><rect x=\"0\" y=\"33\" width=\"120\" height=\"14\" fill=\"#003580\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
   { cat: "أعلام", d: 3, q: "صليب أزرق داخل صليب أبيض على أحمر — أي دولة؟", a: "النرويج", alt: ["Norway"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#BA0C2F\"/><rect x=\"32\" y=\"0\" width=\"20\" height=\"80\" fill=\"#fff\"/><rect x=\"0\" y=\"30\" width=\"120\" height=\"20\" fill=\"#fff\"/><rect x=\"37\" y=\"0\" width=\"10\" height=\"80\" fill=\"#00205B\"/><rect x=\"0\" y=\"35\" width=\"120\" height=\"10\" fill=\"#00205B\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
   { cat: "أعلام", d: 3, q: "صليب أحمر على أبيض بحدود زرقاء — أي دولة جزيرة؟", a: "آيسلندا", alt: ["ايسلندا", "Iceland"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#02529C\"/><rect x=\"30\" y=\"0\" width=\"20\" height=\"80\" fill=\"#fff\"/><rect x=\"0\" y=\"30\" width=\"120\" height=\"20\" fill=\"#fff\"/><rect x=\"35\" y=\"0\" width=\"10\" height=\"80\" fill=\"#DC1E35\"/><rect x=\"0\" y=\"35\" width=\"120\" height=\"10\" fill=\"#DC1E35\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
   { cat: "أعلام", d: 3, q: "دائرة حمراء بمنتصف أخضر — أي دولة آسيوية؟", a: "بنغلاديش", alt: ["بنجلاديش", "Bangladesh"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#006A4E\"/><circle cx=\"54\" cy=\"40\" r=\"20\" fill=\"#F42A41\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
   { cat: "أعلام", d: 3, q: "دائرة صفراء غير متمركزة على أزرق — أي دولة جزرية؟", a: "بالاو", alt: ["Palau"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#4AADD6\"/><circle cx=\"52\" cy=\"40\" r=\"18\" fill=\"#FFDE00\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 3, q: "هلال ونجمة بيضاء على أحمر — تركيا ولا تونس؟ (الهلال بالمنتصف داخل دائرة بيضاء)", a: "تونس", alt: ["Tunisia"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#E70013\"/><circle cx=\"60\" cy=\"40\" r=\"22\" fill=\"#fff\"/><circle cx=\"63\" cy=\"40\" r=\"14\" fill=\"#E70013\"/><circle cx=\"68\" cy=\"40\" r=\"11\" fill=\"#fff\"/><polygon points=\"66,34 68,39 73,39 69,42 71,47 66,44 61,47 63,42 59,39 64,39\" fill=\"#E70013\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "وش الدولة صاحبة هذا العلم؟", a: "تونس", alt: ["Tunisia"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#E70013\"/><circle cx=\"60\" cy=\"40\" r=\"22\" fill=\"#fff\"/><circle cx=\"63\" cy=\"40\" r=\"14\" fill=\"#E70013\"/><circle cx=\"68\" cy=\"40\" r=\"11\" fill=\"#fff\"/><polygon points=\"66,34 68,39 73,39 69,42 71,47 66,44 61,47 63,42 59,39 64,39\" fill=\"#E70013\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
   { cat: "أعلام", d: 3, q: "هلال ونجمة بيضاء على أحمر بلا دائرة — أي دولة؟", a: "تركيا", alt: ["Turkey"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#E30A17\"/><circle cx=\"50\" cy=\"40\" r=\"18\" fill=\"#fff\"/><circle cx=\"57\" cy=\"40\" r=\"15\" fill=\"#E30A17\"/><polygon points=\"76,40 80,47 88,47 82,52 84,60 76,55 68,60 70,52 64,47 72,47\" fill=\"#fff\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
   { cat: "أعلام", d: 3, q: "أخضر بهلال ونجمة أبيض وشريط أبيض على السارية — أي دولة؟", a: "باكستان", alt: ["Pakistan"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#01411C\"/><rect width=\"30\" height=\"80\" fill=\"#fff\"/><circle cx=\"72\" cy=\"40\" r=\"17\" fill=\"#fff\"/><circle cx=\"78\" cy=\"38\" r=\"14\" fill=\"#01411C\"/><polygon points=\"88,32 90,37 95,37 91,40 93,45 88,42 83,45 85,40 81,37 86,37\" fill=\"#fff\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
   { cat: "أعلام", d: 3, q: "أحمر بخمس نجوم صفراء بالزاوية — أي دولة؟", a: "الصين", alt: ["China"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#DE2910\"/><polygon points=\"22,12 26,22 36,22 28,28 31,38 22,32 13,38 16,28 8,22 18,22\" fill=\"#FFDE00\"/><circle cx=\"44\" cy=\"10\" r=\"3\" fill=\"#FFDE00\"/><circle cx=\"52\" cy=\"18\" r=\"3\" fill=\"#FFDE00\"/><circle cx=\"52\" cy=\"30\" r=\"3\" fill=\"#FFDE00\"/><circle cx=\"44\" cy=\"38\" r=\"3\" fill=\"#FFDE00\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
   { cat: "أعلام", d: 3, q: "أخضر وأصفر وأحمر أفقي بنجمة خضراء — أي دولة أفريقية؟", a: "إثيوبيا", alt: ["اثيوبيا", "Ethiopia"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" fill=\"#078930\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" fill=\"#FCDD09\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" fill=\"#DA121A\"/><circle cx=\"60\" cy=\"40\" r=\"15\" fill=\"#0F47AF\"/><polygon points=\"60,30 63,38 71,38 65,43 67,51 60,46 53,51 55,43 49,38 57,38\" fill=\"#FCDD09\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
   { cat: "أعلام", d: 3, q: "أحمر وأبيض وأسود أفقي بنسر ذهبي بالمنتصف — أي دولة عربية؟", a: "مصر", alt: ["Egypt"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" fill=\"#CE1126\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" fill=\"#FFFFFF\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" fill=\"#000000\"/><circle cx=\"60\" cy=\"40\" r=\"8\" fill=\"#C09300\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
   { cat: "أعلام", d: 3, q: "أحمر فوق أسود بشعار ذهبي بالمنتصف — أي دولة أفريقية؟", a: "أنغولا", alt: ["Angola", "موزمبيق"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"40\" y=\"0\" fill=\"#CE1126\"/><rect width=\"120\" height=\"40\" y=\"40\" fill=\"#000000\"/><circle cx=\"60\" cy=\"40\" r=\"10\" fill=\"#FFCB00\" opacity=\"0.9\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 3, q: "أخضر وأبيض وأحمر عمودي بشعار بالمنتصف — إيطاليا ولا المكسيك؟ (فيه شعار)", a: "المكسيك", alt: ["Mexico"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#006847\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FFFFFF\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#CE1126\"/><circle cx=\"60\" cy=\"40\" r=\"9\" fill=\"#8B5A2B\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 3, q: "أبيض وأزرق وأحمر عمودي — فرنسا ولا لوكسمبورغ؟ (الأزرق على السارية)", a: "فرنسا", alt: ["France"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#0055A4\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FFFFFF\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#EF4135\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 3, q: "أسود وأحمر وأصفر عمودي — بلجيكا ولا ألمانيا؟ (عمودي يعني…)", a: "بلجيكا", alt: ["Belgium"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#000000\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FAE042\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#ED2939\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "وش الدولة صاحبة هذا العلم؟", a: "المكسيك", alt: ["Mexico"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#006847\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FFFFFF\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#CE1126\"/><circle cx=\"60\" cy=\"40\" r=\"9\" fill=\"#8B5A2B\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "وش الدولة صاحبة هذا العلم؟", a: "فرنسا", alt: ["France"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#0055A4\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FFFFFF\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#EF4135\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "وش الدولة صاحبة هذا العلم؟", a: "بلجيكا", alt: ["Belgium"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#000000\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FAE042\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#ED2939\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
   { cat: "أعلام", d: 3, q: "أزرق وأبيض بتسعة خطوط وصليب بالزاوية — أي دولة؟", a: "اليونان", alt: ["Greece"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#0D5EAF\"/><rect y=\"8.9\" width=\"120\" height=\"8.9\" fill=\"#fff\"/><rect y=\"17.8\" width=\"120\" height=\"8.9\" fill=\"#0D5EAF\"/><rect y=\"26.700000000000003\" width=\"120\" height=\"8.9\" fill=\"#fff\"/><rect y=\"35.6\" width=\"120\" height=\"8.9\" fill=\"#0D5EAF\"/><rect y=\"44.5\" width=\"120\" height=\"8.9\" fill=\"#fff\"/><rect y=\"53.4\" width=\"120\" height=\"8.9\" fill=\"#0D5EAF\"/><rect y=\"62.300000000000004\" width=\"120\" height=\"8.9\" fill=\"#fff\"/><rect y=\"71.2\" width=\"120\" height=\"8.9\" fill=\"#0D5EAF\"/><rect width=\"44\" height=\"44\" fill=\"#0D5EAF\"/><rect x=\"18\" y=\"0\" width=\"9\" height=\"44\" fill=\"#fff\"/><rect x=\"0\" y=\"17\" width=\"44\" height=\"9\" fill=\"#fff\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 3, q: "صليب أبيض على أحمر مربع الشكل — سويسرا ولا الدنمارك؟", a: "سويسرا", alt: ["Switzerland"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#D52B1E\"/><rect x=\"52\" y=\"18\" width=\"16\" height=\"44\" fill=\"#fff\"/><rect x=\"38\" y=\"32\" width=\"44\" height=\"16\" fill=\"#fff\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "وش الدولة صاحبة هذا العلم؟", a: "سويسرا", alt: ["Switzerland"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#D52B1E\"/><rect x=\"52\" y=\"18\" width=\"16\" height=\"44\" fill=\"#fff\"/><rect x=\"38\" y=\"32\" width=\"44\" height=\"16\" fill=\"#fff\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
   { cat: "أعلام", d: 3, q: "أخضر وأبيض وأحمر عمودي بلا شعار — أي دولة أوروبية؟", a: "إيطاليا", alt: ["ايطاليا", "Italy"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#009246\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FFFFFF\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#CE2B37\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
   { cat: "أعلام", d: 3, q: "أحمر وأصفر وأحمر أفقي بشريط أصفر عريض — أي دولة أوروبية؟", a: "إسبانيا", alt: ["اسبانيا", "Spain"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"20\" y=\"0\" fill=\"#AA151B\"/><rect width=\"120\" height=\"40\" y=\"20\" fill=\"#F1BF00\"/><rect width=\"120\" height=\"20\" y=\"60\" fill=\"#AA151B\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 3, q: "أبيض وأحمر أفقي بسيط — بولندا ولا موناكو؟ (الأطول)", a: "بولندا", alt: ["Poland"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"40\" y=\"0\" fill=\"#FFFFFF\"/><rect width=\"120\" height=\"40\" y=\"40\" fill=\"#DC143C\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 3, q: "أزرق وأصفر أفقي — أوكرانيا ولا السويد؟", a: "أوكرانيا", alt: ["Ukraine"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"40\" y=\"0\" fill=\"#0057B7\"/><rect width=\"120\" height=\"40\" y=\"40\" fill=\"#FFD700\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "وش الدولة صاحبة هذا العلم؟", a: "بولندا", alt: ["Poland"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"40\" y=\"0\" fill=\"#FFFFFF\"/><rect width=\"120\" height=\"40\" y=\"40\" fill=\"#DC143C\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "وش الدولة صاحبة هذا العلم؟", a: "أوكرانيا", alt: ["Ukraine"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"40\" y=\"0\" fill=\"#0057B7\"/><rect width=\"120\" height=\"40\" y=\"40\" fill=\"#FFD700\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
   { cat: "شكل ورسم", d: 2, q: "وش نوع العدسة المرسومة؟", a: "محدبة", alt: ["convex", "محدب"], svg: "<svg viewBox=\"0 0 200 110\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M100 12 Q128 55 100 98 Q72 55 100 12 Z\" fill=\"#2EC4A6\" opacity=\"0.35\" stroke=\"#2EC4A6\" stroke-width=\"2.5\"/><g stroke=\"var(--sand)\" stroke-width=\"2\"><line x1=\"10\" y1=\"30\" x2=\"92\" y2=\"30\"/><line x1=\"10\" y1=\"55\" x2=\"92\" y2=\"55\"/><line x1=\"10\" y1=\"80\" x2=\"92\" y2=\"80\"/><line x1=\"108\" y1=\"32\" x2=\"178\" y2=\"55\"/><line x1=\"108\" y1=\"55\" x2=\"178\" y2=\"55\"/><line x1=\"108\" y1=\"78\" x2=\"178\" y2=\"55\"/></g><circle cx=\"178\" cy=\"55\" r=\"4\" fill=\"#F0A32F\"/></svg>" },
   { cat: "شكل ورسم", d: 2, q: "الدائرة الكهربائية المرسومة: توصيل على التوالي ولا على التوازي؟", a: "التوازي", alt: ["parallel", "توازي"], svg: "<svg viewBox=\"0 0 200 110\" xmlns=\"http://www.w3.org/2000/svg\"><g stroke=\"var(--sand)\" stroke-width=\"2.5\" fill=\"none\"><path d=\"M20 20 H180 V90 H20 Z\"/><path d=\"M70 20 V90\"/><path d=\"M130 20 V90\"/></g><g fill=\"#F0A32F\"><rect x=\"58\" y=\"48\" width=\"24\" height=\"14\" rx=\"3\"/><rect x=\"118\" y=\"48\" width=\"24\" height=\"14\" rx=\"3\"/></g><circle cx=\"20\" cy=\"55\" r=\"5\" fill=\"#D9494F\"/></svg>" },
   { cat: "شكل ورسم", d: 2, q: "أي موجة ترددها أعلى: العليا (الخضراء) ولا السفلى (البرتقالية)؟", a: "العليا", alt: ["الخضراء", "الأولى", "فوق"], svg: "<svg viewBox=\"0 0 200 110\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M10 32 q7.5 -16 15 0 t15 0 t15 0 t15 0 t15 0 t15 0 t15 0 t15 0 t15 0 t15 0\" fill=\"none\" stroke=\"#2EC4A6\" stroke-width=\"2.5\"/><path d=\"M10 82 q22.5 -26 45 0 t45 0 t45 0 t45 0\" fill=\"none\" stroke=\"#F0A32F\" stroke-width=\"2.5\"/></svg>" },
@@ -1432,7 +1432,7 @@ export default function App() {
   const [, forceN] = useState(0);
   const rerender = () => forceN((x) => x + 1);
 
-  const [cfg, setCfg] = useState({ count: 25, src: { bank: true, mine: false }, picked: [], mode: "classic" });
+  const [cfg, setCfg] = useState({ count: 25, src: { bank: true, mine: false }, picked: [], mode: "classic", teamNames: ["", ""] });
 
   const localRef = useRef({ qIndex: -1, renderAt: 0, answered: false, text: "" });
   const [typedText, setTypedText] = useState("");
@@ -1672,11 +1672,13 @@ export default function App() {
       tile: h.tile ? { ci: h.tile.ci, ti: h.tile.ti, pts: h.tile.pts, cat: h.tile.cat } : null,
       bq: h.phase === "bq" && h.tile ? {
         q: h.tile.q.q, svg: h.tile.q.svg || null, img: h.tile.q.img || null, zoom: h.tile.q.zoom || null,
-        cat: h.tile.cat, pts: h.tile.pts, dur: h.qDur, steal: h.stealDone,
+        cat: h.tile.cat, pts: h.tile.pts, dur: h.qDur,
+        revealed: !!h.revealed, timeUp: !!h.timeUp,
+        answer: h.revealed ? h.tile.q.a : null,
+        alt: h.revealed ? (h.tile.q.alt || []) : null,
       } : null,
       puActive: h.puActive || {}, puLog: (h.puLog || []).slice(-4), restPid: h.restPid || null,
       pitOn: h.pitOn || [false, false],
-      answeredTeam: Object.keys(h.pending || {}),
       updatedAt: Date.now(),
       q: h.phase === "question" && q ? { q: q.q, svg: q.svg || null, img: q.img || null, zoom: q.zoom || null, nodiff: !!q.nodiff, pts: q.pts, d: q.d, cat: q.cat, dur: durFor(h) } : null,
     };
@@ -1730,12 +1732,6 @@ export default function App() {
               const tag = "pk:" + a.pid + ":" + a.pick.n;
               if (!h.doneUses[tag]) { h.doneUses[tag] = 1; await selectTile(a.pick.ci, a.pick.ti); busy = false; return; }
             }
-            if (a.bans && h.phase === "bq" && a.bans.tile === (h.tile ? h.tile.ci + ":" + h.tile.ti : "") ) {
-              const tm = teamOf(h, a.pid);
-              if (tm === h.answering && a.pid !== h.restPid && !(a.pid in h.pending)) {
-                h.pending[a.pid] = { text: a.bans.text, ms: a.bans.ms || 0 };
-              }
-            }
             if (a.pu) {
               const tag = "pu:" + a.pid + ":" + a.pu.n;
               if (!h.doneUses[tag]) {
@@ -1755,13 +1751,11 @@ export default function App() {
           }
         }
         // --- مؤقتات نمط سين جيم ---
-        if (h.phase === "bq") {
-          const dbl = h.puActive["double"] === h.answering;
-          const need = dbl ? 2 : 1;
-          const got = Object.keys(h.pending).filter((pid) => teamOf(h, pid) === h.answering).length;
-          const timeUp = Date.now() > h.qStart + h.qDur * 1000 + 1200;
-          if (timeUp) { await resolveAttempt(true); busy = false; return; }
-          if (got >= need && Date.now() > h.qStart + 1500) { await resolveAttempt(false); busy = false; return; }
+        if (h.phase === "bq" && !h.revealed) {
+          if (Date.now() > h.qStart + h.qDur * 1000 + 800) {
+            h.revealed = true; h.timeUp = true;
+            await broadcast(); busy = false; rerender(); return;
+          }
         }
         if (h.phase === "breveal" && h.autoNext !== false && Date.now() - (h.stageStart || 0) > REVEAL_SEC * 1000) {
           await nextTurn(); busy = false; return;
@@ -1898,64 +1892,56 @@ export default function App() {
     h.puActive = {};
     h.qStart = Date.now() + 3000;  // عد تنازلي قصير
     h.qDur = TEAM_SEC;
-    h.stealDone = false;
+    h.revealed = false;
+    h.timeUp = false;
     h.phase = "bq";
     await broadcast();
     rerender();
   }
 
-  // حساب نتيجة محاولة الفريق الحالي
-  async function resolveAttempt(timedOut) {
+  // الإجابة شفهية: الهوست يكشف الجواب ثم يحدد مين جاوب
+  async function revealAnswer() {
+    const h = hostRef.current;
+    if (!h || h.phase !== "bq") return;
+    h.revealed = true;
+    await broadcast(); rerender();
+  }
+
+  // الهوست يمنح النقاط: team = 0 أو 1 أو null (محد جاوب)
+  async function awardTile(team) {
     const h = hostRef.current;
     if (!h || h.phase !== "bq") return;
     const t = h.tile;
-    const team = h.answering;
-    const dbl = h.puActive["double"] === team;
-    const tries = Object.entries(h.pending)
-      .filter(([pid]) => teamOf(h, pid) === team)
-      .map(([, v]) => v.text)
-      .slice(0, dbl ? 2 : 1);
-
-    h.judging = true; await broadcast();
-    let ok = false;
-    if (tries.length) {
-      const entries = tries.map((text, i) => ({ pid: "t" + i, text }));
-      const map = await judgeTyped(t.q.q, t.q.a, entries, true, t.q.alt);
-      ok = Object.values(map).some(Boolean);
-    }
-    h.judging = false;
-
-    const other = team === 0 ? 1 : 0;
-    let log = [];
-    if (ok) {
+    const log = [];
+    if (team === 0 || team === 1) {
       h.teams[team].score += t.pts;
       log.push({ team, text: `${h.teams[team].name} جاوب صح +${t.pts}` });
-      // الحفرة: لو كان الفريق الثاني حاطط حفرة، ما تنطبق لأنه جاوب صح
-      h.pitOn[team] = false;
-      await endTile(log, team);
-      return;
+      const other = team === 0 ? 1 : 0;
+      if (h.pitOn[other]) {
+        const cut = Math.round(t.pts / 2);
+        h.teams[other].score -= cut;
+        log.push({ team: other, text: `🕳️ الحفرة! انخصم ${cut} من ${h.teams[other].name}` });
+      }
+      h.pitOn = [false, false];
+    } else {
+      log.push({ team: null, text: "ما أحد جاوب — لا نقاط" });
+      const owner = h.owner;
+      if (h.pitOn[owner]) {
+        const cut = Math.round(t.pts / 2);
+        h.teams[owner].score -= cut;
+        log.push({ team: owner, text: `🕳️ الحفرة! انخصم ${cut} من ${h.teams[owner].name}` });
+      }
+      h.pitOn = [false, false];
     }
-    // غلط أو انتهى الوقت
-    log.push({ team, text: `${h.teams[team].name} ${timedOut ? "انتهى وقته" : "جاوب غلط"}` });
-    // الحفرة مفعّلة ضد هذا الفريق؟
-    if (h.pitOn[team]) {
-      const cut = Math.round(t.pts / 2);
-      h.teams[team].score -= cut;
-      log.push({ team, text: `🕳️ الحفرة! انخصم ${cut} من ${h.teams[team].name}` });
-      h.pitOn[team] = false;
-    }
-    if (!h.stealDone && team === h.owner) {
-      // ينتقل للفريق الثاني بوقت السرقة
-      h.stealDone = true;
-      h.answering = other;
-      h.pending = {};
-      h.qStart = Date.now() + 1500;
-      h.qDur = STEAL_SEC;
-      h.stealLog = log;
-      await broadcast(); rerender();
-      return;
-    }
-    await endTile(log, null);
+    await endTile(log, team);
+  }
+
+  // تعديل يدوي للنقاط
+  async function adjustScore(team, delta) {
+    const h = hostRef.current;
+    if (!h || !h.teams) return;
+    h.teams[team].score += delta;
+    await broadcast(); rerender();
   }
 
   async function endTile(log, winner) {
@@ -2008,17 +1994,7 @@ export default function App() {
     if (id === "double") { h.puActive["double"] = team; }
     if (id === "pit") { h.pitOn[other] = true; }
     if (id === "rest") { h.restPid = targetPid || null; }
-    if (id === "trap") {
-      // نحوّل السؤال للفريق الثاني
-      h.puActive["trap"] = team;
-      h.owner = other;
-      h.answering = other;
-      h.pending = {};
-      h.qStart = Date.now() + 1500;
-      h.qDur = TEAM_SEC;
-      h.stealDone = false;
-      h.pitOn[other] = true; // لو غلط ينخصم منه
-    }
+    if (id === "trap") { h.pitOn[other] = true; }
     h.puLog = (h.puLog || []).concat([{ icon: pu.icon, text: `${h.teams[team].name} استخدم ${pu.name}` }]);
     await broadcast(); rerender();
     return true;
@@ -2257,8 +2233,8 @@ export default function App() {
       seenAll: new Set(Array.isArray(prevSeen) ? prevSeen : []),
       mode: cfg.mode || "classic",
       teams: [
-        { name: "الفريق الأول", color: TEAM_COLORS[0], score: 0, members: [], pu: freshPowerUps() },
-        { name: "الفريق الثاني", color: TEAM_COLORS[1], score: 0, members: [], pu: freshPowerUps() },
+        { name: (cfg.teamNames && cfg.teamNames[0]) || "الفريق الأول", color: TEAM_COLORS[0], score: 0, members: [], pu: freshPowerUps() },
+        { name: (cfg.teamNames && cfg.teamNames[1]) || "الفريق الثاني", color: TEAM_COLORS[1], score: 0, members: [], pu: freshPowerUps() },
       ],
       board: null, turn: 0, tile: null, owner: 0, answering: 0, pending: {},
       puActive: {}, pitOn: [false, false], restPid: null, stealDone: false, puLog: [],
@@ -2428,36 +2404,23 @@ export default function App() {
   };
 
   async function pickTile(ci, ti) {
-    if (!view || view.phase !== "board" || myTeam() !== view.turn) return;
+    if (!view || view.phase !== "board") return;
+    // الهوست يدير اللوحة للجميع، واللاعب لازم يكون دوره
     if (role === "host") { await selectTile(ci, ti); return; }
+    if (myTeam() !== view.turn) return;
     useCounterRef.current += 1;
     await pushSlot({ pick: { ci, ti, n: useCounterRef.current } }, true);
   }
 
-  async function sendBoardAnswer() {
-    if (!view || view.phase !== "bq" || !typedText.trim()) return;
-    if (myTeam() !== view.answering) return;
-    if (view.restPid === me.pid) return;
-    if (Date.now() < localRef.current.renderAt) return;
-    const ms = Date.now() - localRef.current.renderAt;
-    const tile = view.tile ? view.tile.ci + ":" + view.tile.ti : "";
-    localRef.current.answered = true;
-    rerender();
+  async function sendPowerUp(id, target) {
     if (role === "host") {
       const h = hostRef.current;
-      if (h && h.phase === "bq" && !(me.pid in h.pending)) h.pending[me.pid] = { text: typedText.trim(), ms };
-      setTypedText("");
-    } else {
-      const sent = await pushSlot({ bans: { tile, text: typedText.trim(), ms } }, true);
-      if (!sent) { localRef.current.answered = false; rerender(); setToast("ما وصلت — جرّب مرة ثانية"); }
-      else setTypedText("");
+      const t = h.phase === "board" ? h.turn : h.owner;
+      await applyPowerUp(t, id, target);
+      return;
     }
-  }
-
-  async function sendPowerUp(id, target) {
     const t = myTeam();
     if (t < 0) return;
-    if (role === "host") { await applyPowerUp(t, id, target); return; }
     useCounterRef.current += 1;
     await pushSlot({ pu: { id, target, n: useCounterRef.current } }, true);
     setToast("أرسلنا الوسيلة ⚡");
@@ -2603,26 +2566,61 @@ export default function App() {
     .scoreName{font-weight:500; max-width:80px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
     .scoreVal{font-family:'Lalezar',cursive; color:var(--amber); font-size:16px;}
     .scoreTick{color:var(--teal); font-size:12px;}
+    .jWrap{max-width:760px;}
+    .jTop{display:flex; align-items:center; gap:10px; margin-bottom:10px; flex-wrap:wrap;}
+    .jBrand{font-family:'Lalezar',cursive; font-size:22px; color:var(--amber); letter-spacing:1px;}
+    .jBrand b{color:var(--sand); font-weight:400;}
+    .jTurn{margin-inline-start:auto; color:#fff; font-weight:700; font-size:13px;
+      border-radius:999px; padding:6px 16px;}
+    .jTop .exitBar{margin:0;}
+    .qHead{display:flex; align-items:center; justify-content:space-between; margin:6px 0;}
+    .qPts{font-family:'Lalezar',cursive; font-size:34px; color:var(--amber);}
+    .qClock{font-family:'Lalezar',cursive; font-size:26px; color:var(--sand);
+      background:var(--sur2); border-radius:12px; padding:2px 16px 0;}
+    .qClock.hot{color:#fff; background:var(--red); animation:pl 1s ease-in-out infinite;}
+    .jCard{padding:22px;}
+    .jCard .qtext{font-size:24px;}
+    .ansBox{background:#173330; border:2px solid var(--teal); border-radius:16px;
+      padding:18px; text-align:center; font-size:26px; font-weight:700; color:var(--teal);
+      margin-top:14px; animation:pp .35s cubic-bezier(.2,1.4,.4,1);}
+    .ansLbl{display:block; font-size:12px; color:var(--dim); font-weight:400; margin-bottom:4px;}
+    .ansAlt{font-size:13px; color:var(--dim); font-weight:400; margin-top:8px;}
+    .judgeBox{margin-top:16px;}
+    .jAward{color:#fff !important; font-size:17px;}
+    .puRow{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:16px;}
+    .puBtn{display:flex; align-items:center; gap:6px; background:var(--sur2);
+      border:1.5px solid var(--line); color:var(--sand); border-radius:999px;
+      padding:8px 14px; font-size:13px; cursor:pointer; font-family:'Rubik',sans-serif;
+      transition:all .15s ease;}
+    .puBtn:not(:disabled):hover{border-color:var(--amber); color:var(--amber);}
+    .puBtn:disabled{opacity:.35; cursor:default;}
+    .puBtn b{color:var(--amber);}
+    .scoreAdj{display:flex; gap:6px; justify-content:center; margin-top:4px;}
+    .scoreAdj button{width:30px; height:26px; border-radius:8px; border:1px solid var(--line);
+      background:var(--sur2); color:var(--sand); font-size:16px; cursor:pointer; line-height:1;}
+    .scoreAdj button:hover{border-color:var(--amber); color:var(--amber);}
     .teamBar{display:flex; gap:10px; margin:10px 0 14px;}
-    .teamCard{flex:1; background:var(--sur); border:1.5px solid var(--line); border-radius:14px;
-      padding:10px; text-align:center; transition:box-shadow .2s ease, transform .2s ease;}
-    .teamCard.turn{box-shadow:0 0 0 2px currentColor inset; transform:translateY(-2px);}
-    .teamCard.mine .teamName::after{content:" ★";}
-    .teamName{font-weight:700; font-size:14px;}
+    .teamCard{flex:1; background:var(--sur); border:2px solid var(--line); border-radius:16px;
+      padding:12px 10px; text-align:center; transition:all .25s ease; position:relative;}
+    .teamCard.turn{border-color:var(--tc); background:var(--sur2); transform:translateY(-3px);
+      box-shadow:0 6px 18px rgba(0,0,0,.35);}
+    .teamCard.turn::before{content:""; position:absolute; inset-inline:16px; top:-2px; height:4px;
+      background:var(--tc); border-radius:0 0 6px 6px;}
+    .teamName{font-weight:700; font-size:14px; color:var(--tc);}
     .teamScore{font-family:'Lalezar',cursive; font-size:30px; color:var(--sand); line-height:1.1;}
     .teamMembers{font-size:11px; color:var(--dim); margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
     .jBoard{display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; margin-top:12px;}
     .jCol{display:flex; flex-direction:column; gap:5px;}
-    .jCat{background:var(--sur2); border:1px solid var(--line); border-radius:10px; padding:8px 4px;
-      font-size:11px; font-weight:700; text-align:center; min-height:42px; display:flex;
-      align-items:center; justify-content:center; line-height:1.3;}
-    .jTile{border:1.5px solid var(--line); background:var(--sur); color:var(--amber);
-      border-radius:10px; padding:11px 4px; font-family:'Lalezar',cursive; font-size:19px;
+    .jCat{background:var(--amber); color:var(--bg); border-radius:12px 12px 4px 4px; padding:10px 4px;
+      font-size:12px; font-weight:700; text-align:center; min-height:44px; display:flex;
+      align-items:center; justify-content:center; line-height:1.3; margin-bottom:3px;}
+    .jTile{border:none; background:var(--sur2); color:var(--amber);
+      border-radius:10px; padding:14px 4px; font-family:'Lalezar',cursive; font-size:22px;
       cursor:pointer; transition:transform .12s ease, background .15s ease;}
-    .jTile:not(:disabled):hover{background:var(--amber); color:var(--bg); border-color:var(--amber);}
+    .jTile:not(:disabled):hover{background:var(--amber); color:var(--bg);}
     .jTile:active:not(:disabled){transform:scale(.93);}
-    .jTile.locked{background:transparent; color:var(--line); border-style:dashed; cursor:default;}
-    .jTile:disabled{cursor:default; opacity:.75;}
+    .jTile.locked{background:transparent; color:#2E2440; cursor:default; box-shadow:inset 0 0 0 1.5px #2E2440;}
+    .jTile:disabled{cursor:default;}
     @media (max-width:420px){ .jBoard{gap:5px;} .jCat{font-size:10px;} .jTile{font-size:16px; padding:9px 2px;} }
     .cdNum{font-family:'Lalezar',cursive; font-size:96px; line-height:1; color:var(--amber);
       animation:cdPop .5s cubic-bezier(.2,1.5,.4,1);}
@@ -2708,6 +2706,21 @@ export default function App() {
           : "كل واحد لحاله — الأسرع الصح ياخذ بونص، وأحداث وآيتمات تخريب."}
       </p>
 
+      {cfg.mode === "board" && (
+        <>
+          <label className="lbl">أسماء الفريقين</label>
+          <div style={{ display: "flex", gap: 8 }}>
+            <input className="inp" value={cfg.teamNames[0]} maxLength={16}
+              style={{ borderColor: TEAM_COLORS[0] }}
+              onChange={(e) => setCfg({ ...cfg, teamNames: [e.target.value, cfg.teamNames[1]] })}
+              placeholder="الفريق الأول" />
+            <input className="inp" value={cfg.teamNames[1]} maxLength={16}
+              style={{ borderColor: TEAM_COLORS[1] }}
+              onChange={(e) => setCfg({ ...cfg, teamNames: [cfg.teamNames[0], e.target.value] })}
+              placeholder="الفريق الثاني" />
+          </div>
+        </>
+      )}
       <label className="lbl" style={{ display: cfg.mode === "board" ? "none" : "block" }}>عدد الأسئلة</label>
       <div className="seg" style={{ display: cfg.mode === "board" ? "none" : "flex" }}>
         {[9, 15, 20, 25].map((n) => (
@@ -2980,22 +2993,27 @@ export default function App() {
 
 
   /* ============ واجهات نمط سين جيم ============ */
-  const TeamBar = () => {
+  const TeamBar = ({ controls }) => {
     if (!view || !view.teams) return null;
     const mine = myTeam();
     return (
       <div className="teamBar">
         {view.teams.map((t, i) => (
-          <div key={i} className={"teamCard" + (view.turn === i ? " turn" : "") + (mine === i ? " mine" : "")}
-            style={{ borderColor: t.color }}>
-            <div className="teamName" style={{ color: t.color }}>
-              {t.name}{mine === i ? " (فريقك)" : ""}
-            </div>
+          <div key={i} className={"teamCard" + (view.turn === i ? " turn" : "")}
+            style={{ "--tc": t.color }}>
+            <div className="teamName">{t.name}{mine === i ? " ★" : ""}</div>
             <div className="teamScore">{t.score}</div>
-            <div className="teamMembers">{t.members.map((pid) => {
-              const p = (view.allPlayers || []).find((x) => x.pid === pid);
-              return p ? p.name : null;
-            }).filter(Boolean).join(" · ")}</div>
+            {controls && role === "host" ? (
+              <div className="scoreAdj">
+                <button onClick={() => adjustScore(i, -100)}>−</button>
+                <button onClick={() => adjustScore(i, +100)}>+</button>
+              </div>
+            ) : (
+              <div className="teamMembers">{t.members.map((pid) => {
+                const p = (view.allPlayers || []).find((x) => x.pid === pid);
+                return p ? p.name : null;
+              }).filter(Boolean).join(" · ")}</div>
+            )}
           </div>
         ))}
       </div>
@@ -3003,44 +3021,38 @@ export default function App() {
   };
 
   const PowerBar = ({ where }) => {
-    const t = myTeam();
-    if (t < 0 || !view.teams) return null;
+    if (!view.teams) return null;
+    // الهوست يشغّل وسائل الفريق صاحب الدور
+    const t = role === "host" ? (where === "board" ? view.turn : view.owner) : myTeam();
+    if (t < 0) return null;
     const mine = view.teams[t].pu || {};
     const list = POWERUPS.filter((p) => p.when === where && (mine[p.id] || 0) > 0);
-    const canUse = where === "board" ? (view.phase === "board" && view.turn === t)
-                                     : (view.phase === "bq" && view.answering === t);
+    const canUse = role === "host"
+      ? (where === "board" ? view.phase === "board" : (view.phase === "bq" && !((view.bq || {}).revealed)))
+      : (where === "board" ? (view.phase === "board" && view.turn === t)
+                           : (view.phase === "bq" && !((view.bq || {}).revealed) && myTeam() === view.owner));
     if (!list.length) return null;
     return (
-      <div className="card" style={{ marginTop: 12 }}>
-        <b style={{ fontSize: 15 }}>🎒 وسائل فريقك</b>
-        <div className="itemGrid">
-          {list.map((p) => (
-            <button key={p.id} className="itemBtn" disabled={!canUse}
-              style={{ opacity: canUse ? 1 : 0.45 }}
-              onClick={() => {
-                if (p.id === "rest") { setPendingItem({ id: "rest" }); return; }
-                sendPowerUp(p.id);
-              }}>
-              <span style={{ fontSize: 22 }}>{p.icon}</span>
-              <b>{p.name} ×{mine[p.id]}</b>
-              <span className="badge" style={{ fontSize: 11, lineHeight: 1.5 }}>{p.desc}</span>
-            </button>
-          ))}
-        </div>
+      <div className="puRow">
+        <span className="badge" style={{ width: "100%", textAlign: "center" }}>
+          🎒 وسائل {view.teams[t].name}
+        </span>
+        {list.map((p) => (
+          <button key={p.id} className="puBtn" disabled={!canUse} title={p.desc}
+            onClick={() => { if (p.id === "rest") setPendingItem({ id: "rest" }); else sendPowerUp(p.id); }}>
+            <span style={{ fontSize: 18 }}>{p.icon}</span>
+            <span>{p.name}</span>
+            <b>×{mine[p.id]}</b>
+          </button>
+        ))}
         {pendingItem && pendingItem.id === "rest" && (
-          <div style={{ marginTop: 10 }}>
-            <p className="badge">🛑 على مين؟ (من الفريق الثاني)</p>
-            <div className="chips" style={{ marginTop: 6 }}>
-              {view.teams[t === 0 ? 1 : 0].members.map((pid) => {
-                const p = view.allPlayers.find((x) => x.pid === pid);
-                return p ? (
-                  <button key={pid} className="chip" onClick={() => { sendPowerUp("rest", pid); setPendingItem(null); }}>
-                    {p.name}
-                  </button>
-                ) : null;
-              })}
-              <button className="chip" onClick={() => setPendingItem(null)}>إلغاء</button>
-            </div>
+          <div className="chips" style={{ width: "100%", marginTop: 6 }}>
+            <span className="badge">🛑 على مين؟</span>
+            {view.teams[t === 0 ? 1 : 0].members.map((pid) => {
+              const p = (view.allPlayers || []).find((x) => x.pid === pid);
+              return p ? <button key={pid} className="chip" onClick={() => { sendPowerUp("rest", pid); setPendingItem(null); }}>{p.name}</button> : null;
+            })}
+            <button className="chip" onClick={() => setPendingItem(null)}>إلغاء</button>
           </div>
         )}
       </div>
@@ -3051,31 +3063,33 @@ export default function App() {
     const t = myTeam();
     const myTurn = t === view.turn;
     return (
-      <div className="wrap">
-        <ExitBar />
-        <TeamBar />
-        <p style={{ textAlign: "center", fontWeight: 700, marginBottom: 4,
-          color: t < 0 ? "var(--dim)" : view.teams[view.turn].color }}>
-          {t < 0 ? "أنت متفرّج — انتظر الجولة الجاية"
-                 : myTurn ? "دوركم — اختاروا سؤال" : `الدور على ${view.teams[view.turn].name}`}
-        </p>
+      <div className="wrap jWrap">
+        <div className="jTop">
+          <span className="jBrand">SICK <b>JEEM</b></span>
+          <span className="jTurn" style={{ background: view.teams[view.turn].color }}>
+            دور: {view.teams[view.turn].name}
+          </span>
+          <ExitBar />
+        </div>
+        <TeamBar controls />
+        {t < 0 && <p className="badge" style={{ textAlign: "center" }}>أنت متفرّج</p>}
         <div className="jBoard">
           {view.gboard.map((c, ci) => (
             <div key={ci} className="jCol">
               <div className="jCat">{c.cat}</div>
               {c.tiles.map((x, ti) => (
                 <button key={ti} className={"jTile " + x.state}
-                  disabled={x.state !== "available" || !myTurn}
+                  disabled={x.state !== "available" || (role !== "host" && !myTurn)}
                   onClick={() => pickTile(ci, ti)}>
-                  {x.state === "available" ? x.pts : "✕"}
+                  {x.state === "available" ? x.pts : "✓"}
                 </button>
               ))}
             </div>
           ))}
         </div>
-        {(view.pitOn && view.pitOn[t]) && (
+        {(view.pitOn && t >= 0 && view.pitOn[t]) && (
           <p className="badge" style={{ textAlign: "center", color: "var(--red)", marginTop: 10 }}>
-            🕳️ فيه حفرة عليكم — لو غلطتم بالسؤال الجاي ينخصم منكم
+            🕳️ فيه حفرة عليكم هذي الجولة
           </p>
         )}
         <PowerBar where="board" />
@@ -3086,61 +3100,70 @@ export default function App() {
   const BoardQuestion = () => {
     const b = view.bq;
     if (!b) return null;
-    const t = myTeam();
-    const mineNow = t === view.answering;
     const pre = localRef.current.renderAt - Date.now();
     const elapsed = (Date.now() - localRef.current.renderAt) / 1000;
     const remain = Math.max(0, b.dur - elapsed);
     const muted = view.restPid === me.pid;
-    const answered = localRef.current.answered;
     return (
-      <div className="wrap">
-        <ExitBar />
+      <div className="wrap jWrap">
+        <div className="jTop">
+          <span className="jBrand">{b.cat}</span>
+          <span className="jTurn" style={{ background: view.teams[view.owner].color }}>
+            دور: {view.teams[view.owner].name}
+          </span>
+          <ExitBar />
+        </div>
         <TeamBar />
-        <div className="meta">
-          <span className="badge">{b.cat}</span>
-          <span className="ptsTile">{b.pts}</span>
+        <div className="qHead">
+          <span className="qPts">{b.pts}</span>
+          {!b.revealed && (
+            <span className={"qClock" + (remain <= 10 ? " hot" : "")}>
+              ⏱ {pre > 0 ? Math.ceil(b.dur) : Math.ceil(remain)}
+            </span>
+          )}
         </div>
-        <div className="evBanner" style={{ borderColor: view.teams[view.answering].color, color: view.teams[view.answering].color }}>
-          {b.steal ? "🔓 فرصة السرقة — " : "🎯 دور "}{view.teams[view.answering].name}
-          <span style={{ marginInlineStart: "auto" }}>⏱ {pre > 0 ? Math.ceil(b.dur) : Math.ceil(remain)} ث</span>
-        </div>
-        <div className="fuseTrack">
-          {pre <= 0 && <div className="fuseBar" style={{ width: Math.max(0, Math.min(100, (remain / b.dur) * 100)) + "%" }} />}
-        </div>
-        {(view.puLog || []).map((l, i) => <div key={i} className="logRow" style={{ marginTop: 8 }}>{l.icon} {l.text}</div>)}
-        {pre > 0 ? (
-          <div className="card" style={{ textAlign: "center", padding: "40px 18px" }}>
-            <div className="cdNum" key={Math.ceil(pre / 1000)}>{Math.ceil(pre / 1000)}</div>
-          </div>
-        ) : (
-          <div className="card flash">
-            {b.svg && <div className="qImg" dangerouslySetInnerHTML={{ __html: b.svg }} />}
-            {b.img && <div className="qPhoto"><img src={b.img} alt="" style={b.zoom ? {
-              transform: `scale(${b.zoom.s || 2})`,
-              transformOrigin: `${b.zoom.x != null ? b.zoom.x : 50}% ${b.zoom.y != null ? b.zoom.y : 50}%` } : undefined} /></div>}
-            <p className="qtext">{b.q}</p>
-            {muted ? (
-              <div className="hiddenQ">🛑 استريح — ما تقدر تجاوب هذا السؤال</div>
-            ) : mineNow ? (
-              <>
-                <input className="inp" value={typedText} disabled={answered || remain <= 0}
-                  onChange={(e) => setTypedText(e.target.value)}
-                  onKeyDown={(e) => { if (e.key === "Enter") sendBoardAnswer(); }}
-                  placeholder="اكتب إجابة فريقك…" />
-                <div style={{ height: 10 }} />
-                <button className="btn btn-amber" disabled={answered || remain <= 0 || !typedText.trim()}
-                  onClick={sendBoardAnswer}>أرسل ⚡</button>
-              </>
-            ) : (
-              <p className="pulse" style={{ textAlign: "center", color: "var(--dim)", fontWeight: 700 }}>
-                الدور على الفريق الثاني — انتظروا
-              </p>
-            )}
+        {!b.revealed && (
+          <div className="fuseTrack">
+            {pre <= 0 && <div className="fuseBar" style={{ width: Math.max(0, Math.min(100, (remain / b.dur) * 100)) + "%" }} />}
           </div>
         )}
-        {answered && <p className="pulse" style={{ textAlign: "center", color: "var(--teal)", marginTop: 10, fontWeight: 700 }}>وصلت إجابتكم ✓</p>}
-        {view.judging && <p className="pulse" style={{ textAlign: "center", color: "var(--amber)", marginTop: 10, fontWeight: 700 }}>نراجع…</p>}
+        {(view.puLog || []).map((l, i) => <div key={i} className="logRow" style={{ marginTop: 8 }}>{l.icon} {l.text}</div>)}
+        {muted && <div className="hiddenQ">🛑 استريح — ما تشارك بهذا السؤال</div>}
+        <div className="card jCard">
+          {b.svg && <div className="qImg" dangerouslySetInnerHTML={{ __html: b.svg }} />}
+          {b.img && <div className="qPhoto"><img src={b.img} alt="" style={b.zoom ? {
+            transform: `scale(${b.zoom.s || 2})`,
+            transformOrigin: `${b.zoom.x != null ? b.zoom.x : 50}% ${b.zoom.y != null ? b.zoom.y : 50}%` } : undefined} /></div>}
+          <p className="qtext" style={{ textAlign: "center" }}>{b.q}</p>
+          {b.revealed && (
+            <div className="ansBox">
+              <span className="ansLbl">الجواب</span>
+              {b.answer}
+              {b.alt && b.alt.length > 0 && <div className="ansAlt">يُقبل أيضًا: {b.alt.join(" · ")}</div>}
+            </div>
+          )}
+        </div>
+
+        {role === "host" ? (
+          !b.revealed ? (
+            <button className="btn btn-amber" onClick={revealAnswer}>👁️ أظهر الإجابة</button>
+          ) : (
+            <div className="judgeBox">
+              <p className="badge" style={{ textAlign: "center", marginBottom: 8 }}>مين جاوب صح؟</p>
+              <button className="btn jAward" style={{ background: view.teams[0].color }}
+                onClick={() => awardTile(0)}>{view.teams[0].name} +{b.pts}</button>
+              <div style={{ height: 8 }} />
+              <button className="btn jAward" style={{ background: view.teams[1].color }}
+                onClick={() => awardTile(1)}>{view.teams[1].name} +{b.pts}</button>
+              <div style={{ height: 8 }} />
+              <button className="btn btn-ghost" onClick={() => awardTile(null)}>محد جاوب ✕</button>
+            </div>
+          )
+        ) : (
+          <p className="pulse" style={{ textAlign: "center", color: "var(--dim)", marginTop: 12, fontWeight: 700 }}>
+            {b.revealed ? "الهوست يحدد مين جاوب…" : b.timeUp ? "انتهى الوقت" : "جاوبوا بصوت عالي 🗣️"}
+          </p>
+        )}
         <PowerBar where="question" />
       </div>
     );
