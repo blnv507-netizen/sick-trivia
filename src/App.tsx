@@ -29,7 +29,7 @@ if (typeof window !== "undefined" && !(window as any).storage) {
 
 /* ============================================================
    SICK TRIVIA — لعبة أسئلة جماعية بين الربع
-   كل سؤال: الأخير بالترتيب يختار الفئة 😈
+   كل سؤال: الكل يصوّت على الفئة 🗳️
    إجابات كتابية والذكاء الاصطناعي يحكم ⚡ وأحداث كل 3 أسئلة 🎲
    ============================================================ */
 
@@ -86,6 +86,50 @@ const CAT_INFO = {
   "تقنية": { icon: "💻", desc: "شركات ومؤسسين واختصارات وتواريخ من عالم التقنية." },
 };
 const catInfo = (c) => CAT_INFO[c] || { icon: "❓", desc: "أسئلة متنوعة من هذي الفئة." };
+
+
+/* ============================================================
+   نمط "سين جيم" — فريقان، لوحة 6 فئات، وسائل مساعدة
+   كل الإعدادات هنا بمكان واحد عشان تعدّلها بسهولة
+   ============================================================ */
+const BOARD_VALUES = [100, 200, 300, 400, 500];   // قيم الأسئلة بكل فئة
+const BOARD_CATS_N = 6;                            // عدد الفئات باللوحة
+const TEAM_SEC = 60;                               // وقت الفريق صاحب الدور
+const STEAL_SEC = 10;                              // وقت الفريق الثاني (السرقة)
+const TEAM_COLORS = ["#D9494F", "#2E7FC4"];        // هوية كل فريق
+
+// وسائل المساعدة — غيّر العدد أو الوصف من هنا
+const POWERUPS = [
+  { id: "call",   icon: "📞", name: "اتصال بصديق", uses: 1, when: "question",
+    desc: "يزيد وقتكم 30 ثانية ويظهر للجميع إنكم تستخدمونها" },
+  { id: "double", icon: "✌️", name: "جاوب جوابين", uses: 1, when: "question",
+    desc: "تقدرون ترسلون إجابتين ويكفي إن وحدة تكون صح" },
+  { id: "pit",    icon: "🕳️", name: "الحفرة",      uses: 1, when: "board",
+    desc: "لو الفريق الثاني غلط بسؤاله الجاي، ينخصم منه نص قيمة السؤال" },
+  { id: "rest",   icon: "🛑", name: "استريح",      uses: 1, when: "board",
+    desc: "توقف لاعبًا من الفريق الثاني عن المشاركة بالسؤال الجاي" },
+  { id: "trap",   icon: "🪤", name: "الفخ",        uses: 1, when: "question",
+    desc: "تحوّل السؤال للفريق الثاني — ولو غلط ينخصم منه" },
+];
+const puById = (id) => POWERUPS.find((p) => p.id === id);
+const freshPowerUps = () => {
+  const o = {};
+  POWERUPS.forEach((p) => { o[p.id] = p.uses; });
+  return o;
+};
+
+// بناء اللوحة: 6 فئات × 5 قيم = 30 سؤال
+function buildBoard(cats, pickQ) {
+  return cats.map((cat) => ({
+    cat,
+    tiles: BOARD_VALUES.map((pts) => {
+      const q = pickQ(cat, pts);
+      return { pts, state: q ? "available" : "locked", q };
+    }),
+  }));
+}
+// القيمة الأعلى = سؤال أصعب
+const ptsToDiff = (pts) => (pts <= 100 ? 1 : pts <= 300 ? 2 : 3);
 
 /* ---------- الأحداث ---------- */
 const EVENTS = [
@@ -1384,7 +1428,7 @@ export default function App() {
   const [, forceN] = useState(0);
   const rerender = () => forceN((x) => x + 1);
 
-  const [cfg, setCfg] = useState({ count: 25, src: { bank: true, mine: false }, picked: [] });
+  const [cfg, setCfg] = useState({ count: 25, src: { bank: true, mine: false }, picked: [], mode: "classic" });
 
   const localRef = useRef({ qIndex: -1, renderAt: 0, answered: false, text: "" });
   const [typedText, setTypedText] = useState("");
@@ -1491,6 +1535,41 @@ export default function App() {
   }
 
 
+  /* ---------- نمط سين جيم: بناء اللوحة ---------- */
+  function makeBoard(h) {
+    const picked = (h.picked && h.picked.length >= BOARD_CATS_N)
+      ? shuffle(h.picked).slice(0, BOARD_CATS_N)
+      : shuffle([...shuffle(INVENTIVE).slice(0, 4), ...shuffle(CLASSIC).slice(0, 2)]).slice(0, BOARD_CATS_N);
+    const taken = new Set();
+    const pickQ = (cat, pts) => {
+      const want = ptsToDiff(pts);
+      let pool = BANK.filter((b) => b.cat === cat && !taken.has(qKey(b)) && !h.seenAll.has(qKey(b)));
+      if (!pool.length) pool = BANK.filter((b) => b.cat === cat && !taken.has(qKey(b)));
+      if (!pool.length) return null;
+      let cand = noDiff(cat) ? pool : pool.filter((b) => b.d === want);
+      if (!cand.length) cand = pool;
+      const q = cand[Math.floor(Math.random() * cand.length)];
+      taken.add(qKey(q));
+      h.seenAll.add(qKey(q));
+      return { ...q, type: "typed" };
+    };
+    jset("fz:seenQ", [...h.seenAll].slice(-1200), false);
+    return buildBoard(picked, pickQ);
+  }
+
+  function teamOf(h, pid) {
+    if (h.teams[0].members.includes(pid)) return 0;
+    if (h.teams[1].members.includes(pid)) return 1;
+    return -1;
+  }
+
+  // توزيع اللاعبين على فريقين بالتناوب
+  function autoTeams(h) {
+    const pids = Object.keys(h.players);
+    h.teams[0].members = []; h.teams[1].members = [];
+    pids.forEach((pid, i) => h.teams[i % 2].members.push(pid));
+  }
+
   /* ---------- الآيتمات ---------- */
   function applyItemUse(userPid, itemId, targetPid) {
     const h = hostRef.current;
@@ -1570,7 +1649,6 @@ export default function App() {
       stageStart: h.stageStart || 0, catStart: h.catStart || 0, autoNext: h.autoNext !== false, qStartAt: h.qStart || 0,
       cm: h.phase === "catpick" ? {
         mode: h.catMode, options: h.catOptions,
-        pickerPid: h.pickerPid, pickerName: h.pickerPid && h.players[h.pickerPid] ? h.players[h.pickerPid].name : "",
         voters: (() => {
           const v = {};
           Object.entries(h.votes || {}).forEach(([pid, cat]) => {
@@ -1582,6 +1660,19 @@ export default function App() {
         voted: Object.keys(h.votes || {}).length,
         totalPlayers: Object.keys(h.players).length,
       } : null,
+      mode: h.mode || "classic",
+      allPlayers: Object.entries(h.players).map(([pid, p]) => ({ pid, name: p.name })),
+      teams: h.teams ? h.teams.map((t) => ({ name: t.name, color: t.color, score: t.score, members: t.members, pu: t.pu })) : null,
+      board: h.board ? h.board.map((c) => ({ cat: c.cat, tiles: c.tiles.map((x) => ({ pts: x.pts, state: x.state })) })) : null,
+      turn: h.turn, owner: h.owner, answering: h.answering,
+      tile: h.tile ? { ci: h.tile.ci, ti: h.tile.ti, pts: h.tile.pts, cat: h.tile.cat } : null,
+      bq: h.phase === "bq" && h.tile ? {
+        q: h.tile.q.q, svg: h.tile.q.svg || null, img: h.tile.q.img || null, zoom: h.tile.q.zoom || null,
+        cat: h.tile.cat, pts: h.tile.pts, dur: h.qDur, steal: h.stealDone,
+      } : null,
+      puActive: h.puActive || {}, puLog: (h.puLog || []).slice(-4), restPid: h.restPid || null,
+      pitOn: h.pitOn || [false, false],
+      answeredTeam: Object.keys(h.pending || {}),
       updatedAt: Date.now(),
       q: h.phase === "question" && q ? { q: q.q, svg: q.svg || null, img: q.img || null, zoom: q.zoom || null, nodiff: !!q.nodiff, pts: q.pts, d: q.d, cat: q.cat, dur: durFor(h) } : null,
     };
@@ -1597,7 +1688,7 @@ export default function App() {
       const h = hostRef.current;
       if (!h || busy) return;
       if (h.phase === "cancelled") return;
-      if (!["lobby", "question", "catpick", "event", "reveal", "intro"].includes(h.phase)) return;
+      if (!["lobby", "question", "catpick", "event", "reveal", "intro", "board", "bq", "breveal", "bend"].includes(h.phase)) return;
       busy = true;
       try {
         // ترشيد الطلبات: مسح شامل نادر، وبعده نقرأ الخانات المشغولة فقط
@@ -1622,6 +1713,27 @@ export default function App() {
           if (a.vote && a.vote.q === h.qIndex && a.vote.cat) {
             h.votes[a.pid] = a.vote.cat;
           }
+          // --- نمط سين جيم ---
+          if (h.mode === "board") {
+            if (a.pick && h.phase === "board" && teamOf(h, a.pid) === h.turn) {
+              const tag = "pk:" + a.pid + ":" + a.pick.n;
+              if (!h.doneUses[tag]) { h.doneUses[tag] = 1; await selectTile(a.pick.ci, a.pick.ti); busy = false; return; }
+            }
+            if (a.bans && h.phase === "bq" && a.bans.tile === (h.tile ? h.tile.ci + ":" + h.tile.ti : "") ) {
+              const tm = teamOf(h, a.pid);
+              if (tm === h.answering && a.pid !== h.restPid && !(a.pid in h.pending)) {
+                h.pending[a.pid] = { text: a.bans.text, ms: a.bans.ms || 0 };
+              }
+            }
+            if (a.pu) {
+              const tag = "pu:" + a.pid + ":" + a.pu.n;
+              if (!h.doneUses[tag]) {
+                h.doneUses[tag] = 1;
+                const tm = teamOf(h, a.pid);
+                if (tm >= 0) { await applyPowerUp(tm, a.pu.id, a.pu.target); busy = false; return; }
+              }
+            }
+          }
           if (a.use && a.use.q === h.qIndex) {
             const tag = a.pid + ":" + a.use.n;
             if (!h.doneUses) h.doneUses = {};
@@ -1630,6 +1742,18 @@ export default function App() {
               applyItemUse(a.pid, a.use.item, a.use.target);
             }
           }
+        }
+        // --- مؤقتات نمط سين جيم ---
+        if (h.phase === "bq") {
+          const dbl = h.puActive["double"] === h.answering;
+          const need = dbl ? 2 : 1;
+          const got = Object.keys(h.pending).filter((pid) => teamOf(h, pid) === h.answering).length;
+          const timeUp = Date.now() > h.qStart + h.qDur * 1000 + 1200;
+          if (timeUp) { await resolveAttempt(true); busy = false; return; }
+          if (got >= need && Date.now() > h.qStart + 1500) { await resolveAttempt(false); busy = false; return; }
+        }
+        if (h.phase === "breveal" && h.autoNext !== false && Date.now() - (h.stageStart || 0) > REVEAL_SEC * 1000) {
+          await nextTurn(); busy = false; return;
         }
         if (h.phase === "question") {
           // كل من له خانة يُعتبر لاعبًا حاضرًا (ولو تأخر نبضه)
@@ -1655,18 +1779,10 @@ export default function App() {
         }
         if (h.phase === "catpick") {
           const elapsed = Date.now() - h.catStart;
-          if (h.catMode === "vote") {
-            const pids = Object.keys(h.players);
-            const allVoted = pids.length > 0 && pids.every((pid) => h.votes[pid]);
-            if (allVoted || elapsed > VOTE_SEC * 1000) {
-              await resolveCat(tallyVotes(h)); busy = false; return;
-            }
-          } else {
-            const pv = h.votes[h.pickerPid];
-            if (pv) { await resolveCat(pv); busy = false; return; }
-            if (elapsed > PICK_SEC * 1000) {
-              await resolveCat(h.catOptions[rnd(0, h.catOptions.length - 1)]); busy = false; return;
-            }
+          const pids = Object.keys(h.players);
+          const allVoted = pids.length > 0 && pids.every((pid) => h.votes[pid]);
+          if (allVoted || elapsed > VOTE_SEC * 1000) {
+            await resolveCat(tallyVotes(h)); busy = false; return;
           }
         }
         await broadcast();
@@ -1735,6 +1851,166 @@ export default function App() {
       h.currentEvent = null;
       await beginQuestion(h.qIndex);
     }
+  }
+
+
+  /* ============ نمط سين جيم: دورة اللعب ============ */
+  async function startBoardGame() {
+    const h = hostRef.current;
+    if (!h) return;
+    autoTeams(h);
+    h.teams.forEach((t) => { t.score = 0; t.pu = freshPowerUps(); });
+    h.board = makeBoard(h);
+    h.turn = 0;
+    h.tile = null;
+    h.pending = {};       // إجابات الجولة الحالية
+    h.puActive = {};      // مفعّلة بهذي الجولة
+    h.pitOn = [false, false];
+    h.restPid = null;
+    h.bphase = "board";
+    h.phase = "board";
+    await broadcast();
+    rerender();
+  }
+
+  // الفريق صاحب الدور يختار خانة
+  async function selectTile(ci, ti) {
+    const h = hostRef.current;
+    if (!h || h.phase !== "board") return;
+    const cell = h.board[ci] && h.board[ci].tiles[ti];
+    if (!cell || cell.state !== "available") return;
+    cell.state = "active";
+    h.tile = { ci, ti, pts: cell.pts, cat: h.board[ci].cat, q: cell.q };
+    h.owner = h.turn;              // الفريق صاحب السؤال
+    h.answering = h.turn;          // الفريق اللي يجاوب حاليًا
+    h.pending = {};
+    h.puActive = {};
+    h.qStart = Date.now() + 3000;  // عد تنازلي قصير
+    h.qDur = TEAM_SEC;
+    h.stealDone = false;
+    h.phase = "bq";
+    await broadcast();
+    rerender();
+  }
+
+  // حساب نتيجة محاولة الفريق الحالي
+  async function resolveAttempt(timedOut) {
+    const h = hostRef.current;
+    if (!h || h.phase !== "bq") return;
+    const t = h.tile;
+    const team = h.answering;
+    const dbl = h.puActive["double"] === team;
+    const tries = Object.entries(h.pending)
+      .filter(([pid]) => teamOf(h, pid) === team)
+      .map(([, v]) => v.text)
+      .slice(0, dbl ? 2 : 1);
+
+    h.judging = true; await broadcast();
+    let ok = false;
+    if (tries.length) {
+      const entries = tries.map((text, i) => ({ pid: "t" + i, text }));
+      const map = await judgeTyped(t.q.q, t.q.a, entries, true, t.q.alt);
+      ok = Object.values(map).some(Boolean);
+    }
+    h.judging = false;
+
+    const other = team === 0 ? 1 : 0;
+    let log = [];
+    if (ok) {
+      h.teams[team].score += t.pts;
+      log.push({ team, text: `${h.teams[team].name} جاوب صح +${t.pts}` });
+      // الحفرة: لو كان الفريق الثاني حاطط حفرة، ما تنطبق لأنه جاوب صح
+      h.pitOn[team] = false;
+      await endTile(log, team);
+      return;
+    }
+    // غلط أو انتهى الوقت
+    log.push({ team, text: `${h.teams[team].name} ${timedOut ? "انتهى وقته" : "جاوب غلط"}` });
+    // الحفرة مفعّلة ضد هذا الفريق؟
+    if (h.pitOn[team]) {
+      const cut = Math.round(t.pts / 2);
+      h.teams[team].score -= cut;
+      log.push({ team, text: `🕳️ الحفرة! انخصم ${cut} من ${h.teams[team].name}` });
+      h.pitOn[team] = false;
+    }
+    if (!h.stealDone && team === h.owner) {
+      // ينتقل للفريق الثاني بوقت السرقة
+      h.stealDone = true;
+      h.answering = other;
+      h.pending = {};
+      h.qStart = Date.now() + 1500;
+      h.qDur = STEAL_SEC;
+      h.stealLog = log;
+      await broadcast(); rerender();
+      return;
+    }
+    await endTile(log, null);
+  }
+
+  async function endTile(log, winner) {
+    const h = hostRef.current;
+    const t = h.tile;
+    h.board[t.ci].tiles[t.ti].state = "locked";
+    h.reveal = {
+      cat: t.cat, pts: t.pts, qText: t.q.q, qSvg: t.q.svg || null, qImg: t.q.img || null,
+      correctText: t.q.a, log: [...(h.stealLog || []), ...log], winner,
+    };
+    h.stealLog = null;
+    h.restPid = null;
+    h.stageStart = Date.now();
+    h.phase = "breveal";
+    await broadcast(); rerender();
+  }
+
+  async function nextTurn() {
+    const h = hostRef.current;
+    if (!h) return;
+    h.reveal = null;
+    h.tile = null;
+    const left = h.board.some((c) => c.tiles.some((x) => x.state === "available"));
+    if (!left) { h.phase = "bend"; await broadcast(); rerender(); return; }
+    h.turn = h.turn === 0 ? 1 : 0;
+    h.phase = "board";
+    await broadcast(); rerender();
+  }
+
+  // استخدام وسيلة مساعدة
+  async function usePowerUp(id, targetPid) {
+    const h = hostRef.current;
+    if (!h) return;
+    const team = role === "host" ? teamOf(h, me.pid) : -1;
+    if (team < 0) return;
+    await applyPowerUp(team, id, targetPid);
+  }
+
+  async function applyPowerUp(team, id, targetPid) {
+    const h = hostRef.current;
+    const pu = puById(id);
+    if (!h || !pu || (h.teams[team].pu[id] || 0) <= 0) return false;
+    const other = team === 0 ? 1 : 0;
+    if (pu.when === "board" && h.phase !== "board") return false;
+    if (pu.when === "question" && h.phase !== "bq") return false;
+    if (pu.when === "question" && h.answering !== team) return false;
+
+    h.teams[team].pu[id] -= 1;
+    if (id === "call") { h.qDur += 30; h.puActive["call"] = team; }
+    if (id === "double") { h.puActive["double"] = team; }
+    if (id === "pit") { h.pitOn[other] = true; }
+    if (id === "rest") { h.restPid = targetPid || null; }
+    if (id === "trap") {
+      // نحوّل السؤال للفريق الثاني
+      h.puActive["trap"] = team;
+      h.owner = other;
+      h.answering = other;
+      h.pending = {};
+      h.qStart = Date.now() + 1500;
+      h.qDur = TEAM_SEC;
+      h.stealDone = false;
+      h.pitOn[other] = true; // لو غلط ينخصم منه
+    }
+    h.puLog = (h.puLog || []).concat([{ icon: pu.icon, text: `${h.teams[team].name} استخدم ${pu.name}` }]);
+    await broadcast(); rerender();
+    return true;
   }
 
   /* ---------- الهوست: إغلاق السؤال والتحكيم ---------- */
@@ -1860,13 +2136,8 @@ export default function App() {
       return;
     }
     h.qIndex = idx;
-    h.catMode = idx === 0 ? "vote" : "pick";
-    if (idx > 0) {
-      const sorted = Object.entries(h.players).sort((a, b) => a[1].score - b[1].score);
-      h.pickerPid = sorted.length ? sorted[0][0] : null; // الأقل نقاط
-    } else {
-      h.pickerPid = null;
-    }
+    h.catMode = "vote"; // التصويت دايم — الأعلى أصواتًا يفوز والتعادل عشوائي
+    h.pickerPid = null;
     h.catOptions = sampleCats(h.picked);
     h.votes = {};
     h.catStart = Date.now();
@@ -1881,6 +2152,7 @@ export default function App() {
   async function startGame() {
     const h = hostRef.current;
     if (!h) return;
+    if (h.mode === "board") { await startBoardGame(); return; }
     Object.values(h.players).forEach((p) => { p.score = 0; });
     h.eventPool = null;
     h.used = new Set();
@@ -1942,11 +2214,7 @@ export default function App() {
     if (role === "host") {
       const h = hostRef.current;
       if (!h || h.phase !== "catpick") return;
-      if (h.catMode === "pick") {
-        if (h.pickerPid === me.pid) await resolveCat(cat);
-      } else {
-        h.votes[me.pid] = cat;
-      }
+      h.votes[me.pid] = cat;
     } else {
       await pushSlot({ vote: { q: view.qIndex, cat } }, true);
     }
@@ -1972,6 +2240,13 @@ export default function App() {
       items: { [me.pid]: [] }, fx: {}, itemLog: [], seen: {}, doneUses: {}, picked: cfg.picked || [], stageStart: 0, autoNext: cfg.autoNext !== false,
       catMode: "vote", pickerPid: null, catOptions: [], catStart: 0, chosenCat: null, rolled: 0, catCount: {},
       seenAll: new Set(Array.isArray(prevSeen) ? prevSeen : []),
+      mode: cfg.mode || "classic",
+      teams: [
+        { name: "الفريق الأول", color: TEAM_COLORS[0], score: 0, members: [], pu: freshPowerUps() },
+        { name: "الفريق الثاني", color: TEAM_COLORS[1], score: 0, members: [], pu: freshPowerUps() },
+      ],
+      board: null, turn: 0, tile: null, owner: 0, answering: 0, pending: {},
+      puActive: {}, pitOn: [false, false], restPid: null, stealDone: false, puLog: [],
     };
     setCode(c);
     setRole("host");
@@ -2097,6 +2372,14 @@ export default function App() {
       localRef.current = { qIndex: view.qIndex, renderAt: startLocal, answered: false, text: "" };
       setTypedText("");
     }
+    if (view.phase === "bq" && view.tile) {
+      const key = view.tile.ci + ":" + view.tile.ti + ":" + view.answering;
+      if (localRef.current.bkey !== key) {
+        const off = view.qStartAt ? view.qStartAt + (role === "host" ? 0 : offsetRef.current) : Date.now();
+        localRef.current = { bkey: key, qIndex: -1, renderAt: Math.max(off, Date.now()), answered: false, text: "" };
+        setTypedText("");
+      }
+    }
     if (view.phase === "catpick" && lastCatQRef.current !== view.qIndex) {
       lastCatQRef.current = view.qIndex;
       setMyVote(null);
@@ -2119,6 +2402,50 @@ export default function App() {
       const sent = await pushSlot({ ans: { q: view.qIndex, text: typedText.trim(), ms } }, true);
       if (!sent) { reopen(); setToast("تعذّر إرسال إجابتك — اضغط أرسل مرة ثانية"); }
     }
+  }
+
+  /* ---------- نمط سين جيم: أفعال اللاعب ---------- */
+  const myTeam = () => {
+    if (!view || !view.teams) return -1;
+    if (view.teams[0].members.includes(me.pid)) return 0;
+    if (view.teams[1].members.includes(me.pid)) return 1;
+    return -1;
+  };
+
+  async function pickTile(ci, ti) {
+    if (!view || view.phase !== "board" || myTeam() !== view.turn) return;
+    if (role === "host") { await selectTile(ci, ti); return; }
+    useCounterRef.current += 1;
+    await pushSlot({ pick: { ci, ti, n: useCounterRef.current } }, true);
+  }
+
+  async function sendBoardAnswer() {
+    if (!view || view.phase !== "bq" || !typedText.trim()) return;
+    if (myTeam() !== view.answering) return;
+    if (view.restPid === me.pid) return;
+    if (Date.now() < localRef.current.renderAt) return;
+    const ms = Date.now() - localRef.current.renderAt;
+    const tile = view.tile ? view.tile.ci + ":" + view.tile.ti : "";
+    localRef.current.answered = true;
+    rerender();
+    if (role === "host") {
+      const h = hostRef.current;
+      if (h && h.phase === "bq" && !(me.pid in h.pending)) h.pending[me.pid] = { text: typedText.trim(), ms };
+      setTypedText("");
+    } else {
+      const sent = await pushSlot({ bans: { tile, text: typedText.trim(), ms } }, true);
+      if (!sent) { localRef.current.answered = false; rerender(); setToast("ما وصلت — جرّب مرة ثانية"); }
+      else setTypedText("");
+    }
+  }
+
+  async function sendPowerUp(id, target) {
+    const t = myTeam();
+    if (t < 0) return;
+    if (role === "host") { await applyPowerUp(t, id, target); return; }
+    useCounterRef.current += 1;
+    await pushSlot({ pu: { id, target, n: useCounterRef.current } }, true);
+    setToast("أرسلنا الوسيلة ⚡");
   }
 
   /* ---------- محرر أسئلتي ---------- */
@@ -2252,6 +2579,36 @@ export default function App() {
     .qPhoto img{width:100%; display:block; aspect-ratio:16/10; object-fit:cover; transition:transform .3s ease;}
     .catPick{display:flex; flex-wrap:wrap; gap:8px; max-height:230px; overflow-y:auto;
       background:var(--sur); border:1px solid var(--line); border-radius:14px; padding:12px;}
+    .scoreBar{display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 12px; justify-content:center;}
+    .scoreChip{display:flex; align-items:center; gap:6px; background:var(--sur2); border:1.5px solid var(--line);
+      border-radius:999px; padding:5px 12px; font-size:13px; transition:border-color .2s ease;}
+    .scoreChip.me{border-color:var(--amber);}
+    .scoreChip.done{border-color:var(--teal);}
+    .scoreRank{color:var(--dim); font-size:11px; min-width:14px; text-align:center;}
+    .scoreName{font-weight:500; max-width:80px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+    .scoreVal{font-family:'Lalezar',cursive; color:var(--amber); font-size:16px;}
+    .scoreTick{color:var(--teal); font-size:12px;}
+    .teamBar{display:flex; gap:10px; margin:10px 0 14px;}
+    .teamCard{flex:1; background:var(--sur); border:1.5px solid var(--line); border-radius:14px;
+      padding:10px; text-align:center; transition:box-shadow .2s ease, transform .2s ease;}
+    .teamCard.turn{box-shadow:0 0 0 2px currentColor inset; transform:translateY(-2px);}
+    .teamCard.mine .teamName::after{content:" ★";}
+    .teamName{font-weight:700; font-size:14px;}
+    .teamScore{font-family:'Lalezar',cursive; font-size:30px; color:var(--sand); line-height:1.1;}
+    .teamMembers{font-size:11px; color:var(--dim); margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+    .jBoard{display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; margin-top:12px;}
+    .jCol{display:flex; flex-direction:column; gap:5px;}
+    .jCat{background:var(--sur2); border:1px solid var(--line); border-radius:10px; padding:8px 4px;
+      font-size:11px; font-weight:700; text-align:center; min-height:42px; display:flex;
+      align-items:center; justify-content:center; line-height:1.3;}
+    .jTile{border:1.5px solid var(--line); background:var(--sur); color:var(--amber);
+      border-radius:10px; padding:11px 4px; font-family:'Lalezar',cursive; font-size:19px;
+      cursor:pointer; transition:transform .12s ease, background .15s ease;}
+    .jTile:not(:disabled):hover{background:var(--amber); color:var(--bg); border-color:var(--amber);}
+    .jTile:active:not(:disabled){transform:scale(.93);}
+    .jTile.locked{background:transparent; color:var(--line); border-style:dashed; cursor:default;}
+    .jTile:disabled{cursor:default; opacity:.75;}
+    @media (max-width:420px){ .jBoard{gap:5px;} .jCat{font-size:10px;} .jTile{font-size:16px; padding:9px 2px;} }
     .cdNum{font-family:'Lalezar',cursive; font-size:96px; line-height:1; color:var(--amber);
       animation:cdPop .5s cubic-bezier(.2,1.5,.4,1);}
     @keyframes cdPop{0%{transform:scale(.4); opacity:0;}60%{transform:scale(1.15);}100%{transform:scale(1); opacity:1;}}
@@ -2308,7 +2665,7 @@ export default function App() {
       <div style={{ height: 10 }} />
       <button className="btn btn-ghost" onClick={() => setScreen("editor")}>أسئلتي ({myq.length})</button>
       <p style={{ color: "var(--dim)", fontSize: 13, textAlign: "center", marginTop: 24, lineHeight: 1.8 }}>
-        أول سؤال بالتصويت، وبعدها الأخير بالترتيب يختار الفئة 😈
+        كل جولة تصوّتون على الفئة — الأعلى أصواتًا يفوز 🗳️
         <br />وكل 3 أسئلة حدث يقلب اللعبة 🎲
         <br />الفائز بسؤال الحدث ياخذ آيتم تخريب 🎒
       </p>
@@ -2323,8 +2680,21 @@ export default function App() {
       <label className="lbl">اسمك</label>
       <input className="inp" value={me.name} onChange={(e) => setMe({ ...me, name: e.target.value })} placeholder="مثلاً: حسين" />
 
-      <label className="lbl">عدد الأسئلة</label>
+      <label className="lbl">نمط اللعب</label>
       <div className="seg">
+        <button className={"chip" + (cfg.mode !== "board" ? " on" : "")}
+          onClick={() => setCfg({ ...cfg, mode: "classic" })}>⚡ سريع (فردي)</button>
+        <button className={"chip" + (cfg.mode === "board" ? " on" : "")}
+          onClick={() => setCfg({ ...cfg, mode: "board" })}>🎯 سين جيم (فريقين)</button>
+      </div>
+      <p style={{ color: "var(--dim)", fontSize: 12, marginTop: 6, lineHeight: 1.7 }}>
+        {cfg.mode === "board"
+          ? "فريقان، لوحة 6 فئات × 5 قيم، دور بالتناوب، وسرقة لو غلط الفريق صاحب الدور."
+          : "كل واحد لحاله — الأسرع الصح ياخذ بونص، وأحداث وآيتمات تخريب."}
+      </p>
+
+      <label className="lbl" style={{ display: cfg.mode === "board" ? "none" : "block" }}>عدد الأسئلة</label>
+      <div className="seg" style={{ display: cfg.mode === "board" ? "none" : "flex" }}>
         {[9, 15, 20, 25].map((n) => (
           <button key={n} className={"chip" + (cfg.count === n ? " on" : "")} onClick={() => setCfg({ ...cfg, count: n })}>{n}</button>
         ))}
@@ -2371,7 +2741,7 @@ export default function App() {
         </button>
       </div>
       <p style={{ color: "var(--dim)", fontSize: 13, marginTop: 12, lineHeight: 1.8 }}>
-        اختر الفئات اللي تبونها فوق — وبكل جولة، الأخير بالترتيب يختار وحدة منها 😈
+        اختر الفئات اللي تبونها فوق — وبكل جولة تصوّتون على وحدة منها 🗳️
         <br />التصحيح يتسامح مع الأخطاء الإملائية ويقبل العربي والإنجليزي.
       </p>
 
@@ -2463,9 +2833,16 @@ export default function App() {
           ))}
         </div>
       </div>
+      {view.mode === "board" && (
+        <p className="badge" style={{ textAlign: "center", marginTop: 10, lineHeight: 1.8 }}>
+          🎯 نمط سين جيم — بينقسمون على فريقين تلقائيًا بالتناوب عند البدء
+        </p>
+      )}
       {role === "host" ? (
         <div style={{ marginTop: 16 }}>
-          <button className="btn btn-red" onClick={startGame}>ابدأ اللعب ({view.total} سؤال)</button>
+          <button className="btn btn-red" onClick={startGame}>
+            {view.mode === "board" ? "ابدأ المباراة (30 سؤال)" : `ابدأ اللعب (${view.total} سؤال)`}
+          </button>
         </div>
       ) : (
         <p style={{ textAlign: "center", color: "var(--dim)", marginTop: 16 }} className="pulse">ننتظر الهوست يبدأ…</p>
@@ -2490,6 +2867,30 @@ export default function App() {
       )}
     </div>
   );
+
+  // لوحة النتائج — ظاهرة دائمًا أثناء اللعب
+  const ScoreBar = () => {
+    if (!view || !view.board || !view.board.length) return null;
+    const answered = view.answeredPids || [];
+    const inQ = view.phase === "question" || view.phase === "closing";
+    const voters = view.cm && view.cm.voters ? Object.values(view.cm.voters).flat() : [];
+    return (
+      <div className="scoreBar">
+        {view.board.map((p, i) => {
+          const done = inQ ? answered.includes(p.pid)
+            : view.phase === "catpick" ? voters.includes(p.name) : false;
+          return (
+            <div key={p.pid} className={"scoreChip" + (p.pid === me.pid ? " me" : "") + (done ? " done" : "")}>
+              <span className="scoreRank">{i === 0 ? "👑" : i + 1}</span>
+              <span className="scoreName">{p.name}</span>
+              <span className="scoreVal">{p.score}</span>
+              {done && <span className="scoreTick">✓</span>}
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
 
   const ItemBar = () => {
     if (!view || !view.canUseItems) return null;
@@ -2548,25 +2949,253 @@ export default function App() {
     );
   };
 
-  const CatPick = () => {
-    const cm = view.cm;
-    if (!cm) return null;
-    const isVote = cm.mode === "vote";
-    const iAmPicker = !isVote && cm.pickerPid === me.pid;
-    const canChoose = isVote || iAmPicker;
+
+  /* ============ واجهات نمط سين جيم ============ */
+  const TeamBar = () => {
+    if (!view || !view.teams) return null;
+    const mine = myTeam();
+    return (
+      <div className="teamBar">
+        {view.teams.map((t, i) => (
+          <div key={i} className={"teamCard" + (view.turn === i ? " turn" : "") + (mine === i ? " mine" : "")}
+            style={{ borderColor: t.color }}>
+            <div className="teamName" style={{ color: t.color }}>
+              {t.name}{mine === i ? " (فريقك)" : ""}
+            </div>
+            <div className="teamScore">{t.score}</div>
+            <div className="teamMembers">{t.members.map((pid) => {
+              const p = view.board2 ? null : (view.allPlayers || []).find((x) => x.pid === pid);
+              return p ? p.name : null;
+            }).filter(Boolean).join(" · ")}</div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const PowerBar = ({ where }) => {
+    const t = myTeam();
+    if (t < 0 || !view.teams) return null;
+    const mine = view.teams[t].pu || {};
+    const list = POWERUPS.filter((p) => p.when === where && (mine[p.id] || 0) > 0);
+    const canUse = where === "board" ? (view.phase === "board" && view.turn === t)
+                                     : (view.phase === "bq" && view.answering === t);
+    if (!list.length) return null;
+    return (
+      <div className="card" style={{ marginTop: 12 }}>
+        <b style={{ fontSize: 15 }}>🎒 وسائل فريقك</b>
+        <div className="itemGrid">
+          {list.map((p) => (
+            <button key={p.id} className="itemBtn" disabled={!canUse}
+              style={{ opacity: canUse ? 1 : 0.45 }}
+              onClick={() => {
+                if (p.id === "rest") { setPendingItem({ id: "rest" }); return; }
+                sendPowerUp(p.id);
+              }}>
+              <span style={{ fontSize: 22 }}>{p.icon}</span>
+              <b>{p.name} ×{mine[p.id]}</b>
+              <span className="badge" style={{ fontSize: 11, lineHeight: 1.5 }}>{p.desc}</span>
+            </button>
+          ))}
+        </div>
+        {pendingItem && pendingItem.id === "rest" && (
+          <div style={{ marginTop: 10 }}>
+            <p className="badge">🛑 على مين؟ (من الفريق الثاني)</p>
+            <div className="chips" style={{ marginTop: 6 }}>
+              {view.board.length && view.teams[t === 0 ? 1 : 0].members.map((pid) => {
+                const p = view.allPlayers.find((x) => x.pid === pid);
+                return p ? (
+                  <button key={pid} className="chip" onClick={() => { sendPowerUp("rest", pid); setPendingItem(null); }}>
+                    {p.name}
+                  </button>
+                ) : null;
+              })}
+              <button className="chip" onClick={() => setPendingItem(null)}>إلغاء</button>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  const BoardScreen = () => {
+    const t = myTeam();
+    const myTurn = t === view.turn;
     return (
       <div className="wrap">
         <ExitBar />
+        <TeamBar />
+        <p style={{ textAlign: "center", fontWeight: 700, marginBottom: 4,
+          color: view.teams[view.turn].color }}>
+          {myTurn ? "دوركم — اختاروا سؤال" : `الدور على ${view.teams[view.turn].name}`}
+        </p>
+        <div className="jBoard">
+          {view.board.map((c, ci) => (
+            <div key={ci} className="jCol">
+              <div className="jCat">{c.cat}</div>
+              {c.tiles.map((x, ti) => (
+                <button key={ti} className={"jTile " + x.state}
+                  disabled={x.state !== "available" || !myTurn}
+                  onClick={() => pickTile(ci, ti)}>
+                  {x.state === "available" ? x.pts : "✕"}
+                </button>
+              ))}
+            </div>
+          ))}
+        </div>
+        {(view.pitOn && view.pitOn[t]) && (
+          <p className="badge" style={{ textAlign: "center", color: "var(--red)", marginTop: 10 }}>
+            🕳️ فيه حفرة عليكم — لو غلطتم بالسؤال الجاي ينخصم منكم
+          </p>
+        )}
+        <PowerBar where="board" />
+      </div>
+    );
+  };
+
+  const BoardQuestion = () => {
+    const b = view.bq;
+    if (!b) return null;
+    const t = myTeam();
+    const mineNow = t === view.answering;
+    const pre = localRef.current.renderAt - Date.now();
+    const elapsed = (Date.now() - localRef.current.renderAt) / 1000;
+    const remain = Math.max(0, b.dur - elapsed);
+    const muted = view.restPid === me.pid;
+    const answered = localRef.current.answered;
+    return (
+      <div className="wrap">
+        <ExitBar />
+        <TeamBar />
+        <div className="meta">
+          <span className="badge">{b.cat}</span>
+          <span className="ptsTile">{b.pts}</span>
+        </div>
+        <div className="evBanner" style={{ borderColor: view.teams[view.answering].color, color: view.teams[view.answering].color }}>
+          {b.steal ? "🔓 فرصة السرقة — " : "🎯 دور "}{view.teams[view.answering].name}
+          <span style={{ marginInlineStart: "auto" }}>⏱ {pre > 0 ? Math.ceil(b.dur) : Math.ceil(remain)} ث</span>
+        </div>
+        <div className="fuseTrack">
+          {pre <= 0 && <div className="fuseBar" style={{ width: Math.max(0, Math.min(100, (remain / b.dur) * 100)) + "%" }} />}
+        </div>
+        {(view.puLog || []).map((l, i) => <div key={i} className="logRow" style={{ marginTop: 8 }}>{l.icon} {l.text}</div>)}
+        {pre > 0 ? (
+          <div className="card" style={{ textAlign: "center", padding: "40px 18px" }}>
+            <div className="cdNum" key={Math.ceil(pre / 1000)}>{Math.ceil(pre / 1000)}</div>
+          </div>
+        ) : (
+          <div className="card flash">
+            {b.svg && <div className="qImg" dangerouslySetInnerHTML={{ __html: b.svg }} />}
+            {b.img && <div className="qPhoto"><img src={b.img} alt="" style={b.zoom ? {
+              transform: `scale(${b.zoom.s || 2})`,
+              transformOrigin: `${b.zoom.x != null ? b.zoom.x : 50}% ${b.zoom.y != null ? b.zoom.y : 50}%` } : undefined} /></div>}
+            <p className="qtext">{b.q}</p>
+            {muted ? (
+              <div className="hiddenQ">🛑 استريح — ما تقدر تجاوب هذا السؤال</div>
+            ) : mineNow ? (
+              <>
+                <input className="inp" value={typedText} disabled={answered || remain <= 0}
+                  onChange={(e) => setTypedText(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter") sendBoardAnswer(); }}
+                  placeholder="اكتب إجابة فريقك…" />
+                <div style={{ height: 10 }} />
+                <button className="btn btn-amber" disabled={answered || remain <= 0 || !typedText.trim()}
+                  onClick={sendBoardAnswer}>أرسل ⚡</button>
+              </>
+            ) : (
+              <p className="pulse" style={{ textAlign: "center", color: "var(--dim)", fontWeight: 700 }}>
+                الدور على الفريق الثاني — انتظروا
+              </p>
+            )}
+          </div>
+        )}
+        {answered && <p className="pulse" style={{ textAlign: "center", color: "var(--teal)", marginTop: 10, fontWeight: 700 }}>وصلت إجابتكم ✓</p>}
+        {view.judging && <p className="pulse" style={{ textAlign: "center", color: "var(--amber)", marginTop: 10, fontWeight: 700 }}>نراجع…</p>}
+        <PowerBar where="question" />
+      </div>
+    );
+  };
+
+  const BoardReveal = () => {
+    const r = view.reveal;
+    if (!r) return null;
+    const left = view.autoNext ? Math.max(0, Math.ceil(REVEAL_SEC - (Date.now() - (view.stageStart || 0)) / 1000)) : null;
+    return (
+      <div className="wrap">
+        <ExitBar />
+        <TeamBar />
+        <div className="card">
+          <div className="meta"><span className="badge">{r.cat}</span><span className="ptsTile">{r.pts}</span></div>
+          {r.qSvg && <div className="qImg" style={{ margin: "10px 0" }} dangerouslySetInnerHTML={{ __html: r.qSvg }} />}
+          {r.qImg && <div className="qPhoto" style={{ margin: "10px 0" }}><img src={r.qImg} alt="" /></div>}
+          <p style={{ color: "var(--dim)", fontSize: 14, marginTop: 8 }}>{r.qText}</p>
+          <div style={{ height: 10 }} />
+          <div className="correctBox">الجواب: {r.correctText}</div>
+          {r.log.map((l, i) => (
+            <div key={i} className="rrow" style={{ borderInlineStart: `4px solid ${l.team != null ? view.teams[l.team].color : "var(--line)"}` }}>
+              <span>{l.text}</span>
+            </div>
+          ))}
+        </div>
+        {role === "host" ? (
+          <button className="btn btn-red" onClick={nextTurn}>
+            كمّل ← {left !== null ? "(" + left + ")" : ""}
+          </button>
+        ) : (
+          <p className="pulse" style={{ textAlign: "center", color: "var(--dim)" }}>
+            {left !== null ? `نرجع للوحة بعد ${left} ث…` : "ننتظر الهوست…"}
+          </p>
+        )}
+      </div>
+    );
+  };
+
+  const BoardEnd = () => {
+    const [a, b] = view.teams;
+    const tie = a.score === b.score;
+    const win = a.score > b.score ? a : b;
+    return (
+      <div className="wrap">
+        <h2 className="disp" style={{ fontSize: 34, textAlign: "center", marginTop: 20 }}>
+          {tie ? "تعادل!" : `فاز ${win.name} 🏆`}
+        </h2>
+        <Sadu />
+        <div className="teamBar">
+          {view.teams.map((t, i) => (
+            <div key={i} className="teamCard" style={{ borderColor: t.color, borderWidth: !tie && win.name === t.name ? 3 : 1.5 }}>
+              <div className="teamName" style={{ color: t.color }}>{t.name}</div>
+              <div className="teamScore" style={{ fontSize: 40 }}>{t.score}</div>
+            </div>
+          ))}
+        </div>
+        {role === "host" && (
+          <div style={{ marginTop: 20 }}>
+            <button className="btn btn-red" onClick={startBoardGame}>جولة ثانية 🔄</button>
+          </div>
+        )}
+        <div style={{ height: 10 }} />
+        <button className="btn btn-ghost" onClick={leaveGame}>الرئيسية</button>
+      </div>
+    );
+  };
+
+  const CatPick = () => {
+    const cm = view.cm;
+    if (!cm) return null;
+    const isVote = true;          // التصويت هو الوضع الوحيد
+    const canChoose = true;       // الكل يصوّت
+    return (
+      <div className="wrap">
+        <ExitBar />
+        <ScoreBar />
         <div className="meta">
           <span className="qcount">سؤال {view.qIndex + 1} / {view.total}</span>
         </div>
         <div className="evSplash pop" style={{ padding: "16px 0 4px" }}>
-          <div className="evIcon">{isVote ? "🗳️" : "😈"}</div>
-          <div className="evName" style={{ fontSize: 34 }}>
-            {isVote ? "صوّتوا للفئة!" : iAmPicker ? "أنت الأخير — اختر الفئة" : cm.pickerName + " يختار الفئة"}
-          </div>
+          <div className="evIcon">🗳️</div>
+          <div className="evName" style={{ fontSize: 34 }}>صوّتوا للفئة!</div>
           <div className="evDesc" style={{ fontSize: 15, color: "var(--dim)" }}>
-            {isVote ? "الأغلبية تحدد فئة أول سؤال" : iAmPicker ? "انتقم… اختر اللي تكسّر فيه 😈" : "الأقل نقاط له حق الاختيار"}
+            الأعلى أصواتًا يفوز — ولو صار تعادل نختار بينهم عشوائي 🎲
           </div>
         </div>
         {canChoose ? (
@@ -2612,6 +3241,7 @@ export default function App() {
   const Prep = () => (
     <div className="wrap">
       <ExitBar />
+        <ScoreBar />
       <div className="evSplash">
         <div className="spin" style={{ margin: "30px auto 16px" }} />
         <div className="evName" style={{ fontSize: 28 }}>نجهّز سؤال {view.chosenCat}…</div>
@@ -2628,6 +3258,7 @@ export default function App() {
     return (
       <div className="wrap">
         <ExitBar />
+        <ScoreBar />
         <div className="meta">
           <span className="qcount">سؤال {view.qIndex + 1} / {view.total}</span>
         </div>
@@ -2665,6 +3296,7 @@ export default function App() {
     return (
       <div className="wrap">
         <ExitBar />
+        <ScoreBar />
         <div className="evSplash pop">
           <div className="evIcon">{ev.icon}</div>
           <div className="evName">{ev.name}</div>
@@ -2709,6 +3341,7 @@ export default function App() {
     return (
       <div className="wrap">
         <ExitBar />
+        <ScoreBar />
         <div className="meta">
           <span className="qcount">سؤال {view.qIndex + 1} / {view.total}</span>
           <span className="ptsTile">{isRoulette ? "؟؟" : ev && ev.id === "double" ? q.pts + "×2" : q.pts}</span>
@@ -2769,20 +3402,6 @@ export default function App() {
         </div>
         )}
         {answered && <p className="pulse" style={{ textAlign: "center", color: "var(--teal)", marginTop: 12, fontWeight: 700 }}>وصلت إجابتك ✓ ننتظر البقية…</p>}
-        {preMs <= 0 && (
-          <div className="chips" style={{ justifyContent: "center", marginTop: 12 }}>
-            {view.board.map((p) => {
-              const done = (view.answeredPids || []).includes(p.pid);
-              return (
-                <span key={p.pid} className="chip" style={{
-                  cursor: "default", opacity: done ? 1 : 0.5,
-                  borderColor: done ? "var(--teal)" : "var(--line)",
-                  color: done ? "var(--teal)" : "var(--dim)",
-                }}>{done ? "✓ " : "… "}{p.name}</span>
-              );
-            })}
-          </div>
-        )}
         {!answered && remain <= 0 && preMs <= 0 && (
           <p className="pulse" style={{ textAlign: "center", color: "var(--red)", marginTop: 12, fontWeight: 700 }}>انتهى الوقت ⏱</p>
         )}
@@ -2802,6 +3421,7 @@ export default function App() {
     return (
       <div className="wrap">
         <ExitBar />
+        <ScoreBar />
         <div className="meta">
           <span className="qcount">سؤال {view.qIndex + 1} / {view.total}</span>
           <span className="ptsTile">{r.pts}</span>
@@ -2849,15 +3469,12 @@ export default function App() {
           <div className="plist">
             {view.board.map((p, i) => (
               <div className="prow" key={p.pid}>
-                <span>{i === 0 ? "👑 " : (i + 1) + ". "}{p.name}{i === view.board.length - 1 && view.board.length > 1 ? " 😈" : ""}</span>
+                <span>{i === 0 ? "👑 " : (i + 1) + ". "}{p.name}</span>
                 <span className="ptsTile" style={{ fontSize: 18, padding: "0 10px" }}>{p.score}</span>
               </div>
             ))}
           </div>
-          {view.board.length > 1 && (
-            <p className="badge" style={{ marginTop: 10, textAlign: "center" }}>😈 = يختار فئة السؤال الجاي</p>
-          )}
-        </div>
+                  </div>
         {(() => {
           const left = view.autoNext ? Math.max(0, Math.ceil(REVEAL_SEC - (Date.now() - (view.stageStart || 0)) / 1000)) : null;
           return role === "host" ? (
@@ -2923,6 +3540,10 @@ export default function App() {
       {screen === "join" && Join()}
       {screen === "editor" && Editor()}
       {screen === "game" && view && (
+        view.phase === "board" ? BoardScreen() :
+        view.phase === "bq" ? BoardQuestion() :
+        view.phase === "breveal" ? BoardReveal() :
+        view.phase === "bend" ? BoardEnd() :
         view.phase === "lobby" ? Lobby() :
         view.phase === "catpick" ? CatPick() :
         view.phase === "prep" ? Prep() :
