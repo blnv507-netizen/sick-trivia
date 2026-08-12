@@ -60,6 +60,7 @@ const CAT_INFO = {
   "دليلين": { icon: "🕵️", desc: "دليلين ما لهم علاقة ببعض ظاهريًا، بس يتقاطعون على جواب واحد." },
   "الأغرب": { icon: "🎲", desc: "أربعة أشياء وواحد منهم شاذ عن الباقي — لاقِه." },
   "لو كنت مكانك": { icon: "🧠", desc: "مواقف داخل الألعاب: وش يصير لو سويت كذا؟ أسئلة عن الميكانيكيات مو الأسماء." },
+  "خمّن اللعبة": { icon: "🎮", desc: "صورة مقرّبة من زاوية غريبة داخل لعبة — تحزر اللعبة من التفصيلة. الصورة الكاملة تنكشف بالنتيجة." },
   "لعبة الحروف": { icon: "🔤", desc: "نعطيك الحرف ونوصف لك الشي — والجواب لازم يبدأ بنفس الحرف. زي لعبة عزيز بالضبط!" },
   "منطق وألغاز": { icon: "🧩", desc: "ألغاز تحتاج تفكير مو حفظ. اقرأ السؤال مرتين — الفخ دايم بالتفاصيل." },
   "أمثال ومصطلحات": { icon: "📖", desc: "كمّل المثل أو فسّر المصطلح — من الأمثال الشعبية والفصحى." },
@@ -116,20 +117,52 @@ const itemById = (id) => ITEMS.find((x) => x.id === id);
 /* ---------- بنك الأسئلة ---------- */
 const BANK = [
   // ============ أسئلة الصور ============
-  { cat: "أعلام", d: 2, q: "وش الدولة صاحبة هذا العلم؟", a: "اليابان", alt: ["Japan"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#ffffff\"/><circle cx=\"60\" cy=\"40\" r=\"22\" fill=\"#BC002D\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 2, q: "وش الدولة صاحبة العلم المرسوم؟", a: "فرنسا", alt: ["France"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#0055A4\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FFFFFF\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#EF4135\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 2, q: "وش الدولة صاحبة هذا العلم الثلاثي؟", a: "إيطاليا", alt: ["Italy"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#009246\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FFFFFF\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#CE2B37\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 2, q: "وش الدولة صاحبة هذا العلم الأفقي؟", a: "ألمانيا", alt: ["Germany"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" fill=\"#000000\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" fill=\"#DD0000\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" fill=\"#FFCE00\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 2, q: "وش الدولة صاحبة هذا العلم؟ (أحمر وأبيض وأزرق)", a: "هولندا", alt: ["Netherlands"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" fill=\"#AE1C28\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" fill=\"#FFFFFF\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" fill=\"#21468B\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 2, q: "وش الدولة صاحبة هذا العلم؟ (أسود وأصفر وأحمر)", a: "بلجيكا", alt: ["Belgium"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#000000\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FAE042\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#ED2939\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 2, q: "وش الدولة صاحبة هذا العلم؟ (أخضر وأبيض وبرتقالي)", a: "أيرلندا", alt: ["Ireland"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#169B62\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FFFFFF\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#FF883E\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 2, q: "وش الدولة صاحبة هذا العلم؟ (أخضر وأبيض وأخضر)", a: "نيجيريا", alt: ["Nigeria"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#008751\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FFFFFF\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#008751\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 2, q: "وش الدولة صاحبة هذا العلم؟ (أزرق فوق أصفر)", a: "أوكرانيا", alt: ["Ukraine"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"40\" y=\"0\" fill=\"#0057B7\"/><rect width=\"120\" height=\"40\" y=\"40\" fill=\"#FFD700\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 3, q: "انتبه للترتيب — وش الدولة؟ (أبيض فوق أحمر)", a: "بولندا", alt: ["Poland"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"40\" y=\"0\" fill=\"#FFFFFF\"/><rect width=\"120\" height=\"40\" y=\"40\" fill=\"#DC143C\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 3, q: "انتبه للترتيب — وش الدولة؟ (أحمر فوق أبيض)", a: "إندونيسيا", alt: ["Indonesia"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"40\" y=\"0\" fill=\"#CE1126\"/><rect width=\"120\" height=\"40\" y=\"40\" fill=\"#FFFFFF\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 3, q: "وش الدولة صاحبة هذا العلم الإسكندنافي؟ (أصفر على أزرق)", a: "السويد", alt: ["Sweden"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#006AA7\"/><rect x=\"36\" y=\"0\" width=\"14\" height=\"80\" fill=\"#FECC00\"/><rect x=\"0\" y=\"33\" width=\"120\" height=\"14\" fill=\"#FECC00\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 3, q: "وش الدولة صاحبة هذا العلم الإسكندنافي؟ (أبيض على أحمر)", a: "الدنمارك", alt: ["Denmark"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#C60C30\"/><rect x=\"36\" y=\"0\" width=\"14\" height=\"80\" fill=\"#FFFFFF\"/><rect x=\"0\" y=\"33\" width=\"120\" height=\"14\" fill=\"#FFFFFF\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
-  { cat: "أعلام", d: 3, q: "وش الدولة صاحبة هذا العلم؟ (صليب أبيض بمنتصف أحمر)", a: "سويسرا", alt: ["Switzerland"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#D52B1E\"/><rect x=\"52\" y=\"18\" width=\"16\" height=\"44\" fill=\"#fff\"/><rect x=\"38\" y=\"32\" width=\"44\" height=\"16\" fill=\"#fff\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  // ---- خمّن اللعبة (تحتاج صور بمجلد public/img) ----
+  { cat: "خمّن اللعبة", d: 2, q: "من أي لعبة هذي الزاوية؟", a: "Overwatch", alt: ["أوفرواتش"], img: "/img/ow-map.jpg", zoom: { s: 3, x: 30, y: 40 } },
+  { cat: "خمّن اللعبة", d: 3, q: "خمّن اللعبة من هذي التفصيلة؟", a: "Elden Ring", alt: ["إلدن رينق"], img: "/img/er-1.jpg", zoom: { s: 3.5, x: 65, y: 25 } },
+  // ---- الأعلام (كلها مرسومة) ----
+  { cat: "أعلام", d: 3, q: "انتبه: أزرق وأصفر وأحمر عمودي — تشاد ولا رومانيا؟ (هذا الأزرق الغامق)", a: "تشاد", alt: ["Chad"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#002664\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FECB00\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#C60C30\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "نفس ألوان تشاد لكن الأزرق أفتح — أي دولة أوروبية؟", a: "رومانيا", alt: ["Romania"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#002B7F\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FCD116\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#CE1126\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أحمر فوق أبيض بنسبة مربعة — موناكو ولا إندونيسيا؟ (الأعرض)", a: "إندونيسيا", alt: ["Indonesia"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"40\" y=\"0\" fill=\"#CE1126\"/><rect width=\"120\" height=\"40\" y=\"40\" fill=\"#FFFFFF\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أخضر وأبيض وبرتقالي عمودي — أيرلندا ولا ساحل العاج؟ (الأخضر على السارية)", a: "أيرلندا", alt: ["Ireland"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#169B62\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FFFFFF\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#FF883E\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "برتقالي وأبيض وأخضر عمودي — معكوس أيرلندا تمامًا؟", a: "ساحل العاج", alt: ["Ivory Coast", "كوت ديفوار"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#FF883E\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FFFFFF\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#169B62\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أحمر وأبيض وأزرق أفقي — هولندا ولا لوكسمبورغ؟ (الأزرق غامق)", a: "هولندا", alt: ["Netherlands"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" fill=\"#AE1C28\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" fill=\"#FFFFFF\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" fill=\"#21468B\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أبيض وأزرق وأحمر أفقي — روسيا ولا سلوفينيا بدون شعار؟", a: "روسيا", alt: ["Russia"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" fill=\"#FFFFFF\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" fill=\"#0039A6\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" fill=\"#D52B1E\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أحمر وأبيض وأحمر أفقي — النمسا ولا لاتفيا؟ (الأحمر فاقع والشريط متساوي)", a: "النمسا", alt: ["Austria"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" fill=\"#ED2939\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" fill=\"#FFFFFF\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" fill=\"#ED2939\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أخضر وأصفر وأحمر عمودي بلا نجمة — مالي ولا غينيا؟ (الأخضر على السارية)", a: "مالي", alt: ["Mali"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#14B53A\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FCD116\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#CE1126\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أحمر وأصفر وأخضر عمودي — معكوس مالي؟", a: "غينيا", alt: ["Guinea"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#CE1126\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FCD116\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#009460\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 2, q: "علم عنابي وأبيض بتسع أسنان مثلثة — أي دولة خليجية؟", a: "قطر", alt: ["Qatar"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#8A1538\"/><rect width=\"34\" height=\"80\" fill=\"#fff\"/><polygon points=\"34,0 46,4.4 34,8.9 46,13.3 34,17.8 46,22.2 34,26.7 46,31.1 34,35.6 46,40 34,44.4 46,48.9 34,53.3 46,57.8 34,62.2 46,66.7 34,71.1 46,75.6 34,80\" fill=\"#fff\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "علم أحمر وأبيض بخمس أسنان مثلثة — أي دولة خليجية؟", a: "البحرين", alt: ["Bahrain"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#CE1126\"/><rect width=\"38\" height=\"80\" fill=\"#fff\"/><polygon points=\"38,0 54,8 38,16 54,24 38,32 54,40 38,48 54,56 38,64 54,72 38,80\" fill=\"#fff\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أحمر عمودي على السارية وثلاثة خطوط أخضر وأبيض وأسود — أي دولة؟", a: "الإمارات", alt: ["الامارات", "UAE"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" x=\"30\" fill=\"#00732F\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" x=\"30\" fill=\"#fff\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" x=\"30\" fill=\"#000\"/><rect width=\"30\" height=\"80\" fill=\"#FF0000\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "مثلث أحمر على السارية وثلاثة خطوط أخضر وأبيض وأسود — أي دولة؟", a: "الأردن", alt: ["الاردن", "Jordan", "فلسطين"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" fill=\"#000\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" fill=\"#fff\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" fill=\"#007A3D\"/><polygon points=\"0,0 46,40 0,80\" fill=\"#CE1126\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أخضر وأبيض وأسود أفقي بمثلث أحمر — أي دولة عربية؟", a: "السودان", alt: ["Sudan"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" fill=\"#D21034\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" fill=\"#fff\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" fill=\"#000\"/><polygon points=\"0,0 40,40 0,80\" fill=\"#007229\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أحمر وأبيض وأسود أفقي مع شكل أخضر منحرف على السارية — أي دولة؟", a: "الكويت", alt: ["Kuwait"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" fill=\"#007A3D\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" fill=\"#fff\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" fill=\"#CE1126\"/><polygon points=\"0,0 30,26.7 30,53.3 0,80\" fill=\"#000\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أحمر بمثلث أبيض على السارية وخنجر وسيفان — أي دولة عربية؟", a: "عمان", alt: ["Oman", "عُمان"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#DB161B\"/><rect x=\"30\" width=\"90\" height=\"26.7\" fill=\"#fff\"/><rect x=\"30\" y=\"53.3\" width=\"90\" height=\"26.7\" fill=\"#008000\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أصفر عريض فوق وأزرق وأحمر — كولومبيا ولا الإكوادور؟ (بلا شعار)", a: "كولومبيا", alt: ["Colombia"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"40\" y=\"0\" fill=\"#FCD116\"/><rect width=\"120\" height=\"20\" y=\"40\" fill=\"#003893\"/><rect width=\"120\" height=\"20\" y=\"60\" fill=\"#CE1126\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أصفر وأزرق وأحمر متساوية أفقيًا — أي دولة جنوب أمريكية؟", a: "فنزويلا", alt: ["Venezuela"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" fill=\"#FCD116\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" fill=\"#00247D\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" fill=\"#CF142B\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أحمر وأبيض وأحمر عمودي — أي دولة جنوب أمريكية؟", a: "بيرو", alt: ["Peru"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#D91023\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FFFFFF\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#D91023\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أزرق وأبيض وأزرق أفقي بشمس ذهبية بالمنتصف — أي دولة؟", a: "الأرجنتين", alt: ["الارجنتين", "Argentina"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" fill=\"#74ACDF\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" fill=\"#FFFFFF\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" fill=\"#74ACDF\"/><circle cx=\"60\" cy=\"40\" r=\"9\" fill=\"#F6B40E\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "صليب أبيض على أزرق — فنلندا ولا اليونان؟", a: "فنلندا", alt: ["Finland"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#FFFFFF\"/><rect x=\"36\" y=\"0\" width=\"14\" height=\"80\" fill=\"#003580\"/><rect x=\"0\" y=\"33\" width=\"120\" height=\"14\" fill=\"#003580\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "صليب أزرق داخل صليب أبيض على أحمر — أي دولة؟", a: "النرويج", alt: ["Norway"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#BA0C2F\"/><rect x=\"32\" y=\"0\" width=\"20\" height=\"80\" fill=\"#fff\"/><rect x=\"0\" y=\"30\" width=\"120\" height=\"20\" fill=\"#fff\"/><rect x=\"37\" y=\"0\" width=\"10\" height=\"80\" fill=\"#00205B\"/><rect x=\"0\" y=\"35\" width=\"120\" height=\"10\" fill=\"#00205B\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "صليب أحمر على أبيض بحدود زرقاء — أي دولة جزيرة؟", a: "آيسلندا", alt: ["ايسلندا", "Iceland"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#02529C\"/><rect x=\"30\" y=\"0\" width=\"20\" height=\"80\" fill=\"#fff\"/><rect x=\"0\" y=\"30\" width=\"120\" height=\"20\" fill=\"#fff\"/><rect x=\"35\" y=\"0\" width=\"10\" height=\"80\" fill=\"#DC1E35\"/><rect x=\"0\" y=\"35\" width=\"120\" height=\"10\" fill=\"#DC1E35\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "دائرة حمراء بمنتصف أخضر — أي دولة آسيوية؟", a: "بنغلاديش", alt: ["بنجلاديش", "Bangladesh"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#006A4E\"/><circle cx=\"54\" cy=\"40\" r=\"20\" fill=\"#F42A41\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "دائرة صفراء غير متمركزة على أزرق — أي دولة جزرية؟", a: "بالاو", alt: ["Palau"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#4AADD6\"/><circle cx=\"52\" cy=\"40\" r=\"18\" fill=\"#FFDE00\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "هلال ونجمة بيضاء على أحمر — تركيا ولا تونس؟ (الهلال بالمنتصف داخل دائرة بيضاء)", a: "تونس", alt: ["Tunisia"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#E70013\"/><circle cx=\"60\" cy=\"40\" r=\"22\" fill=\"#fff\"/><circle cx=\"63\" cy=\"40\" r=\"14\" fill=\"#E70013\"/><circle cx=\"68\" cy=\"40\" r=\"11\" fill=\"#fff\"/><polygon points=\"66,34 68,39 73,39 69,42 71,47 66,44 61,47 63,42 59,39 64,39\" fill=\"#E70013\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "هلال ونجمة بيضاء على أحمر بلا دائرة — أي دولة؟", a: "تركيا", alt: ["Turkey"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#E30A17\"/><circle cx=\"50\" cy=\"40\" r=\"18\" fill=\"#fff\"/><circle cx=\"57\" cy=\"40\" r=\"15\" fill=\"#E30A17\"/><polygon points=\"76,40 80,47 88,47 82,52 84,60 76,55 68,60 70,52 64,47 72,47\" fill=\"#fff\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أخضر بهلال ونجمة أبيض وشريط أبيض على السارية — أي دولة؟", a: "باكستان", alt: ["Pakistan"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#01411C\"/><rect width=\"30\" height=\"80\" fill=\"#fff\"/><circle cx=\"72\" cy=\"40\" r=\"17\" fill=\"#fff\"/><circle cx=\"78\" cy=\"38\" r=\"14\" fill=\"#01411C\"/><polygon points=\"88,32 90,37 95,37 91,40 93,45 88,42 83,45 85,40 81,37 86,37\" fill=\"#fff\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أحمر بخمس نجوم صفراء بالزاوية — أي دولة؟", a: "الصين", alt: ["China"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#DE2910\"/><polygon points=\"22,12 26,22 36,22 28,28 31,38 22,32 13,38 16,28 8,22 18,22\" fill=\"#FFDE00\"/><circle cx=\"44\" cy=\"10\" r=\"3\" fill=\"#FFDE00\"/><circle cx=\"52\" cy=\"18\" r=\"3\" fill=\"#FFDE00\"/><circle cx=\"52\" cy=\"30\" r=\"3\" fill=\"#FFDE00\"/><circle cx=\"44\" cy=\"38\" r=\"3\" fill=\"#FFDE00\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أخضر وأصفر وأحمر أفقي بنجمة خضراء — أي دولة أفريقية؟", a: "إثيوبيا", alt: ["اثيوبيا", "Ethiopia"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" fill=\"#078930\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" fill=\"#FCDD09\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" fill=\"#DA121A\"/><circle cx=\"60\" cy=\"40\" r=\"15\" fill=\"#0F47AF\"/><polygon points=\"60,30 63,38 71,38 65,43 67,51 60,46 53,51 55,43 49,38 57,38\" fill=\"#FCDD09\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أحمر وأبيض وأسود أفقي بنسر ذهبي بالمنتصف — أي دولة عربية؟", a: "مصر", alt: ["Egypt"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"26.7\" y=\"0\" fill=\"#CE1126\"/><rect width=\"120\" height=\"26.7\" y=\"26.7\" fill=\"#FFFFFF\"/><rect width=\"120\" height=\"26.6\" y=\"53.4\" fill=\"#000000\"/><circle cx=\"60\" cy=\"40\" r=\"8\" fill=\"#C09300\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أحمر فوق أسود بشعار ذهبي بالمنتصف — أي دولة أفريقية؟", a: "أنغولا", alt: ["Angola", "موزمبيق"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"40\" y=\"0\" fill=\"#CE1126\"/><rect width=\"120\" height=\"40\" y=\"40\" fill=\"#000000\"/><circle cx=\"60\" cy=\"40\" r=\"10\" fill=\"#FFCB00\" opacity=\"0.9\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أخضر وأبيض وأحمر عمودي بشعار بالمنتصف — إيطاليا ولا المكسيك؟ (فيه شعار)", a: "المكسيك", alt: ["Mexico"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#006847\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FFFFFF\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#CE1126\"/><circle cx=\"60\" cy=\"40\" r=\"9\" fill=\"#8B5A2B\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أبيض وأزرق وأحمر عمودي — فرنسا ولا لوكسمبورغ؟ (الأزرق على السارية)", a: "فرنسا", alt: ["France"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#0055A4\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FFFFFF\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#EF4135\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أسود وأحمر وأصفر عمودي — بلجيكا ولا ألمانيا؟ (عمودي يعني…)", a: "بلجيكا", alt: ["Belgium"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#000000\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FAE042\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#ED2939\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أزرق وأبيض بتسعة خطوط وصليب بالزاوية — أي دولة؟", a: "اليونان", alt: ["Greece"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#0D5EAF\"/><rect y=\"8.9\" width=\"120\" height=\"8.9\" fill=\"#fff\"/><rect y=\"17.8\" width=\"120\" height=\"8.9\" fill=\"#0D5EAF\"/><rect y=\"26.700000000000003\" width=\"120\" height=\"8.9\" fill=\"#fff\"/><rect y=\"35.6\" width=\"120\" height=\"8.9\" fill=\"#0D5EAF\"/><rect y=\"44.5\" width=\"120\" height=\"8.9\" fill=\"#fff\"/><rect y=\"53.4\" width=\"120\" height=\"8.9\" fill=\"#0D5EAF\"/><rect y=\"62.300000000000004\" width=\"120\" height=\"8.9\" fill=\"#fff\"/><rect y=\"71.2\" width=\"120\" height=\"8.9\" fill=\"#0D5EAF\"/><rect width=\"44\" height=\"44\" fill=\"#0D5EAF\"/><rect x=\"18\" y=\"0\" width=\"9\" height=\"44\" fill=\"#fff\"/><rect x=\"0\" y=\"17\" width=\"44\" height=\"9\" fill=\"#fff\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "صليب أبيض على أحمر مربع الشكل — سويسرا ولا الدنمارك؟", a: "سويسرا", alt: ["Switzerland"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"80\" fill=\"#D52B1E\"/><rect x=\"52\" y=\"18\" width=\"16\" height=\"44\" fill=\"#fff\"/><rect x=\"38\" y=\"32\" width=\"44\" height=\"16\" fill=\"#fff\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أخضر وأبيض وأحمر عمودي بلا شعار — أي دولة أوروبية؟", a: "إيطاليا", alt: ["ايطاليا", "Italy"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#009246\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FFFFFF\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#CE2B37\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أحمر وأصفر وأحمر أفقي بشريط أصفر عريض — أي دولة أوروبية؟", a: "إسبانيا", alt: ["اسبانيا", "Spain"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"20\" y=\"0\" fill=\"#AA151B\"/><rect width=\"120\" height=\"40\" y=\"20\" fill=\"#F1BF00\"/><rect width=\"120\" height=\"20\" y=\"60\" fill=\"#AA151B\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أبيض وأحمر أفقي بسيط — بولندا ولا موناكو؟ (الأطول)", a: "بولندا", alt: ["Poland"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"40\" y=\"0\" fill=\"#FFFFFF\"/><rect width=\"120\" height=\"40\" y=\"40\" fill=\"#DC143C\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
+  { cat: "أعلام", d: 3, q: "أزرق وأصفر أفقي — أوكرانيا ولا السويد؟", a: "أوكرانيا", alt: ["Ukraine"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"120\" height=\"40\" y=\"0\" fill=\"#0057B7\"/><rect width=\"120\" height=\"40\" y=\"40\" fill=\"#FFD700\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
   { cat: "شكل ورسم", d: 2, q: "وش نوع العدسة المرسومة؟", a: "محدبة", alt: ["convex", "محدب"], svg: "<svg viewBox=\"0 0 200 110\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M100 12 Q128 55 100 98 Q72 55 100 12 Z\" fill=\"#2EC4A6\" opacity=\"0.35\" stroke=\"#2EC4A6\" stroke-width=\"2.5\"/><g stroke=\"var(--sand)\" stroke-width=\"2\"><line x1=\"10\" y1=\"30\" x2=\"92\" y2=\"30\"/><line x1=\"10\" y1=\"55\" x2=\"92\" y2=\"55\"/><line x1=\"10\" y1=\"80\" x2=\"92\" y2=\"80\"/><line x1=\"108\" y1=\"32\" x2=\"178\" y2=\"55\"/><line x1=\"108\" y1=\"55\" x2=\"178\" y2=\"55\"/><line x1=\"108\" y1=\"78\" x2=\"178\" y2=\"55\"/></g><circle cx=\"178\" cy=\"55\" r=\"4\" fill=\"#F0A32F\"/></svg>" },
   { cat: "شكل ورسم", d: 2, q: "الدائرة الكهربائية المرسومة: توصيل على التوالي ولا على التوازي؟", a: "التوازي", alt: ["parallel", "توازي"], svg: "<svg viewBox=\"0 0 200 110\" xmlns=\"http://www.w3.org/2000/svg\"><g stroke=\"var(--sand)\" stroke-width=\"2.5\" fill=\"none\"><path d=\"M20 20 H180 V90 H20 Z\"/><path d=\"M70 20 V90\"/><path d=\"M130 20 V90\"/></g><g fill=\"#F0A32F\"><rect x=\"58\" y=\"48\" width=\"24\" height=\"14\" rx=\"3\"/><rect x=\"118\" y=\"48\" width=\"24\" height=\"14\" rx=\"3\"/></g><circle cx=\"20\" cy=\"55\" r=\"5\" fill=\"#D9494F\"/></svg>" },
   { cat: "شكل ورسم", d: 2, q: "أي موجة ترددها أعلى: العليا (الخضراء) ولا السفلى (البرتقالية)؟", a: "العليا", alt: ["الخضراء", "الأولى", "فوق"], svg: "<svg viewBox=\"0 0 200 110\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M10 32 q7.5 -16 15 0 t15 0 t15 0 t15 0 t15 0 t15 0 t15 0 t15 0 t15 0 t15 0\" fill=\"none\" stroke=\"#2EC4A6\" stroke-width=\"2.5\"/><path d=\"M10 82 q22.5 -26 45 0 t45 0 t45 0 t45 0\" fill=\"none\" stroke=\"#F0A32F\" stroke-width=\"2.5\"/></svg>" },
@@ -138,6 +171,304 @@ const BANK = [
   { cat: "شكل ورسم", d: 3, q: "الأعمدة تمثل مبيعات 4 أرباع — كم الفرق بين الأعلى والأدنى؟", a: "30", alt: ["ثلاثين"], svg: "<svg viewBox=\"0 0 200 120\" xmlns=\"http://www.w3.org/2000/svg\"><g stroke=\"var(--sand)\" stroke-width=\"2\"><line x1=\"22\" y1=\"12\" x2=\"22\" y2=\"100\"/><line x1=\"22\" y1=\"100\" x2=\"185\" y2=\"100\"/></g><g fill=\"#2EC4A6\"><rect x=\"36\" y=\"60\" width=\"26\" height=\"40\"/><rect x=\"74\" y=\"40\" width=\"26\" height=\"60\"/><rect x=\"112\" y=\"25\" width=\"26\" height=\"75\"/><rect x=\"150\" y=\"55\" width=\"26\" height=\"45\"/></g><g fill=\"var(--sand)\" font-size=\"11\" font-family=\"sans-serif\"><text x=\"40\" y=\"55\">40</text><text x=\"78\" y=\"35\">60</text><text x=\"116\" y=\"20\">70</text><text x=\"154\" y=\"50\">45</text></g></svg>" },
   { cat: "شكل ورسم", d: 3, q: "وش اسم الشكل الهندسي المرسوم حسب عدد أضلاعه؟", a: "سداسي", alt: ["hexagon", "مسدس"], svg: "<svg viewBox=\"0 0 200 130\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"100,18 145,44 145,96 100,122 55,96 55,44\" fill=\"#D9494F\" opacity=\"0.22\" stroke=\"#D9494F\" stroke-width=\"2.5\"/></svg>" },
   // ============ البنك الجديد — صعوبة مرفوعة ============
+  // ---- أفلام (أسئلة حسين) ----
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Fight Club — من هو الشخص الذي يعاني من الأرق ويؤسس ناديًا سريًا للقتال دون أن يدرك حقيقة شريكه؟", a: "The Narrator", alt: ["الراوي", "Narrator"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Fight Club — من هو الشخص الذي كان يعيش داخل عقل الراوي دون أن يدرك الراوي أنه هو نفسه؟", a: "Tyler Durden", alt: ["تايلر", "Tyler"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم The Godfather — لماذا كان Michael Corleone في البداية بعيدًا عن أعمال عائلته؟", a: "أراد حياة بعيدة عن الجريمة", alt: ["يبي يعيش حياته", "بعيد عن الجريمة", "ما يبي الإجرام"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم The Godfather — من الذي دبّر مقتل Sonny Corleone بالتعاون مع رجال Barzini؟", a: "Carlo Rizzi", alt: ["Carlo", "كارلو"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم The Godfather Part II — من هو الرجل الذي أمر بقتل أخيه Fredo؟", a: "Michael Corleone", alt: ["Michael", "مايكل"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Gladiator — من هو الشخص الذي قتل عائلة Maximus وأرسله ليصبح عبدًا؟", a: "Commodus", alt: ["كومودوس"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم The Shawshank Redemption — ما الاسم الوهمي الذي استخدمه Andy لغسل أموال المأمور؟", a: "Randall Stephens", alt: ["راندال ستيفنز", "Randall"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم The Green Mile — ما الشيء الذي كان John Coffey قادرًا على فعله بلمسه للآخرين؟", a: "يشفيهم", alt: ["امتصاص المرض", "الشفاء", "يمتص الألم"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Shutter Island — من هو المارشال الذي جاء يحقق في اختفاء مريضة من المستشفى؟", a: "Teddy Daniels", alt: ["Teddy", "تيدي"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Shutter Island — ما الحقيقة التي يكتشفها Teddy في النهاية؟", a: "أنه Andrew Laeddis", alt: ["Andrew Laeddis", "أنه مريض بالمستشفى", "اندرو ليديس"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Memento — ما الحالة التي يعاني منها Leonard وتمنعه من تكوين ذكريات جديدة؟", a: "فقدان الذاكرة قصيرة المدى", alt: ["أمنيسيا", "Anterograde Amnesia", "فقدان الذاكرة"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Memento — ما الأشياء التي يعتمد عليها Leonard بدل ذاكرته؟", a: "الصور والوشوم والملاحظات", alt: ["الوشوم", "الصور", "الملاحظات", "التاتو"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم The Matrix — من هو الرجل الذي أعطى Neo خيار الحبة الزرقاء أو الحمراء؟", a: "Morpheus", alt: ["مورفيوس"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Inception — ماذا كان الهدف الحقيقي من عملية Inception ضد Robert Fischer؟", a: "زرع فكرة تفكيك إمبراطورية والده", alt: ["تفكيك شركة والده", "يفكك امبراطورية ابوه"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Inception — لماذا كانت Mal تظهر باستمرار داخل أحلام Cobb؟", a: "بسبب شعوره بالذنب", alt: ["الذنب", "ذنبه تجاهها", "احساسه بالذنب"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم The Truman Show — من هو الرجل الذي كان يعيش في عالم مصطنع دون أن يعرف ذلك؟", a: "Truman Burbank", alt: ["Truman", "ترومان"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم The Truman Show — من هو الشخص الذي كان يتحكم بكل ما يحدث في حياة Truman؟", a: "Christof", alt: ["كريستوف"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Se7en — من هو القاتل الذي بنى جرائمه على الخطايا السبع؟", a: "John Doe", alt: ["جون دو"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Se7en — أي خطيئتين مثّلهما John Doe وMills في المشهد الأخير؟", a: "Envy وWrath", alt: ["الحسد والغضب", "Envy and Wrath", "حسد وغضب"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم The Departed — من هو الرجل الذي كان يعمل شرطيًا متخفيًا داخل عصابة Costello؟", a: "Billy Costigan", alt: ["Billy", "بيلي"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم The Departed — من هو الشرطي الذي كان يعمل سرًا لصالح Frank Costello؟", a: "Colin Sullivan", alt: ["Colin", "كولن"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Kill Bill — من هو الشخص الذي قتل Bill في النهاية؟", a: "The Bride", alt: ["Beatrix Kiddo", "العروس", "بياتريكس"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Kill Bill — لماذا أرادت The Bride الانتقام من Bill؟", a: "لأنه حاول قتلها يوم زفافها", alt: ["حاول قتلها", "اطلق عليها يوم زواجها", "تركها ميتة"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Kill Bill — من هي أول ضحية تظهر بالفيلم من قائمة The Bride؟", a: "Vernita Green", alt: ["Vernita", "فيرنيتا"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Django Unchained — من هو الرجل الذي حرر Django من العبودية وأصبح شريكه؟", a: "Dr. King Schultz", alt: ["Schultz", "شولتز"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Django Unchained — من هي المرأة التي كان Django يحاول تحريرها من Calvin Candie؟", a: "Broomhilda", alt: ["Broomhilda von Shaft", "برومهيلدا"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Inglourious Basterds — من هو الضابط النازي الذي اكتشف خطة Shosanna؟", a: "Hans Landa", alt: ["Landa", "هانز لاندا"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Inglourious Basterds — لماذا ذهب Hans Landa إلى منزل عائلة Shosanna في بداية الفيلم؟", a: "كان يبحث عن عائلة Dreyfus", alt: ["عائلة درايفوس", "يدور على اليهود المختبئين", "Dreyfus"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Inglourious Basterds — من هو الرجل الذي قاد مجموعة الجنود للانتقام من النازيين؟", a: "Aldo Raine", alt: ["Aldo", "ألدو"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم The Wolf of Wall Street — من هو الرجل الذي كان يريد أن يصبح سمسار أسهم ثريًا مهما كان الثمن؟", a: "Jordan Belfort", alt: ["Belfort", "جوردن بلفورت"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم The Wolf of Wall Street — من هو الرجل الذي علّم Jordan Belfort أساسيات ثقافة Wall Street؟", a: "Mark Hanna", alt: ["Hanna", "مارك هانا"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم The Wolf of Wall Street — ما اسم الشركة التي أسسها Jordan Belfort؟", a: "Stratton Oakmont", alt: ["ستراتون أوكمونت", "Stratton"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم The Wolf of Wall Street — من هو عميل الـFBI الذي كان يحقق في جرائم Jordan Belfort؟", a: "Patrick Denham", alt: ["Denham", "دنهام"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Taxi Driver — من هو الرجل الذي كان يقود سيارة أجرة ليلًا ويزداد هوسه بتنظيف المدينة من الفساد؟", a: "Travis Bickle", alt: ["Travis", "ترافيس"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Taxi Driver — من هي الفتاة التي حاول Travis إنقاذها؟", a: "Iris", alt: ["إيريس", "ايرس"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Rocky — من هو الملاكم المغمور الذي حصل على فرصة نزال ضد بطل العالم؟", a: "Rocky Balboa", alt: ["Rocky", "روكي"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Rocky — من هو الرجل الذي كان يدرب Rocky؟", a: "Mickey Goldmill", alt: ["Mickey", "ميكي"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Pulp Fiction — من هو زعيم العصابة الذي يعمل لديه Vincent وJules؟", a: "Marsellus Wallace", alt: ["Marsellus", "مارسيلوس"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Pulp Fiction — ماذا كشف الفيلم عن محتوى حقيبة Marsellus Wallace؟", a: "لم يكشفه أبدًا", alt: ["ما كشفه", "بقي غامضًا", "ما بيّنه", "غامض"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Pulp Fiction — من هو الملاكم الذي خالف أوامر Marsellus Wallace؟", a: "Butch Coolidge", alt: ["Butch", "بوتش"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Pulp Fiction — لماذا كان Butch مطلوبًا من Marsellus؟", a: "لأنه أخذ المال وفاز بالمباراة", alt: ["ما خسر المباراة", "فاز بدل ما يخسر", "غش بالاتفاق"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم GoodFellas — من هو الرجل الذي عاش طفولة قاسية في الفقر ثم أصبح مجرمًا مشهورًا؟", a: "Henry Hill", alt: ["Henry", "هنري هيل"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم GoodFellas — من هو الرجل الذي قتل Billy Batts بعد إهانته له؟", a: "Tommy DeVito", alt: ["Tommy", "تومي"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Raging Bull — من هو الملاكم الذي دمّر حياته بغيرته المرضية على زوجته وأخيه؟", a: "Jake LaMotta", alt: ["LaMotta", "جيك لاموتا"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Once Upon a Time in America — من هو الرجل الذي عاد بعد عقود ليواجه ماضيه في عالم العصابات بنيويورك؟", a: "Noodles", alt: ["David Aaronson", "نودلز"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Once Upon a Time in America — من هو الرجل الذي عاش حياته وهو يحمل شعورًا بالذنب بسبب خيانة أصدقائه؟", a: "Noodles", alt: ["David Aaronson", "نودلز"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Scarface — من هو الرجل الذي كان يحاول بناء إمبراطورية مخدرات في Miami بعد وصوله من كوبا؟", a: "Tony Montana", alt: ["Tony", "توني مونتانا"] },
+  { cat: "أفلام ومسلسلات", d: 3, q: "من فيلم Scarface — من هو الرجل الذي قتل Tony Montana في النهاية؟", a: "The Skull", alt: ["سكال", "رجل Sosa", "الرجل ذو القناع"] },
+  // ---- لور السولز (أسئلة حسين) ----
+  { cat: "لور السولز", d: 3, q: "من إلدن رينق — من هو ابن Godfrey وMarika الذي كان يُعرف بأنه أول Elden Lord؟", a: "Godwyn the Golden", alt: ["Godwyn", "غودوين", "جودوين"] },
+  { cat: "لور السولز", d: 3, q: "من إلدن رينق — من هي الشخصية التي تخلّت عن جسدها لتتحرر من الـ Greater Will وتبدأ مخططها الخاص؟", a: "Ranni the Witch", alt: ["Ranni", "رانّي", "راني"] },
+  { cat: "لور السولز", d: 3, q: "من إلدن رينق — من هما التوأمان اللذان وُلدا من Marika وRadagon وكانا مصابين بلعنة منذ ولادتهما؟", a: "Malenia وMiquella", alt: ["Malenia and Miquella", "ماليينيا وميكيلا", "ماليينيا", "ميكيلا"] },
+  { cat: "لور السولز", d: 3, q: "من إلدن رينق — من هو ابن Radagon وRennala الذي أصبح سيد الـ Starscourge؟", a: "Starscourge Radahn", alt: ["Radahn", "رادان"] },
+  { cat: "لور السولز", d: 3, q: "من إلدن رينق — من هي الشخصية التي قادت عملية سرقة جزء من الـ Rune of Death؟", a: "Ranni", alt: ["رانّي", "Ranni the Witch"] },
+  { cat: "لور السولز", d: 3, q: "من إلدن رينق — من هو الشخص الذي قُتل جسده في Night of the Black Knives، بينما بقيت روحه مرتبطة بالموت؟", a: "Godwyn", alt: ["غودوين", "Godwyn the Golden"] },
+  { cat: "لور السولز", d: 3, q: "من إلدن رينق — ما الحدث الذي تسبب في تحطم الـ Elden Ring واندلاع الحرب بين أنصاف الآلهة؟", a: "The Shattering", alt: ["الشاترينغ", "التشظي", "Shattering"] },
+  { cat: "لور السولز", d: 3, q: "من إلدن رينق — من هو الابن المنبوذ لـ Marika وGodfrey الذي أصبح Lord of Blood؟", a: "Mohg", alt: ["موغ", "موق"] },
+  { cat: "لور السولز", d: 3, q: "من إلدن رينق — من هي المحاربة التي لم تهزم Radahn بالسيف، بل تسببت في إطلاق الـ Scarlet Rot عليه؟", a: "Malenia", alt: ["ماليينيا"] },
+  { cat: "لور السولز", d: 3, q: "من إلدن رينق — من هو الشخص الذي كان زوج Marika الأول وElden Lord قبل أن يُنفى؟", a: "Godfrey", alt: ["غودفري", "جودفري"] },
+  { cat: "لور السولز", d: 3, q: "من إلدن رينق — من هو والد Ranni وRadahn وRykard؟", a: "Radagon", alt: ["رادغون", "رادجون"] },
+  { cat: "لور السولز", d: 3, q: "من إلدن رينق — من هي الشخصية التي أنشأت الـ Haligtree كمكان للمنبوذين والمصابين بالـ Curses؟", a: "Miquella", alt: ["ميكيلا"] },
+  { cat: "لور السولز", d: 3, q: "من إلدن رينق — من هو الـ Demigod الذي التهمه الثعبان العظيم وأصبح Lord of Blasphemy؟", a: "Rykard", alt: ["ريكارد"] },
+  { cat: "لور السولز", d: 3, q: "من إلدن رينق — من هي الشخصية التي كانت وراء خطة الـ Night of the Black Knives، رغم أنها لم تنفذ عملية القتل بنفسها؟", a: "Ranni", alt: ["رانّي"] },
+  { cat: "لور السولز", d: 3, q: "من إلدن رينق — ما العلاقة بين Marika وRadagon؟", a: "هما نفس الشخص", alt: ["نفس الشخص", "same person", "شخص واحد"] },
+  { cat: "لور السولز", d: 3, q: "من إلدن رينق — من الذي تسبب في إصابة Caelid بالـ Scarlet Rot خلال معركته ضد Radahn؟", a: "Malenia", alt: ["ماليينيا"] },
+  { cat: "لور السولز", d: 3, q: "من إلدن رينق — من هو الـ Demigod الذي ظل متمسكًا بجسده رغم موته وأصبح أصلًا لانتشار Deathroot؟", a: "Godwyn", alt: ["غودوين", "Godwyn the Golden"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 3 — من هو الشخص الذي أشعل الـ First Flame للمرة الأولى في عصره؟", a: "Gwyn", alt: ["غوين", "Gwyn Lord of Sunlight"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 3 — من هو الـ Lord of Cinder الذي رفض التضحية بنفسه لإعادة إشعال الـ First Flame؟", a: "Lothric", alt: ["لوثريك", "Lothric Younger Prince"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 3 — من هو الأخ الأكبر لـ Lothric الذي حمله على ظهره أثناء المعركة؟", a: "Lorian", alt: ["لوريان", "Lorian Elder Prince"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 3 — من هو الـ Lord of Cinder الذي كان حاكمًا عملاقًا وضحّى بنفسه لحماية شعبه؟", a: "Yhorm the Giant", alt: ["Yhorm", "يورم"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 3 — من هم الـ Lords of Cinder الذين كانوا فرقة محاربين تلاحق الـ Abyss وهُزموا في النهاية؟", a: "Abyss Watchers", alt: ["أبيس ووتشرز", "حراس الأبيس"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 3 — من هو أول مولود لـ Gwyn الذي مُحي اسمه من التاريخ بسبب تحالفه مع التنانين؟", a: "Nameless King", alt: ["الملك بلا اسم", "نيملس كنق"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 3 — من هو الـ Lord of Cinder الذي أصبح جسده مرتبطًا بالـ Profaned Flame؟", a: "Yhorm the Giant", alt: ["Yhorm", "يورم"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 3 — من هي الشخصية التي رفضت أن تصبح Lord of Cinder وانضمت إلى Painted World of Ariandel؟", a: "Sister Friede", alt: ["Friede", "فريدي"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 3 — من هو الفارس الذي سافر إلى نهاية العالم بحثًا عن دم الـ Dark Soul؟", a: "Slave Knight Gael", alt: ["Gael", "غايل"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 3 — من هو الشخص الذي كان مسؤولًا عن تحويل Vordt وDancer إلى Outrider Knights؟", a: "Pontiff Sulyvahn", alt: ["Sulyvahn", "سوليفان"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 3 — من هو الشخص الذي أصبح حاكمًا لـ Irithyll واستخدم السحر والسيطرة لإخضاع الآخرين؟", a: "Pontiff Sulyvahn", alt: ["Sulyvahn", "سوليفان"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 3 — من هو المحارب الذي أصبح يُعرف باسم Champion بعد أن فشل في الوصول إلى الـ First Flame؟", a: "Champion Gundyr", alt: ["Gundyr", "غوندر"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 3 — ما اسم القوة التي ابتلعت Artorias وجعلته يفقد السيطرة على نفسه؟", a: "The Abyss", alt: ["Abyss", "الأبيس", "الهاوية"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 3 — من هو الشخص الذي كان شريك Yhorm وصديقه، وأقسم أن يفي بوعده له؟", a: "Siegward of Catarina", alt: ["Siegward", "سيغوارد"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 3 — من هو البوس الذي يمثل أرواح جميع من أصبحوا Lords of Cinder؟", a: "Soul of Cinder", alt: ["روح الرماد", "سول اوف سندر"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 3 — من هو الشخص الذي أصبح مرتبطًا بالـ First Flame لدرجة أن جسده تحوّل إلى Ashen warrior؟", a: "Soul of Cinder", alt: ["روح الرماد", "سول اوف سندر"] },
+  { cat: "لور السولز", d: 3, q: "من سيكيرو — من هو الرجل الذي ربّى Sekiro وعلّمه طريق الـ Shinobi؟", a: "Owl", alt: ["البومة", "أوول"] },
+  { cat: "لور السولز", d: 3, q: "من سيكيرو — من هو الشخص الذي يُعرف بأنه وريث قوة التنين ويصبح محور الصراع في القصة؟", a: "Kuro", alt: ["كورو", "Divine Heir", "الوريث الإلهي"] },
+  { cat: "لور السولز", d: 3, q: "من سيكيرو — من هي المرأة التي كانت مرتبطة بـ Kuro وامتلكت قوة Dragon's Heritage قبله؟", a: "Tomoe", alt: ["توموي", "تومو"] },
+  { cat: "لور السولز", d: 3, q: "من سيكيرو — من هو المحارب الذي كان جدّه Isshin Ashina ويحاول إنقاذ Ashina بأي وسيلة؟", a: "Genichiro", alt: ["جينيتشيرو", "Genichiro Ashina"] },
+  { cat: "لور السولز", d: 3, q: "من سيكيرو — من هو الرجل الذي يُعتبر مؤسس Ashina Clan وأحد أعظم المبارزين في اليابان؟", a: "Isshin Ashina", alt: ["Isshin", "إيشين"] },
+  { cat: "لور السولز", d: 3, q: "من سيكيرو — من هو الشخص الذي منح Sekiro قدرته على العودة من الموت؟", a: "Kuro", alt: ["كورو"] },
+  { cat: "لور السولز", d: 3, q: "من سيكيرو — من هي الشخصية التي حاولت استخدام الـ Dragon's Heritage لإنقاذ Ashina؟", a: "Genichiro", alt: ["جينيتشيرو", "Genichiro Ashina"] },
+  { cat: "لور السولز", d: 3, q: "من سيكيرو — من هو المحارب الذي هزم Sekiro في بداية اللعبة وقطع ذراعه؟", a: "Genichiro", alt: ["جينيتشيرو", "Genichiro Ashina"] },
+  { cat: "لور السولز", d: 3, q: "من سيكيرو — من هو الشخص الذي كان يستخدم الـ Mortal Blade الحمراء لإحياء الموتى؟", a: "Genichiro", alt: ["جينيتشيرو", "Genichiro Ashina"] },
+  { cat: "لور السولز", d: 3, q: "من سيكيرو — من هي الشخصية التي ارتبط خلودها بمياه Senpou Temple ويسمونها الطفلة الإلهية؟", a: "Divine Child", alt: ["الطفلة الإلهية", "Divine Child of Rejuvenating Waters"] },
+  { cat: "لور السولز", d: 3, q: "من سيكيرو — من هو الشخص الذي كان يُعرف باسم The Owl وكان من أعظم الـ Shinobi في Ashina؟", a: "Owl", alt: ["البومة", "أوول"] },
+  { cat: "لور السولز", d: 3, q: "من سيكيرو — من هو الشخص الذي قتل Emma وIsshin في نهاية Shura؟", a: "Sekiro", alt: ["سيكيرو", "البطل", "الذئب", "Wolf"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 1 — من هو الذي قاد الـ Lord Souls واستخدم قوة الـ Flame لمواجهة التنانين القديمة؟", a: "Gwyn", alt: ["غوين", "Gwyn Lord of Sunlight"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 1 — من هو الساحر الذي اكتشف Flame of Chaos وحاول استخدامه بعد أن بدأ الـ First Flame بالضعف؟", a: "The Witch of Izalith", alt: ["Witch of Izalith", "ساحرة إيزاليث", "إيزاليث"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 1 — من هو الابن الذي فقد اسمه بعد أن انحاز إلى التنانين القديمة؟", a: "The Nameless King", alt: ["Nameless King", "الملك بلا اسم"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 1 — من هو الشخص الذي تسبب في ظهور الـ Bed of Chaos بعد محاولته إنشاء Flame جديدة؟", a: "The Witch of Izalith", alt: ["Witch of Izalith", "ساحرة إيزاليث"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 1 — من هو الشخص الذي ضحّى بنفسه لإشعال الـ First Flame عندما بدأ يضعف؟", a: "Gwyn", alt: ["غوين", "Gwyn Lord of Cinder"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 1 — من هو أول مخلوق وُلد من الـ Dark Soul؟", a: "The Pygmy", alt: ["Pygmy", "البيقمي", "Furtive Pygmy"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 1 — من هو الشخص الذي كان يبحث عن الـ Dark Soul وأصبح مرتبطًا بأصل الـ Abyss؟", a: "Manus", alt: ["مانوس", "Manus Father of the Abyss"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 1 — من هو الفارس الذي دخل الـ Abyss لمواجهة Manus؟", a: "Artorias", alt: ["أرتورياس", "Artorias the Abysswalker"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 1 — من هو الشخص الذي أنقذ Oolacile من الـ Abyss فعليًا، رغم أن التاريخ نسب الإنجاز إلى Artorias؟", a: "The Chosen Undead", alt: ["Chosen Undead", "اللاعب", "البطل"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 1 — من هو ابن Gwyn الذي أصبح حاميًا لـ Anor Londo بعد أن اختفى والده؟", a: "Gwyndolin", alt: ["غويندولين", "Dark Sun Gwyndolin"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 1 — من هي ابنة Gwyn التي غادرت Anor Londo وتُعرف بإلهة الشمس والخصب؟", a: "Gwynevere", alt: ["غوينيفير", "جوينيفير"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 1 — من هو الأفعى الذي كان يوجّه الـ Darkwraiths ويشجع على قدوم عصر الظلام؟", a: "Darkstalker Kaathe", alt: ["Kaathe", "كاثي"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 1 — من هو أحد فرسان Gwyn الأربعة الأشهر بولائه ودخوله الـ Abyss؟", a: "Artorias", alt: ["أرتورياس"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 1 — من هو التنين الذي قطع ذيله وأصبح سلاحه مشهورًا بين الـ Chosen Undead؟", a: "Seath the Scaleless", alt: ["Seath", "سيث"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 1 — من هو التنين الذي خان أبناء جنسه وانضم إلى Gwyn أثناء الحرب ضد التنانين؟", a: "Seath the Scaleless", alt: ["Seath", "سيث"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 1 — من هو الشخص الذي أصبح أول حامل للـ Gravelord power واستخدم الـ Miasma of Death؟", a: "Gravelord Nito", alt: ["Nito", "نيتو"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 1 — من هي الشخصية التي أصبحت مرتبطة بـ Chaos بعد محاولة إعادة إشعال الـ First Flame؟", a: "The Witch of Izalith", alt: ["Witch of Izalith", "ساحرة إيزاليث"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 1 — من هو الشخص الذي كان أول من وجد الـ Dark Soul داخل الـ First Flame؟", a: "The Furtive Pygmy", alt: ["Furtive Pygmy", "البيقمي", "Pygmy"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 1 — من هو الشخص الذي أعطى الـ Chosen Undead مهمة الوصول إلى Anor Londo ومواجهة الـ Lord Souls؟", a: "Kingseeker Frampt", alt: ["Frampt", "فرامبت"] },
+  { cat: "لور السولز", d: 3, q: "من دارك سولز 1 — من هو الشخص الذي كان يحاول إقناع الـ Chosen Undead بعدم إشعال الـ First Flame؟", a: "Darkstalker Kaathe", alt: ["Kaathe", "كاثي"] },
+  // ---- بوسات السولز (أسئلة حسين) ----
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق DLC — من هو البوس اللي ينتمي لعائلة Marika لكنه مخفي عن العالم؟", a: "Messmer", alt: ["ميسمر", "Messmer the Impaler", "ميسمير"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق DLC — من هو البوس اللي كان مسؤولًا عن حملة الـ Crusade في الـ Realm of Shadow؟", a: "Messmer", alt: ["ميسمر", "Messmer the Impaler", "ميسمير"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق DLC — من هو البوس اللي يستخدم الرمح والنار في قتاله؟", a: "Messmer", alt: ["ميسمر", "Messmer the Impaler", "ميسمير"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق DLC — من هو البوس اللي عنده عين مغطاة وشعر أحمر؟", a: "Messmer", alt: ["ميسمر", "Messmer the Impaler", "ميسمير"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق — من هو البوس اللي اختار أن يُلتهم بدل أن يخضع لإرادة الـ Greater Will؟", a: "Rykard", alt: ["ريكارد", "Rykard Lord of Blasphemy", "لورد البلاسفيمي"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق — من هو البوس اللي حوّل الـ Volcano Manor إلى معقل للتمرد على الـ Erdtree؟", a: "Rykard", alt: ["ريكارد", "Rykard Lord of Blasphemy", "لورد البلاسفيمي"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق — من هو البوس اللي لقبه مرتبط بتحدّي المقدسات ورفض النظام الذهبي؟", a: "Rykard", alt: ["ريكارد", "Rykard Lord of Blasphemy", "لورد البلاسفيمي"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق — من هو البوس اللي قال إن يومًا ما سيصبح كل شيء one flesh؟", a: "Rykard", alt: ["ريكارد", "Rykard Lord of Blasphemy", "لورد البلاسفيمي"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق DLC — من هو البوس اللي فقد جزءًا من جسده في معركة قديمة ضد أقوى تنين؟", a: "Bayle", alt: ["بايل", "Bayle the Dread", "بايل الرهيب"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق DLC — من هو البوس اللي تمرّد على الـ Dragonlord ورفض الخضوع له؟", a: "Bayle", alt: ["بايل", "Bayle the Dread", "بايل الرهيب"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق DLC — من هو البوس اللي قاتل Dragonlord Placidusax ونجا من المواجهة؟", a: "Bayle", alt: ["بايل", "Bayle the Dread", "بايل الرهيب"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق DLC — من هو البوس اللي يُعتبر العدو الأكبر لـ Igon؟", a: "Bayle", alt: ["بايل", "Bayle the Dread", "بايل الرهيب"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق — من هو البوس اللي كان تنينًا عظيمًا مرتبطًا بأمير الموت؟", a: "Lichdragon Fortissax", alt: ["فورتساكس", "Fortissax", "ليتش دراقون"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق — من هو البوس اللي واجه الـ Death داخل أحلام أحد الشخصيات؟", a: "Lichdragon Fortissax", alt: ["فورتساكس", "Fortissax", "ليتش دراقون"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق — من هو البوس اللي مرتبط بـ Godwyn والـ Prince of Death؟", a: "Lichdragon Fortissax", alt: ["فورتساكس", "Fortissax", "ليتش دراقون"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق — من هو البوس اللي تقاتله داخل حلم Fia؟", a: "Lichdragon Fortissax", alt: ["فورتساكس", "Fortissax", "ليتش دراقون"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق — من هو البوس اللي لقبه يجمع بين التنين وشيء مرتبط بالموت؟", a: "Lichdragon Fortissax", alt: ["فورتساكس", "Fortissax", "ليتش دراقون"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق DLC — من هو البوس اللي ظلّ يعاني من الـ Frenzied Flame رغم أنه حاول مقاومته؟", a: "Midra", alt: ["ميدرا", "Midra Lord of Frenzied Flame", "لورد الفرنزيد فليم"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق DLC — من هو البوس اللي تخلى عن رأسه ليمنع الـ Frenzied Flame من السيطرة عليه؟", a: "Midra", alt: ["ميدرا", "Midra Lord of Frenzied Flame", "لورد الفرنزيد فليم"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق DLC — من هو البوس اللي مرتبط بأتباع الـ Three Fingers وفلسفة الـ Frenzied Flame؟", a: "Midra", alt: ["ميدرا", "Midra Lord of Frenzied Flame", "لورد الفرنزيد فليم"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق DLC — من هو البوس اللي يتحول في منتصف المعركة من رجل ضعيف إلى Lord مخيف؟", a: "Midra", alt: ["ميدرا", "Midra Lord of Frenzied Flame", "لورد الفرنزيد فليم"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق DLC — من هو البوس اللي كان يعاني من ألم شديد بسبب سيف مغروس في رأسه؟", a: "Midra", alt: ["ميدرا", "Midra Lord of Frenzied Flame", "لورد الفرنزيد فليم"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق DLC — من هو البوس اللي كانت شقيقتها واحدة من أشهر الشخصيات في الـ Lands Between؟", a: "Rellana", alt: ["ريلانا", "Rellana Twin Moon Knight", "فارسة القمرين"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق DLC — من هو البوس اللي تحوّل قتالها في المرحلة الثانية إلى مزيج من السحر والنار؟", a: "Rellana", alt: ["ريلانا", "Rellana Twin Moon Knight", "فارسة القمرين"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق DLC — من هو البوس اللي حاربت إلى جانب Messmer في حملته في الـ Realm of Shadow؟", a: "Rellana", alt: ["ريلانا", "Rellana Twin Moon Knight", "فارسة القمرين"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق DLC — من هو البوس اللي تستخدم تقنية القمرين التوأمين في أقوى هجماتها؟", a: "Rellana", alt: ["ريلانا", "Rellana Twin Moon Knight", "فارسة القمرين"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق DLC — من هو البوس اللي تركت عائلتها واتبعت Messmer إلى أرض الظلال؟", a: "Rellana", alt: ["ريلانا", "Rellana Twin Moon Knight", "فارسة القمرين"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق — من هو البوس اللي يحمل جزءًا من الـ Rune of Death داخل سلاحه؟", a: "Maliketh", alt: ["ماليكيث", "Maliketh the Black Blade", "النصل الأسود"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق — من هو البوس اللي كان يُعرف باسم Gurranq تحت هوية مختلفة؟", a: "Maliketh", alt: ["ماليكيث", "Maliketh the Black Blade", "النصل الأسود"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق — من هو البوس اللي يحرس شيئًا أخفته Marika عن بقية العالم؟", a: "Maliketh", alt: ["ماليكيث", "Maliketh the Black Blade", "النصل الأسود"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق — من هو البوس اللي تسبب سرقته في بداية سلسلة أحداث أدت إلى Night of the Black Knives؟", a: "Maliketh", alt: ["ماليكيث", "Maliketh the Black Blade", "النصل الأسود"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق — من هو البوس اللي تواجهه في Crumbling Farum Azula؟", a: "Maliketh", alt: ["ماليكيث", "Maliketh the Black Blade", "النصل الأسود"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق — من هو البوس اللي يُعتبر Shadowbound Beast الخاص بـ Marika؟", a: "Maliketh", alt: ["ماليكيث", "Maliketh the Black Blade", "النصل الأسود"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق — من هو البوس اللي لقبه مرتبط بالسلاح الذي يحمل قوة الـ Rune of Death؟", a: "Maliketh", alt: ["ماليكيث", "Maliketh the Black Blade", "النصل الأسود"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق — من هو البوس اللي كان يَعتبر نفسه من سلالة Godfrey، رغم أن دمه كان أضعف من بقية أفراد العائلة؟", a: "Godrick", alt: ["غودريك", "Godrick the Grafted", "جودريك"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق — من هو البوس اللي كان يعوّض ضعفه بزراعة أجزاء أجساد المحاربين في جسده؟", a: "Godrick", alt: ["غودريك", "Godrick the Grafted", "جودريك"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق — من هو البوس اللي هرب من Leyndell بعد هزيمته، ثم اختبأ داخل قلعة بعيدة؟", a: "Godrick", alt: ["غودريك", "Godrick the Grafted", "جودريك"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق — من هو البوس اللي قطع رأسه بنفسه ليحاول الهروب من الموت؟", a: "Godrick", alt: ["غودريك", "Godrick the Grafted", "جودريك"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق — من هو البوس اللي استبدل أحد ذراعيه بذراع تنين أثناء المعركة؟", a: "Godrick", alt: ["غودريك", "Godrick the Grafted", "جودريك"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق — من هو البوس اللي جمع أطرافًا من أجساد الآخرين ليصنع لنفسه قوة أكبر؟", a: "Godrick", alt: ["غودريك", "Godrick the Grafted", "جودريك"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق — من هو البوس اللي يحكم Stormveil Castle رغم أن أقاربه الأقوى ينظرون إليه باحتقار؟", a: "Godrick", alt: ["غودريك", "Godrick the Grafted", "جودريك"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق — من هو البوس اللي تقدر تسمعه يتحدث عن نفسه كأنه أعظم من يكون، رغم أنه يُعتبر الأضعف بين الـ Demigods؟", a: "Godrick", alt: ["غودريك", "Godrick the Grafted", "جودريك"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق — من هو البوس اللي في المرحلة الثانية يقطع ذراعه ويستخدم رأس تنين كسلاح؟", a: "Godrick", alt: ["غودريك", "Godrick the Grafted", "جودريك"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق — من هو البوس اللي لقبه مرتبط بفعلٍ يجعله يضيف أجساد الآخرين إلى جسده؟", a: "Godrick", alt: ["غودريك", "Godrick the Grafted", "جودريك"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي يستخدم مطرقة ضخمة ويعتمد على الهجمات الجسدية والجليد؟", a: "Vordt", alt: ["فوردت", "Vordt of the Boreal Valley", "فوردت البوريل"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي تبدأ المرحلة الثانية عنده بإطلاقه نفسًا جليديًا قويًا؟", a: "Vordt", alt: ["فوردت", "Vordt of the Boreal Valley", "فوردت البوريل"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي كان أحد فرسان Pontiff Sulyvahn قبل أن يفقد إنسانيته؟", a: "Vordt", alt: ["فوردت", "Vordt of the Boreal Valley", "فوردت البوريل"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي تقاتله مباشرة بعد الوصول إلى High Wall of Lothric؟", a: "Vordt", alt: ["فوردت", "Vordt of the Boreal Valley", "فوردت البوريل"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي يظهر كوحش ضخم بأرجل قصيرة ودرع معدني؟", a: "Vordt", alt: ["فوردت", "Vordt of the Boreal Valley", "فوردت البوريل"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي لقبه مرتبط بمنطقة شمالية باردة تُعرف باسم Boreal Valley؟", a: "Vordt", alt: ["فوردت", "Vordt of the Boreal Valley", "فوردت البوريل"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي يُعتبر أول Boss رئيسي بالقصة؟", a: "Vordt", alt: ["فوردت", "Vordt of the Boreal Valley", "فوردت البوريل"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هم البوس اللي ما تواجه فيهم مقاتل واحد، بل مجموعة كاملة من رجال الدين؟", a: "Deacons of the Deep", alt: ["الشمامسة", "ديكونز", "Deacons"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هم البوس اللي يتجمعون حول جثة ويؤدون طقوسًا غامضة؟", a: "Deacons of the Deep", alt: ["الشمامسة", "ديكونز", "Deacons"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هم البوس اللي يستخدمون السحر والـ Dark أثناء محاولتهم إيقافك؟", a: "Deacons of the Deep", alt: ["الشمامسة", "ديكونز", "Deacons"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هم البوس اللي واحد منهم يحمل علامة حمراء ويجب التركيز عليه لهزيمتهم؟", a: "Deacons of the Deep", alt: ["الشمامسة", "ديكونز", "Deacons"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هم البوس اللي يستمرون في الظهور بأعداد كبيرة كلما قتلت بعضهم؟", a: "Deacons of the Deep", alt: ["الشمامسة", "ديكونز", "Deacons"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هم البوس اللي يحرسون قبرًا مرتبطًا بـ Aldrich؟", a: "Deacons of the Deep", alt: ["الشمامسة", "ديكونز", "Deacons"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هم البوس اللي تواجههم داخل Cathedral of the Deep؟", a: "Deacons of the Deep", alt: ["الشمامسة", "ديكونز", "Deacons"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هم البوس اللي قتالهم يعتمد أكثر على إدارة مجموعة من الأعداء بدل مواجهة واحد قوي؟", a: "Deacons of the Deep", alt: ["الشمامسة", "ديكونز", "Deacons"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي كان في الأصل ساحرًا من Irithyll قبل أن يصبح حاكمًا مستبدًا؟", a: "Pontiff Sulyvahn", alt: ["سوليفان", "Sulyvahn", "البابا سوليفان"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي يحمل سيفين، أحدهما ناري والآخر مغطى بالسحر؟", a: "Pontiff Sulyvahn", alt: ["سوليفان", "Sulyvahn", "البابا سوليفان"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي استولى على Irithyll بعد أن وصل إليها من الـ Painted World؟", a: "Pontiff Sulyvahn", alt: ["سوليفان", "Sulyvahn", "البابا سوليفان"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي تظهر نسخة منه في منتصف القتال لتقاتلك بجانبه؟", a: "Pontiff Sulyvahn", alt: ["سوليفان", "Sulyvahn", "البابا سوليفان"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي يقف بينك وبين الوصول إلى Anor Londo؟", a: "Pontiff Sulyvahn", alt: ["سوليفان", "Sulyvahn", "البابا سوليفان"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي كان وراء تحويل Vordt وDancer إلى Outrider Knights؟", a: "Pontiff Sulyvahn", alt: ["سوليفان", "Sulyvahn", "البابا سوليفان"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي يقاتلك بسيفين، ويستطيع استدعاء نسخة مظلمة من نفسه؟", a: "Pontiff Sulyvahn", alt: ["سوليفان", "Sulyvahn", "البابا سوليفان"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي قصته مرتبطة بـ Siegward of Catarina ووعدٍ قديم بينهما؟", a: "Yhorm the Giant", alt: ["يورم", "Yhorm", "يورم العملاق"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس العملاق اللي يمكن هزيمته بسهولة أكبر باستخدام سلاح صُمم خصيصًا ضده؟", a: "Yhorm the Giant", alt: ["يورم", "Yhorm", "يورم العملاق"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي كانت في الأصل راقصة في قصر Irithyll قبل أن تتحول إلى شيء آخر؟", a: "Dancer of the Boreal Valley", alt: ["الراقصة", "Dancer", "راقصة الوادي البارد"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي أُجبرت على أن تصبح واحدة من Outrider Knights؟", a: "Dancer of the Boreal Valley", alt: ["الراقصة", "Dancer", "راقصة الوادي البارد"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي حوّلها Pontiff Sulyvahn إلى وحش باستخدام الـ Pontiff's Eyes؟", a: "Dancer of the Boreal Valley", alt: ["الراقصة", "Dancer", "راقصة الوادي البارد"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي يمكن مواجهته مبكرًا جدًا إذا قتلت شخصية معينة؟", a: "Dancer of the Boreal Valley", alt: ["الراقصة", "Dancer", "راقصة الوادي البارد"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي تُعتبر من أقرب خدم Pontiff Sulyvahn وأكثرهم ولاءً؟", a: "Dancer of the Boreal Valley", alt: ["الراقصة", "Dancer", "راقصة الوادي البارد"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي كان في الأصل Unkindled مثل اللاعب، لكنه وصل إلى Firelink Shrine بعد فوات الأوان؟", a: "Champion Gundyr", alt: ["تشامبيون غوندر", "Gundyr", "غوندر البطل"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي تواجه نسخة منه في مكان يشبه الماضي، قبل أن يصبح ما هو عليه؟", a: "Champion Gundyr", alt: ["تشامبيون غوندر", "Gundyr", "غوندر البطل"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي كان من المفترض أن يكون Ashen One، لكنه فشل في الوصول إلى الـ Flame؟", a: "Champion Gundyr", alt: ["تشامبيون غوندر", "Gundyr", "غوندر البطل"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي يستخدم Halberd ضخمة ويقاتل بأسلوب أكثر عدوانية من نسخته الأخرى؟", a: "Champion Gundyr", alt: ["تشامبيون غوندر", "Gundyr", "غوندر البطل"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي يظهر في Untended Graves بدل الـ Cemetery of Ash؟", a: "Champion Gundyr", alt: ["تشامبيون غوندر", "Gundyr", "غوندر البطل"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي يبدو شبيهًا بـ Iudex Gundyr، لكن الفرق أن هذه النسخة أسرع وأشرس؟", a: "Champion Gundyr", alt: ["تشامبيون غوندر", "Gundyr", "غوندر البطل"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي لقبه يدل على أنه نسخة مُتوجة وأقوى من Gundyr الذي واجهته في البداية؟", a: "Champion Gundyr", alt: ["تشامبيون غوندر", "Gundyr", "غوندر البطل"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي كان مقدّرًا له أن يصبح Lord of Cinder لكنه رفض هذا المصير؟", a: "Lothric", alt: ["لوثريك", "Lothric Younger Prince", "الأمير الأصغر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي اختار أخوه الأكبر أن يحمله على ظهره بدل أن يتركه يواجه مصيره وحده؟", a: "Lothric", alt: ["لوثريك", "Lothric Younger Prince", "الأمير الأصغر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي كان يعاني من مرض جعله غير قادر على أن يعيش حياة طبيعية؟", a: "Lothric", alt: ["لوثريك", "Lothric Younger Prince", "الأمير الأصغر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي كان جزءًا من خطة العائلة لإشعال الـ First Flame رغم أنه لم يرغب بذلك؟", a: "Lothric", alt: ["لوثريك", "Lothric Younger Prince", "الأمير الأصغر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي يقاتلك وهو جالس على ظهر أخيه الأكبر؟", a: "Lothric", alt: ["لوثريك", "Lothric Younger Prince", "الأمير الأصغر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي يستخدم الـ Holy Magic ويمتلك القدرة على إحياء أخيه أثناء المعركة؟", a: "Lothric", alt: ["لوثريك", "Lothric Younger Prince", "الأمير الأصغر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي كان رفضه التضحية بالـ Flame سببًا في دخول مملكة Lothric في حالة من الفوضى؟", a: "Lothric", alt: ["لوثريك", "Lothric Younger Prince", "الأمير الأصغر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي تواجهه مع أخيه بعد صعودك إلى قمة Lothric Castle؟", a: "Lothric", alt: ["لوثريك", "Lothric Younger Prince", "الأمير الأصغر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي يُعتبر أصغر أبناء العائلة الملكية في Lothric؟", a: "Lothric", alt: ["لوثريك", "Lothric Younger Prince", "الأمير الأصغر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي لقبه Younger Prince ويشارك جسده ومعركته مع أخيه الأكبر؟", a: "Lothric", alt: ["لوثريك", "Lothric Younger Prince", "الأمير الأصغر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي تخلّى عن عائلته بعد أن اختار الوقوف إلى جانب أعدائهم؟", a: "Nameless King", alt: ["الملك بلا اسم", "Nameless King", "نيملس كنق"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي كان إلهًا للحرب قبل أن يُمحى اسمه من التاريخ؟", a: "Nameless King", alt: ["الملك بلا اسم", "Nameless King", "نيملس كنق"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي قطع علاقته مع والده بسبب تحالفه مع التنانين؟", a: "Nameless King", alt: ["الملك بلا اسم", "Nameless King", "نيملس كنق"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي يصل إلى ساحة القتال راكبًا على تنين عاصفة؟", a: "Nameless King", alt: ["الملك بلا اسم", "Nameless King", "نيملس كنق"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي يستخدم البرق كسلاح، بينما يقاتلك من فوق سحابة؟", a: "Nameless King", alt: ["الملك بلا اسم", "Nameless King", "نيملس كنق"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي ارتبط اسمه بـ Gwyn رغم أن اللعبة تعمدت عدم ذكر اسمه الحقيقي؟", a: "Nameless King", alt: ["الملك بلا اسم", "Nameless King", "نيملس كنق"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي كان أول مولود لـ Gwyn قبل أن يخسر مكانته ويُمحى اسمه؟", a: "Nameless King", alt: ["الملك بلا اسم", "Nameless King", "نيملس كنق"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي يقاتلك بعد هزيمة تنين يرافقه في المعركة؟", a: "Nameless King", alt: ["الملك بلا اسم", "Nameless King", "نيملس كنق"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي تواجهه في Archdragon Peak وسط عاصفة وبرق؟", a: "Nameless King", alt: ["الملك بلا اسم", "Nameless King", "نيملس كنق"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي لقبه نفسه يدل على أن اسمه الحقيقي قد أُزيل من التاريخ؟", a: "Nameless King", alt: ["الملك بلا اسم", "Nameless King", "نيملس كنق"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي يمثل كل من سبق له أن أشعل الـ First Flame؟", a: "Soul of Cinder", alt: ["روح الرماد", "Soul of Cinder", "سول اوف سندر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي يتغير أسلوب قتاله أثناء المعركة وكأنه يستخدم أرواح محاربين مختلفين؟", a: "Soul of Cinder", alt: ["روح الرماد", "Soul of Cinder", "سول اوف سندر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي يحمل آثار جميع الـ Lords of Cinder في جسد واحد؟", a: "Soul of Cinder", alt: ["روح الرماد", "Soul of Cinder", "سول اوف سندر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي يستخدم عدة أساليب قتال مختلفة، من السيف والسحر إلى المعجزات؟", a: "Soul of Cinder", alt: ["روح الرماد", "Soul of Cinder", "سول اوف سندر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي يظهر في نهاية رحلة اللاعب كآخر حارس للـ First Flame؟", a: "Soul of Cinder", alt: ["روح الرماد", "Soul of Cinder", "سول اوف سندر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي يبدو في البداية كمحارب عادي، لكنه يخفي قوة هائلة مرتبطة بالـ Flame؟", a: "Soul of Cinder", alt: ["روح الرماد", "Soul of Cinder", "سول اوف سندر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي في المرحلة الثانية يبدأ بالقتال بأسلوب يشبه Gwyn؟", a: "Soul of Cinder", alt: ["روح الرماد", "Soul of Cinder", "سول اوف سندر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي يمثل إرادة الـ First Flame أكثر من كونه شخصًا واحدًا؟", a: "Soul of Cinder", alt: ["روح الرماد", "Soul of Cinder", "سول اوف سندر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي تقاتله عند Kiln of the First Flame؟", a: "Soul of Cinder", alt: ["روح الرماد", "Soul of Cinder", "سول اوف سندر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 — من هو البوس اللي لقبه يشير إلى أنه تجسيد للأرواح التي أصبحت رمادًا؟", a: "Soul of Cinder", alt: ["روح الرماد", "Soul of Cinder", "سول اوف سندر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 DLC — من هي البوس اللي تخفي حقيقتها خلف شخصية راهبة هادئة داخل كنيسة معزولة؟", a: "Sister Friede", alt: ["فريدي", "Friede", "الأخت فريدي"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 DLC — من هي البوس اللي تنتمي إلى عائلة مرتبطة مباشرة بـ Darkwraiths؟", a: "Sister Friede", alt: ["فريدي", "Friede", "الأخت فريدي"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 DLC — من هي البوس اللي تحاربك باستخدام منجل أسود ضخم وحركات سريعة جدًا؟", a: "Sister Friede", alt: ["فريدي", "Friede", "الأخت فريدي"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 DLC — من هي البوس اللي تعود للقتال أكثر من مرة بعد أن تظن أنك هزمتها؟", a: "Sister Friede", alt: ["فريدي", "Friede", "الأخت فريدي"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 DLC — من هي البوس اللي تقاتلها داخل Painted World of Ariandel؟", a: "Sister Friede", alt: ["فريدي", "Friede", "الأخت فريدي"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 DLC — من هي البوس اللي كانت من أتباع Pontiff Sulyvahn قبل أن تنشق عنه؟", a: "Sister Friede", alt: ["فريدي", "Friede", "الأخت فريدي"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 DLC — من هي البوس اللي ترتبط قصتها بـ Yuria of Londor؟", a: "Sister Friede", alt: ["فريدي", "Friede", "الأخت فريدي"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 DLC — من هي البوس اللي تبدأ المرحلة الثالثة منها بقوة الـ Black Flame؟", a: "Sister Friede", alt: ["فريدي", "Friede", "الأخت فريدي"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 DLC — من هو البوس اللي بدأ رحلته كعبد، لكنه انتهى به الأمر بمواجهة اللاعب في نهاية العالم؟", a: "Slave Knight Gael", alt: ["غايل", "Gael", "سليف نايت غايل"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 DLC — من هو البوس اللي كان يبحث عن دم الـ Dark Soul من أجل إكمال لوحة جديدة؟", a: "Slave Knight Gael", alt: ["غايل", "Gael", "سليف نايت غايل"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 DLC — من هو البوس اللي خدم كحارس وحليف لشخصية صغيرة كانت تحلم برسم عالم جديد؟", a: "Slave Knight Gael", alt: ["غايل", "Gael", "سليف نايت غايل"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 DLC — من هو البوس اللي سافر إلى نهاية العالم بحثًا عن شيء كان يحتاجه رسام لخلق عالم جديد؟", a: "Slave Knight Gael", alt: ["غايل", "Gael", "سليف نايت غايل"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 DLC — من هو البوس اللي ابتلع الـ Dark Soul لدرجة أن جسده بدأ ينهار تحت تأثيرها؟", a: "Slave Knight Gael", alt: ["غايل", "Gael", "سليف نايت غايل"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 DLC — من هو البوس اللي تواجهه في نهاية الـ Ringed City وسط عالم يحتضر؟", a: "Slave Knight Gael", alt: ["غايل", "Gael", "سليف نايت غايل"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 3 DLC — من هو البوس اللي يقاتلك بسيف ضخم وقوس ونشاب، ثم يبدأ باستخدام الـ Dark Soul ضدك؟", a: "Slave Knight Gael", alt: ["غايل", "Gael", "سليف نايت غايل"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 DLC — من هو البوس اللي دخل الـ Abyss لإنقاذ البشر، لكنه انتهى به الأمر يستهلكه الظلام؟", a: "Artorias", alt: ["أرتورياس", "Artorias of the Abyss", "ارتورياس"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 DLC — من هو البوس اللي اشتهر بأنه فارس عظيم، لكن الحقيقة أن قصته أكثر مأساوية مما تُروى؟", a: "Artorias", alt: ["أرتورياس", "Artorias of the Abyss", "ارتورياس"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 DLC — من هو البوس اللي قاتل الـ Abyss حتى فقد ذراعه وسيفه قبل أن ينهار بالكامل؟", a: "Artorias", alt: ["أرتورياس", "Artorias of the Abyss", "ارتورياس"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 DLC — من هو البوس اللي كان أحد أعظم فرسان Gwyn الأربعة؟", a: "Artorias", alt: ["أرتورياس", "Artorias of the Abyss", "ارتورياس"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 DLC — من هو البوس اللي واجه Manus قبل أن يصل اللاعب إلى الـ Abyss؟", a: "Artorias", alt: ["أرتورياس", "Artorias of the Abyss", "ارتورياس"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 DLC — من هو البوس اللي تقاتله وهو مصاب وذراعه مكسورة، لكنه يستمر بالقتال بلا توقف؟", a: "Artorias", alt: ["أرتورياس", "Artorias of the Abyss", "ارتورياس"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 DLC — من هو البوس اللي كان لديه رفيق ذئب ضخم يُدعى Sif؟", a: "Artorias", alt: ["أرتورياس", "Artorias of the Abyss", "ارتورياس"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 DLC — من هو البوس اللي يُقال إن غضبه وحزنه كانا من أسباب انتشار الـ Abyss؟", a: "Manus", alt: ["مانوس", "Manus Father of the Abyss", "أبو الأبيس"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 DLC — من هو البوس اللي كان يبحث بجنون عن شيء ثمين سُرق منه؟", a: "Manus", alt: ["مانوس", "Manus Father of the Abyss", "أبو الأبيس"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 DLC — من هو البوس اللي ارتبط اسمه بأصل الـ Abyss في Oolacile؟", a: "Manus", alt: ["مانوس", "Manus Father of the Abyss", "أبو الأبيس"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 DLC — من هو البوس اللي يُعتبر مصدرًا أو أبًا للـ Abyss؟", a: "Manus", alt: ["مانوس", "Manus Father of the Abyss", "أبو الأبيس"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 DLC — من هو البوس اللي تقاتله في أعمق مكان داخل الـ Abyss؟", a: "Manus", alt: ["مانوس", "Manus Father of the Abyss", "أبو الأبيس"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 DLC — من هو البوس اللي يستخدم ذراعًا ضخمة بشكل غير طبيعي ويهاجمك من مسافات مختلفة؟", a: "Manus", alt: ["مانوس", "Manus Father of the Abyss", "أبو الأبيس"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 DLC — من هو البوس اللي يستطيع استخدام السحر المظلم بطريقة تشبه الـ Dark Soul؟", a: "Manus", alt: ["مانوس", "Manus Father of the Abyss", "أبو الأبيس"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 DLC — من هو البوس اللي كان في الأصل إنسانًا قبل أن يتحول إلى مخلوق هائل بسبب الـ Abyss؟", a: "Manus", alt: ["مانوس", "Manus Father of the Abyss", "أبو الأبيس"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 DLC — من هو البوس اللي كان غضبه مرتبطًا ببحثه عن قلادة فقدها؟", a: "Manus", alt: ["مانوس", "Manus Father of the Abyss", "أبو الأبيس"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 DLC — من هو البوس اللي لقبه Father of the Abyss ويرتبط مباشرة بأحداث Oolacile؟", a: "Manus", alt: ["مانوس", "Manus Father of the Abyss", "أبو الأبيس"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 — من هو البوس اللي تقاتله في مساحة صغيرة جدًا ويبدأ القتال مع كلابه بجانبه؟", a: "Capra Demon", alt: ["كابرا ديمون", "Capra", "شيطان الماعز"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 — من هو البوس اللي تدخل ساحته لتجد أن أول شيء يهاجمك ليس هو، بل كلابه؟", a: "Capra Demon", alt: ["كابرا ديمون", "Capra", "شيطان الماعز"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 — من هو البوس اللي يستخدم زوجًا من الـ Machetes بدل سلاح واحد؟", a: "Capra Demon", alt: ["كابرا ديمون", "Capra", "شيطان الماعز"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 — من هو البوس اللي لقبه مرتبط بمخلوق أسطوري نصفه إنسان ونصفه ماعز؟", a: "Capra Demon", alt: ["كابرا ديمون", "Capra", "شيطان الماعز"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 — من هو البوس اللي حافظ على وهمٍ كبير ليجعل مدينة كاملة تبدو كما كانت في الماضي؟", a: "Dark Sun Gwyndolin", alt: ["غويندولين", "Gwyndolin", "دارك سن غويندولين"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 — من هو البوس اللي تقاتله داخل Anor Londo بعد أن تكشف الوهم؟", a: "Dark Sun Gwyndolin", alt: ["غويندولين", "Gwyndolin", "دارك سن غويندولين"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 — من هو البوس اللي كان أصغر أبناء Gwyn وأحد آلهة Anor Londo؟", a: "Dark Sun Gwyndolin", alt: ["غويندولين", "Gwyndolin", "دارك سن غويندولين"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 — من هو البوس اللي تقاتله في ممر طويل بينما يحاول دائمًا الابتعاد عنك؟", a: "Dark Sun Gwyndolin", alt: ["غويندولين", "Gwyndolin", "دارك سن غويندولين"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 — من هو البوس اللي لقبه يجمع بين الشمس واسم إله من عائلة Gwyn؟", a: "Dark Sun Gwyndolin", alt: ["غويندولين", "Gwyndolin", "دارك سن غويندولين"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 — من هو البوس اللي ضحّى بنفسه ليحافظ على عصر النار رغم أن جسده بدأ يتحول إلى رماد؟", a: "Gwyn", alt: ["غوين", "Gwyn Lord of Cinder", "لورد سندر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 — من هو البوس اللي كان أحد أقوى الآلهة في بداية عصر النار؟", a: "Gwyn", alt: ["غوين", "Gwyn Lord of Cinder", "لورد سندر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 — من هو البوس اللي استخدم قوة الـ Lightning لمحاربة التنانين القديمة؟", a: "Gwyn", alt: ["غوين", "Gwyn Lord of Cinder", "لورد سندر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 — من هو البوس اللي قسّم الـ Lord Soul بين أتباعه قبل أن يواجه مصيره؟", a: "Gwyn", alt: ["غوين", "Gwyn Lord of Cinder", "لورد سندر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 — من هو البوس اللي ترك مملكته وعائلته خلفه عندما ذهب لإشعال الـ First Flame؟", a: "Gwyn", alt: ["غوين", "Gwyn Lord of Cinder", "لورد سندر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 — من هو البوس اللي تقاتله في Kiln of the First Flame بعد أن تصل إلى نهاية رحلتك؟", a: "Gwyn", alt: ["غوين", "Gwyn Lord of Cinder", "لورد سندر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 — من هو البوس اللي أصبح Hollow تقريبًا بعد أن ضحّى بكل شيء لإبقاء الـ Flame مشتعلًا؟", a: "Gwyn", alt: ["غوين", "Gwyn Lord of Cinder", "لورد سندر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 — من هو البوس اللي كان Lord of Sunlight قبل أن يصبح Lord of Cinder؟", a: "Gwyn", alt: ["غوين", "Gwyn Lord of Cinder", "لورد سندر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 — من هو البوس اللي يستخدم سيفًا مشتعلًا رغم أنه لم يعد يملك القوة التي كانت لديه في السابق؟", a: "Gwyn", alt: ["غوين", "Gwyn Lord of Cinder", "لورد سندر"] },
+  { cat: "بوسات السولز", d: 3, q: "من دارك سولز 1 — من هو البوس اللي قصته تمثل نهاية عصرٍ وبداية دورة جديدة بين النار والظلام؟", a: "Gwyn", alt: ["غوين", "Gwyn Lord of Cinder", "لورد سندر"] },
+  { cat: "بوسات السولز", d: 3, q: "من سيكيرو — من هو البوس اللي استخدم قوى الـ Mortal Blade والـ Lightning لتحقيق هدفه؟", a: "Genichiro Ashina", alt: ["جينيتشيرو", "Genichiro", "غينيتشيرو"] },
+  { cat: "بوسات السولز", d: 3, q: "من سيكيرو — من هو البوس اللي كان يحاول حماية Ashina من السقوط أمام الغزاة؟", a: "Genichiro Ashina", alt: ["جينيتشيرو", "Genichiro", "غينيتشيرو"] },
+  { cat: "بوسات السولز", d: 3, q: "من سيكيرو — من هو البوس اللي قطع ذراعك في أول مواجهة بينكما؟", a: "Genichiro Ashina", alt: ["جينيتشيرو", "Genichiro", "غينيتشيرو"] },
+  { cat: "بوسات السولز", d: 3, q: "من سيكيرو — من هو البوس اللي كان حفيد Isshin Ashina لكنه لم يرث مهارته القتالية بالكامل؟", a: "Genichiro Ashina", alt: ["جينيتشيرو", "Genichiro", "غينيتشيرو"] },
+  { cat: "بوسات السولز", d: 3, q: "من سيكيرو — من هو البوس اللي تواجهه فوق Ashina Castle في واحدة من أشهر معارك Sekiro؟", a: "Genichiro Ashina", alt: ["جينيتشيرو", "Genichiro", "غينيتشيرو"] },
+  { cat: "بوسات السولز", d: 3, q: "من سيكيرو — من هو البوس اللي يحرس مدخل Fountainhead Palace ويمنعك من التقدم؟", a: "Corrupted Monk", alt: ["الراهبة الفاسدة", "Corrupted Monk", "الراهب الفاسد"] },
+  { cat: "بوسات السولز", d: 3, q: "من سيكيرو — من هو البوس اللي لقبه يوحي بأنه راهب، لكنه أصبح فاسدًا بسبب قوة الـ Palace؟", a: "Corrupted Monk", alt: ["الراهبة الفاسدة", "Corrupted Monk", "الراهب الفاسد"] },
+  { cat: "بوسات السولز", d: 3, q: "من سيكيرو — من هو البوس اللي تقاتله عند جسر يؤدي إلى Fountainhead Palace؟", a: "Corrupted Monk", alt: ["الراهبة الفاسدة", "Corrupted Monk", "الراهب الفاسد"] },
+  { cat: "بوسات السولز", d: 3, q: "من سيكيرو — من هو البوس اللي يستخدم الوهم والـ Illusion في منتصف المعركة؟", a: "Corrupted Monk", alt: ["الراهبة الفاسدة", "Corrupted Monk", "الراهب الفاسد"] },
+  { cat: "بوسات السولز", d: 3, q: "من سيكيرو — من هو البوس اللي كان أبًا ومعلّمًا للمحارب الذي تلعب به؟", a: "Owl", alt: ["البومة", "Great Shinobi Owl", "أوول"] },
+  { cat: "بوسات السولز", d: 3, q: "من سيكيرو — من هو البوس اللي كان مستعدًا لقتل ابنه بالتبني لتحقيق هدفه؟", a: "Owl", alt: ["البومة", "Great Shinobi Owl", "أوول"] },
+  { cat: "بوسات السولز", d: 3, q: "من Lies of P — من هو البوس اللي يخفي نفسه داخل جسد دمية ضخمة ويتحكم بها؟", a: "King of Puppets", alt: ["ملك الدمى", "كنق اوف بابتس"] },
+  { cat: "بوسات السولز", d: 3, q: "من Lies of P — من هو البوس اللي يظهر في البداية كدمية عملاقة، لكن الحقيقة أن هناك شخصًا آخر داخلها؟", a: "King of Puppets", alt: ["ملك الدمى", "كنق اوف بابتس"] },
+  { cat: "بوسات السولز", d: 3, q: "من Lies of P — من هو البوس اللي يقاتلك أولًا باستخدام جسد ضخم، ثم يكشف عن شكله الحقيقي؟", a: "King of Puppets", alt: ["ملك الدمى", "كنق اوف بابتس"] },
+  { cat: "بوسات السولز", d: 3, q: "من Lies of P — من هي البوس اللي كانت محاربة مخلصة لـ Simon Manus قبل أن تتحول إلى شيء يتجاوز حدود الإنسان؟", a: "Laxasia", alt: ["لاكسيا", "Laxasia the Complete", "لاكساسيا"] },
+  { cat: "بوسات السولز", d: 3, q: "من Lies of P — من هي البوس اللي تحولت من محاربة مدرعة إلى كائن أسرع بكثير في المرحلة الثانية؟", a: "Laxasia", alt: ["لاكسيا", "Laxasia the Complete", "لاكساسيا"] },
+  { cat: "بوسات السولز", d: 3, q: "من Lies of P — من هي البوس اللي تستخدم البرق كسلاح رئيسي في المرحلة الثانية؟", a: "Laxasia", alt: ["لاكسيا", "Laxasia the Complete", "لاكساسيا"] },
+  { cat: "بوسات السولز", d: 3, q: "من Lies of P — من هي البوس اللي تخلع درعها وتكشف قوتها الحقيقية بعد أن تبدأ المرحلة الثانية؟", a: "Laxasia", alt: ["لاكسيا", "Laxasia the Complete", "لاكساسيا"] },
+  { cat: "بوسات السولز", d: 3, q: "من Lies of P — من هي البوس اللي تقاتل بسيف طويل ودرع ضخم قبل أن تبدأ باستخدام البرق؟", a: "Laxasia", alt: ["لاكسيا", "Laxasia the Complete", "لاكساسيا"] },
+  { cat: "بوسات السولز", d: 3, q: "من Lies of P — من هي البوس اللي تواجهها في Ascension Bridge؟", a: "Laxasia", alt: ["لاكسيا", "Laxasia the Complete", "لاكساسيا"] },
+  { cat: "بوسات السولز", d: 3, q: "من Lies of P — من هي البوس اللي كانت تُعرف كواحدة من أقوى أتباع Simon Manus؟", a: "Laxasia", alt: ["لاكسيا", "Laxasia the Complete", "لاكساسيا"] },
   // ---- الدفعة الإضافية ----
   { cat: "فيزياء", d: 3, q: "جسم كتلته 2 كجم يتسارع 3 م/ث² — كم القوة بالنيوتن؟", a: "6", alt: ["ستة", "٦"] },
   { cat: "فيزياء", d: 3, q: "وش الكمية اللي تبقى ثابتة بالتصادم المرن وغير المرن معًا؟", a: "الزخم", alt: ["كمية الحركة", "Momentum"] },
@@ -370,19 +701,19 @@ const BANK = [
   { cat: "اختراعات", d: 3, q: "وش أول محرك بحث بالإنترنت قبل غوغل بسنين؟", a: "آركي", alt: ["Archie", "ياهو"] },
   { cat: "اختراعات", d: 3, q: "من صمّم أول حاسوب ميكانيكي قابل للبرمجة نظريًا بالقرن 19؟", a: "تشارلز بابيج", alt: ["بابيج", "Babbage"] },
   { cat: "بوسات السولز", d: 3, q: "بوس تقاتله بسطح مائي والانعكاس جزء من جو المعركة، وهو ساحرة القمر بإلدن رينق؟", a: "Rennala", alt: ["رينالا"] },
-  { cat: "بوسات السولز", d: 3, q: "بوس يستدعي نسخ منه كل ما نزلت صحته، ثنائي بأزياء بيضاء وسوداء؟", a: "Godskin Duo", alt: ["غودسكن", "جودسكين"] },
+  { cat: "بوسات السولز", d: 3, q: "من إلدن رينق — بوس يستدعي نسخ منه كل ما نزلت صحته، ثنائي بأزياء بيضاء وسوداء؟", a: "Godskin Duo", alt: ["غودسكن", "جودسكين"] },
   { cat: "بوسات السولز", d: 3, q: "بوس بلودبورن اللي يمثل عنكبوت بعقل بشري ويحرس سرًا كونيًا؟", a: "Rom", alt: ["روم", "Rom the Vacuous Spider"] },
   { cat: "بوسات السولز", d: 3, q: "بوس دارك سولز 3 اللي هو تنين رمادي متآكل بمقبرة، وضربة واحدة منه تقتل؟", a: "Ancient Wyvern", alt: ["الوايفرن", "التنين القديم"] },
   { cat: "بوسات السولز", d: 3, q: "بوس سيكيرو اللي يقاتلك بمرحلتين بالثلج ويستخدم رمح طويل، حارس القصر؟", a: "Owl", alt: ["البومة", "الأب", "Great Shinobi Owl"] },
   { cat: "بوسات السولز", d: 3, q: "بوس Lies of P اللي هو أخوين ميكانيكيين بمطارق عملاقة بالمصنع؟", a: "Black Rabbit Brotherhood", alt: ["الأرنب الأسود", "الإخوة"] },
   { cat: "بوسات السولز", d: 3, q: "بوس إلدن رينق اللي يمثل تنين البرق العملاق بجبل جيلمير؟", a: "Fortissax", alt: ["فورتساكس"] },
-  { cat: "بوسات السولز", d: 3, q: "بوس Nightreign اللي يمثل الوحش الأول والأصعب بالليلة الثالثة؟", a: "Nightlord", alt: ["نايتلورد", "اللورد"] },
+  { cat: "بوسات السولز", d: 3, q: "من نايترين — البوس اللي يمثل الوحش الأول والأصعب بالليلة الثالثة؟", a: "Nightlord", alt: ["نايتلورد", "اللورد"] },
   { cat: "بوسات السولز", d: 3, q: "بوس دارك سولز الأول اللي معركته بالظلام الدامس وتحتاج مصباح؟", a: "Four Kings", alt: ["الملوك الأربعة", "الاربع ملوك"] },
   { cat: "بوسات السولز", d: 3, q: "بوس إلدن رينق DLC اللي يمثل أسدًا يرقص بعنصرين متغيرين؟", a: "Dancing Lion", alt: ["الأسد الراقص"] },
   { cat: "لور السولز", d: 3, q: "وش اسم الحلقة اللي انكسرت وبدأ التشظي بإلدن رينق؟", a: "إلدن رينق", alt: ["Elden Ring", "الحلقة"] },
-  { cat: "لور السولز", d: 3, q: "مين الشخصية اللي تدير أكاديمية رايا لوكاريا قبل سقوطها؟", a: "Rennala", alt: ["رينالا"] },
+  { cat: "لور السولز", d: 3, q: "من إلدن رينق — مين الشخصية اللي تدير أكاديمية رايا لوكاريا قبل سقوطها؟", a: "Rennala", alt: ["رينالا"] },
   { cat: "لور السولز", d: 3, q: "وش اسم الوباء اللي يصيب من يستخدم الإحياء كثير بسيكيرو؟", a: "Dragonrot", alt: ["تعفن التنين", "دراقون روت"] },
-  { cat: "لور السولز", d: 3, q: "وش الطائفة اللي تعارض الكنيسة وتصطاد الوحوش بيارنام؟", a: "Hunters", alt: ["الصيادون", "صيادو الوحوش"] },
+  { cat: "لور السولز", d: 3, q: "من بلودبورن — وش الطائفة اللي تعارض الكنيسة وتصطاد الوحوش بيارنام؟", a: "Hunters", alt: ["الصيادون", "صيادو الوحوش"] },
   { cat: "لور السولز", d: 3, q: "من صانع الدمى اللي بنى البطل بـLies of P؟", a: "Geppetto", alt: ["جيبيتو"] },
   { cat: "لور السولز", d: 3, q: "وش المدينة اللي تبدأ فيها دارك سولز الأولى كسجن للاموات؟", a: "Undead Asylum", alt: ["ملجأ الأموات", "الأسايلوم"] },
   { cat: "لور السولز", d: 3, q: "وش اسم النار اللي إذا انطفت يبدأ عصر الظلام بدارك سولز؟", a: "النار الأولى", alt: ["First Flame"] },
@@ -489,16 +820,6 @@ const BANK = [
   { cat: "شكل ورسم", d: 3, q: "كم عدد حروف مستقيمة تحتاج لرسم مربع بأقل عدد خطوط؟", a: "4", alt: ["أربعة", "٤"] },
   { cat: "شكل ورسم", d: 3, q: "شبه منحرف قاعدتاه 6 و10 وارتفاعه 4 — كم مساحته؟", a: "32", alt: ["اثنين وثلاثين", "٣٢"] },
   { cat: "شكل ورسم", d: 3, q: "كم محور تماثل بالمربع؟", a: "4", alt: ["أربعة", "٤"] },
-  { cat: "أعلام", d: 3, q: "علم فيه دائرة حمراء بمنتصف أبيض — أي دولة؟", a: "اليابان", alt: ["Japan"] },
-  { cat: "أعلام", d: 3, q: "العلم الوحيد بالعالم اللي مو مستطيل ولا مربع؟", a: "نيبال", alt: ["Nepal"] },
-  { cat: "أعلام", d: 3, q: "علم فيه سيف وشهادة التوحيد — أي دولة؟", a: "السعودية", alt: ["Saudi Arabia"] },
-  { cat: "أعلام", d: 3, q: "علم فيه ورقة قيقب حمراء — أي دولة؟", a: "كندا", alt: ["Canada"] },
-  { cat: "أعلام", d: 3, q: "علم أخضر بالكامل بدون رموز كان لأي دولة سابقًا؟", a: "ليبيا", alt: ["Libya"] },
-  { cat: "أعلام", d: 3, q: "علم فيه نجمة داوود وخطين أزرقين — أي دولة؟", a: "إسرائيل", alt: ["Israel"] },
-  { cat: "أعلام", d: 3, q: "علم فيه 50 نجمة و13 خط — أي دولة؟", a: "أمريكا", alt: ["الولايات المتحدة", "USA"] },
-  { cat: "أعلام", d: 3, q: "علم فيه تنين أحمر — أي إقليم بريطاني؟", a: "ويلز", alt: ["Wales"] },
-  { cat: "أعلام", d: 3, q: "علم فيه هلال ونجمة على أحمر — أي دولة؟", a: "تركيا", alt: ["Turkey"] },
-  { cat: "أعلام", d: 3, q: "علم فيه شمس بيضاء على أزرق وأحمر — أي دولة آسيوية؟", a: "تايوان", alt: ["Taiwan"] },
   { cat: "مين البوس؟", d: 2, q: "بوس تقاتله مرتين: أول مرة بقناع يخفي هويته، وثاني مرة بالعاصمة يكشف اسمه الملكي — وش اسمه الثاني؟", a: "Morgott", alt: ["مورغوت"] },
   { cat: "مين البوس؟", d: 2, q: "بوس يقطع رقبته بنفسه ويكمل يقاتلك بالمرحلة الثانية وهو بلا راس؟", a: "Guardian Ape", alt: ["القرد الحارس"] },
   { cat: "مين البوس؟", d: 3, q: "بوسة كل ضربة تصيبك فيها ترجّع لها صحة، فتموت وأنت تصدها؟", a: "Malenia", alt: ["ماليينيا"] },
@@ -775,22 +1096,19 @@ const BANK = [
   { cat: "أمثال ومصطلحات", d: 3, q: "وش معنى المثل: الحديد بالحديد يُفلح؟", a: "القوة تقابل بالقوة", alt: ["الشدة بالشدة", "المثل بالمثل"] },
   { cat: "أمثال ومصطلحات", d: 3, q: "كمّل بيت المتنبي: على قدر أهل العزم…؟", a: "تأتي العزائم", alt: ["تاتي العزائم"] },
   { cat: "أمثال ومصطلحات", d: 3, q: "وش معنى مصطلح سيف ديموقليس؟", a: "خطر محدق دائم", alt: ["تهديد دائم", "خطر معلق"] },
-  { cat: "بوسات السولز", d: 2, q: "بوس إلدن رينق اللي يقاتلك بمرحلتين: الأولى دروع والثانية يفصل نفسه لنسختين مصغّرة بمقبرة؟", a: "Godskin Duo", alt: ["غودسكن", "جودسكين"] },
   { cat: "بوسات السولز", d: 2, q: "بوس بلودبورن الأخير بالـDLC، ورث دم الطفل ويقاتلك بثلاث مراحل؟", a: "Orphan of Kos", alt: ["يتيم كوس", "أورفان أوف كوس"] },
-  { cat: "بوسات السولز", d: 3, q: "بوس إلدن رينق اللي إذا قتلته قبل موغ تصير معركة موغ أسهل — الشرير بقصر الدم؟", a: "Mohg", alt: ["موغ", "موق"] },
   { cat: "بوسات السولز", d: 3, q: "بوس دارك سولز 3 اللي يظهر بشكل شجرة عملاقة وله نقطة ضعف بالوجه المخفي؟", a: "Curse-Rotted Greatwood", alt: ["الشجرة الملعونة", "Greatwood"] },
   { cat: "بوسات السولز", d: 3, q: "بوس سيكيرو اللي يقاتلك بثلاث مراحل وآخرها يطلق البرق وتقدر ترجعه عليه؟", a: "Genichiro", alt: ["جينيتشيرو", "غينيتشيرو"] },
   { cat: "بوسات السولز", d: 3, q: "بوس Lies of P اللي يقاتلك بمرحلتين وسلاحه رمح كهربائي، تواجهه بالكاتدرائية؟", a: "Laxasia", alt: ["لاكسيا", "لاكساسيا"] },
-  { cat: "بوسات السولز", d: 3, q: "البوس السري بإلدن رينق اللي تحصله بحفرة الأمعاء وهو الوحش الأصلي قبل التنانين؟", a: "Elden Beast", alt: ["إلدن بيست"] },
   { cat: "بوسات السولز", d: 3, q: "بوس بلودبورن اللي معركته كلها تحتاج تستخدم صندوق الموسيقى عشان يتوقف لحظة؟", a: "Father Gascoigne", alt: ["غاسكوين", "الأب غاسكوين"] },
-  { cat: "بوسات السولز", d: 3, q: "بوس Nightreign اللي يعتبر التنين الجليدي ويهاجم من السما بالليلة الثالثة؟", a: "Adel", alt: ["أدل", "ادل"] },
+  { cat: "بوسات السولز", d: 3, q: "من نايترين — البوس اللي يعتبر التنين الجليدي ويهاجم من السما بالليلة الثالثة؟", a: "Adel", alt: ["أدل", "ادل"] },
   { cat: "بوسات السولز", d: 3, q: "بوس دارك سولز الأول اللي كل ما قطعت جزء منه انقسم لاثنين؟", a: "Pinwheel", alt: ["بينويل", "الطاحونة"] },
   { cat: "لور السولز", d: 2, q: "وش اسم أول رون عظيم تحصل عليه غالبًا بإلدن رينق (من ستورمفيل)؟", a: "رون غودريك", alt: ["غودريك", "Godrick"] },
-  { cat: "لور السولز", d: 3, q: "وش اسم النظام اللي فيه ماريكا كسرت الحلقة وبدأ عصر التشظي؟", a: "الشاترينغ", alt: ["التشظي", "Shattering", "حرب التشظي"] },
+  { cat: "لور السولز", d: 3, q: "من إلدن رينق — وش اسم النظام اللي فيه ماريكا كسرت الحلقة وبدأ عصر التشظي؟", a: "الشاترينغ", alt: ["التشظي", "Shattering", "حرب التشظي"] },
   { cat: "لور السولز", d: 3, q: "من الإله اللي شارك النار الأولى مع غوين وسُرقت منه بدارك سولز؟", a: "نيتو", alt: ["Nito", "نيتوه"] },
   { cat: "لور السولز", d: 3, q: "وش أصل الخلود بسيكيرو — من يمنح البطل قدرة الرجوع للحياة؟", a: "التنين الإلهي", alt: ["الوريث الإلهي", "Divine Heir", "الدراقون"] },
   { cat: "لور السولز", d: 3, q: "وش المادة اللي كانوا يستخرجونها بـLies of P وسببت جنون سكان كرات؟", a: "الإرغو", alt: ["Ergo", "ايرقو"] },
-  { cat: "لور السولز", d: 3, q: "وش اسم الطائفة اللي كانت تجري تجارب الدم القديم بيارنام؟", a: "كنيسة الشفاء", alt: ["Healing Church", "الكنيسة"] },
+  { cat: "لور السولز", d: 3, q: "من بلودبورن — وش اسم الطائفة اللي كانت تجري تجارب الدم القديم بيارنام؟", a: "كنيسة الشفاء", alt: ["Healing Church", "الكنيسة"] },
   { cat: "لور السولز", d: 3, q: "مين الشخصية اللي تعطيك ماء البحيرة المقدس وترافقك بإلدن رينق كساحرة؟", a: "Melina", alt: ["ميلينا"] },
   { cat: "سولز لايك", d: 2, q: "كم عدد النهايات الرئيسية بلعبة إلدن رينق (بدون DLC)؟", a: "6", alt: ["ستة", "٦"] },
   { cat: "سولز لايك", d: 3, q: "وش اسم آلية Lies of P اللي تقيس كم كذبت وتحدد نهايتك؟", a: "نظام الإنسانية", alt: ["الكذب", "Humanity", "نظام الكذب"] },
@@ -1069,7 +1387,11 @@ const roomKey = (c) => `fz:room:${c}`;
 const slotKey = (c, s) => `fz:s${s}:${c}`;   // مفتاح ثابت لكل لاعب — ما نحتاج list()
 const qKey = (q) => (q.q || "") + "|" + (q.a || "");
 const isEventSlot = (idx) => idx > 0 && idx % 3 === 2;
-const INVENTIVE = ["لعبة الحروف", "منطق وألغاز", "أمثال ومصطلحات", "طعام ومطبخ", "حيوانات", "فضاء", "جسم الإنسان", "السعودية", "سيارات", "اختراعات", "أعلام", "شكل ورسم", "مين البوس؟", "وين المكان؟", "مين قالها؟", "وش الغرض؟",
+// فئات ما فيها تقييم صعوبة — كل أسئلتها بنفس المستوى
+const NO_DIFF = ["بوسات السولز", "لور السولز"];
+const noDiff = (c) => NO_DIFF.includes(c);
+
+const INVENTIVE = ["خمّن اللعبة", "لعبة الحروف", "منطق وألغاز", "أمثال ومصطلحات", "طعام ومطبخ", "حيوانات", "فضاء", "جسم الإنسان", "السعودية", "سيارات", "اختراعات", "أعلام", "شكل ورسم", "مين البوس؟", "وين المكان؟", "مين قالها؟", "وش الغرض؟",
   "الرابط المشترك", "قبل ولا بعد؟", "إيموجي", "دليلين", "الأغرب", "لو كنت مكانك"];
 const CLASSIC = CATS.filter((c) => !INVENTIVE.includes(c));
 // نضمن 6 فئات مبتكرة + 3 كلاسيكية كل جولة (9 خيارات)
@@ -1181,7 +1503,8 @@ export default function App() {
     if (cfg.src.mine) pool = pool.concat(myq.filter((q) => q.cat === cat).map((q) => ({ type: "typed", ...q })));
     if (cfg.src.bank) pool = pool.concat(BANK.filter((b) => b.cat === cat).map((b) => ({ type: "typed", ...b })));
     pool = pool.filter((q) => !h.used.has(qKey(q)));
-    let cand = pool.filter((q) => q.d === dT);
+    // فئات بلا تقييم: كل الأسئلة بنفس المستوى، نختار من الكل
+    let cand = noDiff(cat) ? pool : pool.filter((q) => q.d === dT);
     if (!cand.length) cand = pool;
     // ما نكرر أسئلة طلعت بجولات سابقة — إلا إذا خلصت كل أسئلة الفئة
     if (h.seenAll && h.seenAll.size) {
@@ -1199,6 +1522,10 @@ export default function App() {
     if (h.seenAll) {
       h.seenAll.add(qKey(q));
       jset("fz:seenQ", [...h.seenAll].slice(-1200), false); // نحفظ بالخلفية
+    }
+    if (noDiff(cat)) {
+      // بلا تقييم صعوبة: نقاط موحّدة ترتفع مع تكرار الفئة
+      return { ...q, nodiff: true, pts: Math.round((500 * heat) / 50) * 50 };
     }
     return { ...q, pts: scale(q.d) || 400 };
   }
@@ -1257,7 +1584,8 @@ export default function App() {
     // الوقت يتحدد بصعوبة السؤال: سهل 40 ث، متوسط 32 ث، صعب 24 ث
     const q = h.questions[h.qIndex];
     const d = q && q.d ? q.d : 2;
-    const base = d === 1 ? TYPED_SEC : d === 2 ? Math.round(TYPED_SEC * 0.8) : Math.round(TYPED_SEC * 0.6);
+    const base = q && q.nodiff ? Math.round(TYPED_SEC * 0.75)
+      : (d === 1 ? TYPED_SEC : d === 2 ? Math.round(TYPED_SEC * 0.8) : Math.round(TYPED_SEC * 0.6));
     return h.currentEvent && h.currentEvent.id === "blitz" ? Math.round(base / 2) : base;
   }
 
@@ -1276,7 +1604,7 @@ export default function App() {
       event: ["event", "question", "closing"].includes(h.phase) ? h.currentEvent || null : null,
       chosenCat: h.chosenCat || null,
       introInfo: h.phase === "intro" && h.questions[h.qIndex]
-        ? { d: h.questions[h.qIndex].d, pts: h.questions[h.qIndex].pts, pick: h.curPick || 1 } : null,
+        ? { d: h.questions[h.qIndex].d, pts: h.questions[h.qIndex].pts, pick: h.curPick || 1, nodiff: !!h.questions[h.qIndex].nodiff } : null,
       items: h.items || {}, fx: h.fx || {}, itemLog: h.itemLog || [],
       canUseItems: ["catpick", "event"].includes(h.phase),
       stageStart: h.stageStart || 0, catStart: h.catStart || 0, autoNext: h.autoNext !== false, qStartAt: h.qStart || 0,
@@ -1295,7 +1623,7 @@ export default function App() {
         totalPlayers: Object.keys(h.players).length,
       } : null,
       updatedAt: Date.now(),
-      q: h.phase === "question" && q ? { q: q.q, svg: q.svg || null, pts: q.pts, d: q.d, cat: q.cat, dur: durFor(h) } : null,
+      q: h.phase === "question" && q ? { q: q.q, svg: q.svg || null, img: q.img || null, zoom: q.zoom || null, nodiff: !!q.nodiff, pts: q.pts, d: q.d, cat: q.cat, dur: durFor(h) } : null,
     };
     setView(pub); // تحديث فوري للشاشة ثم الحفظ بالخلفية
     await jset(roomKey(h.code), pub);
@@ -1528,7 +1856,7 @@ export default function App() {
     h.stageStart = Date.now();
     h.reveal = {
       grant: grantInfo,
-      correctText: q.a, qText: q.q, qSvg: q.svg || null, results, pts: effPts, event: ev || null,
+      correctText: q.a, qText: q.q, qSvg: q.svg || null, qImg: q.img || null, results, pts: effPts, event: ev || null,
       rolled: ev && ev.id === "roulette" ? effPts : null, steal: stealInfo,
     };
     h.phase = "reveal";
@@ -1951,6 +2279,9 @@ export default function App() {
     .exitBtn:hover{border-color:var(--dim); color:var(--sand);}
     .exitBtn.danger{border-color:#5A2A32; color:#C4707A;}
     .exitBtn.danger:hover{border-color:var(--red); color:var(--red);}
+    .qPhoto{background:var(--sur2); border:1.5px solid var(--line); border-radius:14px;
+      overflow:hidden; margin-bottom:6px; display:block;}
+    .qPhoto img{width:100%; display:block; aspect-ratio:16/10; object-fit:cover; transition:transform .3s ease;}
     .cdNum{font-family:'Lalezar',cursive; font-size:96px; line-height:1; color:var(--amber);
       animation:cdPop .5s cubic-bezier(.2,1.5,.4,1);}
     @keyframes cdPop{0%{transform:scale(.4); opacity:0;}60%{transform:scale(1.15);}100%{transform:scale(1); opacity:1;}}
@@ -2312,8 +2643,8 @@ export default function App() {
             <div className="meta" style={{ justifyContent: "center", gap: 14, marginTop: 14 }}>
               <span className="ptsTile" style={{ fontSize: 20 }}>{view.introInfo.pts}</span>
               <span className="badge" style={{ fontSize: 15 }}>
-                {DLBL[view.introInfo.d]}
-                {view.introInfo.pick > 1 ? ` · المرة ${view.introInfo.pick} لهذي الفئة 🔥` : " · أول مرة"}
+                {view.introInfo.nodiff ? "" : DLBL[view.introInfo.d] + " · "}
+                {view.introInfo.pick > 1 ? `المرة ${view.introInfo.pick} لهذي الفئة 🔥` : "أول مرة"}
               </span>
             </div>
           )}
@@ -2387,7 +2718,7 @@ export default function App() {
           <span className="ptsTile">{isRoulette ? "؟؟" : ev && ev.id === "double" ? q.pts + "×2" : q.pts}</span>
         </div>
         <div className="meta" style={{ marginTop: 6 }}>
-          <span className="badge">{q.cat} · {DLBL[q.d]}</span>
+          <span className="badge">{q.cat}{q.nodiff ? "" : " · " + DLBL[q.d]}</span>
           <span className="badge">⏱ {preMs > 0 ? Math.round(myDur) : Math.floor(remain)} ث</span>
         </div>
         {ev && (
@@ -2421,6 +2752,15 @@ export default function App() {
               transition: "filter .3s ease",
             }}>
               {q.svg && <div className="qImg" dangerouslySetInnerHTML={{ __html: q.svg }} />}
+              {q.img && (
+                <div className="qPhoto">
+                  <img src={q.img} alt="" loading="eager"
+                    style={q.zoom ? {
+                      transform: `scale(${q.zoom.s || 2})`,
+                      transformOrigin: `${q.zoom.x != null ? q.zoom.x : 50}% ${q.zoom.y != null ? q.zoom.y : 50}%`,
+                    } : undefined} />
+                </div>
+              )}
               <p className="qtext">{q.q}</p>
             </div>
           )}
@@ -2478,6 +2818,12 @@ export default function App() {
         )}
         <div className="card">
           {r.qSvg && <div className="qImg" style={{ marginBottom: 10 }} dangerouslySetInnerHTML={{ __html: r.qSvg }} />}
+          {r.qImg && (
+            <div className="qPhoto" style={{ marginBottom: 10 }}>
+              <img src={r.qImg} alt="" />
+              <span className="badge" style={{ display: "block", textAlign: "center", marginTop: 6 }}>الصورة كاملة</span>
+            </div>
+          )}
           <p style={{ color: "var(--dim)", fontSize: 14 }}>{r.qText}</p>
           <div style={{ height: 10 }} />
           <div className="correctBox">الجواب: {r.correctText}</div>
