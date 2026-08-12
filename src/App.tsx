@@ -59,6 +59,7 @@ const CAT_INFO = {
   "دليلين": { icon: "🕵️", desc: "دليلين ما لهم علاقة ببعض ظاهريًا، بس يتقاطعون على جواب واحد." },
   "الأغرب": { icon: "🎲", desc: "أربعة أشياء وواحد منهم شاذ عن الباقي — لاقِه." },
   "لو كنت مكانك": { icon: "🧠", desc: "مواقف داخل الألعاب: وش يصير لو سويت كذا؟ أسئلة عن الميكانيكيات مو الأسماء." },
+  "خمّن البوس": { icon: "👹", desc: "صورة مقرّبة لبوس — تحزره من تفصيلة بدرعه أو سلاحه أو شكله. الصورة الكاملة تنكشف بالنتيجة." },
   "خمّن اللعبة": { icon: "🎮", desc: "صورة مقرّبة من زاوية غريبة داخل لعبة — تحزر اللعبة من التفصيلة. الصورة الكاملة تنكشف بالنتيجة." },
   "لعبة الحروف": { icon: "🔤", desc: "نعطيك الحرف ونوصف لك الشي — والجواب لازم يبدأ بنفس الحرف. زي لعبة عزيز بالضبط!" },
   "منطق وألغاز": { icon: "🧩", desc: "ألغاز تحتاج تفكير مو حفظ. اقرأ السؤال مرتين — الفخ دايم بالتفاصيل." },
@@ -159,6 +160,9 @@ const itemById = (id) => ITEMS.find((x) => x.id === id);
 /* ---------- بنك الأسئلة ---------- */
 const BANK = [
   // ============ أسئلة الصور ============
+  // ---- خمّن البوس (حط صورك بمجلد public/img) ----
+  { cat: "خمّن البوس", d: 2, q: "مين هذا البوس؟", a: "Malenia", alt: ["ماليينيا"], img: "/img/boss-malenia.jpg", zoom: { s: 3, x: 50, y: 30 } },
+  { cat: "خمّن البوس", d: 3, q: "مين هذا البوس من هذي التفصيلة؟", a: "Gehrman", alt: ["غيرمان"], img: "/img/boss-gehrman.jpg", zoom: { s: 3.5, x: 40, y: 35 } },
   // ---- خمّن اللعبة (تحتاج صور بمجلد public/img) ----
   { cat: "خمّن اللعبة", d: 2, q: "من أي لعبة هذي الزاوية؟", a: "Overwatch", alt: ["أوفرواتش"], img: "/img/ow-map.jpg", zoom: { s: 3, x: 30, y: 40 } },
   { cat: "خمّن اللعبة", d: 3, q: "خمّن اللعبة من هذي التفصيلة؟", a: "Elden Ring", alt: ["إلدن رينق"], img: "/img/er-1.jpg", zoom: { s: 3.5, x: 65, y: 25 } },
@@ -1385,10 +1389,10 @@ const slotKey = (c, s) => `fz:s${s}:${c}`;   // مفتاح ثابت لكل لا�
 const qKey = (q) => (q.q || "") + "|" + (q.a || "");
 const isEventSlot = (idx) => idx > 0 && idx % 3 === 2;
 // فئات ما فيها تقييم صعوبة — كل أسئلتها بنفس المستوى
-const NO_DIFF = ["بوسات السولز", "لور السولز"];
+const NO_DIFF = ["بوسات السولز", "لور السولز", "خمّن البوس", "خمّن اللعبة"];
 const noDiff = (c) => NO_DIFF.includes(c);
 
-const INVENTIVE = ["خمّن اللعبة", "لعبة الحروف", "منطق وألغاز", "أمثال ومصطلحات", "طعام ومطبخ", "حيوانات", "فضاء", "جسم الإنسان", "السعودية", "سيارات", "اختراعات", "أعلام", "شكل ورسم", "وين المكان؟", "مين قالها؟", "وش الغرض؟",
+const INVENTIVE = ["خمّن البوس", "خمّن اللعبة", "لعبة الحروف", "منطق وألغاز", "أمثال ومصطلحات", "طعام ومطبخ", "حيوانات", "فضاء", "جسم الإنسان", "السعودية", "سيارات", "اختراعات", "أعلام", "شكل ورسم", "وين المكان؟", "مين قالها؟", "وش الغرض؟",
   "الرابط المشترك", "قبل ولا بعد؟", "إيموجي", "دليلين", "الأغرب", "لو كنت مكانك"];
 const CLASSIC = CATS.filter((c) => !INVENTIVE.includes(c));
 // نضمن 6 فئات مبتكرة + 3 كلاسيكية كل جولة (9 خيارات)
@@ -1663,7 +1667,7 @@ export default function App() {
       mode: h.mode || "classic",
       allPlayers: Object.entries(h.players).map(([pid, p]) => ({ pid, name: p.name })),
       teams: h.teams ? h.teams.map((t) => ({ name: t.name, color: t.color, score: t.score, members: t.members, pu: t.pu })) : null,
-      board: h.board ? h.board.map((c) => ({ cat: c.cat, tiles: c.tiles.map((x) => ({ pts: x.pts, state: x.state })) })) : null,
+      gboard: h.board ? h.board.map((c) => ({ cat: c.cat, tiles: c.tiles.map((x) => ({ pts: x.pts, state: x.state })) })) : null,
       turn: h.turn, owner: h.owner, answering: h.answering,
       tile: h.tile ? { ci: h.tile.ci, ti: h.tile.ti, pts: h.tile.pts, cat: h.tile.cat } : null,
       bq: h.phase === "bq" && h.tile ? {
@@ -1704,7 +1708,14 @@ export default function App() {
         for (const a of slots) {
           if (!a || !a.pid || a.pid === me.pid) continue;
           if (Date.now() - (a.t || 0) > 120000) continue; // خانة قديمة
-          if (!h.players[a.pid]) h.players[a.pid] = { name: a.name || "لاعب", score: 0 };
+          if (!h.players[a.pid]) {
+            h.players[a.pid] = { name: a.name || "لاعب", score: 0 };
+            // بنمط سين جيم: الداخل متأخرًا ينضم للفريق الأقل عددًا
+            if (h.mode === "board" && h.board && teamOf(h, a.pid) === -1) {
+              const t = h.teams[0].members.length <= h.teams[1].members.length ? 0 : 1;
+              h.teams[t].members.push(a.pid);
+            }
+          }
           if (a.name) h.players[a.pid].name = a.name;
           h.seen[a.pid] = Date.now();
           if (a.ans && a.ans.q === h.qIndex && !(a.pid in h.answers)) {
@@ -2223,6 +2234,10 @@ export default function App() {
   /* ---------- إنشاء روم ---------- */
   async function createRoom() {
     if (!me.name.trim()) { setToast("اكتب اسمك أول"); return; }
+    if (cfg.mode === "board" && cfg.picked.length > 0 && cfg.picked.length !== BOARD_CATS_N) {
+      setToast(`لوحة سين جيم تحتاج ${BOARD_CATS_N} فئات بالضبط — أو اضغط «عشوائي»`);
+      return;
+    }
     if (!cfg.src.bank && !(cfg.src.mine && myq.length)) {
       setToast("لازم تفعّل بنك الأسئلة أو تضيف أسئلتك أول");
       return;
@@ -2685,7 +2700,7 @@ export default function App() {
         <button className={"chip" + (cfg.mode !== "board" ? " on" : "")}
           onClick={() => setCfg({ ...cfg, mode: "classic" })}>⚡ سريع (فردي)</button>
         <button className={"chip" + (cfg.mode === "board" ? " on" : "")}
-          onClick={() => setCfg({ ...cfg, mode: "board" })}>🎯 سين جيم (فريقين)</button>
+          onClick={() => setCfg({ ...cfg, mode: "board", picked: cfg.picked.slice(0, BOARD_CATS_N) })}>🎯 سين جيم (فريقين)</button>
       </div>
       <p style={{ color: "var(--dim)", fontSize: 12, marginTop: 6, lineHeight: 1.7 }}>
         {cfg.mode === "board"
@@ -2707,19 +2722,25 @@ export default function App() {
       </div>
 
       <label className="lbl">
-        الفئات ({cfg.picked.length ? `${cfg.picked.length} مختارة` : "الكل — عشوائي"})
+        {cfg.mode === "board"
+          ? `الفئات (${cfg.picked.length} / ${BOARD_CATS_N} — اللوحة تحتاج ${BOARD_CATS_N} بالضبط)`
+          : `الفئات (${cfg.picked.length ? cfg.picked.length + " مختارة" : "الكل — عشوائي"})`}
       </label>
       <div className="chips" style={{ marginBottom: 8 }}>
         <button className="chip" onClick={() => setCfg({ ...cfg, picked: [] })}>
-          {cfg.picked.length === 0 ? "✓ " : ""}الكل
+          {cfg.picked.length === 0 ? "✓ " : ""}{cfg.mode === "board" ? "عشوائي" : "الكل"}
         </button>
-        <button className="chip" onClick={() => setCfg({ ...cfg, picked: [...CATS] })}>حدد الكل</button>
+        {cfg.mode !== "board" && (
+          <button className="chip" onClick={() => setCfg({ ...cfg, picked: [...CATS] })}>حدد الكل</button>
+        )}
       </div>
       <div className="catPick">
         {CATS.map((c) => {
           const on = cfg.picked.includes(c);
           return (
             <button key={c} className={"chip" + (on ? " on" : "")}
+              disabled={!on && cfg.mode === "board" && cfg.picked.length >= BOARD_CATS_N}
+              style={!on && cfg.mode === "board" && cfg.picked.length >= BOARD_CATS_N ? { opacity: 0.35 } : undefined}
               onClick={() => setCfg({
                 ...cfg,
                 picked: on ? cfg.picked.filter((x) => x !== c) : [...cfg.picked, c],
@@ -2727,10 +2748,18 @@ export default function App() {
           );
         })}
       </div>
-      {cfg.picked.length > 0 && cfg.picked.length < 2 && (
-        <p style={{ color: "var(--red)", fontSize: 13, marginTop: 8 }}>
-          اختر فئتين على الأقل — وإلا كل الأسئلة من فئة وحدة
-        </p>
+      {cfg.mode === "board" ? (
+        cfg.picked.length > 0 && cfg.picked.length < BOARD_CATS_N && (
+          <p style={{ color: "var(--red)", fontSize: 13, marginTop: 8 }}>
+            ناقص {BOARD_CATS_N - cfg.picked.length} — إما تكمّل {BOARD_CATS_N} أو تضغط «عشوائي»
+          </p>
+        )
+      ) : (
+        cfg.picked.length > 0 && cfg.picked.length < 2 && (
+          <p style={{ color: "var(--red)", fontSize: 13, marginTop: 8 }}>
+            اختر فئتين على الأقل — وإلا كل الأسئلة من فئة وحدة
+          </p>
+        )
       )}
 
       <label className="lbl">إيقاع اللعبة</label>
@@ -2964,7 +2993,7 @@ export default function App() {
             </div>
             <div className="teamScore">{t.score}</div>
             <div className="teamMembers">{t.members.map((pid) => {
-              const p = view.board2 ? null : (view.allPlayers || []).find((x) => x.pid === pid);
+              const p = (view.allPlayers || []).find((x) => x.pid === pid);
               return p ? p.name : null;
             }).filter(Boolean).join(" · ")}</div>
           </div>
@@ -3002,7 +3031,7 @@ export default function App() {
           <div style={{ marginTop: 10 }}>
             <p className="badge">🛑 على مين؟ (من الفريق الثاني)</p>
             <div className="chips" style={{ marginTop: 6 }}>
-              {view.board.length && view.teams[t === 0 ? 1 : 0].members.map((pid) => {
+              {view.teams[t === 0 ? 1 : 0].members.map((pid) => {
                 const p = view.allPlayers.find((x) => x.pid === pid);
                 return p ? (
                   <button key={pid} className="chip" onClick={() => { sendPowerUp("rest", pid); setPendingItem(null); }}>
@@ -3026,11 +3055,12 @@ export default function App() {
         <ExitBar />
         <TeamBar />
         <p style={{ textAlign: "center", fontWeight: 700, marginBottom: 4,
-          color: view.teams[view.turn].color }}>
-          {myTurn ? "دوركم — اختاروا سؤال" : `الدور على ${view.teams[view.turn].name}`}
+          color: t < 0 ? "var(--dim)" : view.teams[view.turn].color }}>
+          {t < 0 ? "أنت متفرّج — انتظر الجولة الجاية"
+                 : myTurn ? "دوركم — اختاروا سؤال" : `الدور على ${view.teams[view.turn].name}`}
         </p>
         <div className="jBoard">
-          {view.board.map((c, ci) => (
+          {view.gboard.map((c, ci) => (
             <div key={ci} className="jCol">
               <div className="jCat">{c.cat}</div>
               {c.tiles.map((x, ti) => (
