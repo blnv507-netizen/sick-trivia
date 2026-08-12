@@ -35,7 +35,7 @@ if (typeof window !== "undefined" && !(window as any).storage) {
 
 const PTS = { 1: 200, 2: 400, 3: 600 };
 const DLBL = { 1: "سهل", 2: "متوسط", 3: "صعب" };
-const CATS = ["لعبة الحروف", "منطق وألغاز", "أمثال ومصطلحات", "طعام ومطبخ", "حيوانات", "فضاء", "جسم الإنسان", "السعودية", "سيارات", "اختراعات", "أعلام", "شكل ورسم", "مين البوس؟", "وين المكان؟", "مين قالها؟", "وش الغرض؟", "الرابط المشترك", "قبل ولا بعد؟", "إيموجي", "دليلين", "الأغرب", "لو كنت مكانك", "بوسات السولز", "لور السولز", "سولز لايك", "أوفرواتش", "أزياء الشخصيات", "ألعاب فيديو", "رياضيات", "فيزياء", "علوم", "عام", "رياضة", "أفلام ومسلسلات", "تاريخ", "جغرافيا", "تقنية"];
+const CATS = ["لعبة الحروف", "منطق وألغاز", "أمثال ومصطلحات", "طعام ومطبخ", "حيوانات", "فضاء", "جسم الإنسان", "السعودية", "سيارات", "اختراعات", "أعلام", "شكل ورسم", "وين المكان؟", "مين قالها؟", "وش الغرض؟", "الرابط المشترك", "قبل ولا بعد؟", "إيموجي", "دليلين", "الأغرب", "لو كنت مكانك", "بوسات السولز", "لور السولز", "أوفرواتش", "أزياء الشخصيات", "ألعاب فيديو", "رياضيات", "فيزياء", "علوم", "عام", "رياضة", "أفلام ومسلسلات", "تاريخ", "جغرافيا", "تقنية"];
 const TYPED_SEC = 40;
 const BLIND_SHOW = 6;
 const VOTE_SEC = 15;
@@ -50,7 +50,6 @@ const INTRO_SEC = 12;
 const CAT_INFO = {
   "أعلام": { icon: "🏳️", desc: "بيطلع لك علم مرسوم، وتكتب اسم الدولة صاحبته. انتبه — فيه أعلام متشابهة ومقلوبة!" },
   "شكل ورسم": { icon: "📐", desc: "رسمة علمية أو هندسية (عدسة، دائرة كهربائية، مثلث، رسم بياني) وتستنتج منها الجواب." },
-  "مين البوس؟": { icon: "🗡️", desc: "نوصف لك بوس من ألعاب السولز بمكانه وحركاته وترتيبه — بدون ما نذكر اسمه. وأنت تعرفه." },
   "وين المكان؟": { icon: "🗺️", desc: "نوصف لك منطقة داخل لعبة بمعالمها وجوّها، وتقول لنا وش اسمها." },
   "مين قالها؟": { icon: "💬", desc: "عبارة مشهورة من لعبة أو مسلسل، وتقول لنا مين قائلها." },
   "وش الغرض؟": { icon: "⚔️", desc: "نوصف لك سلاح أو أداة بوظيفتها وشكلها، وتسمّيها." },
@@ -73,7 +72,6 @@ const CAT_INFO = {
   "اختراعات": { icon: "💡", desc: "مين اخترع وش، وقصص الاكتشافات اللي صارت بالصدفة." },
   "بوسات السولز": { icon: "☠️", desc: "بوسات من إلدن رينق ودارك سولز وبلودبورن وسيكيرو ولايز أوف بي ونايترين وخازان." },
   "لور السولز": { icon: "📜", desc: "قصص وخلفيات عوالم السولز — الآلهة والمدن والأحداث اللي وراء اللعب." },
-  "سولز لايك": { icon: "🎮", desc: "الاستوديوهات وتواريخ الإصدار والميكانيكيات عبر ألعاب السولز لايك كلها." },
   "أوفرواتش": { icon: "🔫", desc: "الأبطال وأسماءهم الحقيقية وجنسياتهم وقصة اللعبة." },
   "أزياء الشخصيات": { icon: "👕", desc: "نوصف لك لبس شخصية بالتفصيل، وتخمّن مين هي." },
   "ألعاب فيديو": { icon: "🕹️", desc: "أسئلة عامة عن الألعاب: شركات، خرائط، شخصيات، وتواريخ." },
@@ -720,16 +718,6 @@ const BANK = [
   { cat: "لور السولز", d: 3, q: "مين الشخصية اللي تبيعك الترقيات بإلدن رينق بالكنيسة الأولى؟", a: "Twin Maiden Husks", alt: ["العرائس التوأم", "التوأم"] },
   { cat: "لور السولز", d: 3, q: "وش المخلوق اللي يعتبر أصل كل التنانين بدارك سولز؟", a: "التنانين القديمة", alt: ["Everlasting Dragons", "التنانين الخالدة"] },
   { cat: "لور السولز", d: 3, q: "وش القارة أو الأرض اللي تدور فيها أحداث إلدن رينق؟", a: "Lands Between", alt: ["الأراضي البينية", "الأراضي الوسطى"] },
-  { cat: "سولز لايك", d: 3, q: "وش أول لعبة بالسلسلة قدّمت نظام الاستدعاء والغزو أونلاين؟", a: "Demon's Souls", alt: ["ديمون سولز"] },
-  { cat: "سولز لايك", d: 3, q: "وش اسم المخرج اللي أخرج سيكيرو وإلدن رينق؟", a: "ميازاكي", alt: ["Miyazaki", "هيديتاكا ميازاكي"] },
-  { cat: "سولز لايك", d: 3, q: "كم عدد المناطق الرئيسية بـ Demon's Souls الأصلية؟", a: "5", alt: ["خمسة", "٥"] },
-  { cat: "سولز لايك", d: 3, q: "وش اللعبة اللي جمعت السولز مع العالم المفتوح لأول مرة من فروم؟", a: "Elden Ring", alt: ["إلدن رينق"] },
-  { cat: "سولز لايك", d: 3, q: "وش الاستوديو الياباني وراء سلسلة Nioh؟", a: "Team Ninja", alt: ["تيم نينجا"] },
-  { cat: "سولز لايك", d: 3, q: "وش اسم آلية الشفاء بـLies of P المشابهة للإستوس؟", a: "Pulse Cell", alt: ["بلس سيل", "خلية النبض"] },
-  { cat: "سولز لايك", d: 3, q: "وش السلسلة السولزية اللي تدور بالصين القديمة من تيم نينجا؟", a: "Wo Long", alt: ["وو لونق"] },
-  { cat: "سولز لايك", d: 3, q: "في أي سنة صدرت Dark Souls الأولى؟", a: "2011", alt: ["٢٠١١"] },
-  { cat: "سولز لايك", d: 3, q: "وش اللعبة الكورية اللي بطلها جنرال خانوه وصار يسعى للانتقام بالجليد؟", a: "Khazan", alt: ["خازان", "The First Berserker"] },
-  { cat: "سولز لايك", d: 3, q: "وش عدد اللاعبين بفريق Nightreign الواحد؟", a: "3", alt: ["ثلاثة", "٣"] },
   { cat: "أوفرواتش", d: 3, q: "وش تصنيف البطل Reinhardt؟", a: "دبابة", alt: ["Tank", "تانك"] },
   { cat: "أوفرواتش", d: 3, q: "من البطل اللي يقدر يقلّد قدرات الأعداء أو يعيد إحياء الفريق؟", a: "Mercy", alt: ["ميرسي"] },
   { cat: "أوفرواتش", d: 3, q: "وش الخريطة اللي تدور بمصر وفيها معبد أنوبيس؟", a: "Temple of Anubis", alt: ["معبد أنوبيس", "انوبيس"] },
@@ -760,16 +748,6 @@ const BANK = [
   { cat: "أزياء الشخصيات", d: 3, q: "شعر أبيض طويل ودرع أسود وسيفان، صياد وحوش بعيون قطة؟", a: "Geralt", alt: ["غيرالت"] },
   { cat: "أزياء الشخصيات", d: 3, q: "قبعة قش وسترة حمراء وندبة تحت العين اليسرى؟", a: "Luffy", alt: ["لوفي"] },
   { cat: "أزياء الشخصيات", d: 3, q: "بدلة سوداء بأذنين مدببتين وعباءة طويلة ورمز خفاش؟", a: "Batman", alt: ["باتمان"] },
-  { cat: "مين البوس؟", d: 3, q: "بوس يقاتلك بالماء ويستدعي كتب سحرية طائرة، وتحتاج تكسر حمايتها ثلاث مرات؟", a: "Rennala", alt: ["رينالا"] },
-  { cat: "مين البوس؟", d: 3, q: "بوس عملاق أزرق يحمل مطرقة ضخمة ويحرس بوابة العاصمة الذهبية؟", a: "Draconic Tree Sentinel", alt: ["حارس الشجرة", "Tree Sentinel"] },
-  { cat: "مين البوس؟", d: 3, q: "بوس بلعبة رعب تحت الماء ما تقدر تقاتله، تختبي منه بس؟", a: "Leviathan", alt: ["الليفياثان", "Subnautica"] },
-  { cat: "مين البوس؟", d: 3, q: "بوس نهائي بلعبة منصات يرمي عليك مطارق وأنت تصعد سلالم؟", a: "Donkey Kong", alt: ["دونكي كونق"] },
-  { cat: "مين البوس؟", d: 3, q: "بوس بلعبة إطلاق نار يظهر كعنكبوت آلي عملاق بنهاية القصة؟", a: "Sentinel", alt: ["السنتينل", "الحارس"] },
-  { cat: "مين البوس؟", d: 3, q: "بوس بلعبة سولز كورية يواجهك أول اللعبة ويعتبر امتحان مهاراتك؟", a: "Yurikhan", alt: ["يوريكان", "يوريكس"] },
-  { cat: "مين البوس؟", d: 3, q: "بوس يقاتلك على جسر وتحتاج تقطع ذيله عشان تاخذ سلاحًا نادرًا؟", a: "Bridge Dragon", alt: ["تنين الجسر", "Hellkite"] },
-  { cat: "مين البوس؟", d: 3, q: "بوس يمثل شجرة عملاقة متعفنة ونقطة ضعفه بجذورها؟", a: "Curse-Rotted Greatwood", alt: ["الشجرة الملعونة"] },
-  { cat: "مين البوس؟", d: 3, q: "بوس بمرحلتين: بشري ثم يتحول لوحش، ويقاتلك بجسر يارنام؟", a: "Father Gascoigne", alt: ["غاسكوين"] },
-  { cat: "مين البوس؟", d: 3, q: "بوس نهائي بلعبة عن دمية، وهو رئيس الكنيسة اللي يتحول لوحش؟", a: "Simon Manus", alt: ["سيمون مانوس"] },
   { cat: "وين المكان؟", d: 3, q: "مدينة مبنية على 118 جزيرة موصولة بـ400 جسر؟", a: "البندقية", alt: ["فينيسيا", "Venice"] },
   { cat: "وين المكان؟", d: 3, q: "أكبر غابة مطيرة بالعالم وتُسمى رئة الأرض؟", a: "الأمازون", alt: ["Amazon", "غابات الأمازون"] },
   { cat: "وين المكان؟", d: 3, q: "منطقة بالمحيط الهادئ فيها 75% من براكين العالم؟", a: "حزام النار", alt: ["Ring of Fire", "حلقة النار"] },
@@ -820,16 +798,6 @@ const BANK = [
   { cat: "شكل ورسم", d: 3, q: "كم عدد حروف مستقيمة تحتاج لرسم مربع بأقل عدد خطوط؟", a: "4", alt: ["أربعة", "٤"] },
   { cat: "شكل ورسم", d: 3, q: "شبه منحرف قاعدتاه 6 و10 وارتفاعه 4 — كم مساحته؟", a: "32", alt: ["اثنين وثلاثين", "٣٢"] },
   { cat: "شكل ورسم", d: 3, q: "كم محور تماثل بالمربع؟", a: "4", alt: ["أربعة", "٤"] },
-  { cat: "مين البوس؟", d: 2, q: "بوس تقاتله مرتين: أول مرة بقناع يخفي هويته، وثاني مرة بالعاصمة يكشف اسمه الملكي — وش اسمه الثاني؟", a: "Morgott", alt: ["مورغوت"] },
-  { cat: "مين البوس؟", d: 2, q: "بوس يقطع رقبته بنفسه ويكمل يقاتلك بالمرحلة الثانية وهو بلا راس؟", a: "Guardian Ape", alt: ["القرد الحارس"] },
-  { cat: "مين البوس؟", d: 3, q: "بوسة كل ضربة تصيبك فيها ترجّع لها صحة، فتموت وأنت تصدها؟", a: "Malenia", alt: ["ماليينيا"] },
-  { cat: "مين البوس؟", d: 3, q: "بوس تقاتله وأنت راكب حصانك بمهرجان، وبالمرحلة الثانية يطير للسما ويرتطم فيك كنيزك؟", a: "Radahn", alt: ["رادان"] },
-  { cat: "مين البوس؟", d: 3, q: "بوس معركته موسيقاها بيانو حزين بدون طبول — لأنه ملك انطفأ نوره وصار ظل؟", a: "Gwyn", alt: ["غوين"] },
-  { cat: "مين البوس؟", d: 3, q: "بوس تحاربه بعالم الـEnd وتكسر أعمدة الكريستال أول عشان تمنعه يشفي نفسه؟", a: "Ender Dragon", alt: ["تنين الإندر"] },
-  { cat: "مين البوس؟", d: 3, q: "بوس ذكاء اصطناعي معلّق بالسقف تنزّل كراته وحدة وحدة، وتوعدك بكيكة؟", a: "GLaDOS", alt: ["غلادوس"] },
-  { cat: "مين البوس؟", d: 3, q: "بوس عجوز على كرسي متحرك تحت شجرة، كان معلّم الصيادين قبل ما يصير خصمك الأخير؟", a: "Gehrman", alt: ["غيرمان"] },
-  { cat: "مين البوس؟", d: 3, q: "بوس تكسر دمية ضخمة فيطلع من داخلها صديق البطل الحقيقي؟", a: "Romeo", alt: ["روميو"] },
-  { cat: "مين البوس؟", d: 3, q: "بوس ما يموت مهما ضربته إلا بسلاح مقدس واحد بالذات؟", a: "الراهب الخالد", alt: ["Corrupted Monk", "الراهبة الخالدة"] },
   { cat: "إيموجي", d: 2, q: "خمّن الظاهرة: 🌊🌕⬆️⬇️", a: "المد والجزر", alt: ["المد", "الجزر"] },
   { cat: "إيموجي", d: 2, q: "خمّن العملية: 🌱☀️💨➡️🍬", a: "التمثيل الضوئي", alt: ["البناء الضوئي", "photosynthesis"] },
   { cat: "إيموجي", d: 3, q: "خمّن المصطلح: ♟️👑🕰️ = ضغط الوقت بالشطرنج؟", a: "زوغزوانغ", alt: ["ضغط الوقت", "Zeitnot", "زايتنوت"] },
@@ -1110,14 +1078,6 @@ const BANK = [
   { cat: "لور السولز", d: 3, q: "وش المادة اللي كانوا يستخرجونها بـLies of P وسببت جنون سكان كرات؟", a: "الإرغو", alt: ["Ergo", "ايرقو"] },
   { cat: "لور السولز", d: 3, q: "من بلودبورن — وش اسم الطائفة اللي كانت تجري تجارب الدم القديم بيارنام؟", a: "كنيسة الشفاء", alt: ["Healing Church", "الكنيسة"] },
   { cat: "لور السولز", d: 3, q: "مين الشخصية اللي تعطيك ماء البحيرة المقدس وترافقك بإلدن رينق كساحرة؟", a: "Melina", alt: ["ميلينا"] },
-  { cat: "سولز لايك", d: 2, q: "كم عدد النهايات الرئيسية بلعبة إلدن رينق (بدون DLC)؟", a: "6", alt: ["ستة", "٦"] },
-  { cat: "سولز لايك", d: 3, q: "وش اسم آلية Lies of P اللي تقيس كم كذبت وتحدد نهايتك؟", a: "نظام الإنسانية", alt: ["الكذب", "Humanity", "نظام الكذب"] },
-  { cat: "سولز لايك", d: 3, q: "كم عدد الـNightlords بـ Elden Ring Nightreign؟", a: "8", alt: ["ثمانية", "٨"] },
-  { cat: "سولز لايك", d: 3, q: "وش اسم الاستوديو الكوري وراء The First Berserker: Khazan؟", a: "Neople", alt: ["نيوبل"] },
-  { cat: "سولز لايك", d: 3, q: "في أي سنة صدرت Demon's Souls الأصلية باليابان؟", a: "2009", alt: ["٢٠٠٩"] },
-  { cat: "سولز لايك", d: 3, q: "وش اللعبة اللي أدخلت آلية الـParry المثالية كأساس القتال بدل التفادي؟", a: "Sekiro", alt: ["سيكيرو"] },
-  { cat: "سولز لايك", d: 3, q: "كم جائزة لعبة العام حصدتها إلدن رينق بحفل TGA 2022 كأبرزها؟", a: "لعبة العام", alt: ["GOTY", "جائزة أفضل لعبة"] },
-  { cat: "سولز لايك", d: 3, q: "وش أول لعبة فروم سوفتوير تصدر على PC بشكل متزامن مع الكونسول؟", a: "Dark Souls", alt: ["دارك سولز"] },
   { cat: "أوفرواتش", d: 2, q: "كم بطل كان بأوفرواتش وقت الإطلاق 2016؟", a: "21", alt: ["واحد وعشرين", "٢١"] },
   { cat: "أوفرواتش", d: 3, q: "وش الاسم الحقيقي لسومبرا؟", a: "Olivia Colomar", alt: ["أوليفيا", "اوليفيا كولومار"] },
   { cat: "أوفرواتش", d: 3, q: "وش الدولة اللي منها بطل الدعم Baptiste؟", a: "هايتي", alt: ["Haiti"] },
@@ -1226,13 +1186,6 @@ async function askClaudeInner(prompt, signal) {
   return String(data.text || "").replace(/```json|```/g, "").trim();
 }
 
-async function genTyped(cats, n) {
-  const prompt = `أنت مولّد أسئلة لمجموعة أصدقاء سعوديين قيمرز يحبون التحدي. ولّد ${n} أسئلة مبتكرة وغير مستهلكة بالعربية إجابتها كلمة أو كلمتين أو رقم (بدون خيارات). الفئات: ${cats.join("، ")}. تجنب الأسئلة الكليشيه، واستخدم تلميحات ذكية أو تفاصيل غير مشهورة، ونوّع الصعوبة (1 سهل، 2 متوسط، 3 صعب). تأكد أن الإجابة واحدة مؤكدة لا لبس فيها. أرجع JSON فقط بدون أي نص آخر: [{"q":"نص السؤال","a":"الإجابة","d":2,"cat":"الفئة"}]`;
-  const raw = await askClaude(prompt);
-  const arr = JSON.parse(raw);
-  return arr.filter((x) => x.q && x.a)
-    .map((x) => ({ type: "typed", q: x.q, a: String(x.a), d: x.d >= 1 && x.d <= 3 ? x.d : 2, cat: x.cat || cats[0] }));
-}
 
 const AR_NUM = {
   "صفر": "0", "واحد": "1", "وحده": "1", "اثنين": "2", "اثنان": "2", "ثنين": "2",
@@ -1391,11 +1344,17 @@ const isEventSlot = (idx) => idx > 0 && idx % 3 === 2;
 const NO_DIFF = ["بوسات السولز", "لور السولز"];
 const noDiff = (c) => NO_DIFF.includes(c);
 
-const INVENTIVE = ["خمّن اللعبة", "لعبة الحروف", "منطق وألغاز", "أمثال ومصطلحات", "طعام ومطبخ", "حيوانات", "فضاء", "جسم الإنسان", "السعودية", "سيارات", "اختراعات", "أعلام", "شكل ورسم", "مين البوس؟", "وين المكان؟", "مين قالها؟", "وش الغرض؟",
+const INVENTIVE = ["خمّن اللعبة", "لعبة الحروف", "منطق وألغاز", "أمثال ومصطلحات", "طعام ومطبخ", "حيوانات", "فضاء", "جسم الإنسان", "السعودية", "سيارات", "اختراعات", "أعلام", "شكل ورسم", "وين المكان؟", "مين قالها؟", "وش الغرض؟",
   "الرابط المشترك", "قبل ولا بعد؟", "إيموجي", "دليلين", "الأغرب", "لو كنت مكانك"];
 const CLASSIC = CATS.filter((c) => !INVENTIVE.includes(c));
 // نضمن 6 فئات مبتكرة + 3 كلاسيكية كل جولة (9 خيارات)
-const sampleCats = () => shuffle([...shuffle(INVENTIVE).slice(0, 6), ...shuffle(CLASSIC).slice(0, 3)]);
+const sampleCats = (picked) => {
+  // لو الهوست حدد فئات معيّنة، ما نعرض غيرها
+  if (picked && picked.length) {
+    return picked.length <= 9 ? shuffle(picked) : shuffle(picked).slice(0, 9);
+  }
+  return shuffle([...shuffle(INVENTIVE).slice(0, 6), ...shuffle(CLASSIC).slice(0, 3)]);
+};
 
 const Sadu = () => (
   <div className="sadu" aria-hidden="true">
@@ -1425,7 +1384,7 @@ export default function App() {
   const [, forceN] = useState(0);
   const rerender = () => forceN((x) => x + 1);
 
-  const [cfg, setCfg] = useState({ count: 25, src: { bank: true, ai: true, mine: false } });
+  const [cfg, setCfg] = useState({ count: 25, src: { bank: true, mine: false }, picked: [] });
 
   const localRef = useRef({ qIndex: -1, renderAt: 0, answered: false, text: "" });
   const [typedText, setTypedText] = useState("");
@@ -1512,10 +1471,11 @@ export default function App() {
       if (fresh.length) cand = fresh;
       else cand.forEach((q) => h.seenAll.delete(qKey(q))); // دورة جديدة لهذي الفئة
     }
-    if (!cand.length && cfg.src.ai) {
-      try { const g = await genTyped([cat], 1); if (g.length) cand = g.filter((q) => !h.used.has(qKey(q))); } catch (e) { /* fallback */ }
+    if (!cand.length) {
+      // احتياطي: من فئات الروم المختارة فقط
+      const scope = h.picked && h.picked.length ? BANK.filter((b) => h.picked.includes(b.cat)) : BANK;
+      cand = scope.map((b) => ({ type: "typed", ...b })).filter((q) => !h.used.has(qKey(q)));
     }
-    if (!cand.length) cand = BANK.map((b) => ({ type: "typed", ...b })).filter((q) => !h.used.has(qKey(q)));
     if (!cand.length) cand = [genMathQ(dT)];
     const q = cand[Math.floor(Math.random() * cand.length)];
     h.used.add(qKey(q));
@@ -1743,8 +1703,12 @@ export default function App() {
       ]);
     } catch (e) { q = null; }
     if (!q) {
-      const pool = BANK.filter((b) => !h.used.has(qKey(b)));
-      const pick = (pool.length ? pool : BANK)[Math.floor(Math.random() * (pool.length || BANK.length))];
+      // الاحتياطي يحترم الفئة المختارة، ثم فئات الروم، ثم الكل
+      const inCat = BANK.filter((b) => b.cat === cat);
+      const inRoom = h.picked && h.picked.length ? BANK.filter((b) => h.picked.includes(b.cat)) : BANK;
+      const base = inCat.length ? inCat : inRoom;
+      const pool = base.filter((b) => !h.used.has(qKey(b)));
+      const pick = (pool.length ? pool : base)[Math.floor(Math.random() * (pool.length || base.length))];
       h.used.add(qKey(pick));
       q = { type: "typed", ...pick, pts: PTS[pick.d] || 400 };
     }
@@ -1790,7 +1754,7 @@ export default function App() {
     } else {
       h.judging = true;
       await broadcast();
-      okMap = entries.length ? await judgeTyped(q.q, q.a, entries, cfg.src.ai, q.alt) : {};
+      okMap = entries.length ? await judgeTyped(q.q, q.a, entries, true, q.alt) : {};
       h.judging = false;
     }
 
@@ -1903,7 +1867,7 @@ export default function App() {
     } else {
       h.pickerPid = null;
     }
-    h.catOptions = sampleCats();
+    h.catOptions = sampleCats(h.picked);
     h.votes = {};
     h.catStart = Date.now();
     h.chosenCat = null;
@@ -1991,6 +1955,10 @@ export default function App() {
   /* ---------- إنشاء روم ---------- */
   async function createRoom() {
     if (!me.name.trim()) { setToast("اكتب اسمك أول"); return; }
+    if (!cfg.src.bank && !(cfg.src.mine && myq.length)) {
+      setToast("لازم تفعّل بنك الأسئلة أو تضيف أسئلتك أول");
+      return;
+    }
     setLoading("نجهّز الروم…");
     await jset("fz:me", me, false);
     const prevSeen = await jget("fz:seenQ", false);
@@ -2001,7 +1969,7 @@ export default function App() {
       code: c, total: cfg.count, questions: [], used: new Set(), qIndex: 0, qStart: 0, phase: "lobby",
       players: { [me.pid]: { name: me.name.trim(), score: 0 } },
       answers: {}, votes: {}, reveal: null, judging: false, currentEvent: null, eventPool: null, ver: 0,
-      items: { [me.pid]: [] }, fx: {}, itemLog: [], seen: {}, doneUses: {}, stageStart: 0, autoNext: cfg.autoNext !== false,
+      items: { [me.pid]: [] }, fx: {}, itemLog: [], seen: {}, doneUses: {}, picked: cfg.picked || [], stageStart: 0, autoNext: cfg.autoNext !== false,
       catMode: "vote", pickerPid: null, catOptions: [], catStart: 0, chosenCat: null, rolled: 0, catCount: {},
       seenAll: new Set(Array.isArray(prevSeen) ? prevSeen : []),
     };
@@ -2282,6 +2250,8 @@ export default function App() {
     .qPhoto{background:var(--sur2); border:1.5px solid var(--line); border-radius:14px;
       overflow:hidden; margin-bottom:6px; display:block;}
     .qPhoto img{width:100%; display:block; aspect-ratio:16/10; object-fit:cover; transition:transform .3s ease;}
+    .catPick{display:flex; flex-wrap:wrap; gap:8px; max-height:230px; overflow-y:auto;
+      background:var(--sur); border:1px solid var(--line); border-radius:14px; padding:12px;}
     .cdNum{font-family:'Lalezar',cursive; font-size:96px; line-height:1; color:var(--amber);
       animation:cdPop .5s cubic-bezier(.2,1.5,.4,1);}
     @keyframes cdPop{0%{transform:scale(.4); opacity:0;}60%{transform:scale(1.15);}100%{transform:scale(1); opacity:1;}}
@@ -2363,9 +2333,35 @@ export default function App() {
       <label className="lbl">مصادر الأسئلة</label>
       <div className="chips">
         <button className={"chip" + (cfg.src.bank ? " on" : "")} onClick={() => setCfg({ ...cfg, src: { ...cfg.src, bank: !cfg.src.bank } })}>بنك الأسئلة ({BANK.length})</button>
-        <button className={"chip" + (cfg.src.ai ? " on" : "")} onClick={() => setCfg({ ...cfg, src: { ...cfg.src, ai: !cfg.src.ai } })}>توليد AI</button>
         <button className={"chip" + (cfg.src.mine ? " on" : "")} onClick={() => setCfg({ ...cfg, src: { ...cfg.src, mine: !cfg.src.mine } })}>أسئلتي ({myq.length})</button>
       </div>
+
+      <label className="lbl">
+        الفئات ({cfg.picked.length ? `${cfg.picked.length} مختارة` : "الكل — عشوائي"})
+      </label>
+      <div className="chips" style={{ marginBottom: 8 }}>
+        <button className="chip" onClick={() => setCfg({ ...cfg, picked: [] })}>
+          {cfg.picked.length === 0 ? "✓ " : ""}الكل
+        </button>
+        <button className="chip" onClick={() => setCfg({ ...cfg, picked: [...CATS] })}>حدد الكل</button>
+      </div>
+      <div className="catPick">
+        {CATS.map((c) => {
+          const on = cfg.picked.includes(c);
+          return (
+            <button key={c} className={"chip" + (on ? " on" : "")}
+              onClick={() => setCfg({
+                ...cfg,
+                picked: on ? cfg.picked.filter((x) => x !== c) : [...cfg.picked, c],
+              })}>{on ? "✓ " : ""}{c}</button>
+          );
+        })}
+      </div>
+      {cfg.picked.length > 0 && cfg.picked.length < 2 && (
+        <p style={{ color: "var(--red)", fontSize: 13, marginTop: 8 }}>
+          اختر فئتين على الأقل — وإلا كل الأسئلة من فئة وحدة
+        </p>
+      )}
 
       <label className="lbl">إيقاع اللعبة</label>
       <div className="chips">
@@ -2375,8 +2371,8 @@ export default function App() {
         </button>
       </div>
       <p style={{ color: "var(--dim)", fontSize: 13, marginTop: 12, lineHeight: 1.8 }}>
-        الفئات ما تنحدد هنا — كل سؤال، الأخير بالترتيب يختار فئته من داخل اللعبة 😈
-        <br />التصحيح يشتغل بدون إنترنت ويتسامح مع الأخطاء الإملائية. توليد AI اختياري ويشتغل من جهازك أنت بس — ربعك ما يحتاجون حساب.
+        اختر الفئات اللي تبونها فوق — وبكل جولة، الأخير بالترتيب يختار وحدة منها 😈
+        <br />التصحيح يتسامح مع الأخطاء الإملائية ويقبل العربي والإنجليزي.
       </p>
 
       <div style={{ height: 20 }} />
