@@ -113,6 +113,9 @@ const POWERUPS = [
   { id: "trap",   icon: "🪤", name: "الفخ",        uses: 1, when: "board",
     desc: "السؤال الجاي: لو جاوبه الفريق الثاني غلط ينخصم منه نص القيمة" },
 ];
+// هل الفئة عندها أسئلة كافية للوحة؟ (6 إجابات مختلفة على الأقل)
+const boardReady = (c) => new Set(BANK.filter((b) => b.cat === c).map((b) => b.a)).size >= BOARD_VALUES.length;
+
 const puById = (id) => POWERUPS.find((p) => p.id === id);
 const freshPowerUps = () => {
   const o = {};
@@ -162,8 +165,53 @@ const itemById = (id) => ITEMS.find((x) => x.id === id);
 const BANK = [
   // ============ أسئلة الصور ============
   // ---- خمّن البوس (حط صورك بمجلد public/img) ----
-  { cat: "خمّن البوس", d: 2, q: "من إلدن رينق — مين هذا البوس؟", a: "Black Knife Assassin", alt: ["بلاك نايف","قاتلة السكين السوداء","Blackknife Assassin"], img: "/img/boss-blackknifeassassin.jpg", zoom: { s: 2.5, x: 50, y: 40 }, info: "قتلة الليلة السوداء اللي اغتالوا Godwyn بسكاكين مشحونة برون الموت." },
-  { cat: "خمّن البوس", d: 2, q: "من إلدن رينق — مين هذا التنين؟", a: "Great Wyrm Theodorix", alt: ["ثيودوريكس","Theodorix"], img: "/img/boss-GreatWyrmTheodorix.jpg", zoom: { s: 2.5, x: 50, y: 45 }, info: "تنين عملاق مسموم بمستنقعات جبل جيلمير، يهاجم بأنفاس سامة." },
+  { cat: "خمّن البوس", d: 2, q: "من إلدن رينق — مين هذا البوس؟", a: "Ancient Hero of Zamor", alt: ["بطل زامور"], img: "/img/boss-ancientheroofzamor.jpg", info: "محارب جليدي قديم يهاجم بسيف يجمّد." },
+  { cat: "خمّن البوس", d: 2, q: "من إلدن رينق — مين هذا البوس؟", a: "Beastman of Farum Azula", alt: ["بيست مان"], img: "/img/boss-beastmanoffarumazula.jpg", info: "محارب وحشي بفاروم أزولا يقاتل بأسلوب سريع." },
+  { cat: "خمّن البوس", d: 2, q: "من إلدن رينق — مين هذا البوس؟", a: "Black Knife Assassin", alt: ["بلاك نايف", "قاتلة السكين السوداء"], img: "/img/boss-blackknifeassassin.jpg", info: "من اغتالوا Godwyn بسكاكين مشحونة برون الموت." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 2 — مين هذا البوس؟", a: "Burnt Ivory King", alt: ["ملك العاج المحترق"], img: "/img/boss-Burntivoryking.avif", info: "ملك ضحّى بنفسه ليغلق بوابة الفوضى." },
+  { cat: "خمّن البوس", d: 2, q: "من إلدن رينق — مين هذا البوس؟", a: "Cemetery Shade", alt: ["شبح المقبرة"], img: "/img/boss-cemeteryshade.jpg", info: "شبح يظهر بالمقابر ويستدعي أرواحًا." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 1 — مين هذا البوس؟", a: "Chaos Witch Quelaag", alt: ["كويلاق", "Quelaag"], img: "/img/boss-ChaosWitchQuelaag.avif", info: "نصفها امرأة ونصفها عنكبوت ناري، من بنات ساحرة إيزاليث." },
+  { cat: "خمّن البوس", d: 2, q: "من إلدن رينق DLC — مين هذا البوس؟", a: "Commander Gaius", alt: ["غايوس"], img: "/img/boss-commandergaius.png", info: "يهاجمك راكبًا خنزيرًا بريًا ضخمًا." },
+  { cat: "خمّن البوس", d: 2, q: "من إلدن رينق — مين هذا البوس؟", a: "Commander O'Neil", alt: ["أونيل", "O'Neil"], img: "/img/boss-commanderoneil.jpg.jpg", info: "قائد بمستنقعات كايليد يستدعي جنودًا حوله." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 1 — مين هذا البوس؟", a: "Crossbreed Priscilla", alt: ["بريسيلا", "Priscilla"], img: "/img/boss-CrossbreedPriscilla.avif", info: "تختفي عن النظر، ويمكن تجاوزها بلا قتال." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 2 — مين هذا البوس؟", a: "Darklurker", alt: ["دارك لوركر"], img: "/img/boss-Darklurker.avif", info: "ينقسم لنسختين بالمرحلة الثانية." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 3 — مين هذا البوس؟", a: "Deep Accursed", alt: ["ديب أكيرسد"], img: "/img/boss-Deepaccursed.webp", info: "يقفز من السقف ويصيبك باللعنة." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 1 — مين هذا البوس؟", a: "Demon Firesage", alt: ["ديمون فايرسيج"], img: "/img/boss-DemonFiresage.avif", info: "شيطان ناري بأعماق إيزاليث." },
+  { cat: "خمّن البوس", d: 2, q: "من إلدن رينق — مين هذا البوس؟", a: "Dragonkin Soldier", alt: ["جندي التنانين"], img: "/img/boss-dragonkinsoldier.jpg", info: "يهاجم بالبرق الأحمر، من بقايا حرب التنانين." },
+  { cat: "خمّن البوس", d: 2, q: "من إلدن رينق DLC — مين هذا البوس؟", a: "Esgar, Priest of Blood", alt: ["إسغار", "Esgar"], img: "/img/boss-esgarpriestofblood.jpg", info: "كاهن دموي بأسلوب قتال وحشي." },
+  { cat: "خمّن البوس", d: 2, q: "من إلدن رينق — مين هذا البوس؟", a: "Fell Twins", alt: ["التوأم", "Omen Twins"], img: "/img/boss-felltwinsomen.jpg", info: "توأم من الـOmen يقاتلانك معًا بالثلوج." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 2 — مين هذا البوس؟", a: "Flexile Sentry", alt: ["فليكسايل سنتري"], img: "/img/boss-Flexilesentry.avif", info: "له وجهان وسيفان، يقاتلك بسفينة تغرق." },
+  { cat: "خمّن البوس", d: 2, q: "من إلدن رينق — مين هذا البوس؟", a: "Lichdragon Fortissax", alt: ["فورتساكس", "Fortissax"], img: "/img/boss-fortissax.jpg", info: "تنين البرق المرتبط بـGodwyn، تقاتله داخل حلم Fia." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 1 — مين هذا البوس؟", a: "Four Kings", alt: ["الملوك الأربعة"], img: "/img/boss-FourKings.avif", info: "تقاتلهم بالظلام الدامس، وكل ما تأخرت زاد عددهم." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 2 — مين هذا البوس؟", a: "Fume Knight", alt: ["فيوم نايت"], img: "/img/boss-FumeKnight.avif", info: "من أصعب بوسات السلسلة، بسيفين وأسلوب عدواني." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 2 — مين هذا البوس؟", a: "Gank Squad", alt: ["غانك سكواد"], img: "/img/boss-GankSquad.avif", info: "ثلاثة يهاجمونك معًا — سمعتها السيئة مستحقة." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 1 — مين هذا البوس؟", a: "Gaping Dragon", alt: ["التنين الفاغر"], img: "/img/boss-GapingDragon.avif", info: "تنين تحوّل فمه لبطن عملاق من شراهته." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 2 — مين هذا البوس؟", a: "Giant Lord", alt: ["لورد العمالقة"], img: "/img/boss-Giantlord.avif", info: "تقاتله بالماضي عبر رحلة زمنية." },
+  { cat: "خمّن البوس", d: 2, q: "من إلدن رينق — مين هذا البوس؟", a: "Godskin Duo", alt: ["غودسكن", "جودسكين"], img: "/img/bossgodskinduo.jpg", info: "نبيل ورسول يتبادلان الظهور — يشتركان بشريط صحة واحد." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 1 — مين هذا البوس؟", a: "Great Grey Wolf Sif", alt: ["سيف", "Sif"], img: "/img/boss-GreatGreywolfSif.avif", info: "ذئب يحمل سيف سيده Artorias بفمه ويحرس قبره." },
+  { cat: "خمّن البوس", d: 2, q: "من إلدن رينق — مين هذا البوس؟", a: "Great Wyrm Theodorix", alt: ["ثيودوريكس", "Theodorix"], img: "/img/boss-GreatWyrmTheodorix.jpg", info: "تنين مسموم بمستنقعات جبل جيلمير." },
+  { cat: "خمّن البوس", d: 2, q: "مين هذا البوس؟", a: "Iron Dragonslayer", alt: ["قاتل التنانين الحديدي"], img: "/img/boss-irondragonslayer.webp", info: "محارب مدرّع يقاتل بسلاح البرق." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 1 — مين هذا البوس؟", a: "Iron Golem", alt: ["الغولم الحديدي"], img: "/img/boss-IronGolem.avif", info: "تقدر تسقطه من حافة البرج بدل قتاله." },
+  { cat: "خمّن البوس", d: 2, q: "من إلدن رينق — مين هذا البوس؟", a: "Leonine Misbegotten", alt: ["ليونين"], img: "/img/boss-leoninemisbegotten.jpg", info: "مخلوق أسدي يحرس قلعة موراين." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 2 — مين هذا البوس؟", a: "Lost Sinner", alt: ["الخاطئة الضائعة"], img: "/img/boss-Lostsinner.avif", info: "تقاتلها بالظلام إلا لو أشعلت المشاعل حولها." },
+  { cat: "خمّن البوس", d: 2, q: "من إلدن رينق — مين هذا البوس؟", a: "Mimic Tear", alt: ["الدمعة المحاكية"], img: "/img/boss-mimictear.jpg", info: "يتشكّل نسخة منك بسلاحك وعتادك بالضبط." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 2 — مين هذا البوس؟", a: "Nashandra", alt: ["ناشاندرا"], img: "/img/boss-Nashandra.avif", info: "الملكة والبوس النهائي، من شظايا روح مانوس." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 1 — مين هذا البوس؟", a: "Gravelord Nito", alt: ["نيتو", "Nito"], img: "/img/boss-Nito.avif", info: "أول من مات، وأحد حاملي أرواح اللوردات." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 1 — مين هذا البوس؟", a: "Ornstein and Smough", alt: ["أورنشتاين وسموغ"], img: "/img/boss-OrnsteinandSmough.avif", info: "لما تقتل واحدًا يمتص الثاني قوته ويكبر." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 1 — مين هذا البوس؟", a: "Pinwheel", alt: ["بينويل"], img: "/img/boss-Pinwheel.avif", info: "ينقسم لنسخ متعددة، ويُعد أسهل بوس بالسلسلة." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 2 — مين هذا البوس؟", a: "Pursuer", alt: ["المطارد"], img: "/img/boss-Pursuer.avif", info: "يظهر لك مرارًا بأماكن مختلفة طوال اللعبة." },
+  { cat: "خمّن البوس", d: 2, q: "مين هذا البوس؟", a: "Red Wolf / Redmane Duo", alt: ["ريدماين", "الذئب الأحمر"], img: "/img/boss-redmaneduo.jpg", info: "من فرسان ردمين المرتبطين برادان." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 3 — مين هذا البوس؟", a: "Ringed Knight", alt: ["فرسان الحلقة"], img: "/img/boss-RingedKnight.webp", info: "حراس المدينة المطوّقة، بسيوف مشتعلة بالظلام." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 2 — مين هذا البوس؟", a: "Ruin Sentinels", alt: ["حراس الأطلال"], img: "/img/boss-Ruinsentinels.avif", info: "ثلاثة دروع طويلة تقاتلك فوق برج ضيق." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 2 — مين هذا البوس؟", a: "Scorpioness Najka", alt: ["ناجكا"], img: "/img/boss-Scorpionessnajka.avif", info: "نصفها امرأة ونصفها عقرب، تغوص بالرمال." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 2 — مين هذا البوس؟", a: "Sir Alonne", alt: ["سير ألون"], img: "/img/boss-sirAlonne.avif", info: "محارب بأسلوب ساموراي، وله نهاية مميزة لو هزمته بلا ضرر." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 2 — مين هذا البوس؟", a: "Smelter Demon", alt: ["شيطان المصهر"], img: "/img/boss-Smelterdemon.avif", info: "درعه مشتعل ويحرقك بمجرد الاقتراب." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 2 — مين هذا البوس؟", a: "Twin Dragonriders", alt: ["فرسان التنين التوأم"], img: "/img/boss-Twindragonriders.avif", info: "اثنان يقاتلانك بساحة ضيقة." },
+  { cat: "خمّن البوس", d: 2, q: "من إلدن رينق — مين هذا البوس؟", a: "Valiant Gargoyle", alt: ["الغرغويل"], img: "/img/boss-valiantgargoyle.jpg", info: "اثنان يهاجمانك بأعماق نهر سيوفرا." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 2 — مين هذا البوس؟", a: "Velstadt, the Royal Aegis", alt: ["فيلستادت", "Velstadt"], img: "/img/boss-Velstadttheroyalaegis.avif", info: "حارس الملك المخلص، يقاتلك قبل الوصول إليه." },
+  { cat: "خمّن البوس", d: 2, q: "من دارك سولز 2 — مين هذا البوس؟", a: "Vendrick", alt: ["فيندريك"], img: "/img/boss-Vendrick.avif", info: "ملك دراينغليك، يمشي ببطء وضربته تسحق." },
+  { cat: "خمّن البوس", d: 2, q: "مين هذا البوس؟", a: "Rot Grub / Worm", alt: ["الدودة"], img: "/img/boss-Worm.webp", info: "مخلوق دودي ضخم." },
+  { cat: "خمّن البوس", d: 2, q: "من إلدن رينق — مين هذا البوس؟", a: "Commander Niall", alt: ["نيال", "Niall"], img: "/img/boss-niall.png", info: "قائد بساق واحدة يستدعي محاربين شبحيين." },
   // ---- خمّن اللعبة (تحتاج صور بمجلد public/img) ----
   // ---- الأعلام (كلها مرسومة) ----
   { cat: "أعلام", d: 2, q: "وش الدولة صاحبة هذا العلم؟", a: "تشاد", alt: ["Chad"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#002664\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FECB00\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#C60C30\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
@@ -1669,13 +1717,15 @@ export default function App() {
 
   /* ---------- نمط سين جيم: بناء اللوحة ---------- */
   function makeBoard(h) {
-    // الفئة تصلح للوحة فقط لو عندها 6 إجابات مختلفة على الأقل
-    const enough = (c) => new Set(BANK.filter((b) => b.cat === c).map((b) => b.a)).size >= BOARD_VALUES.length;
-    const usable = (arr) => arr.filter(enough);
-    const pickedOk = usable(h.picked || []);
-    const picked = pickedOk.length >= BOARD_CATS_N
-      ? shuffle(pickedOk).slice(0, BOARD_CATS_N)
-      : shuffle([...usable(INVENTIVE), ...usable(CLASSIC)]).slice(0, BOARD_CATS_N);
+    const usable = (arr) => arr.filter(boardReady);
+    // فئاتك المختارة أولًا، ثم نكمّل الناقص عشوائيًا
+    const pickedOk = shuffle(usable(h.picked || []));
+    const picked = pickedOk.slice(0, BOARD_CATS_N);
+    if (picked.length < BOARD_CATS_N) {
+      const rest = shuffle([...usable(INVENTIVE), ...usable(CLASSIC)])
+        .filter((c) => !picked.includes(c));
+      picked.push(...rest.slice(0, BOARD_CATS_N - picked.length));
+    }
     const taken = new Set();
     const takenAns = new Set();   // ما نكرر نفس الجواب باللوحة كلها
     const pickQ = (cat, pts) => {
@@ -2358,10 +2408,6 @@ export default function App() {
   /* ---------- إنشاء روم ---------- */
   async function createRoom() {
     if (!me.name.trim()) { setToast("اكتب اسمك أول"); return; }
-    if (cfg.mode === "board" && cfg.picked.length > 0 && cfg.picked.length !== BOARD_CATS_N) {
-      setToast(`لوحة سين جيم تحتاج ${BOARD_CATS_N} فئات بالضبط — أو اضغط «عشوائي»`);
-      return;
-    }
     if (!cfg.src.bank && !(cfg.src.mine && myq.length)) {
       setToast("لازم تفعّل بنك الأسئلة أو تضيف أسئلتك أول");
       return;
@@ -2702,7 +2748,10 @@ export default function App() {
     .exitBtn.danger:hover{border-color:var(--red); color:var(--red);}
     .qPhoto{background:var(--sur2); border:1.5px solid var(--line); border-radius:14px;
       overflow:hidden; margin-bottom:6px; display:block;}
-    .qPhoto img{width:100%; display:block; aspect-ratio:16/10; object-fit:cover; transition:transform .3s ease;}
+    .qPhoto img{width:100%; display:block; max-height:420px; object-fit:contain;
+      transition:transform .3s ease; background:#1B1526;}
+    /* مع الزوم نحتاج قص عشان التقريب يبان */
+    .qPhoto.zoomed img{aspect-ratio:16/10; object-fit:cover; max-height:none;}
     .catPick{display:flex; flex-wrap:wrap; gap:8px; max-height:230px; overflow-y:auto;
       background:var(--sur); border:1px solid var(--line); border-radius:14px; padding:12px;}
     .scoreBar{display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 12px; justify-content:center;}
@@ -2848,7 +2897,7 @@ export default function App() {
         <button className={"chip" + (cfg.mode !== "board" ? " on" : "")}
           onClick={() => setCfg({ ...cfg, mode: "classic" })}>⚡ سريع (فردي)</button>
         <button className={"chip" + (cfg.mode === "board" ? " on" : "")}
-          onClick={() => setCfg({ ...cfg, mode: "board", picked: cfg.picked.slice(0, BOARD_CATS_N) })}>🎯 SICKJEEM (فريقين)</button>
+          onClick={() => setCfg({ ...cfg, mode: "board", picked: cfg.picked.filter(boardReady) })}>🎯 SICKJEEM (فريقين)</button>
       </div>
       <p style={{ color: "var(--dim)", fontSize: 12, marginTop: 6, lineHeight: 1.7 }}>
         {cfg.mode === "board"
@@ -2886,7 +2935,9 @@ export default function App() {
 
       <label className="lbl">
         {cfg.mode === "board"
-          ? `الفئات (${cfg.picked.length} / ${BOARD_CATS_N} — اللوحة تحتاج ${BOARD_CATS_N} بالضبط)`
+          ? (cfg.picked.length
+              ? `الفئات (${Math.min(cfg.picked.length, BOARD_CATS_N)} مختارة${cfg.picked.length < BOARD_CATS_N ? ` + ${BOARD_CATS_N - cfg.picked.length} عشوائية` : ""})`
+              : `الفئات (${BOARD_CATS_N} عشوائية)`)
           : `الفئات (${cfg.picked.length ? cfg.picked.length + " مختارة" : "الكل — عشوائي"})`}
       </label>
       <div className="chips" style={{ marginBottom: 8 }}>
@@ -2900,10 +2951,12 @@ export default function App() {
       <div className="catPick">
         {CATS.map((c) => {
           const on = cfg.picked.includes(c);
+          const weak = cfg.mode === "board" && !boardReady(c);
           return (
             <button key={c} className={"chip" + (on ? " on" : "")}
-              disabled={!on && cfg.mode === "board" && cfg.picked.length >= BOARD_CATS_N}
-              style={!on && cfg.mode === "board" && cfg.picked.length >= BOARD_CATS_N ? { opacity: 0.35 } : undefined}
+              disabled={weak}
+              title={weak ? "ما فيها أسئلة كافية للوحة (تحتاج 6 إجابات مختلفة)" : undefined}
+              style={weak ? { opacity: 0.3, textDecoration: "line-through" } : undefined}
               onClick={() => setCfg({
                 ...cfg,
                 picked: on ? cfg.picked.filter((x) => x !== c) : [...cfg.picked, c],
@@ -2912,9 +2965,9 @@ export default function App() {
         })}
       </div>
       {cfg.mode === "board" ? (
-        cfg.picked.length > 0 && cfg.picked.length < BOARD_CATS_N && (
-          <p style={{ color: "var(--red)", fontSize: 13, marginTop: 8 }}>
-            ناقص {BOARD_CATS_N - cfg.picked.length} — إما تكمّل {BOARD_CATS_N} أو تضغط «عشوائي»
+        cfg.picked.length > BOARD_CATS_N && (
+          <p style={{ color: "var(--amber)", fontSize: 13, marginTop: 8 }}>
+            اخترت {cfg.picked.length} — اللوحة تعرض {BOARD_CATS_N} منها عشوائيًا كل مباراة
           </p>
         )
       ) : (
@@ -3281,7 +3334,7 @@ export default function App() {
         {muted && <div className="hiddenQ">🛑 استريح — ما تشارك بهذا السؤال</div>}
         <div className="card jCard">
           {b.svg && <div className="qImg" dangerouslySetInnerHTML={{ __html: b.svg }} />}
-          {b.img && <div className="qPhoto"><img src={b.img} alt=""
+          {b.img && <div className={"qPhoto" + (b.zoom ? " zoomed" : "")}><img src={b.img} alt=""
             onError={(ev) => { ev.currentTarget.parentElement.style.display = "none"; }}
             style={b.zoom ? {
             transform: `scale(${b.zoom.s || 2})`,
@@ -3589,7 +3642,7 @@ export default function App() {
             }}>
               {q.svg && <div className="qImg" dangerouslySetInnerHTML={{ __html: q.svg }} />}
               {q.img && (
-                <div className="qPhoto">
+                <div className={"qPhoto" + (q.zoom ? " zoomed" : "")}>
                   <img src={q.img} alt="" loading="eager"
                     onError={(ev) => { ev.currentTarget.parentElement.style.display = "none"; }}
                     style={q.zoom ? {
