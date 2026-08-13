@@ -162,11 +162,9 @@ const itemById = (id) => ITEMS.find((x) => x.id === id);
 const BANK = [
   // ============ أسئلة الصور ============
   // ---- خمّن البوس (حط صورك بمجلد public/img) ----
-  { cat: "خمّن البوس", d: 2, q: "مين هذا البوس؟", a: "Malenia", alt: ["ماليينيا"], img: "/img/boss-malenia.jpg", zoom: { s: 3, x: 50, y: 30 } },
-  { cat: "خمّن البوس", d: 3, q: "مين هذا البوس من هذي التفصيلة؟", a: "Gehrman", alt: ["غيرمان"], img: "/img/boss-gehrman.jpg", zoom: { s: 3.5, x: 40, y: 35 } },
+  { cat: "خمّن البوس", d: 2, q: "من إلدن رينق — مين هذا البوس؟", a: "Black Knife Assassin", alt: ["بلاك نايف","قاتلة السكين السوداء","Blackknife Assassin"], img: "/img/boss-blackknifeassassin.jpg", zoom: { s: 2.5, x: 50, y: 40 }, info: "قتلة الليلة السوداء اللي اغتالوا Godwyn بسكاكين مشحونة برون الموت." },
+  { cat: "خمّن البوس", d: 2, q: "من إلدن رينق — مين هذا التنين؟", a: "Great Wyrm Theodorix", alt: ["ثيودوريكس","Theodorix"], img: "/img/boss-GreatWyrmTheodorix.jpg", zoom: { s: 2.5, x: 50, y: 45 }, info: "تنين عملاق مسموم بمستنقعات جبل جيلمير، يهاجم بأنفاس سامة." },
   // ---- خمّن اللعبة (تحتاج صور بمجلد public/img) ----
-  { cat: "خمّن اللعبة", d: 2, q: "من أي لعبة هذي الزاوية؟", a: "Overwatch", alt: ["أوفرواتش"], img: "/img/ow-map.jpg", zoom: { s: 3, x: 30, y: 40 } },
-  { cat: "خمّن اللعبة", d: 3, q: "خمّن اللعبة من هذي التفصيلة؟", a: "Elden Ring", alt: ["إلدن رينق"], img: "/img/er-1.jpg", zoom: { s: 3.5, x: 65, y: 25 } },
   // ---- الأعلام (كلها مرسومة) ----
   { cat: "أعلام", d: 2, q: "وش الدولة صاحبة هذا العلم؟", a: "تشاد", alt: ["Chad"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#002664\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FECB00\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#C60C30\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
   { cat: "أعلام", d: 2, q: "نفس ألوان تشاد لكن الأزرق أفتح — أي دولة أوروبية؟", a: "رومانيا", alt: ["Romania"], svg: "<svg viewBox=\"0 0 120 80\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"80\" x=\"0\" fill=\"#002B7F\"/><rect width=\"40\" height=\"80\" x=\"40\" fill=\"#FCD116\"/><rect width=\"40\" height=\"80\" x=\"80\" fill=\"#CE1126\"/><rect x=\"0\" y=\"0\" width=\"120\" height=\"80\" fill=\"none\" stroke=\"#3D3153\" stroke-width=\"2\"/></svg>" },
@@ -1509,6 +1507,8 @@ const MAX_SLOTS = 8;
 const roomKey = (c) => `fz:room:${c}`;
 const slotKey = (c, s) => `fz:s${s}:${c}`;   // مفتاح ثابت لكل لاعب — ما نحتاج list()
 const qKey = (q) => (q.q || "") + "|" + (q.a || "");
+// مفتاح الإجابة — نمنع تكرار نفس الجواب بنفس الجولة
+const aKey = (q) => norm(q.a || "");
 const isEventSlot = (idx) => idx > 0 && idx % 3 === 2;
 // فئات ما فيها تقييم صعوبة — كل أسئلتها بنفس المستوى
 const NO_DIFF = ["بوسات السولز", "بوسات إلدن رينق", "لور السولز", "خمّن البوس", "خمّن اللعبة"];
@@ -1635,6 +1635,11 @@ export default function App() {
     // فئات بلا تقييم: كل الأسئلة بنفس المستوى، نختار من الكل
     let cand = noDiff(cat) ? pool : pool.filter((q) => q.d === dT);
     if (!cand.length) cand = pool;
+    // ما نكرر نفس الإجابة بنفس الجولة (غودريك مثلاً له أسئلة كثيرة)
+    if (h.usedAns && h.usedAns.size) {
+      const fresh = cand.filter((q) => !h.usedAns.has(aKey(q)));
+      if (fresh.length) cand = fresh;
+    }
     // ما نكرر أسئلة طلعت بجولات سابقة — إلا إذا خلصت كل أسئلة الفئة
     if (h.seenAll && h.seenAll.size) {
       const fresh = cand.filter((q) => !h.seenAll.has(qKey(q)));
@@ -1653,6 +1658,7 @@ export default function App() {
       h.seenAll.add(qKey(q));
       jset("fz:seenQ", [...h.seenAll].slice(-1200), false); // نحفظ بالخلفية
     }
+    if (h.usedAns) h.usedAns.add(aKey(q));
     if (noDiff(cat)) {
       // بلا تقييم صعوبة: نقاط موحّدة ترتفع مع تكرار الفئة
       return { ...q, nodiff: true, pts: Math.round((500 * heat) / 50) * 50 };
@@ -1663,13 +1669,20 @@ export default function App() {
 
   /* ---------- نمط سين جيم: بناء اللوحة ---------- */
   function makeBoard(h) {
-    const picked = (h.picked && h.picked.length >= BOARD_CATS_N)
-      ? shuffle(h.picked).slice(0, BOARD_CATS_N)
-      : shuffle([...shuffle(INVENTIVE).slice(0, 4), ...shuffle(CLASSIC).slice(0, 2)]).slice(0, BOARD_CATS_N);
+    // الفئة تصلح للوحة فقط لو عندها 6 إجابات مختلفة على الأقل
+    const enough = (c) => new Set(BANK.filter((b) => b.cat === c).map((b) => b.a)).size >= BOARD_VALUES.length;
+    const usable = (arr) => arr.filter(enough);
+    const pickedOk = usable(h.picked || []);
+    const picked = pickedOk.length >= BOARD_CATS_N
+      ? shuffle(pickedOk).slice(0, BOARD_CATS_N)
+      : shuffle([...usable(INVENTIVE), ...usable(CLASSIC)]).slice(0, BOARD_CATS_N);
     const taken = new Set();
+    const takenAns = new Set();   // ما نكرر نفس الجواب باللوحة كلها
     const pickQ = (cat, pts) => {
       const want = ptsToDiff(pts);
-      let pool = BANK.filter((b) => b.cat === cat && !taken.has(qKey(b)) && !h.seenAll.has(qKey(b)));
+      const fresh = (b) => b.cat === cat && !taken.has(qKey(b)) && !takenAns.has(aKey(b));
+      let pool = BANK.filter((b) => fresh(b) && !h.seenAll.has(qKey(b)));
+      if (!pool.length) pool = BANK.filter(fresh);
       if (!pool.length) pool = BANK.filter((b) => b.cat === cat && !taken.has(qKey(b)));
       if (!pool.length) return null;
       let cand = noDiff(cat) ? pool : pool.filter((b) => b.d === want);
@@ -1684,6 +1697,7 @@ export default function App() {
       if (!cand.length) cand = pool;
       const q = cand[Math.floor(Math.random() * cand.length)];
       taken.add(qKey(q));
+      takenAns.add(aKey(q));
       h.seenAll.add(qKey(q));
       return { ...q, type: "typed" };
     };
@@ -1996,6 +2010,7 @@ export default function App() {
     if (!h) return;
     autoTeams(h);
     h.teams.forEach((t) => { t.score = 0; t.pu = freshPowerUps(); });
+    h.usedAns = new Set();
     h.board = makeBoard(h);
     h.turn = 0;
     h.tile = null;
@@ -2277,6 +2292,7 @@ export default function App() {
     h.questions = [];
     h.items = {}; h.fx = {}; h.itemLog = [];
     h.catCount = {};
+    h.usedAns = new Set();
     Object.keys(h.players).forEach((pid) => { h.items[pid] = []; });
     await advanceTo(0);
   }
@@ -2320,6 +2336,7 @@ export default function App() {
     h.questions = [];
     h.items = {}; h.fx = {}; h.itemLog = [];
     h.catCount = {};
+    h.usedAns = new Set();
     Object.keys(h.players).forEach((pid) => { h.items[pid] = []; });
     Object.values(h.players).forEach((p) => { p.score = 0; });
     await broadcast();
@@ -2359,7 +2376,7 @@ export default function App() {
       code: c, total: cfg.count, questions: [], used: new Set(), qIndex: 0, qStart: 0, phase: "lobby",
       players: { [me.pid]: { name: me.name.trim(), score: 0 } },
       answers: {}, votes: {}, reveal: null, judging: false, currentEvent: null, eventPool: null, ver: 0,
-      items: { [me.pid]: [] }, fx: {}, itemLog: [], seen: {}, doneUses: {}, picked: cfg.picked || [], stageStart: 0, autoNext: cfg.autoNext !== false,
+      items: { [me.pid]: [] }, fx: {}, itemLog: [], seen: {}, doneUses: {}, usedAns: new Set(), picked: cfg.picked || [], stageStart: 0, autoNext: cfg.autoNext !== false,
       catMode: "vote", pickerPid: null, catOptions: [], catStart: 0, chosenCat: null, rolled: 0, catCount: {},
       seenAll: new Set(Array.isArray(prevSeen) ? prevSeen : []),
       mode: cfg.mode || "classic",
@@ -3264,7 +3281,9 @@ export default function App() {
         {muted && <div className="hiddenQ">🛑 استريح — ما تشارك بهذا السؤال</div>}
         <div className="card jCard">
           {b.svg && <div className="qImg" dangerouslySetInnerHTML={{ __html: b.svg }} />}
-          {b.img && <div className="qPhoto"><img src={b.img} alt="" style={b.zoom ? {
+          {b.img && <div className="qPhoto"><img src={b.img} alt=""
+            onError={(ev) => { ev.currentTarget.parentElement.style.display = "none"; }}
+            style={b.zoom ? {
             transform: `scale(${b.zoom.s || 2})`,
             transformOrigin: `${b.zoom.x != null ? b.zoom.x : 50}% ${b.zoom.y != null ? b.zoom.y : 50}%` } : undefined} /></div>}
           <p className="qtext" style={{ textAlign: "center" }}>{b.q}</p>
@@ -3572,6 +3591,7 @@ export default function App() {
               {q.img && (
                 <div className="qPhoto">
                   <img src={q.img} alt="" loading="eager"
+                    onError={(ev) => { ev.currentTarget.parentElement.style.display = "none"; }}
                     style={q.zoom ? {
                       transform: `scale(${q.zoom.s || 2})`,
                       transformOrigin: `${q.zoom.x != null ? q.zoom.x : 50}% ${q.zoom.y != null ? q.zoom.y : 50}%`,
@@ -3624,7 +3644,7 @@ export default function App() {
           {r.qSvg && <div className="qImg" style={{ marginBottom: 10 }} dangerouslySetInnerHTML={{ __html: r.qSvg }} />}
           {r.qImg && (
             <div className="qPhoto" style={{ marginBottom: 10 }}>
-              <img src={r.qImg} alt="" />
+              <img src={r.qImg} alt="" onError={(ev) => { ev.currentTarget.parentElement.style.display = "none"; }} />
               <span className="badge" style={{ display: "block", textAlign: "center", marginTop: 6 }}>الصورة كاملة</span>
             </div>
           )}
