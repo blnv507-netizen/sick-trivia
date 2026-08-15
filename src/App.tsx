@@ -439,6 +439,25 @@ const BANK = [
   { cat: "شكل ورسم", d: 3, q: "الأعمدة تمثل مبيعات 4 أرباع — كم الفرق بين الأعلى والأدنى؟", a: "30", alt: ["ثلاثين"], svg: "<svg viewBox=\"0 0 200 120\" xmlns=\"http://www.w3.org/2000/svg\"><g stroke=\"var(--sand)\" stroke-width=\"2\"><line x1=\"22\" y1=\"12\" x2=\"22\" y2=\"100\"/><line x1=\"22\" y1=\"100\" x2=\"185\" y2=\"100\"/></g><g fill=\"#2EC4A6\"><rect x=\"36\" y=\"60\" width=\"26\" height=\"40\"/><rect x=\"74\" y=\"40\" width=\"26\" height=\"60\"/><rect x=\"112\" y=\"25\" width=\"26\" height=\"75\"/><rect x=\"150\" y=\"55\" width=\"26\" height=\"45\"/></g><g fill=\"var(--sand)\" font-size=\"11\" font-family=\"sans-serif\"><text x=\"40\" y=\"55\">40</text><text x=\"78\" y=\"35\">60</text><text x=\"116\" y=\"20\">70</text><text x=\"154\" y=\"50\">45</text></g></svg>" },
   { cat: "شكل ورسم", d: 2, q: "وش اسم الشكل الهندسي المرسوم حسب عدد أضلاعه؟", a: "سداسي", alt: ["hexagon", "مسدس"], svg: "<svg viewBox=\"0 0 200 130\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"100,18 145,44 145,96 100,122 55,96 55,44\" fill=\"#D9494F\" opacity=\"0.22\" stroke=\"#D9494F\" stroke-width=\"2.5\"/></svg>" },
   // ============ البنك الجديد — صعوبة مرفوعة ============
+  // ---- هندسة (دفعة 2) ----
+  { cat: "Engineering Questions", d: 1, q: "What is the primary driving force behind the sintering process in ceramic powder compacts?", a: "Reduction in total surface energy", opts: ["Increase in atomic vibration frequency", "Formation of covalent bonds", "Reduction in total surface energy", "External atmospheric pressure"], info: "الجسيمات تلتحم لتقليل مساحة السطح الكلية — والطاقة السطحية هي المحرك لا الحرارة نفسها." },
+  { cat: "Engineering Questions", d: 3, q: "In liquid phase sintering, what role does the liquid constituent play in accelerating densification?", a: "It acts as a lubricant for particle rearrangement", opts: ["It acts as a lubricant for particle rearrangement", "It lowers the overall chemical purity", "It increases the evaporation rate of the solid", "It prevents the formation of grain boundaries"], info: "السائل يملأ الفراغات ويسهّل انزلاق الحبيبات فتتراص أسرع بكثير من التلبيد الصلب." },
+  { cat: "Engineering Questions", d: 2, q: "The structures which have the highest packing of atoms are:", a: "Hexagonal close packed lattice", opts: ["Body centred cubic lattice", "None of the above", "Hexagonal close packed lattice", "Simple cubic lattice"], info: "كفاءة التراص 74% — نفس FCC، وأعلى من BCC (68%) والمكعب البسيط (52%)." },
+  { cat: "Engineering Questions", d: 1, q: "The hardness is the property of a material due to which it:", a: "Can cut another metal", opts: ["Can be rolled or hammered into thin sheets", "Can cut another metal", "Can be drawn into wires", "Breaks with little permanent distortion"], info: "الصلادة مقاومة الخدش والاختراق — ولهذا الأصلب يقطع الألين." },
+  { cat: "Engineering Questions", d: 1, q: "The property which enables metals to be drawn into wire is known as:", a: "Ductility", opts: ["Ductility", "Plastic deformation", "Straining", "Malleability"], info: "المطيلية للأسلاك، والطَرْق (malleability) للصفائح — الفرق باتجاه التشكيل." },
+  { cat: "Engineering Questions", d: 1, q: "The property of a material which enables it to retain the deformation permanently is called:", a: "Plasticity", opts: ["Brittleness", "Ductility", "Malleability", "Plasticity"], info: "عكس المرونة (elasticity) اللي يرجع فيها الجسم لشكله الأصلي." },
+  { cat: "Engineering Questions", d: 1, q: "In a unit cell of a body centred cubic space lattice, there are ___ atoms.", a: "Nine", opts: ["Fourteen", "Nine", "Six", "Seventeen"], info: "ثمانية بالأركان وواحدة بالمركز — لكن النصيب الفعلي للخلية ذرتان." },
+  { cat: "Engineering Questions", d: 2, q: "The property of a material due to which it breaks with little permanent distortion is called:", a: "Brittleness", opts: ["Malleability", "Brittleness", "Ductility", "Plasticity"], info: "الزجاج والسيراميك مثالها — تنكسر فجأة بلا إنذار بتشوه سابق." },
+  { cat: "Engineering Questions", d: 1, q: "Machinability of metal depends on:", a: "Hardness and tensile strength", opts: ["Brittleness", "Brittleness and toughness", "Hardness and tensile strength", "Hardness"], info: "المعدن الأصلب والأقوى شدًا يستهلك أدوات القطع أسرع." },
+  { cat: "Engineering Questions", d: 1, q: "Which property is desirable in parts subjected to shock and impact loads?", a: "Toughness", opts: ["Brittleness", "Toughness", "Stiffness", "Strength"], info: "المتانة = القدرة على امتصاص الطاقة قبل الكسر، مو القوة وحدها." },
+  { cat: "Engineering Questions", d: 2, q: "Which of the following is an amorphous material?", a: "Glass", opts: ["Glass", "Mica", "Lead", "Silver"], info: "ذراته بلا ترتيب بلوري منتظم — ولهذا ينكسر بحواف عشوائية لا بمستويات." },
+  { cat: "Engineering Questions", d: 3, q: "Which statement correctly describes an endothermic reaction?", a: "It absorbs heat from the surroundings, resulting in a temperature decrease", opts: ["It absorbs heat from the surroundings, resulting in a temperature decrease", "It releases heat to the surroundings, resulting in a temperature increase", "It releases heat and lowers the surrounding temperature", "It absorbs heat and raises the surrounding temperature"], info: "endo = للداخل: التفاعل يسحب الحرارة فيبرد المحيط. والطارد (exothermic) عكسه." },
+  { cat: "Engineering Questions", d: 2, q: "CH4 + 2 O2 → CO2 + 2 H2O + 213.2 kJ — this reaction is:", a: "Exothermic", opts: ["Isothermal", "Catalytic", "Endothermic", "Exothermic"], info: "الطاقة تظهر بجهة النواتج، يعني التفاعل أطلقها — والاحتراق دائمًا طارد للحرارة." },
+  { cat: "Engineering Questions", d: 2, q: "If a reaction finishes with more energy than it started, it must be:", a: "Endothermic", opts: ["Endothermic", "Exothermic", "Isothermal", "Spontaneous"], info: "زيادة طاقة النواتج تعني أنها امتُصت من المحيط." },
+  { cat: "Engineering Questions", d: 2, q: "Classify: MgCl2 + Li2CO3 → MgCO3 + LiCl", a: "Double displacement", opts: ["Single displacement", "Decomposition", "Double displacement", "Synthesis"], info: "الأيونان الموجبان تبادلا شريكيهما — ولهذا يُسمى الإحلال المزدوج." },
+  { cat: "Engineering Questions", d: 1, q: "Where do you find the reactants and products in a chemical reaction?", a: "Reactants → products", opts: ["Products → reactants", "Reactants → products", "Both on the right", "Both on the left"], info: "السهم يقرأ «ينتج عنه» — والمتفاعلات دائمًا يساره." },
+  { cat: "Engineering Questions", d: 3, q: "Why is PET preferred over HDPE for carbonated soft drink bottles?", a: "It has superior CO2 barrier properties", opts: ["It is much cheaper to make", "It is much heavier than HDPE", "It attracts more sunlight", "It has superior CO2 barrier properties"], info: "HDPE يسرّب الغاز فتفقد المشروبات فوارها — وPET يحبسه لشهور." },
+  { cat: "Engineering Questions", d: 3, q: "What happens to polymer molecules when they encounter the cold surface of the mold tool?", a: "They lose kinetic energy and stabilize", opts: ["They turn into a gas", "They accelerate rapidly", "They lose kinetic energy and stabilize", "They form permanent cross-links"], info: "التبريد يجمّد السلاسل بمكانها — ولهذا التبريد السريع يسبب إجهادات داخلية بالقطعة." },
   // ---- توسعة + 5 فئات جديدة ----
   { cat: "طعام ومطبخ", d: 1, q: "وش الفاكهة اللي تحتوي على بذورها من الخارج؟", a: "الفراولة", alt: ["strawberry"], info: "ما هي توتة أصلًا نباتيًا — والنقاط الصغيرة عليها هي الثمار الحقيقية." },
   { cat: "طعام ومطبخ", d: 1, q: "وش البهار الأغلى وزنًا بالعالم؟", a: "الزعفران", alt: ["saffron"], info: "يحتاج نحو 150 ألف زهرة لكيلو واحد، وكله يُقطف يدويًا." },
@@ -2645,9 +2664,8 @@ export default function App() {
     if (cfg.src.mine) pool = pool.concat(myq.filter((q) => q.cat === cat).map((q) => ({ type: "typed", ...q })));
     if (cfg.src.bank) pool = pool.concat(BANK.filter((b) => b.cat === cat).map((b) => ({ type: "typed", ...b })));
     pool = pool.filter((q) => !h.used.has(qKey(q)));
-    // فئات بلا تقييم: كل الأسئلة بنفس المستوى، نختار من الكل
-    let cand = noDiff(cat) ? pool : pool.filter((q) => q.d === dT);
-    if (!cand.length) cand = pool;
+    // النمط السريع: الصعوبة عشوائية تمامًا — أي سؤال من أي مستوى
+    let cand = pool;
     // ما نكرر نفس الإجابة بنفس الجولة (غودريك مثلاً له أسئلة كثيرة)
     if (h.usedAns && h.usedAns.size) {
       const fresh = cand.filter((q) => !h.usedAns.has(aKey(q)));
@@ -3902,7 +3920,7 @@ export default function App() {
       )}
       <label className="lbl" style={{ display: cfg.mode === "board" ? "none" : "block" }}>عدد الأسئلة</label>
       <div className="seg" style={{ display: cfg.mode === "board" ? "none" : "flex" }}>
-        {[9, 15, 20, 25].map((n) => (
+        {[9, 15, 25, 40].map((n) => (
           <button key={n} className={"chip" + (cfg.count === n ? " on" : "")} onClick={() => setCfg({ ...cfg, count: n })}>{n}</button>
         ))}
       </div>
