@@ -234,6 +234,40 @@ const BANK = [
   { cat: "خمّن البوس", d: 3, q: "مين هذا البوس؟", a: "Rot Grub / Worm", alt: ["الدودة"], img: "/img/boss-Worm.webp", info: "مخلوق دودي ضخم." },
   { cat: "خمّن البوس", d: 2, q: "من إلدن رينق — مين هذا البوس؟", a: "Commander Niall", alt: ["نيال", "Niall"], img: "/img/boss-niall.png", info: "قائد بساق واحدة يستدعي محاربين شبحيين." },
   // ---- مين الشخصية؟ ----
+  { cat: "مين الشخصية؟", d: 1, q: "مين هذي الشخصية؟", a: "50 Cent", alt: ["فيفتي سنت", "Curtis Jackson"], img: "/img/person-50cent.avif", info: "مغني راب أمريكي، نجا من إطلاق تسع رصاصات قبل شهرته." },
+  { cat: "مين الشخصية؟", d: 2, q: "مين هذي الشخصية؟", a: "Archimedes", alt: ["أرخميدس"], img: "/img/person-Archimedesmid.jpg", info: "صرخ «يوريكا» لما اكتشف مبدأ الطفو وهو بالحمام." },
+  { cat: "مين الشخصية؟", d: 1, q: "مين هذي الشخصية؟", a: "Charlie Chaplin", alt: ["شارلي شابلن", "شابلن"], img: "/img/person-CharlieChaplineasy.jpg", info: "رمز السينما الصامتة، وشخصيته «المتشرد» أشهر صورة بتاريخ الكوميديا." },
+  { cat: "مين الشخصية؟", d: 1, q: "مين هذي الشخصية؟", a: "Che Guevara", alt: ["تشي غيفارا", "جيفارا"], img: "/img/person-cheguevaraaesy.jpg", info: "ثوري أرجنتيني، وصورته من أكثر الصور استنساخًا بالتاريخ." },
+  { cat: "مين الشخصية؟", d: 3, q: "مين هذي الشخصية؟", a: "Clint Eastwood", alt: ["كلينت إيستوود"], img: "/img/person-ClintEastwoodhard.jpg", info: "نجم أفلام الوسترن ثم صار مخرجًا فاز بأوسكارين." },
+  { cat: "مين الشخصية؟", d: 1, q: "مين هذي الشخصية؟", a: "Eminem", alt: ["إمينيم"], img: "/img/person-Eminemeasy.jpg", info: "أكثر مغني راب مبيعًا بالتاريخ، ومن ديترويت." },
+  { cat: "مين الشخصية؟", d: 2, q: "مين هذي الشخصية؟", a: "Fidel Castro", alt: ["فيدل كاسترو", "كاسترو"], img: "/img/person-fidelcastromid.avif", info: "حكم كوبا نحو خمسين سنة، ونجا من مئات محاولات الاغتيال." },
+  { cat: "مين الشخصية؟", d: 1, q: "مين هذي الشخصية؟", a: "Frank Sinatra", alt: ["فرانك سيناترا", "سيناترا"], img: "/img/person-FrankSinatraeasy.jpg", info: "صاحب أغنية My Way، ولُقّب بـ«الصوت»." },
+  { cat: "مين الشخصية؟", d: 3, q: "مين هذي الشخصية؟", a: "Frederick Barbarossa", alt: ["بربروسا", "فريدريك بربروسا"], img: "/img/person-frederickbarbarossahard.avif", info: "إمبراطور روماني مقدس، غرق بنهر أثناء الحملة الصليبية الثالثة." },
+  { cat: "مين الشخصية؟", d: 2, q: "مين هذي الشخصية؟", a: "George Orwell", alt: ["جورج أورويل", "أورويل"], img: "/img/person-GeorgeOrwellmid.jpg", info: "مؤلف 1984 ومزرعة الحيوان، ومنه جاء مصطلح «أورويلي»." },
+  { cat: "مين الشخصية؟", d: 3, q: "مين هذي الشخصية؟", a: "Guy Gibson", alt: ["غاي غيبسون"], img: "/img/person-guygibson.avif", info: "طيار بريطاني قاد غارة السدود الشهيرة بالحرب العالمية الثانية." },
+  { cat: "مين الشخصية؟", d: 3, q: "مين هذي الشخصية؟", a: "Heinrich Himmler", alt: ["هاينريش هيملر", "هيملر"], img: "/img/person-HeinrichHimmlerhard.jpg", info: "قائد قوات الأمن النازية وأحد أبرز منفّذي الهولوكوست." },
+  { cat: "مين الشخصية؟", d: 2, q: "مين هذي الشخصية؟", a: "Immanuel Kant", alt: ["إيمانويل كانط", "كانط"], img: "/img/person-ImmanuelKantmid.jpg", info: "فيلسوف ألماني، وكان منتظمًا لدرجة أن الجيران يضبطون ساعاتهم على مشيته." },
+  { cat: "مين الشخصية؟", d: 2, q: "مين هذي الشخصية؟", a: "James Cook", alt: ["جيمس كوك", "كوك"], img: "/img/person-JamesCookmid.jpg", info: "مستكشف بريطاني رسم خرائط المحيط الهادئ وأستراليا." },
+  { cat: "مين الشخصية؟", d: 2, q: "مين هذي الشخصية؟", a: "Jay-Z", alt: ["جاي زي"], img: "/img/person-JayZmid.jpg", info: "أول مغني راب يصبح مليارديرًا." },
+  { cat: "مين الشخصية؟", d: 1, q: "مين هذي الشخصية؟", a: "Johnny Depp", alt: ["جوني ديب"], img: "/img/person-JohnnyDeppeasy.jpg", info: "اشتهر بدور جاك سبارو بسلسلة قراصنة الكاريبي." },
+  { cat: "مين الشخصية؟", d: 3, q: "مين هذي الشخصية؟", a: "Johannes Kepler", alt: ["كبلر", "يوهانس كبلر"], img: "/img/person-johanneskeplerhard.avif", info: "اكتشف أن مدارات الكواكب بيضاوية لا دائرية." },
+  { cat: "مين الشخصية؟", d: 1, q: "مين هذي الشخصية؟", a: "Leonardo DiCaprio", alt: ["ليوناردو دي كابريو", "دي كابريو"], img: "/img/person-LeonardoDiCaprioeasy.jpg", info: "انتظر أوسكاره الأول حتى فيلم The Revenant بعد سبعة ترشيحات." },
+  { cat: "مين الشخصية؟", d: 3, q: "مين هذي الشخصية؟", a: "Leo Tolstoy", alt: ["تولستوي", "ليو تولستوي"], img: "/img/person-LeoTolstoyhard.jpg", info: "مؤلف «الحرب والسلام» و«آنا كارنينا»." },
+  { cat: "مين الشخصية؟", d: 3, q: "مين هذي الشخصية؟", a: "Louis Armstrong", alt: ["لويس أرمسترونغ"], img: "/img/person-LouisArmstronghard.jpg", info: "عازف ترومبيت أمريكي، من مؤسسي الجاز الحديث." },
+  { cat: "مين الشخصية؟", d: 3, q: "مين هذي الشخصية؟", a: "Marco Polo", alt: ["ماركو بولو"], img: "/img/person-MarcoPolohard.jpg", info: "رحّالة بندقي وصل الصين وعاد بكتاب غيّر تصور أوروبا عن آسيا." },
+  { cat: "مين الشخصية؟", d: 1, q: "مين هذي الشخصية؟", a: "Marilyn Monroe", alt: ["مارلين مونرو", "مونرو"], img: "/img/person-MarilynMonroeeasy.jpg", info: "أيقونة هوليوود بالخمسينات، وتوفيت وعمرها 36." },
+  { cat: "مين الشخصية؟", d: 1, q: "مين هذي الشخصية؟", a: "Marie Curie", alt: ["ماري كوري", "مدام كوري"], img: "/img/person-MarieCurieeasy.jpg", info: "الوحيدة الفائزة بنوبل بمجالين علميين مختلفين." },
+  { cat: "مين الشخصية؟", d: 2, q: "مين هذي الشخصية؟", a: "Quentin Tarantino", alt: ["تارانتينو", "كوينتن تارانتينو"], img: "/img/person-QuentinTarantinomid.jpg", info: "مخرج Pulp Fiction وKill Bill، اشتهر بالسرد غير الخطي." },
+  { cat: "مين الشخصية؟", d: 2, q: "مين هذي الشخصية؟", a: "Rasputin", alt: ["راسبوتين"], img: "/img/person-Rasputinmid.jpg", info: "راهب روسي غامض أثّر على العائلة القيصرية، ومقتله أسطورة بحد ذاته." },
+  { cat: "مين الشخصية؟", d: 1, q: "مين هذي الشخصية؟", a: "Robert De Niro", alt: ["روبرت دي نيرو", "دي نيرو"], img: "/img/person-RobertDeNiroeasy.jpg", info: "زاد 27 كيلو حقيقية لدور Raging Bull." },
+  { cat: "مين الشخصية؟", d: 3, q: "مين هذي الشخصية؟", a: "Salvador Dalí", alt: ["سلفادور دالي", "دالي"], img: "/img/person-SalvadorDalihard.jpg", info: "رسّام سريالي إسباني، وأشهر أعماله الساعات الذائبة." },
+  { cat: "مين الشخصية؟", d: 1, q: "مين هذي الشخصية؟", a: "Steve Jobs", alt: ["ستيف جوبز", "جوبز"], img: "/img/person-SteveJobseasy.jpg", info: "مؤسس آبل، وطُرد من شركته 1985 ثم عاد ليقودها للقمة." },
+  { cat: "مين الشخصية؟", d: 3, q: "مين هذي الشخصية؟", a: "Suleiman the Magnificent", alt: ["سليمان القانوني", "السلطان سليمان"], img: "/img/person-suleimanthemagnificenthard.avif", info: "أطول سلاطين العثمانيين حكمًا، وبلغت الدولة ذروتها بعهده." },
+  { cat: "مين الشخصية؟", d: 1, q: "مين هذي الشخصية؟", a: "Taylor Swift", alt: ["تايلور سويفت"], img: "/img/person-TaylorSwifteasy.jpg", info: "أعادت تسجيل ألبوماتها القديمة لتستعيد ملكية موسيقاها." },
+  { cat: "مين الشخصية؟", d: 1, q: "مين هذي الشخصية؟", a: "Van Gogh", alt: ["فان غوخ", "فنسنت فان غوخ"], img: "/img/person-VanGogheasy.jpg", info: "باع لوحة واحدة بحياته، واليوم أعماله من الأغلى بالعالم." },
+  { cat: "مين الشخصية؟", d: 3, q: "مين هذي الشخصية؟", a: "Vlad Dracula", alt: ["فلاد دراكولا", "فلاد الثالث"], img: "/img/person-VladDraculahard.jpg", info: "أمير من والاشيا، واسمه ألهم رواية دراكولا." },
+  { cat: "مين الشخصية؟", d: 3, q: "مين هذي الشخصية؟", a: "Witold Pilecki", alt: ["فيتولد بيليتسكي"], img: "/img/person-witoldpileckihard.avif", info: "ضابط بولندي تطوّع ليُعتقل بأوشفيتز عمدًا ليوثّق ما يحدث فيه." },
+  { cat: "مين الشخصية؟", d: 2, q: "مين هذي الشخصية؟", a: "Xi Jinping", alt: ["شي جين بينغ", "شي جينبينغ"], img: "/img/person-xijinpingmid.avif", info: "رئيس الصين، وأول من ألغى حد الولايتين الرئاسيتين منذ ماو." },
   { cat: "مين الشخصية؟", d: 1, q: "مين هذي الشخصية؟", a: "Abraham Lincoln", alt: ["أبراهام لينكولن", "لينكولن"], img: "/img/person-AbrahamLincolneasy.webp", info: "سادس عشر رؤساء أمريكا، قاد البلاد بالحرب الأهلية وألغى العبودية." },
   { cat: "مين الشخصية؟", d: 1, q: "مين هذي الشخصية؟", a: "عادل الجبير", alt: ["Adel Al-Jubeir", "الجبير"], img: "/img/person-adelaljubeireasy.jpg", info: "وزير الدولة السعودي للشؤون الخارجية، وسفير سابق بواشنطن." },
   { cat: "مين الشخصية؟", d: 1, q: "مين هذي الشخصية؟", a: "Adolf Hitler", alt: ["أدولف هتلر", "هتلر"], img: "/img/person-AdolfHitlereasy.jpg", info: "زعيم ألمانيا النازية، وأشعل الحرب العالمية الثانية والهولوكوست." },
@@ -306,7 +340,7 @@ const BANK = [
   { cat: "مين الشخصية؟", d: 3, q: "مين هذي الشخصية؟", a: "Wernher von Braun", alt: ["فون براون"], img: "/img/person-WernervonBraunhard.jpg", info: "مصمم صاروخ ساتورن الخامس الذي أوصل الإنسان للقمر." },
   { cat: "مين الشخصية؟", d: 2, q: "مين هذي الشخصية؟", a: "Winston Churchill", alt: ["تشرشل", "ونستون تشرشل"], img: "/img/person-WinstonChurchillmid.jpg", info: "قاد بريطانيا بالحرب العالمية الثانية، وفاز بنوبل للأدب." },
   { cat: "مين الشخصية؟", d: 3, q: "مين هذي الشخصية؟", a: "Woodrow Wilson", alt: ["ويلسون", "وودرو ويلسون"], img: "/img/person-WoodrowWilsonhard.jpg", info: "رئيس أمريكا بالحرب العالمية الأولى، وصاحب فكرة عصبة الأمم." },
-  { cat: "مين الشخصية؟", d: 2, q: "مين هذي الشخصية؟", a: "George W. Bush", alt: ["جورج بوش الابن", "بوش"], img: "/img/person-GeorgeWBushmid.webp", info: "رئيس أمريكا وقت هجمات 11 سبتمبر وحربي أفغانستان والعراق." },
+  { cat: "مين الشخصية؟", d: 2, q: "مين هذي الشخصية؟", a: "George W. Bush", alt: ["جورج بوش الابن", "بوش"], img: "/img/person-GeorgeWBushmid.jpg", info: "رئيس أمريكا وقت هجمات 11 سبتمبر وحربي أفغانستان والعراق." },
   // ---- خمّن اللعبة ----
   { cat: "خمّن اللعبة", d: 3, q: "من أي لعبة هذي الصورة؟", a: "The Simpsons", alt: ["سيمبسونز", "The Simpsons Hit & Run"], img: "/img/game-simpsonshard.webp", info: "لعبة مبنية على المسلسل الكرتوني الأشهر، وأسلوبها مستوحى من GTA." },
   { cat: "خمّن اللعبة", d: 3, q: "من أي لعبة هذي الصورة؟", a: "Age of Empires II", alt: ["ايج اوف امبايرز", "AoE2"], img: "/img/game-AgeofEmpiresIIhard.webp", info: "من أعظم ألعاب الاستراتيجية، وما زالت تُلعب تنافسيًا بعد 25 سنة." },
@@ -2585,7 +2619,7 @@ export default function App() {
   const [, forceN] = useState(0);
   const rerender = () => forceN((x) => x + 1);
 
-  const [cfg, setCfg] = useState({ count: 25, src: { bank: true, mine: false }, picked: [], mode: "classic", teamNames: ["", ""] });
+  const [cfg, setCfg] = useState({ count: 30, src: { bank: true, mine: false }, picked: [], mode: "classic", teamNames: ["", ""] });
 
   const localRef = useRef({ qIndex: -1, renderAt: 0, answered: false, text: "" });
   const [typedText, setTypedText] = useState("");
@@ -3920,7 +3954,7 @@ export default function App() {
       )}
       <label className="lbl" style={{ display: cfg.mode === "board" ? "none" : "block" }}>عدد الأسئلة</label>
       <div className="seg" style={{ display: cfg.mode === "board" ? "none" : "flex" }}>
-        {[9, 15, 25, 40].map((n) => (
+        {[15, 30, 40].map((n) => (
           <button key={n} className={"chip" + (cfg.count === n ? " on" : "")} onClick={() => setCfg({ ...cfg, count: n })}>{n}</button>
         ))}
       </div>
