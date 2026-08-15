@@ -2026,107 +2026,107 @@ const BANK = [
   { cat: "سيارات", d: 3, q: "وش نوع المحرك اللي ما فيه مكابس ويستخدم روتور مثلثي؟", a: "فانكل", alt: ["Wankel", "الدوار", "روتاري"] },
   { cat: "سيارات", d: 2, q: "أول علامة سيارات كهربائية سعودية أُعلن عنها 2022؟", a: "سير", alt: ["Ceer", "سيير"] },
   // ============ Engineering Questions ============
-  { cat: "Engineering Questions", d: 1, q: "What term refers to the rate at which velocity changes over time?", a: "Acceleration" },
-  { cat: "Engineering Questions", d: 1, q: "What polymer-based material can bacteria be engineered to eat to help environmental sustainability?", a: "Plastic" },
-  { cat: "Engineering Questions", d: 2, q: "Abrams’ law describes the strength of which building material made from fine and coarse aggregate bonded together?", a: "Concrete" },
-  { cat: "Engineering Questions", d: 3, q: "What is the moment of an 8 N force acting at a perpendicular distance of 5 m?", a: "40 Nm" },
-  { cat: "Engineering Questions", d: 2, q: "CTE stands for coefficient of thermal what?", a: "Expansion" },
-  { cat: "Engineering Questions", d: 3, q: "What ancient engineering device uses stored potential energy to fling a projectile and is sometimes referred to as a trebuchet?", a: "Catapult" },
-  { cat: "Engineering Questions", d: 3, q: "The equation T = F × d × sin(?) gives which moment-of-force measure that makes an object rotate?", a: "Torque" },
-  { cat: "Engineering Questions", d: 2, q: "What term beginning with F means to machine a flat surface, such as the end of a shaft on a lathe?", a: "Face" },
-  { cat: "Engineering Questions", d: 1, q: "What generic building material is used to buffer a structure against unwanted temperature, acoustics, fire, or impact?", a: "Insulation" },
-  { cat: "Engineering Questions", d: 1, q: "What chemical makes up the majority of petroleum by weight?", a: "Carbon" },
-  { cat: "Engineering Questions", d: 1, q: "What simple machine is a rigid rod with a fixed hinge called a fulcrum?", a: "Lever" },
-  { cat: "Engineering Questions", d: 3, q: "Which element with atomic number 24 gives stainless steel much of its resistance to rusting?", a: "Chromium" },
-  { cat: "Engineering Questions", d: 3, q: "What is the term for the continued extension of an object while under a steady load?", a: "Creep" },
-  { cat: "Engineering Questions", d: 1, q: "What field studies what an object such as an airplane does to the air around it?", a: "Aerodynamics" },
-  { cat: "Engineering Questions", d: 1, q: "Which engineering discipline of mechanics studies how liquids and gases move and are affected by forces?", a: "Fluid" },
-  { cat: "Engineering Questions", d: 2, q: "What fixture goes around a shaft to prevent leaks on moving parts, unlike a flat gasket?", a: "Seal" },
-  { cat: "Engineering Questions", d: 3, q: "Invar is an iron alloy containing which ferromagnetic element that gives it a low coefficient of thermal expansion?", a: "Nickel" },
-  { cat: "Engineering Questions", d: 3, q: "What type of bridge has projecting beams or trusses supported on piers and anchored by counterbalancing members?", a: "Cantilever" },
-  { cat: "Engineering Questions", d: 1, q: "What does CAD stand for in engineering?", a: "Computer-aided design" },
-  { cat: "Engineering Questions", d: 2, q: "The point at which a material breaks under stress is known as what?", a: "Ultimate strength" },
-  { cat: "Engineering Questions", d: 1, q: "What is the standard unit for measuring energy in engineering?", a: "Joule" },
-  { cat: "Engineering Questions", d: 2, q: "Which law states that pressure and volume are inversely proportional in a closed system at constant temperature?", a: "Boyle's Law" },
-  { cat: "Engineering Questions", d: 1, q: "What is the primary metal used in electrical wiring?", a: "Copper" },
-  { cat: "Engineering Questions", d: 3, q: "Which structural element primarily resists bending?", a: "Beam" },
-  { cat: "Engineering Questions", d: 3, q: "What is the term for the bending of light through different mediums?", a: "Refraction" },
-  { cat: "Engineering Questions", d: 2, q: "Archimedes is known for which engineering principle?", a: "Buoyancy principle" },
-  { cat: "Engineering Questions", d: 1, q: "Round 35.6754 to two decimal places.", a: "35.68" },
-  { cat: "Engineering Questions", d: 3, q: "In an order of 2000 hexagonal nuts, 40 were defective. What percentage was defective?", a: "2%" },
-  { cat: "Engineering Questions", d: 3, q: "The potential energy of a vertically raised body is ______ the kinetic energy of a vertically falling body.", a: "Equal to" },
-  { cat: "Engineering Questions", d: 3, q: "The point through which the whole weight of the body acts, irrespective of its position, is known as what?", a: "Centre of gravity" },
-  { cat: "Engineering Questions", d: 2, q: "The rate of change of momentum is directly proportional to the impressed force and occurs in the same direction. What law is this?", a: "Newton's second law of motion" },
-  { cat: "Engineering Questions", d: 3, q: "In ideal machines, mechanical advantage is ______ velocity ratio.", a: "Equal to" },
-  { cat: "Engineering Questions", d: 3, q: "What is the angular velocity in rad/s of a body rotating at N revolutions per minute?", a: "2πN/60" },
-  { cat: "Engineering Questions", d: 3, q: "The minimum force required to slide a body of weight W on a rough horizontal plane is?", a: "F = μW" },
-  { cat: "Engineering Questions", d: 3, q: "What is the moment of inertia of a square of side a about its diagonal?", a: "A4/12" },
-  { cat: "Engineering Questions", d: 3, q: "A differential pulley block has larger and smaller diameters of 100 mm and 80 mm respectively. Its velocity ratio is?", a: "5" },
-  { cat: "Engineering Questions", d: 2, q: "What is the purpose of the exhaust duct?", a: "Straighten exhaust gas-flow" },
-  { cat: "Engineering Questions", d: 2, q: "Carbon monoxide gas is poisonous and odorless, and has what color?", a: "No color" },
-  { cat: "Engineering Questions", d: 2, q: "Stationary vanes positioned between rotor discs in a compressor are used to do what?", a: "Direct air and increase pressure" },
-  { cat: "Engineering Questions", d: 2, q: "What two fluids are combined to make up common jet fuel?", a: "Kerosene and gasoline" },
-  { cat: "Engineering Questions", d: 3, q: "Before installing separable bearings, what must you ensure?", a: "Bearings are a matched set" },
-  { cat: "Engineering Questions", d: 1, q: "The ability to do work is the definition of what?", a: "Energy" },
-  { cat: "Engineering Questions", d: 2, q: "Which section of a jet engine introduces and burns fuel?", a: "Turbine" },
-  { cat: "Engineering Questions", d: 3, q: "Where is the highest point of temperature reached in an engine?", a: "Combustion section" },
-  { cat: "Engineering Questions", d: 3, q: "What is the recommended method of expanding a bearing race before installation?", a: "Hot-oil-bath" },
-  { cat: "Engineering Questions", d: 3, q: "What is the most common type of fuel nozzle system?", a: "Pressure-atomizing" },
-  { cat: "Engineering Questions", d: 2, q: "Which type of duct decreases velocity and increases gas pressure as gas passes through it?", a: "Divergent" },
-  { cat: "Engineering Questions", d: 2, q: "Why must the temperature of compressed air in a jet engine be raised?", a: "Increase energy" },
-  { cat: "Engineering Questions", d: 3, q: "What is the most probable cause of a jet-engine flameout at 40,000 ft with constant engine RPM of 50 percent?", a: "The RPM is too low" },
-  { cat: "Engineering Questions", d: 3, q: "What type of flame speed are swirl-type fuel nozzles normally used to provide?", a: "High" },
-  { cat: "Engineering Questions", d: 2, q: "Why does air temperature gradually rise across a jet-engine compressor to the diffuser outlet?", a: "Compression" },
-  { cat: "Engineering Questions", d: 2, q: "What is the most chemically correct ratio for burning fuel in a combustion chamber?", a: "15:1" },
-  { cat: "Engineering Questions", d: 3, q: "Torque is transferred from the power unit to the safety coupling on the reduction gearbox by the what?", a: "Torque shaft" },
-  { cat: "Engineering Questions", d: 1, q: "The purpose of the turbine section is to convert what into torque?", a: "Energy" },
-  { cat: "Engineering Questions", d: 1, q: "Which law can be summed up with the words action and reaction?", a: "Newton's third law of motion" },
-  { cat: "Engineering Questions", d: 2, q: "An aircraft taxiing at a steady speed can be used to demonstrate which law?", a: "Newton's first law of motion" },
-  { cat: "Engineering Questions", d: 1, q: "What is the unit of electrical current?", a: "Ampere" },
-  { cat: "Engineering Questions", d: 2, q: "Convert T = -10°C to Kelvin.", a: "263 K" },
-  { cat: "Engineering Questions", d: 2, q: "The accumulation in steady states is equal to what?", a: "0" },
-  { cat: "Engineering Questions", d: 3, q: "If the open end of a sealed-end manometer is exposed to the atmosphere, the device functions as what?", a: "Barometer" },
-  { cat: "Engineering Questions", d: 3, q: "For the equation y² = a e^(-b/x), what are the slope and intercept after linearization, respectively?", a: "-b, ln a" },
-  { cat: "Engineering Questions", d: 2, q: "Which process has w = 0 for a gas in a rigid container?", a: "Isochoric" },
-  { cat: "Engineering Questions", d: 1, q: "If a gas is heated in a rigid container, all the added heat goes into increasing internal energy. True or false?", a: "True" },
-  { cat: "Engineering Questions", d: 1, q: "A system has Δu = -250 J and does w = +400 J. What is heat q?", a: "150 J" },
-  { cat: "Engineering Questions", d: 3, q: "A gas is compressed in an insulated cylinder. Which is most likely true?", a: "Δu > 0" },
-  { cat: "Engineering Questions", d: 2, q: "Which thermodynamic process has q = 0?", a: "Adiabatic" },
-  { cat: "Engineering Questions", d: 3, q: "What reagent is used in the bromination of benzene?", a: "Br2" },
-  { cat: "Engineering Questions", d: 3, q: "What is the role of FeCl3 in chlorination of benzene?", a: "Catalyst" },
-  { cat: "Engineering Questions", d: 3, q: "The most common reactions involving aromatics are what type of reactions?", a: "Substitution" },
-  { cat: "Engineering Questions", d: 3, q: "What are the reagent and catalyst used for nitration of benzene?", a: "HNO3 / H2SO4" },
-  { cat: "Engineering Questions", d: 3, q: "Which group is ortho-para directing: -CN, -NO2, -NH3+, or -NH2?", a: "-NH2" },
-  { cat: "Engineering Questions", d: 3, q: "What is the name for PbCl2?", a: "Lead(II) Chloride" },
-  { cat: "Engineering Questions", d: 1, q: "What is the formula for barium sulfide?", a: "BaS" },
-  { cat: "Engineering Questions", d: 3, q: "What is the formula for zinc hydroxide?", a: "Zn(OH)2" },
-  { cat: "Engineering Questions", d: 3, q: "What is the name of CuO?", a: "Copper(II) Oxide" },
-  { cat: "Engineering Questions", d: 3, q: "What test is used to determine whether an alkene is present?", a: "Bromine water test" },
-  { cat: "Engineering Questions", d: 2, q: "A large molecule made of small reactive molecules joined together is called what?", a: "Polymer" },
-  { cat: "Engineering Questions", d: 1, q: "What is a single unit or molecule in a polymer called?", a: "Monomer" },
-  { cat: "Engineering Questions", d: 3, q: "What smaller subunits make up proteins?", a: "Amino acids" },
-  { cat: "Engineering Questions", d: 3, q: "What are the monomers of DNA?", a: "Nucleotides" },
-  { cat: "Engineering Questions", d: 2, q: "Alkenes can join together because they have what type of bond?", a: "Double bond" },
-  { cat: "Engineering Questions", d: 3, q: "What type of reaction breaks polymers to form monomers?", a: "Hydrolysis" },
-  { cat: "Engineering Questions", d: 3, q: "Which bond joins monomers together?", a: "Covalent" },
-  { cat: "Engineering Questions", d: 1, q: "In the reaction Starch + Water → Glucose, what are the products?", a: "Glucose" },
-  { cat: "Engineering Questions", d: 1, q: "The heavy, thick liquid collected at the bottom of a distillation column is often used for what?", a: "Making roads (bitumen)" },
-  { cat: "Engineering Questions", d: 2, q: "What is the purpose of the reflux process in industrial distillation?", a: "To improve the purity of the fractions" },
-  { cat: "Engineering Questions", d: 2, q: "What primary physical property is used to separate different components of crude oil?", a: "Boiling point" },
-  { cat: "Engineering Questions", d: 2, q: "Where in a distillation tower do fractions with the smallest molecules collect?", a: "At the top" },
-  { cat: "Engineering Questions", d: 2, q: "Why is crude oil heated in a furnace before entering the distillation tower?", a: "To vaporize the mixture" },
-  { cat: "Engineering Questions", d: 3, q: "In a distillation column, what are the horizontal levels where vapors condense into liquids called?", a: "Trays" },
-  { cat: "Engineering Questions", d: 3, q: "What happens to the temperature inside a fractional distillation column as you move from bottom to top?", a: "It decreases" },
-  { cat: "Engineering Questions", d: 3, q: "Which gaseous byproduct is primarily released when biodegradable polymers decompose anaerobically in a deep landfill?", a: "Methane" },
-  { cat: "Engineering Questions", d: 3, q: "What process describes microorganisms using enzymes to break down polymer chains into metabolic products?", a: "Mineralization" },
-  { cat: "Engineering Questions", d: 1, q: "How many forces of flight are there?", a: "Four" },
-  { cat: "Engineering Questions", d: 2, q: "What is Bernoulli's principle used to calculate in airplanes?", a: "Aerodynamic lift" },
-  { cat: "Engineering Questions", d: 1, q: "What fluid property describes its internal resistance to flow?", a: "Viscosity" },
-  { cat: "Engineering Questions", d: 1, q: "Stress is best described as what?", a: "Internal resistive force" },
-  { cat: "Engineering Questions", d: 3, q: "What gear mechanism converts rotary motion into translating motion?", a: "Rack and pinion" },
-  { cat: "Engineering Questions", d: 2, q: "What are the units for thermal conductivity?", a: "W/m·K" },
-  { cat: "Engineering Questions", d: 1, q: "The measurement of temperature as a thermodynamic property is based on which law of thermodynamics?", a: "Zeroth law of thermodynamics" },
-  { cat: "Engineering Questions", d: 1, q: "Steel containing 0.8% carbon has which structure according to the source question?", a: "Ferrite" },
+  { cat: "Engineering Questions", d: 1, q: "What term refers to the rate at which velocity changes over time?", a: "Acceleration", opts: ["Acceleration", "Velocity", "Momentum", "Displacement"] },
+  { cat: "Engineering Questions", d: 1, q: "What polymer-based material can bacteria be engineered to eat to help environmental sustainability?", a: "Plastic", opts: ["Cellulose", "Plastic", "Rubber", "Asphalt"] },
+  { cat: "Engineering Questions", d: 2, q: "Abrams’ law describes the strength of which building material made from fine and coarse aggregate bonded together?", a: "Concrete", opts: ["Concrete", "Grout", "Asphalt", "Mortar"] },
+  { cat: "Engineering Questions", d: 3, q: "What is the moment of an 8 N force acting at a perpendicular distance of 5 m?", a: "40 Nm", opts: ["1.6 Nm", "400 Nm", "40 Nm", "13 Nm"] },
+  { cat: "Engineering Questions", d: 2, q: "CTE stands for coefficient of thermal what?", a: "Expansion", opts: ["Extension", "Exchange", "Expansion", "Emission"] },
+  { cat: "Engineering Questions", d: 3, q: "What ancient engineering device uses stored potential energy to fling a projectile and is sometimes referred to as a trebuchet?", a: "Catapult", opts: ["Onager", "Ballista", "Battering ram", "Catapult"] },
+  { cat: "Engineering Questions", d: 3, q: "The equation T = F × d × sin(?) gives which moment-of-force measure that makes an object rotate?", a: "Torque", opts: ["Momentum", "Torque", "Work", "Impulse"] },
+  { cat: "Engineering Questions", d: 2, q: "What term beginning with F means to machine a flat surface, such as the end of a shaft on a lathe?", a: "Face", opts: ["Feed", "Flute", "Fillet", "Face"] },
+  { cat: "Engineering Questions", d: 1, q: "What generic building material is used to buffer a structure against unwanted temperature, acoustics, fire, or impact?", a: "Insulation", opts: ["Cladding", "Sealant", "Membrane", "Insulation"] },
+  { cat: "Engineering Questions", d: 1, q: "What chemical makes up the majority of petroleum by weight?", a: "Carbon", opts: ["Nitrogen", "Carbon", "Sulfur", "Hydrogen"] },
+  { cat: "Engineering Questions", d: 1, q: "What simple machine is a rigid rod with a fixed hinge called a fulcrum?", a: "Lever", opts: ["Lever", "Wedge", "Pulley", "Inclined plane"] },
+  { cat: "Engineering Questions", d: 3, q: "Which element with atomic number 24 gives stainless steel much of its resistance to rusting?", a: "Chromium", opts: ["Manganese", "Chromium", "Molybdenum", "Nickel"] },
+  { cat: "Engineering Questions", d: 3, q: "What is the term for the continued extension of an object while under a steady load?", a: "Creep", opts: ["Relaxation", "Creep", "Fatigue", "Yielding"] },
+  { cat: "Engineering Questions", d: 1, q: "What field studies what an object such as an airplane does to the air around it?", a: "Aerodynamics", opts: ["Kinematics", "Thermodynamics", "Hydrodynamics", "Aerodynamics"] },
+  { cat: "Engineering Questions", d: 1, q: "Which engineering discipline of mechanics studies how liquids and gases move and are affected by forces?", a: "Fluid", opts: ["Solid", "Fluid", "Continuum", "Statics"] },
+  { cat: "Engineering Questions", d: 2, q: "What fixture goes around a shaft to prevent leaks on moving parts, unlike a flat gasket?", a: "Seal", opts: ["O-ring groove", "Seal", "Gasket", "Bushing"] },
+  { cat: "Engineering Questions", d: 3, q: "Invar is an iron alloy containing which ferromagnetic element that gives it a low coefficient of thermal expansion?", a: "Nickel", opts: ["Cobalt", "Titanium", "Nickel", "Chromium"] },
+  { cat: "Engineering Questions", d: 3, q: "What type of bridge has projecting beams or trusses supported on piers and anchored by counterbalancing members?", a: "Cantilever", opts: ["Arch", "Truss", "Suspension", "Cantilever"] },
+  { cat: "Engineering Questions", d: 1, q: "What does CAD stand for in engineering?", a: "Computer-aided design", opts: ["Controlled automated design", "Computer-aided design", "Computer-aided drafting", "Computer-analyzed data"] },
+  { cat: "Engineering Questions", d: 2, q: "The point at which a material breaks under stress is known as what?", a: "Ultimate strength", opts: ["Yield strength", "Proportional limit", "Elastic limit", "Ultimate strength"] },
+  { cat: "Engineering Questions", d: 1, q: "What is the standard unit for measuring energy in engineering?", a: "Joule", opts: ["Pascal", "Newton", "Joule", "Watt"] },
+  { cat: "Engineering Questions", d: 2, q: "Which law states that pressure and volume are inversely proportional in a closed system at constant temperature?", a: "Boyle's Law", opts: ["Boyle's Law", "Gay-Lussac's Law", "Charles's Law", "Avogadro's Law"] },
+  { cat: "Engineering Questions", d: 1, q: "What is the primary metal used in electrical wiring?", a: "Copper", opts: ["Aluminum", "Silver", "Copper", "Steel"] },
+  { cat: "Engineering Questions", d: 3, q: "Which structural element primarily resists bending?", a: "Beam", opts: ["Strut", "Beam", "Column", "Cable"] },
+  { cat: "Engineering Questions", d: 3, q: "What is the term for the bending of light through different mediums?", a: "Refraction", opts: ["Dispersion", "Refraction", "Reflection", "Diffraction"] },
+  { cat: "Engineering Questions", d: 2, q: "Archimedes is known for which engineering principle?", a: "Buoyancy principle", opts: ["Lever principle", "Displacement principle", "Buoyancy principle", "Hydrostatic paradox"] },
+  { cat: "Engineering Questions", d: 1, q: "Round 35.6754 to two decimal places.", a: "35.68", opts: ["35.7", "35.68", "35.680", "35.67"] },
+  { cat: "Engineering Questions", d: 3, q: "In an order of 2000 hexagonal nuts, 40 were defective. What percentage was defective?", a: "2%", opts: ["0.2%", "4%", "20%", "2%"] },
+  { cat: "Engineering Questions", d: 3, q: "The potential energy of a vertically raised body is ______ the kinetic energy of a vertically falling body.", a: "Equal to", opts: ["Greater than", "Less than", "Equal to", "Half of"] },
+  { cat: "Engineering Questions", d: 3, q: "The point through which the whole weight of the body acts, irrespective of its position, is known as what?", a: "Centre of gravity", opts: ["Centroid", "Centre of gravity", "Metacentre", "Moment of inertia"] },
+  { cat: "Engineering Questions", d: 2, q: "The rate of change of momentum is directly proportional to the impressed force and occurs in the same direction. What law is this?", a: "Newton's second law of motion", opts: ["Newton's second law of motion", "Newton's third law of motion", "Law of conservation of momentum", "Newton's first law of motion"] },
+  { cat: "Engineering Questions", d: 3, q: "In ideal machines, mechanical advantage is ______ velocity ratio.", a: "Equal to", opts: ["Double", "Less than", "Greater than", "Equal to"] },
+  { cat: "Engineering Questions", d: 3, q: "What is the angular velocity in rad/s of a body rotating at N revolutions per minute?", a: "2πN/60", opts: ["2πN/30", "N/60", "2πN/60", "πN/60"] },
+  { cat: "Engineering Questions", d: 3, q: "The minimum force required to slide a body of weight W on a rough horizontal plane is?", a: "F = μW", opts: ["F = W/μ", "F = μW²", "F = μW", "F = μ/W"] },
+  { cat: "Engineering Questions", d: 3, q: "What is the moment of inertia of a square of side a about its diagonal?", a: "A4/12", opts: ["a⁴/6", "A4/12", "a⁴/24", "a⁴/3"] },
+  { cat: "Engineering Questions", d: 3, q: "A differential pulley block has larger and smaller diameters of 100 mm and 80 mm respectively. Its velocity ratio is?", a: "5", opts: ["10", "2.5", "20", "5"] },
+  { cat: "Engineering Questions", d: 2, q: "What is the purpose of the exhaust duct?", a: "Straighten exhaust gas-flow", opts: ["Reduce noise", "Straighten exhaust gas-flow", "Cool exhaust gases", "Increase fuel flow"] },
+  { cat: "Engineering Questions", d: 2, q: "Carbon monoxide gas is poisonous and odorless, and has what color?", a: "No color", opts: ["No color", "Light green", "Pale blue", "Yellow"] },
+  { cat: "Engineering Questions", d: 2, q: "Stationary vanes positioned between rotor discs in a compressor are used to do what?", a: "Direct air and increase pressure", opts: ["Reduce pressure", "Cool the airflow", "Increase gas velocity", "Direct air and increase pressure"] },
+  { cat: "Engineering Questions", d: 2, q: "What two fluids are combined to make up common jet fuel?", a: "Kerosene and gasoline", opts: ["Gasoline and methanol", "Kerosene and gasoline", "Naphtha and benzene", "Diesel and alcohol"] },
+  { cat: "Engineering Questions", d: 3, q: "Before installing separable bearings, what must you ensure?", a: "Bearings are a matched set", opts: ["Clearance is zero", "Races are interchangeable", "Bearings are pre-lubricated", "Bearings are a matched set"] },
+  { cat: "Engineering Questions", d: 1, q: "The ability to do work is the definition of what?", a: "Energy", opts: ["Energy", "Power", "Momentum", "Force"] },
+  { cat: "Engineering Questions", d: 2, q: "Which section of a jet engine introduces and burns fuel?", a: "Turbine", opts: ["Turbine", "Exhaust", "Combustion chamber", "Compressor"] },
+  { cat: "Engineering Questions", d: 3, q: "Where is the highest point of temperature reached in an engine?", a: "Combustion section", opts: ["Compressor section", "Combustion section", "Exhaust nozzle", "Turbine section"] },
+  { cat: "Engineering Questions", d: 3, q: "What is the recommended method of expanding a bearing race before installation?", a: "Hot-oil-bath", opts: ["Open flame", "Hot-oil-bath", "Hydraulic press", "Dry ice"] },
+  { cat: "Engineering Questions", d: 3, q: "What is the most common type of fuel nozzle system?", a: "Pressure-atomizing", opts: ["Simplex slinger", "Pressure-atomizing", "Duplex airblast", "Vaporizing"] },
+  { cat: "Engineering Questions", d: 2, q: "Which type of duct decreases velocity and increases gas pressure as gas passes through it?", a: "Divergent", opts: ["Convergent-divergent", "Divergent", "Constant-area", "Convergent"] },
+  { cat: "Engineering Questions", d: 2, q: "Why must the temperature of compressed air in a jet engine be raised?", a: "Increase energy", opts: ["To lower pressure", "Increase energy", "To reduce density", "To cool the turbine"] },
+  { cat: "Engineering Questions", d: 3, q: "What is the most probable cause of a jet-engine flameout at 40,000 ft with constant engine RPM of 50 percent?", a: "The RPM is too low", opts: ["The RPM is too high", "Fuel is over-rich", "The RPM is too low", "Compressor stall"] },
+  { cat: "Engineering Questions", d: 3, q: "What type of flame speed are swirl-type fuel nozzles normally used to provide?", a: "High", opts: ["Constant", "Low", "Variable", "High"] },
+  { cat: "Engineering Questions", d: 2, q: "Why does air temperature gradually rise across a jet-engine compressor to the diffuser outlet?", a: "Compression", opts: ["Compression", "Expansion", "Friction", "Combustion"] },
+  { cat: "Engineering Questions", d: 2, q: "What is the most chemically correct ratio for burning fuel in a combustion chamber?", a: "15:1", opts: ["15:1", "8:1", "10:1", "20:1"] },
+  { cat: "Engineering Questions", d: 3, q: "Torque is transferred from the power unit to the safety coupling on the reduction gearbox by the what?", a: "Torque shaft", opts: ["Drive gear", "Torque shaft", "Accessory shaft", "Splined coupling"] },
+  { cat: "Engineering Questions", d: 1, q: "The purpose of the turbine section is to convert what into torque?", a: "Energy", opts: ["Pressure", "Thrust", "Velocity", "Energy"] },
+  { cat: "Engineering Questions", d: 1, q: "Which law can be summed up with the words action and reaction?", a: "Newton's third law of motion", opts: ["Newton's first law of motion", "Newton's third law of motion", "Newton's second law of motion", "Law of inertia"] },
+  { cat: "Engineering Questions", d: 2, q: "An aircraft taxiing at a steady speed can be used to demonstrate which law?", a: "Newton's first law of motion", opts: ["Newton's second law of motion", "Bernoulli's principle", "Newton's first law of motion", "Newton's third law of motion"] },
+  { cat: "Engineering Questions", d: 1, q: "What is the unit of electrical current?", a: "Ampere", opts: ["Ohm", "Volt", "Watt", "Ampere"] },
+  { cat: "Engineering Questions", d: 2, q: "Convert T = -10°C to Kelvin.", a: "263 K", opts: ["253 K", "263 K", "283 K", "10 K"] },
+  { cat: "Engineering Questions", d: 2, q: "The accumulation in steady states is equal to what?", a: "0", opts: ["1", "Infinity", "The input rate", "0"] },
+  { cat: "Engineering Questions", d: 3, q: "If the open end of a sealed-end manometer is exposed to the atmosphere, the device functions as what?", a: "Barometer", opts: ["Piezometer", "Barometer", "Manometer", "Thermometer"] },
+  { cat: "Engineering Questions", d: 3, q: "For the equation y² = a e^(-b/x), what are the slope and intercept after linearization, respectively?", a: "-b, ln a", opts: ["-b/2, ln a", "-b, 2 ln a", "b, ln a", "-b, ln a"] },
+  { cat: "Engineering Questions", d: 2, q: "Which process has w = 0 for a gas in a rigid container?", a: "Isochoric", opts: ["Isothermal", "Isochoric", "Isobaric", "Adiabatic"] },
+  { cat: "Engineering Questions", d: 1, q: "If a gas is heated in a rigid container, all the added heat goes into increasing internal energy. True or false?", a: "True", opts: ["Only if ideal gas", "False", "Only at constant pressure", "True"] },
+  { cat: "Engineering Questions", d: 1, q: "A system has Δu = -250 J and does w = +400 J. What is heat q?", a: "150 J", opts: ["150 J", "-650 J", "-150 J", "650 J"] },
+  { cat: "Engineering Questions", d: 3, q: "A gas is compressed in an insulated cylinder. Which is most likely true?", a: "Δu > 0", opts: ["Δu < 0", "Δu = 0", "q > 0", "Δu > 0"] },
+  { cat: "Engineering Questions", d: 2, q: "Which thermodynamic process has q = 0?", a: "Adiabatic", opts: ["Isobaric", "Isothermal", "Adiabatic", "Isochoric"] },
+  { cat: "Engineering Questions", d: 3, q: "What reagent is used in the bromination of benzene?", a: "Br2", opts: ["HBr", "NaBr", "Br2", "Br2 / FeBr3"] },
+  { cat: "Engineering Questions", d: 3, q: "What is the role of FeCl3 in chlorination of benzene?", a: "Catalyst", opts: ["Reducing agent", "Oxidizing agent", "Solvent", "Catalyst"] },
+  { cat: "Engineering Questions", d: 3, q: "The most common reactions involving aromatics are what type of reactions?", a: "Substitution", opts: ["Addition", "Rearrangement", "Elimination", "Substitution"] },
+  { cat: "Engineering Questions", d: 3, q: "What are the reagent and catalyst used for nitration of benzene?", a: "HNO3 / H2SO4", opts: ["HNO3 / FeCl3", "HNO3 / H2SO4", "HNO3 / HCl", "H2SO4 alone"] },
+  { cat: "Engineering Questions", d: 3, q: "Which group is ortho-para directing: -CN, -NO2, -NH3+, or -NH2?", a: "-NH2", opts: ["-NO2", "-CN", "-NH2", "-NH3+"] },
+  { cat: "Engineering Questions", d: 3, q: "What is the name for PbCl2?", a: "Lead(II) Chloride", opts: ["Palladium Chloride", "Lead Chlorate", "Lead(IV) Chloride", "Lead(II) Chloride"] },
+  { cat: "Engineering Questions", d: 1, q: "What is the formula for barium sulfide?", a: "BaS", opts: ["BaSO4", "BaS", "Ba2S", "Ba2S3"] },
+  { cat: "Engineering Questions", d: 3, q: "What is the formula for zinc hydroxide?", a: "Zn(OH)2", opts: ["ZnOH", "Zn2(OH)", "ZnO2H", "Zn(OH)2"] },
+  { cat: "Engineering Questions", d: 3, q: "What is the name of CuO?", a: "Copper(II) Oxide", opts: ["Copper Peroxide", "Cobalt Oxide", "Copper(I) Oxide", "Copper(II) Oxide"] },
+  { cat: "Engineering Questions", d: 3, q: "What test is used to determine whether an alkene is present?", a: "Bromine water test", opts: ["Bromine water test", "Limewater test", "Fehling's test", "Iodine test"] },
+  { cat: "Engineering Questions", d: 2, q: "A large molecule made of small reactive molecules joined together is called what?", a: "Polymer", opts: ["Isotope", "Polymer", "Monomer", "Alloy"] },
+  { cat: "Engineering Questions", d: 1, q: "What is a single unit or molecule in a polymer called?", a: "Monomer", opts: ["Isomer", "Compound", "Polymer", "Monomer"] },
+  { cat: "Engineering Questions", d: 3, q: "What smaller subunits make up proteins?", a: "Amino acids", opts: ["Fatty acids", "Nucleotides", "Amino acids", "Monosaccharides"] },
+  { cat: "Engineering Questions", d: 3, q: "What are the monomers of DNA?", a: "Nucleotides", opts: ["Peptides", "Fatty acids", "Amino acids", "Nucleotides"] },
+  { cat: "Engineering Questions", d: 2, q: "Alkenes can join together because they have what type of bond?", a: "Double bond", opts: ["Ionic bond", "Single bond", "Double bond", "Triple bond"] },
+  { cat: "Engineering Questions", d: 3, q: "What type of reaction breaks polymers to form monomers?", a: "Hydrolysis", opts: ["Polymerization", "Oxidation", "Hydrolysis", "Condensation"] },
+  { cat: "Engineering Questions", d: 3, q: "Which bond joins monomers together?", a: "Covalent", opts: ["Covalent", "Hydrogen", "Metallic", "Ionic"] },
+  { cat: "Engineering Questions", d: 1, q: "In the reaction Starch + Water → Glucose, what are the products?", a: "Glucose", opts: ["Sucrose", "Maltose", "Glucose", "Fructose"] },
+  { cat: "Engineering Questions", d: 1, q: "The heavy, thick liquid collected at the bottom of a distillation column is often used for what?", a: "Making roads (bitumen)", opts: ["Making roads (bitumen)", "Making plastics", "Jet fuel", "Lubricating oil only"] },
+  { cat: "Engineering Questions", d: 2, q: "What is the purpose of the reflux process in industrial distillation?", a: "To improve the purity of the fractions", opts: ["To improve the purity of the fractions", "To remove sulfur", "To lower the temperature", "To increase the yield"] },
+  { cat: "Engineering Questions", d: 2, q: "What primary physical property is used to separate different components of crude oil?", a: "Boiling point", opts: ["Viscosity", "Molecular colour", "Boiling point", "Density"] },
+  { cat: "Engineering Questions", d: 2, q: "Where in a distillation tower do fractions with the smallest molecules collect?", a: "At the top", opts: ["At the top", "At the furnace", "In the middle", "At the bottom"] },
+  { cat: "Engineering Questions", d: 2, q: "Why is crude oil heated in a furnace before entering the distillation tower?", a: "To vaporize the mixture", opts: ["To crack the molecules", "To increase pressure", "To vaporize the mixture", "To remove impurities"] },
+  { cat: "Engineering Questions", d: 3, q: "In a distillation column, what are the horizontal levels where vapors condense into liquids called?", a: "Trays", opts: ["Baffles", "Trays", "Plates only", "Condensers"] },
+  { cat: "Engineering Questions", d: 3, q: "What happens to the temperature inside a fractional distillation column as you move from bottom to top?", a: "It decreases", opts: ["It stays constant", "It fluctuates", "It increases", "It decreases"] },
+  { cat: "Engineering Questions", d: 3, q: "Which gaseous byproduct is primarily released when biodegradable polymers decompose anaerobically in a deep landfill?", a: "Methane", opts: ["Hydrogen sulfide", "Nitrous oxide", "Carbon dioxide", "Methane"] },
+  { cat: "Engineering Questions", d: 3, q: "What process describes microorganisms using enzymes to break down polymer chains into metabolic products?", a: "Mineralization", opts: ["Pyrolysis", "Photodegradation", "Mineralization", "Vulcanization"] },
+  { cat: "Engineering Questions", d: 1, q: "How many forces of flight are there?", a: "Four", opts: ["Four", "Three", "Five", "Six"] },
+  { cat: "Engineering Questions", d: 2, q: "What is Bernoulli's principle used to calculate in airplanes?", a: "Aerodynamic lift", opts: ["Aerodynamic lift", "Engine thrust", "Structural load", "Fuel consumption"] },
+  { cat: "Engineering Questions", d: 1, q: "What fluid property describes its internal resistance to flow?", a: "Viscosity", opts: ["Density", "Compressibility", "Viscosity", "Surface tension"] },
+  { cat: "Engineering Questions", d: 1, q: "Stress is best described as what?", a: "Internal resistive force", opts: ["External applied force", "Internal resistive force", "Force per unit volume", "Deformation per unit length"] },
+  { cat: "Engineering Questions", d: 3, q: "What gear mechanism converts rotary motion into translating motion?", a: "Rack and pinion", opts: ["Rack and pinion", "Bevel gear", "Planetary gear", "Worm gear"] },
+  { cat: "Engineering Questions", d: 2, q: "What are the units for thermal conductivity?", a: "W/m·K", opts: ["J/kg·K", "W/m·K", "N/m·K", "W/m²·K"] },
+  { cat: "Engineering Questions", d: 1, q: "The measurement of temperature as a thermodynamic property is based on which law of thermodynamics?", a: "Zeroth law of thermodynamics", opts: ["Zeroth law of thermodynamics", "Second law of thermodynamics", "Third law of thermodynamics", "First law of thermodynamics"] },
+  { cat: "Engineering Questions", d: 1, q: "Steel containing 0.8% carbon has which structure according to the source question?", a: "Ferrite", opts: ["Martensite", "Cementite", "Ferrite", "Austenite"] },
 
 ];
 
@@ -2646,7 +2646,7 @@ export default function App() {
       tile: h.tile ? { ci: h.tile.ci, ti: h.tile.ti, pts: h.tile.pts, cat: h.tile.cat } : null,
       bq: h.phase === "bq" && h.tile ? {
         q: h.tile.q.q, svg: h.tile.q.svg || null, img: h.tile.q.img || null, zoom: h.tile.q.zoom || null,
-        cat: h.tile.cat, pts: h.tile.pts, dur: h.qDur,
+        cat: h.tile.cat, pts: h.tile.pts, dur: h.qDur, opts: h.tile.q.opts || null,
         revealed: !!h.revealed, timeUp: !!h.timeUp,
         answer: h.revealed ? h.tile.q.a : null,
         alt: h.revealed ? (h.tile.q.alt || []) : null,
@@ -2655,7 +2655,7 @@ export default function App() {
       puActive: h.puActive || {}, puLog: (h.puLog || []).slice(-4), restPid: h.restPid || null,
       pitOn: h.pitOn || [false, false],
       updatedAt: Date.now(),
-      q: h.phase === "question" && q ? { q: q.q, svg: q.svg || null, img: q.img || null, zoom: q.zoom || null, nodiff: !!q.nodiff, pts: q.pts, d: q.d, cat: q.cat, dur: durFor(h) } : null,
+      q: h.phase === "question" && q ? { q: q.q, svg: q.svg || null, img: q.img || null, zoom: q.zoom || null, nodiff: !!q.nodiff, opts: q.opts || null, pts: q.pts, d: q.d, cat: q.cat, dur: durFor(h) } : null,
     };
     setView(pub); // تحديث فوري للشاشة ثم الحفظ بالخلفية
     await jset(roomKey(h.code), pub);
@@ -3607,6 +3607,15 @@ export default function App() {
     .jTile.locked{background:transparent; color:#2E2440; cursor:default; box-shadow:inset 0 0 0 1.5px #2E2440;}
     .jTile:disabled{cursor:default;}
     @media (max-width:420px){ .jBoard{gap:5px;} .jCat{font-size:10px;} .jTile{font-size:16px; padding:9px 2px;} }
+    .optGrid{display:grid; grid-template-columns:1fr 1fr; gap:8px;}
+    .optBtn{background:var(--sur2); border:1.5px solid var(--line); color:var(--sand);
+      border-radius:12px; padding:13px 10px; font-size:15px; font-family:'Rubik',sans-serif;
+      cursor:pointer; transition:all .15s ease; text-align:center;}
+    .optBtn:not(:disabled):hover{border-color:var(--amber); color:var(--amber);}
+    .optBtn.on{border-color:var(--amber); background:var(--amber); color:var(--bg); font-weight:700;}
+    .optBtn.right{border-color:var(--teal); background:#173330; color:var(--teal); font-weight:700;}
+    .optBtn:disabled{opacity:.5; cursor:default;}
+    @media (max-width:400px){ .optGrid{grid-template-columns:1fr;} }
     .cdNum{font-family:'Lalezar',cursive; font-size:96px; line-height:1; color:var(--amber);
       animation:cdPop .5s cubic-bezier(.2,1.5,.4,1);}
     @keyframes cdPop{0%{transform:scale(.4); opacity:0;}60%{transform:scale(1.15);}100%{transform:scale(1); opacity:1;}}
@@ -4126,6 +4135,13 @@ export default function App() {
             transform: `scale(${b.zoom.s || 2})`,
             transformOrigin: `${b.zoom.x != null ? b.zoom.x : 50}% ${b.zoom.y != null ? b.zoom.y : 50}%` } : undefined} /></div>}
           <p className="qtext" style={{ textAlign: "center" }}>{b.q}</p>
+          {b.opts && (
+            <div className="optGrid" style={{ marginTop: 14 }}>
+              {b.opts.map((o) => (
+                <div key={o} className={"optBtn" + (b.revealed && o === b.answer ? " right" : "")}>{o}</div>
+              ))}
+            </div>
+          )}
           {b.revealed && (
             <div className="ansBox">
               <span className="ansLbl">الجواب</span>
@@ -4440,10 +4456,20 @@ export default function App() {
               <p className="qtext">{q.q}</p>
             </div>
           )}
-          <input className="inp" value={typedText} disabled={answered || remain <= 0 || locked || cancelled}
-            onChange={(e) => setTypedText(e.target.value)}
-            onKeyDown={(e) => { if (e.key === "Enter") answerTyped(); }}
-            placeholder={cancelled ? "ما تقدر تجاوب 🚫" : locked ? `مقفول… ${Math.ceil(8 - elapsed)} ث` : "اكتب إجابتك — عربي أو إنجليزي"} />
+          {q.opts ? (
+            <div className="optGrid">
+              {q.opts.map((o) => (
+                <button key={o} className={"optBtn" + (typedText === o ? " on" : "")}
+                  disabled={answered || remain <= 0 || locked || cancelled}
+                  onClick={() => setTypedText(o)}>{o}</button>
+              ))}
+            </div>
+          ) : (
+            <input className="inp" value={typedText} disabled={answered || remain <= 0 || locked || cancelled}
+              onChange={(e) => setTypedText(e.target.value)}
+              onKeyDown={(e) => { if (e.key === "Enter") answerTyped(); }}
+              placeholder={cancelled ? "ما تقدر تجاوب 🚫" : locked ? `مقفول… ${Math.ceil(8 - elapsed)} ث` : "اكتب إجابتك — عربي أو إنجليزي"} />
+          )}
           <div style={{ height: 10 }} />
           <button className="btn btn-amber" disabled={answered || remain <= 0 || locked || cancelled || !typedText.trim()} onClick={answerTyped}>أرسل ⚡</button>
         </div>
