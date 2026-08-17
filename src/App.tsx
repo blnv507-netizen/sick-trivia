@@ -3727,6 +3727,9 @@ export default function App() {
     :root{
       --bg:#17121F; --sur:#241C31; --sur2:#2E2440; --line:#3D3153;
       --sand:#F3EADA; --dim:#9C90B0; --red:#D9494F; --amber:#F0A32F; --teal:#2EC4A6;
+      --space-xs:6px; --space-sm:10px; --space-md:14px; --space-lg:20px; --space-xl:30px;
+      --radius:16px; --radius-sm:12px; --radius-lg:20px;
+      --shadow:0 4px 16px rgba(0,0,0,.25); --shadow-lg:0 8px 28px rgba(0,0,0,.35);
     }
     .fz *{box-sizing:border-box; margin:0; padding:0;}
     /* استجابة فورية للمس بالجوال — بدون تأخير ولا ضغطات ضائعة */
@@ -3736,8 +3739,24 @@ export default function App() {
     .fz input, .fz textarea{-webkit-user-select:text; user-select:text; font-size:16px;}
     .fz button:active:not(:disabled){opacity:.75;}
     .fz{min-height:100vh; background:var(--bg); color:var(--sand); font-family:'Rubik',sans-serif; direction:rtl;}
-    .wrap{max-width:520px; margin:0 auto; padding:20px 16px 48px; animation:fadeUp .28s ease both;}
-    @keyframes fadeUp{from{opacity:0; transform:translateY(10px);}to{opacity:1; transform:none;}}
+    .wrap{max-width:540px; margin:0 auto; padding:var(--space-xl) var(--space-lg) var(--space-xl); animation:fadeUp .35s cubic-bezier(.2,.8,.3,1) both;}
+    @media (max-width:480px){
+      .logo{font-size:46px;}
+      .qtext{font-size:21px;}
+      .introDesc{font-size:16px; padding:var(--space-md);}
+      .wrap{padding:var(--space-lg) var(--space-md) var(--space-lg);}
+    }
+    @media (max-width:360px){
+      .logo{font-size:40px;}
+      .btn{font-size:16px; padding:14px 16px;}
+      .scoreChip{font-size:13px; padding:6px 10px;}
+      .scoreName{max-width:70px;}
+    }
+    @keyframes fadeUp{from{opacity:0; transform:translateY(14px);}to{opacity:1; transform:none;}}
+    @keyframes slideInRight{from{opacity:0; transform:translateX(20px);}to{opacity:1; transform:none;}}
+    @keyframes slideInLeft{from{opacity:0; transform:translateX(-20px);}to{opacity:1; transform:none;}}
+    @keyframes scaleIn{from{opacity:0; transform:scale(.9);}to{opacity:1; transform:scale(1);}}
+    @keyframes shimmer{0%{background-position:-200% 0;}100%{background-position:200% 0;}}
     .disp{font-family:'Lalezar',cursive; font-weight:400; letter-spacing:.5px;}
     .logo{font-family:'Lalezar',cursive; font-size:54px; line-height:1; text-align:center; color:var(--sand); direction:ltr; letter-spacing:2px;}
     .logo span{color:var(--amber);}
@@ -3747,35 +3766,51 @@ export default function App() {
       background:
         linear-gradient(-45deg, transparent 70%, var(--c) 70%) 0 0/12px 6px repeat-x,
         linear-gradient(45deg, transparent 70%, var(--c) 70%) 6px 0/12px 6px repeat-x;}
-    .card{background:var(--sur); border:1px solid var(--line); border-radius:18px; padding:18px; margin-top:14px;}
-    .btn{display:block; width:100%; border:none; border-radius:14px; padding:16px; font-size:18px; font-family:'Rubik',sans-serif;
-      font-weight:700; cursor:pointer; transition:transform .12s ease, filter .15s ease; color:var(--bg);}
-    .btn:active{transform:scale(.96);}
-    .btn:focus-visible{outline:3px solid var(--amber); outline-offset:2px;}
+    .card{background:var(--sur); border:1px solid var(--line); border-radius:var(--radius-lg); padding:var(--space-lg); margin-top:var(--space-md);
+      box-shadow:var(--shadow); transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;}
+    .card:hover{border-color:var(--amber); box-shadow:var(--shadow-lg);}
+    .btn{display:block; width:100%; border:none; border-radius:var(--radius); padding:16px 20px; font-size:18px; font-family:'Rubik',sans-serif;
+      font-weight:700; cursor:pointer; transition:transform .12s ease, filter .15s ease, box-shadow .15s ease, background .15s ease; color:var(--bg);
+      position:relative; overflow:hidden;}
+    .btn:active:not(:disabled){transform:scale(.97);}
+    .btn:focus-visible{outline:3px solid var(--amber); outline-offset:3px;}
+    .btn:not(:disabled):hover{filter:brightness(1.08); box-shadow:var(--shadow-lg);}
     .btn-red{background:var(--red); color:#fff;}
-    .btn-amber{background:var(--amber);}
+    .btn-amber{background:var(--amber); color:var(--bg);}
     .btn-ghost{background:transparent; color:var(--sand); border:1.5px solid var(--line);}
-    .btn:disabled{opacity:.45; cursor:default;}
-    .inp{width:100%; background:var(--sur2); border:1.5px solid var(--line); border-radius:12px; padding:14px;
-      color:var(--sand); font-size:17px; font-family:'Rubik',sans-serif; transition:border-color .15s ease;}
-    .inp:focus{outline:none; border-color:var(--amber);}
+    .btn-ghost:not(:disabled):hover{background:var(--sur2); border-color:var(--amber); color:var(--amber);}
+    .btn:disabled{opacity:.45; cursor:default; filter:none; box-shadow:none;}
+    .btn::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(255,255,255,.1) 0%, transparent 60%); opacity:0; transition:opacity .2s ease; pointer-events:none;}
+    .btn:not(:disabled):hover::after{opacity:1;}
+    .inp{width:100%; background:var(--sur2); border:1.5px solid var(--line); border-radius:var(--radius-sm); padding:14px 16px;
+      color:var(--sand); font-size:17px; font-family:'Rubik',sans-serif; transition:border-color .15s ease, box-shadow .15s ease, background .15s ease;}
+    .inp:focus{outline:none; border-color:var(--amber); box-shadow:0 0 0 4px rgba(240,163,47,.15); background:var(--sur);}
+    .inp::placeholder{color:var(--dim); opacity:.7;}
     .lbl{display:block; color:var(--dim); font-size:14px; margin:14px 0 6px;}
     .chips{display:flex; flex-wrap:wrap; gap:8px;}
     .chip{border:1.5px solid var(--line); background:var(--sur2); color:var(--sand); border-radius:999px;
-      padding:8px 14px; font-size:14px; cursor:pointer; font-family:'Rubik',sans-serif;
-      transition:transform .12s ease, background .15s ease, border-color .15s ease;}
-    .chip:active{transform:scale(.94);}
-    .chip.on{background:var(--red); border-color:var(--red); color:#fff; font-weight:700;}
-    .chip:focus-visible{outline:2px solid var(--amber); outline-offset:2px;}
+      padding:10px 16px; font-size:14px; font-weight:500; cursor:pointer; font-family:'Rubik',sans-serif;
+      transition:transform .12s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease, color .15s ease;}
+    .chip:active:not(:disabled){transform:scale(.94);}
+    .chip.on{background:var(--red); border-color:var(--red); color:#fff; font-weight:700; box-shadow:0 4px 12px rgba(217,73,79,.3);}
+    .chip:focus-visible{outline:3px solid var(--amber); outline-offset:3px;}
+    .chip:not(.on):not(:disabled):hover{background:var(--sur); border-color:var(--amber); color:var(--amber);}
+    .chip:disabled{opacity:.4; cursor:not-allowed;}
     .seg{display:flex; gap:8px;}
     .seg .chip{flex:1; text-align:center;}
-    .catGrid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px;}
-    .catBtn{border:1.5px solid var(--line); background:var(--sur); color:var(--sand); border-radius:14px;
-      padding:18px 10px; font-size:16px; font-weight:700; cursor:pointer; font-family:'Rubik',sans-serif;
-      transition:transform .12s ease, border-color .15s ease, background .15s ease;}
-    .catBtn:active{transform:scale(.95);}
-    .catBtn.on{background:var(--amber); border-color:var(--amber); color:var(--bg);}
-    .catBtn:focus-visible{outline:3px solid var(--amber); outline-offset:2px;}
+    .catGrid{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:var(--space-lg);}
+    @media (max-width:380px){ .catGrid{grid-template-columns:1fr;} .catBtn{padding:var(--space-md);} }
+    .catBtn{display:flex; flex-direction:column; align-items:center; gap:6px;
+      border:2px solid var(--line); background:var(--sur); color:var(--sand); border-radius:var(--radius);
+      padding:var(--space-lg) var(--space-md); font-size:15px; font-weight:700; cursor:pointer; font-family:'Rubik',sans-serif;
+      transition:transform .12s ease, border-color .15s ease, background .15s ease, box-shadow .15s ease;}
+    .catBtn .catIcon{font-size:28px; line-height:1;}
+    .catBtn:active:not(:disabled){transform:scale(.96);}
+    .catBtn.on{background:linear-gradient(135deg, var(--amber) 0%, #E8901F 100%); border-color:var(--amber); color:var(--bg);
+      box-shadow:0 6px 20px rgba(240,163,47,.3);}
+    .catBtn:focus-visible{outline:3px solid var(--amber); outline-offset:3px;}
+    .catBtn:not(.on):not(:disabled):hover{border-color:var(--amber); box-shadow:var(--shadow-lg); transform:translateY(-2px);}
+    .catBtn:disabled{opacity:.35; cursor:not-allowed;}
     .codebox{font-family:'Lalezar',cursive; font-size:56px; letter-spacing:12px; text-align:center;
       color:var(--amber); background:var(--sur2); border:2px dashed var(--amber); border-radius:16px; padding:8px 0 2px; direction:ltr;}
     .plist{display:flex; flex-direction:column; gap:8px; margin-top:10px;}
@@ -3783,25 +3818,31 @@ export default function App() {
       border-radius:12px; padding:12px 14px;}
     .ptsTile{font-family:'Lalezar',cursive; font-size:26px; color:var(--amber); background:var(--sur2);
       border:1.5px solid var(--line); border-radius:12px; padding:2px 14px 0; display:inline-block;}
-    .qtext{font-size:22px; font-weight:700; line-height:1.6; margin:14px 0;}
-    .fuseTrack{height:10px; background:var(--sur2); border-radius:999px; overflow:hidden; margin-top:14px;}
+    .qtext{font-size:23px; font-weight:700; line-height:1.7; margin:16px 0; letter-spacing:.2px;
+      color:var(--sand); text-wrap:balance;}
+    .fuseTrack{height:8px; background:var(--sur2); border-radius:999px; overflow:hidden; margin-top:var(--space-md);
+      box-shadow:inset 0 1px 3px rgba(0,0,0,.3);}
     .fuseBar{height:100%; background:linear-gradient(90deg, var(--amber), var(--red)); border-radius:999px;
-      transition:width .12s linear; margin-inline-start:auto;}
+      transition:width .12s linear, background .3s ease; margin-inline-start:auto;
+      background-size:200% 100%; animation:shimmer 2s linear infinite;}
     .meta{display:flex; align-items:center; justify-content:space-between; gap:8px;}
     .badge{font-size:13px; color:var(--dim);}
     .evBanner{display:flex; align-items:center; gap:10px; background:#3A2E1E; border:1.5px solid var(--amber);
       border-radius:14px; padding:10px 14px; margin-top:12px; font-weight:700; color:var(--amber);}
-    .evSplash{text-align:center; padding:30px 0 10px;}
-    .evIcon{font-size:72px; line-height:1;}
-    .evName{font-family:'Lalezar',cursive; font-size:44px; color:var(--amber); margin-top:8px;}
-    .introDesc{color:var(--sand); font-size:17px; line-height:1.9; margin-top:14px;
-      background:var(--sur); border:1px solid var(--line); border-radius:16px; padding:16px; text-align:center;}
-    .evDesc{color:var(--sand); font-size:18px; margin-top:6px; line-height:1.7;}
-    .rrow{display:flex; align-items:center; justify-content:space-between; background:var(--sur2);
-      border-radius:12px; padding:12px 14px; margin-top:8px;}
-    .rrow.ok{border-inline-start:4px solid var(--teal);}
-    .rrow.bad{border-inline-start:4px solid var(--red); opacity:.85;}
-    .gain{font-family:'Lalezar',cursive; font-size:22px;}
+    .evSplash{text-align:center; padding:var(--space-xl) 0 var(--space-md);}
+    .evIcon{font-size:80px; line-height:1; animation:popIn .6s cubic-bezier(.2,1.4,.4,1);}
+    .evName{font-family:'Lalezar',cursive; font-size:48px; color:var(--amber); margin-top:var(--space-md); text-shadow:0 0 20px rgba(240,163,47,.3);}
+    .introDesc{color:var(--sand); font-size:18px; line-height:1.9; margin-top:var(--space-lg);
+      background:var(--sur); border:1px solid var(--line); border-radius:var(--radius-lg); padding:var(--space-lg); text-align:center;
+      box-shadow:var(--shadow);}
+    .evDesc{color:var(--sand); font-size:18px; margin-top:var(--space-sm); line-height:1.8;}
+    .rrow{display:flex; align-items:center; justify-content:space-between; background:var(--sur);
+      border-radius:var(--radius-sm); padding:14px 16px; margin-top:8px;
+      transition:transform .15s ease, box-shadow .15s ease; border:1px solid var(--line);}
+    .rrow:not(:first-child):hover{transform:translateX(-4px); box-shadow:var(--shadow);}
+    .rrow.ok{border-inline-start:4px solid var(--teal); background:#173330;}
+    .rrow.bad{border-inline-start:4px solid var(--red); background:#33202E; opacity:.9;}
+    .gain{font-family:'Lalezar',cursive; font-size:24px;}
     .correctBox{background:#173330; border:1.5px solid var(--teal); color:var(--teal); border-radius:14px;
       padding:14px; font-size:18px; font-weight:700; text-align:center;}
     .stealBox{background:#33202E; border:1.5px solid var(--red); color:var(--sand); border-radius:14px;
@@ -3837,17 +3878,20 @@ export default function App() {
       transition:transform .3s ease; background:#1B1526;}
     /* مع الزوم نحتاج قص عشان التقريب يبان */
     .qPhoto.zoomed img{aspect-ratio:16/10; object-fit:cover; max-height:none;}
-    .catPick{display:flex; flex-wrap:wrap; gap:8px; max-height:230px; overflow-y:auto;
-      background:var(--sur); border:1px solid var(--line); border-radius:14px; padding:12px;}
-    .scoreBar{display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 12px; justify-content:center;}
-    .scoreChip{display:flex; align-items:center; gap:6px; background:var(--sur2); border:1.5px solid var(--line);
-      border-radius:999px; padding:5px 12px; font-size:13px; transition:border-color .2s ease;}
-    .scoreChip.me{border-color:var(--amber);}
-    .scoreChip.done{border-color:var(--teal);}
-    .scoreRank{color:var(--dim); font-size:11px; min-width:14px; text-align:center;}
-    .scoreName{font-weight:500; max-width:80px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
-    .scoreVal{font-family:'Lalezar',cursive; color:var(--amber); font-size:16px;}
-    .scoreTick{color:var(--teal); font-size:12px;}
+    .catPick{display:flex; flex-wrap:wrap; gap:8px; max-height:260px; overflow-y:auto;
+      background:var(--sur); border:1px solid var(--line); border-radius:var(--radius); padding:var(--space-md);}
+    .catPickItem{display:flex; flex-direction:column; align-items:center; gap:4px; min-width:90px; flex:0 0 auto;}
+    .catPickItem .chip{padding:12px 16px; font-size:13px; white-space:nowrap;}
+    .catPickItem .catIcon{font-size:20px; line-height:1;}
+    .scoreBar{display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 16px; justify-content:center;}
+    .scoreChip{display:flex; align-items:center; gap:8px; background:var(--sur); border:2px solid var(--line);
+      border-radius:999px; padding:8px 14px; font-size:14px; transition:all .2s ease; box-shadow:var(--shadow);}
+    .scoreChip.me{border-color:var(--amber); box-shadow:0 0 0 2px rgba(240,163,47,.2), var(--shadow);}
+    .scoreChip.done{border-color:var(--teal); background:#173330;}
+    .scoreRank{color:var(--dim); font-size:12px; min-width:18px; text-align:center; font-weight:700;}
+    .scoreName{font-weight:600; max-width:90px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+    .scoreVal{font-family:'Lalezar',cursive; color:var(--amber); font-size:18px;}
+    .scoreTick{color:var(--teal); font-size:14px;}
     .jWrap{max-width:760px;}
     .jTop{display:flex; align-items:center; gap:10px; margin-bottom:10px; flex-wrap:wrap;}
     .jBrand{font-family:'Lalezar',cursive; font-size:22px; color:var(--amber); letter-spacing:1px;}
@@ -3855,19 +3899,21 @@ export default function App() {
     .jTurn{margin-inline-start:auto; color:#fff; font-weight:700; font-size:13px;
       border-radius:999px; padding:6px 16px;}
     .jTop .exitBar{margin:0;}
-    .qHead{display:flex; align-items:center; justify-content:space-between; margin:6px 0;}
-    .qPts{font-family:'Lalezar',cursive; font-size:34px; color:var(--amber);}
-    .qClock{font-family:'Lalezar',cursive; font-size:26px; color:var(--sand);
-      background:var(--sur2); border-radius:12px; padding:2px 16px 0;}
-    .qClock.hot{color:#fff; background:var(--red); animation:pl 1s ease-in-out infinite;}
+    .qHead{display:flex; align-items:center; justify-content:space-between; margin:8px 0 var(--space-md);}
+    .qPts{font-family:'Lalezar',cursive; font-size:38px; color:var(--amber);}
+    .qClock{font-family:'Lalezar',cursive; font-size:28px; color:var(--sand);
+      background:var(--sur); border:2px solid var(--line); border-radius:var(--radius-sm); padding:6px 20px;}
+    .qClock.hot{color:#fff; background:var(--red); border-color:var(--red); animation:pulseGlow 1s ease-in-out infinite;}
+    @keyframes pulseGlow{0%,100%{box-shadow:0 0 0 0 rgba(217,73,79,.6);}50%{box-shadow:0 0 16px 4px rgba(217,73,79,.4);}}
     .jCard{padding:22px;}
     .jCard .qtext{font-size:24px;}
-    .ansBox{background:#173330; border:2px solid var(--teal); border-radius:16px;
-      padding:18px; text-align:center; font-size:26px; font-weight:700; color:var(--teal);
-      margin-top:14px; animation:pp .35s cubic-bezier(.2,1.4,.4,1);}
-    .ansLbl{display:block; font-size:12px; color:var(--dim); font-weight:400; margin-bottom:4px;}
-    .ansAlt{font-size:13px; color:var(--dim); font-weight:400; margin-top:8px;}
-    .ansInfo{font-size:14px; color:var(--sand); font-weight:400; line-height:1.8; margin-top:12px;
+    .ansBox{background:#173330; border:2px solid var(--teal); border-radius:var(--radius-lg);
+      padding:var(--space-xl); text-align:center; font-size:28px; font-weight:700; color:var(--teal);
+      margin-top:var(--space-lg); animation:scaleIn .4s cubic-bezier(.2,1.4,.4,1);
+      box-shadow:0 0 30px rgba(46,196,166,.15), inset 0 0 0 1px rgba(46,196,166,.2);}
+    .ansLbl{display:block; font-size:13px; color:var(--dim); font-weight:400; margin-bottom:8px; text-transform:uppercase; letter-spacing:1px;}
+    .ansAlt{font-size:14px; color:var(--dim); font-weight:400; margin-top:10px;}
+    .ansInfo{font-size:15px; color:var(--sand); font-weight:400; line-height:1.8; margin-top:14px;
       padding-top:12px; border-top:1px solid rgba(46,196,166,.3); text-align:right;}
     .judgeBox{margin-top:16px;}
     .jAward{color:#fff !important; font-size:17px;}
@@ -3906,14 +3952,16 @@ export default function App() {
     .jTile.locked{background:transparent; color:#2E2440; cursor:default; box-shadow:inset 0 0 0 1.5px #2E2440;}
     .jTile:disabled{cursor:default;}
     @media (max-width:420px){ .jBoard{gap:5px;} .jCat{font-size:10px;} .jTile{font-size:16px; padding:9px 2px;} }
-    .optGrid{display:grid; grid-template-columns:1fr 1fr; gap:8px;}
-    .optBtn{background:var(--sur2); border:1.5px solid var(--line); color:var(--sand);
-      border-radius:12px; padding:13px 10px; font-size:15px; font-family:'Rubik',sans-serif;
-      cursor:pointer; transition:all .15s ease; text-align:center;}
-    .optBtn:not(:disabled):hover{border-color:var(--amber); color:var(--amber);}
-    .optBtn.on{border-color:var(--amber); background:var(--amber); color:var(--bg); font-weight:700;}
-    .optBtn.right{border-color:var(--teal); background:#173330; color:var(--teal); font-weight:700;}
-    .optBtn:disabled{opacity:.5; cursor:default;}
+    .optGrid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+    .optBtn{background:var(--sur); border:2px solid var(--line); color:var(--sand);
+      border-radius:var(--radius-sm); padding:16px 12px; font-size:16px; font-family:'Rubik',sans-serif;
+      font-weight:500; cursor:pointer; transition:all .15s ease; text-align:center;
+      box-shadow:var(--shadow);}
+    .optBtn:not(:disabled):hover{border-color:var(--amber); color:var(--amber); transform:translateY(-2px); box-shadow:var(--shadow-lg);}
+    .optBtn:active:not(:disabled){transform:scale(.98);}
+    .optBtn.on{border-color:var(--amber); background:var(--amber); color:var(--bg); font-weight:700; box-shadow:0 4px 16px rgba(240,163,47,.3);}
+    .optBtn.right{border-color:var(--teal); background:#173330; color:var(--teal); font-weight:700; box-shadow:0 4px 16px rgba(46,196,166,.3);}
+    .optBtn:disabled{opacity:.4; cursor:not-allowed;}
     @media (max-width:400px){ .optGrid{grid-template-columns:1fr;} }
     .cdNum{font-family:'Lalezar',cursive; font-size:96px; line-height:1; color:var(--amber);
       animation:cdPop .5s cubic-bezier(.2,1.5,.4,1);}
@@ -3922,10 +3970,14 @@ export default function App() {
       padding:14px; font-size:15px; font-weight:700; margin-bottom:14px; text-align:right;}
     .hiddenQ{background:var(--sur2); border:1.5px dashed var(--line); border-radius:14px; padding:24px;
       text-align:center; font-size:20px; color:var(--dim); margin:14px 0;}
-    .podium{display:flex; align-items:flex-end; justify-content:center; gap:10px; margin:22px 0 10px;}
-    .pod{flex:1; max-width:120px; text-align:center;}
-    .podBar{border-radius:12px 12px 0 0; display:flex; align-items:flex-start; justify-content:center;
-      padding-top:8px; font-family:'Lalezar',cursive; font-size:28px; color:var(--bg);}
+    .podium{display:flex; align-items:flex-end; justify-content:center; gap:16px; margin:var(--space-xl) 0 var(--space-lg);}
+    .pod{flex:1; max-width:140px; text-align:center; animation:slideInRight .6s cubic-bezier(.2,.8,.3,1) both;}
+    .pod:nth-child(1){animation-delay:.1s;}
+    .pod:nth-child(2){animation-delay:.2s;}
+    .pod:nth-child(3){animation-delay:.3s;}
+    .podBar{border-radius:16px 16px 0 0; display:flex; align-items:flex-start; justify-content:center;
+      padding-top:12px; font-family:'Lalezar',cursive; font-size:32px; color:var(--bg); min-height:60px;
+      box-shadow:0 -4px 20px rgba(0,0,0,.3);}
     .toast{position:fixed; bottom:20px; right:50%; transform:translateX(50%); background:var(--sand); color:var(--bg);
       border-radius:12px; padding:12px 20px; font-weight:700; z-index:50; box-shadow:0 8px 24px rgba(0,0,0,.4); animation:fadeUp .2s ease;}
     .overlay{position:fixed; inset:0; background:rgba(23,18,31,.92); display:flex; flex-direction:column; gap:16px;
@@ -3937,7 +3989,9 @@ export default function App() {
     @keyframes pl{0%,100%{opacity:1;}50%{opacity:.55;}}
     .pop{animation:pp .4s cubic-bezier(.2,1.4,.4,1);}
     @keyframes pp{0%{transform:scale(.6); opacity:0;}100%{transform:scale(1); opacity:1;}}
-    .back{background:none; border:none; color:var(--dim); font-size:15px; cursor:pointer; font-family:'Rubik',sans-serif; padding:6px 0;}
+    @keyframes popIn{0%{transform:scale(.3); opacity:0;}50%{transform:scale(1.1);}100%{transform:scale(1); opacity:1;}}
+    .back{background:none; border:none; color:var(--dim); font-size:15px; cursor:pointer; font-family:'Rubik',sans-serif; padding:6px 0; border-radius:8px;}
+    .back:focus-visible{outline:3px solid var(--amber); outline-offset:3px; color:var(--amber);}
     .qcount{font-family:'Lalezar',cursive; color:var(--dim); font-size:18px;}
     .flash{animation:fl .5s ease;}
     @keyframes fl{0%{background:#3A2E1E;}100%{background:var(--sur);}}
@@ -3965,12 +4019,12 @@ export default function App() {
           </div>
         </div>
       )}
-      <button className="btn btn-red" onClick={() => setScreen("setup")}>سوّ روم جديد</button>
-      <div style={{ height: 10 }} />
-      <button className="btn btn-amber" onClick={() => setScreen("join")}>ادخل روم</button>
-      <div style={{ height: 10 }} />
-      <button className="btn btn-ghost" onClick={() => setScreen("editor")}>أسئلتي ({myq.length})</button>
-      <p style={{ color: "var(--dim)", fontSize: 13, textAlign: "center", marginTop: 24, lineHeight: 1.8 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        <button className="btn btn-red" onClick={() => setScreen("setup")} style={{ animation: "slideInRight .4s cubic-bezier(.2,.8,.3,1) .05s both" }}>سوّ روم جديد</button>
+        <button className="btn btn-amber" onClick={() => setScreen("join")} style={{ animation: "slideInRight .4s cubic-bezier(.2,.8,.3,1) .15s both" }}>ادخل روم</button>
+        <button className="btn btn-ghost" onClick={() => setScreen("editor")} style={{ animation: "slideInRight .4s cubic-bezier(.2,.8,.3,1) .25s both" }}>أسئلتي ({myq.length})</button>
+      </div>
+      <p style={{ color: "var(--dim)", fontSize: 13, textAlign: "center", marginTop: 30, lineHeight: 1.8 }}>
         كل جولة تصوّتون على الفئة — الأعلى أصواتًا يفوز 🗳️
         <br />وكل 3 أسئلة حدث يقلب اللعبة 🎲
         <br />الفائز بسؤال الحدث ياخذ آيتم تخريب 🎒
@@ -4042,19 +4096,23 @@ export default function App() {
           <button className="chip" onClick={() => setCfg({ ...cfg, picked: [...CATS] })}>حدد الكل</button>
         )}
       </div>
-      <div className="catPick">
+      <div className="catPick" onKeyDown={onGridKey(".chip", 4)}>
         {CATS.map((c) => {
           const on = cfg.picked.includes(c);
           const weak = cfg.mode === "board" && !boardReady(c);
+          const info = CAT_INFO[c];
           return (
-            <button key={c} className={"chip" + (on ? " on" : "")}
-              disabled={weak}
-              title={weak ? "ما فيها أسئلة كافية للوحة (تحتاج 6 إجابات مختلفة)" : undefined}
-              style={weak ? { opacity: 0.3, textDecoration: "line-through" } : undefined}
-              onClick={() => setCfg({
-                ...cfg,
-                picked: on ? cfg.picked.filter((x) => x !== c) : [...cfg.picked, c],
-              })}>{on ? "✓ " : ""}{c}</button>
+            <div key={c} className="catPickItem">
+              <button className={"chip" + (on ? " on" : "")}
+                disabled={weak}
+                title={weak ? "ما فيها أسئلة كافية للوحة (تحتاج 6 إجابات مختلفة)" : (info ? info.desc : undefined)}
+                style={weak ? { opacity: 0.3, textDecoration: "line-through" } : undefined}
+                onClick={() => setCfg({
+                  ...cfg,
+                  picked: on ? cfg.picked.filter((x) => x !== c) : [...cfg.picked, c],
+                })}>{on ? "✓ " : ""}{c}</button>
+              {info && <span className="catIcon">{info.icon}</span>}
+            </div>
           );
         })}
       </div>
@@ -4540,6 +4598,24 @@ export default function App() {
     );
   };
 
+  // تنقّل بلوحة المفاتيح (الأسهم) داخل شبكة أزرار
+  const onGridKey = (sel, cols) => (e) => {
+    const keys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
+    if (!keys.includes(e.key)) return;
+    const root = e.currentTarget;
+    const btns = Array.from(root.querySelectorAll(sel)).filter((b) => !b.disabled);
+    const i = btns.indexOf(document.activeElement);
+    if (i < 0) return;
+    e.preventDefault();
+    // في RTL: السهم الأيمن يروح لليسار بصريًا
+    let next = i;
+    if (e.key === "ArrowDown") next = Math.min(btns.length - 1, i + cols);
+    else if (e.key === "ArrowUp") next = Math.max(0, i - cols);
+    else if (e.key === "ArrowRight") next = Math.max(0, i - 1);
+    else if (e.key === "ArrowLeft") next = Math.min(btns.length - 1, i + 1);
+    btns[next] && btns[next].focus();
+  };
+
   const CatPick = () => {
     const cm = view.cm;
     if (!cm) return null;
@@ -4560,11 +4636,13 @@ export default function App() {
           </div>
         </div>
         {canChoose ? (
-          <div className="catGrid">
+          <div className="catGrid" onKeyDown={onGridKey(".catBtn", 2)}>
             {cm.options.map((c) => {
               const names = (cm.voters && cm.voters[c]) || [];
+              const info = CAT_INFO[c];
               return (
                 <button key={c} className={"catBtn" + (myVote === c ? " on" : "")} onClick={() => castVote(c)}>
+                  <span className="catIcon">{info?.icon || "❓"}</span>
                   <span>{c}</span>
                   {isVote && names.length > 0 && (
                     <span className="voteTicks">
@@ -4756,7 +4834,7 @@ export default function App() {
             </div>
           )}
           {q.opts ? (
-            <div className="optGrid">
+            <div className="optGrid" onKeyDown={onGridKey(".optBtn", 2)}>
               {q.opts.map((o) => (
                 <button key={o} className={"optBtn" + (typedText === o ? " on" : "")}
                   disabled={answered || remain <= 0 || locked || cancelled}
@@ -4770,10 +4848,10 @@ export default function App() {
               placeholder={cancelled ? "ما تقدر تجاوب 🚫" : locked ? `مقفول… ${Math.ceil(8 - elapsed)} ث` : "اكتب إجابتك — عربي أو إنجليزي"} />
           )}
           <div style={{ height: 10 }} />
-          <button className="btn btn-amber" disabled={answered || remain <= 0 || locked || cancelled || !typedText.trim()} onClick={answerTyped}>أرسل ⚡</button>
+          <button className={"btn btn-amber" + (answered ? " pop" : "")} disabled={answered || remain <= 0 || locked || cancelled || !typedText.trim()} onClick={answerTyped}>أرسل ⚡</button>
         </div>
         )}
-        {answered && <p className="pulse" style={{ textAlign: "center", color: "var(--teal)", marginTop: 12, fontWeight: 700 }}>وصلت إجابتك ✓ ننتظر البقية…</p>}
+        {answered && <p className="pop" style={{ textAlign: "center", color: "var(--teal)", marginTop: 12, fontWeight: 700 }}>وصلت إجابتك ✓ ننتظر البقية…</p>}
         {!answered && remain <= 0 && preMs <= 0 && (
           <p className="pulse" style={{ textAlign: "center", color: "var(--red)", marginTop: 12, fontWeight: 700 }}>انتهى الوقت ⏱</p>
         )}
@@ -4871,9 +4949,15 @@ export default function App() {
     const heights = [90, 130, 65];
     const colors = ["#B8B8C8", "var(--amber)", "#C98B4E"];
     const medals = ["🥈", "🥇", "🥉"];
+    const winner = b[0];
     return (
       <div className="wrap">
-        <h2 className="disp" style={{ fontSize: 34, textAlign: "center", marginTop: 20 }}>خلصت اللعبة!</h2>
+        <h2 className="disp" style={{ fontSize: 34, textAlign: "center", marginTop: 20 }}>خلصت اللعبة! 🏁</h2>
+        {winner && (
+          <div className="evBanner" style={{ justifyContent: "center", fontSize: 18, marginTop: 14, background: "#1E3320", borderColor: "var(--teal)", color: "var(--teal)" }}>
+            🏆 {winner.name} يفوز بـ {winner.score} نقطة!
+          </div>
+        )}
         <Sadu />
         <div className="podium">
           {pod.map((p, i) => p ? (
@@ -4884,15 +4968,17 @@ export default function App() {
             </div>
           ) : <div className="pod" key={i} />)}
         </div>
-        {b.length > 3 && (
-          <div className="card">
-            {b.slice(3).map((p, i) => (
-              <div className="prow" key={p.pid} style={{ marginTop: i ? 8 : 0 }}>
-                <span>{i + 4}. {p.name}</span><span>{p.score}</span>
+        <div className="card" style={{ marginTop: 12 }}>
+          <b style={{ fontSize: 15 }}>📊 الترتيب النهائي</b>
+          <div className="plist">
+            {b.map((p, i) => (
+              <div className="prow" key={p.pid} style={{ marginTop: 8, borderInlineStart: i === 0 ? "4px solid var(--amber)" : "4px solid transparent" }}>
+                <span>{i === 0 ? "👑 " : (i + 1) + ". "}{p.name}</span>
+                <span className="ptsTile" style={{ fontSize: 18, padding: "0 10px" }}>{p.score}</span>
               </div>
             ))}
           </div>
-        )}
+        </div>
         {role === "host" && (
           <div style={{ marginTop: 20 }}>
             <button className="btn btn-red" onClick={playAgain}>جولة ثانية 🔄</button>
