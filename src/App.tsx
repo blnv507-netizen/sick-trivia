@@ -5046,13 +5046,24 @@ const noDiff = (c) => NO_DIFF.includes(c);
 const INVENTIVE = ["المغالطات المنطقية", "طب وصحة", "اقتصاد وأعمال", "موسيقى", "عمارة ومعالم", "لغات وشعوب", "مقولات", "مين الشخصية؟", "خمّن البوس", "خمّن اللعبة", "خمّن الشيء", "لعبة الحروف", "منطق وألغاز", "أمثال ومصطلحات", "طعام ومطبخ", "حيوانات", "فضاء", "جسم الإنسان", "السعودية", "سيارات", "اختراعات", "أعلام", "شكل ورسم", "وين المكان؟", "وش الغرض؟",
   "الرابط المشترك", "قبل ولا بعد؟", "إيموجي", "دليلين", "الأغرب", "لو كنت مكانك"];
 const CLASSIC = CATS.filter((c) => !INVENTIVE.includes(c));
-// نضمن 6 فئات مبتكرة + 3 كلاسيكية كل جولة (9 خيارات)
-const sampleCats = (picked) => {
-  // لو الهوست حدد فئات معيّنة، ما نعرض غيرها
-  if (picked && picked.length) {
-    return picked.length <= 9 ? shuffle(picked) : shuffle(picked).slice(0, 9);
+// خيارات التصويت تدور على كل الفئات: ما تتكرر فئة بالخيارات لين تطلع كل الفئات مرة
+// (أو كل فئات الهوست المختارة لو حدد فئات)
+const VOTE_N = 9;
+const drawCats = (h) => {
+  const pool = h.picked && h.picked.length ? h.picked : CATS;
+  if (pool.length <= VOTE_N) return shuffle(pool);
+  if (!Array.isArray(h.catDeck)) h.catDeck = [];
+  h.catDeck = h.catDeck.filter((c) => pool.includes(c));
+  const out = h.catDeck.splice(0, VOTE_N);
+  if (out.length < VOTE_N) {
+    // خلصت الدورة: نبدأ دورة جديدة ونكمّل منها بدون تكرار داخل نفس الجولة
+    const fresh = shuffle(pool.filter((c) => !out.includes(c)));
+    const fill = fresh.splice(0, VOTE_N - out.length);
+    // اللي طلعت الحين من الدورة القديمة تنحط آخر الدورة الجديدة عشان ما ترجع قريب
+    h.catDeck = [...fresh, ...shuffle(out)];
+    out.push(...fill);
   }
-  return shuffle([...shuffle(INVENTIVE).slice(0, 6), ...shuffle(CLASSIC).slice(0, 3)]);
+  return shuffle(out);
 };
 
 const Sadu = () => (
@@ -5805,7 +5816,7 @@ export default function App() {
     h.qIndex = idx;
     h.catMode = "vote"; // التصويت دايم — الأعلى أصواتًا يفوز والتعادل عشوائي
     h.pickerPid = null;
-    h.catOptions = sampleCats(h.picked);
+    h.catOptions = drawCats(h);
     h.votes = {};
     h.catStart = Date.now();
     h.chosenCat = null;
@@ -5907,7 +5918,7 @@ export default function App() {
       players: { [me.pid]: { name: me.name.trim(), score: 0 } },
       answers: {}, votes: {}, reveal: null, judging: false, currentEvent: null, eventPool: null, ver: 0,
       items: { [me.pid]: [] }, fx: {}, itemLog: [], seen: {}, doneUses: {}, usedAns: new Set(), picked: cfg.picked || [], stageStart: 0, autoNext: cfg.autoNext !== false,
-      catMode: "vote", pickerPid: null, catOptions: [], catStart: 0, chosenCat: null, rolled: 0, catCount: {},
+      catMode: "vote", pickerPid: null, catOptions: [], catDeck: [], catStart: 0, chosenCat: null, rolled: 0, catCount: {},
       seenAll: new Set(Array.isArray(prevSeen) ? prevSeen : []),
       mode: cfg.mode || "classic",
       teams: [
