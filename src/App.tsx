@@ -2892,6 +2892,47 @@ const BANK = [
   { cat: "رياضة", d: 3, q: "من اللاعب السعودي الذي سجل هدف الفوز على الأرجنتين في كأس العالم 2022؟", a: "سالم الدوسري", alt: ["الدوسري", "سالم"], info: "سجل الهدف الثاني بتسديدة من خارج المنطقة." },
   { cat: "رياضة", d: 3, q: "ما البطولة القارية التي يحمل الهلال الرقم القياسي في عدد ألقابها؟", a: "دوري أبطال آسيا", alt: ["أبطال آسيا", "AFC Champions League", "دوري ابطال اسيا"], info: "أكثر نادٍ آسيوي تتويجًا بها." },
   { cat: "رياضة", d: 3, q: "كم مترًا طول حوض السباحة الأولمبي؟", a: "50", alt: ["خمسين", "٥٠"], info: "عرضه 25 مترًا وفيه عشر حارات." },
+  { cat: "رياضة", d: 1, q: "مين الفريق اللي أنهى موسم 2003-04 من الدوري الإنجليزي بدون ولا خسارة، ولُقب بـ«الذين لا يُقهرون»؟", a: "أرسنال", alt: ["ارسنال", "آرسنال", "Arsenal"], img: "/img/sport/q10.webp", aImg: "/img/sport/a10.webp", info: "فاز 26 وتعادل 12، وما تكرر هالإنجاز من وقتها." },
+  { cat: "رياضة", d: 1, q: "مين الفريق اللي فاز بالدوري الإنجليزي 2015-16 وكانت احتمالية فوزه قبل الموسم 1 إلى 5000؟", a: "ليستر سيتي", alt: ["ليستر", "Leicester", "Leicester City"], aImg: "/img/sport/a11.webp", info: "بقيادة رانييري، وتعتبر من أكبر مفاجآت تاريخ الرياضة." },
+  { cat: "رياضة", d: 1, q: "وش كان اسم دوري أبطال أوروبا قبل 1992؟", a: "كأس أوروبا", alt: ["كأس الأندية الأوروبية البطلة", "كاس اوروبا", "كأس أوروبا للأندية", "European Cup"], img: "/img/sport/q12.webp", info: "انطلقت أول نسخة موسم 1955-56، وتغير الاسم والنظام سنة 1992." },
+  { cat: "رياضة", d: 1, q: "مين الفريق الإنجليزي اللي كان متأخر 3-0 بالشوط الأول في نهائي 2005 ورجع وفاز بالبطولة؟", a: "ليفربول", alt: ["Liverpool"], img: "/img/sport/q13.webp", aImg: "/img/sport/a13.webp", info: "تعادل 3-3 مع ميلان وفاز بالترجيح، وتُسمى «معجزة إسطنبول»." },
+  { cat: "رياضة", d: 1, q: "مين صاحب هدف «يد الله» في كأس العالم 1986؟", a: "مارادونا", alt: ["دييغو مارادونا", "دييجو مارادونا", "Maradona"], img: "/img/sport/q14.webp", aImg: "/img/sport/a14.webp", info: "سجله بيده ضد إنجلترا، وبعده بأربع دقايق سجل هدف القرن بنفس المباراة." },
+  { cat: "رياضة", d: 1, q: "أي منتخب استضاف كأس العالم 1966 وفاز فيها؟", a: "إنجلترا", alt: ["انجلترا", "England"], aImg: "/img/sport/a15.webp", info: "وهي البطولة الوحيدة اللي فازت فيها إنجلترا لين الحين." },
+  { cat: "رياضة", d: 1, q: "كم منتخب شارك في كأس العالم 2026؟", a: "48", alt: ["٤٨", "ثمانية وأربعين"], img: "/img/sport/q16.webp", aImg: "/img/sport/a16.webp", info: "أول نسخة بـ 48 منتخب بدل 32، واستضافتها أمريكا وكندا والمكسيك." },
+  { cat: "رياضة", d: 1, q: "مين الهداف التاريخي للدوري الإنجليزي الممتاز؟", a: "آلان شيرر", alt: ["الان شيرر", "شيرر", "Shearer", "Alan Shearer"], img: "/img/sport/q17.webp", aImg: "/img/sport/a17.webp", info: "سجل 260 هدف مع بلاكبيرن ونيوكاسل، وكان أول من وصل 100 هدف." },
+  { cat: "رياضة", d: 1, q: "مين المدرب اللي فاز بالدوري الإنجليزي 13 مرة كلها مع مانشستر يونايتد؟", a: "أليكس فيرغسون", alt: ["فيرغسون", "فيرجسون", "السير أليكس فيرغسون", "اليكس فيرغسون", "Ferguson"], img: "/img/sport/q18.webp", aImg: "/img/sport/a18.webp", info: "من 1993 إلى 2013، وما فيه مدرب ثاني قرب من الرقم." },
+  { cat: "رياضة", d: 1, q: "مين الفريق اللي جمع 100 نقطة في موسم 2017-18، وهو الرقم القياسي بالدوري الإنجليزي؟", a: "مانشستر سيتي", alt: ["السيتي", "سيتي", "Man City", "Manchester City"], aImg: "/img/sport/a19.webp", info: "بقيادة غوارديولا، وحسم البطولة بهدف في آخر دقيقة من آخر مباراة عشان يوصل 100." },
+  { cat: "رياضة", d: 2, q: "مين سجل هدف فوز مانشستر يونايتد في نهائي 1999 ضد بايرن ميونخ بالوقت بدل الضائع؟", a: "سولشاير", alt: ["أولي غونار سولشاير", "سولسكاير", "سولشار", "Solskjaer"], img: "/img/sport/q20.webp", aImg: "/img/sport/a20.webp", info: "يونايتد كان متأخر 1-0 وسجل هدفين بعد الدقيقة 90، الأول لشيرينغهام والثاني لسولشاير." },
+  { cat: "رياضة", d: 2, q: "مين النادي الإنجليزي اللي فاز بكأس أوروبا مرتين متتاليتين 1979 و1980 بقيادة براين كلاف؟", a: "نوتنغهام فورست", alt: ["نوتينغهام فورست", "نوتنجهام فورست", "فورست", "Nottingham Forest"], aImg: "/img/sport/a21.webp", info: "كان صاعد للدرجة الأولى قبلها بسنتين بس." },
+  { cat: "رياضة", d: 2, q: "مين النادي اللي فاز بكأس أوروبا ثلاث مرات متتالية من 1971 إلى 1973 بقيادة كرويف؟", a: "أياكس", alt: ["اياكس", "Ajax"], aImg: "/img/sport/a22.webp", info: "وهو فريق «الكرة الشاملة» اللي غيّر طريقة لعب كرة القدم." },
+  { cat: "رياضة", d: 2, q: "مين الحارس اللي يملك الرقم القياسي بعدد المباريات بشباك نظيفة في الدوري الإنجليزي؟", a: "بيتر تشيك", alt: ["تشيك", "بيتر شيك", "Cech", "Petr Cech"], aImg: "/img/sport/a23.webp", info: "202 مباراة مع تشيلسي وأرسنال، وكان يلبس الخوذة بعد إصابة رأسه سنة 2006." },
+  { cat: "رياضة", d: 2, q: "مين صاحب أكثر عدد تمريرات حاسمة في تاريخ الدوري الإنجليزي؟", a: "ريان غيغز", alt: ["غيغز", "جيجز", "ريان جيجز", "Giggs"], img: "/img/sport/q24.webp", aImg: "/img/sport/a24.webp", info: "162 تمريرة حاسمة، ولعب كامل مسيرته مع مانشستر يونايتد." },
+  { cat: "رياضة", d: 2, q: "مين سجل أسرع هاتريك في تاريخ دوري أبطال أوروبا بـ 6 دقايق و12 ثانية ضد رينجرز سنة 2022؟", a: "محمد صلاح", alt: ["صلاح", "Salah", "مو صلاح"], img: "/img/sport/q25.webp", aImg: "/img/sport/a25.webp", info: "ونزل بديل بالمباراة، وانتهت 7-1 لليفربول." },
+  { cat: "رياضة", d: 2, q: "في «معجزة برن» نهائي كأس العالم 1954، مين المنتخب اللي فاز على المجر؟", a: "ألمانيا الغربية", alt: ["المانيا الغربية", "ألمانيا", "المانيا", "West Germany", "Germany"], img: "/img/sport/q26.webp", info: "المجر كانت ما خسرت 31 مباراة متتالية، وكانت فايزة على ألمانيا 8-3 بنفس البطولة." },
+  { cat: "رياضة", d: 2, q: "مين اللاعب اللي سجل في نهائي كأس العالم 1998 ونهائي 2006؟", a: "زيدان", alt: ["زين الدين زيدان", "Zidane"], img: "/img/sport/q27.webp", aImg: "/img/sport/a27.webp", info: "سجل برأسه مرتين في 1998، وبضربة جزاء في 2006 قبل ما يُطرد بنطحة ماتيراتزي." },
+  { cat: "رياضة", d: 2, q: "أي منتخب فاز بكأس العالم 2010 رغم إنه خسر أول مباراة له بالبطولة؟", a: "إسبانيا", alt: ["اسبانيا", "Spain"], img: "/img/sport/q28.webp", aImg: "/img/sport/a28.webp", info: "خسر 1-0 من سويسرا، وبعدها ما خسر ولا مباراة." },
+  { cat: "رياضة", d: 2, q: "أي منتخب صار أول منتخب أفريقي يوصل ربع نهائي كأس العالم سنة 1990؟", a: "الكاميرون", alt: ["كاميرون", "Cameroon"], aImg: "/img/sport/a29.webp", info: "وفاز بأول مباراة على الأرجنتين حاملة اللقب." },
+  { cat: "رياضة", d: 3, q: "نشيد دوري أبطال أوروبا مقتبس من مقطوعة «زادوك الكاهن». مين مؤلفها الأصلي؟", a: "هاندل", alt: ["هندل", "Handel", "جورج فريدريك هاندل"], info: "الملحن توني بريتن عدّلها سنة 1992، والأصل كتبه هاندل لتتويج الملك جورج الثاني سنة 1727." },
+  { cat: "رياضة", d: 3, q: "مين سجل أول هدف في تاريخ الدوري الإنجليزي الممتاز سنة 1992؟", a: "براين دين", alt: ["بريان دين", "Brian Deane", "دين"], img: "/img/sport/q31.webp", aImg: "/img/sport/a31.webp", info: "سجله لشيفيلد يونايتد ضد مانشستر يونايتد في 15 أغسطس 1992." },
+  { cat: "رياضة", d: 3, q: "مين سجل أسرع هدف في تاريخ الدوري الإنجليزي بعد 7.69 ثانية بس؟", a: "شين لونغ", alt: ["شين لونج", "Shane Long", "لونغ"], aImg: "/img/sport/a32.webp", info: "لساوثهامبتون ضد واتفورد في أبريل 2019." },
+  { cat: "رياضة", d: 3, q: "مين أصغر لاعب يسجل هاتريك في الدوري الإنجليزي بعمر 18 سنة؟", a: "مايكل أوين", alt: ["أوين", "اوين", "مايكل اوين", "Owen"], img: "/img/sport/q33.webp", aImg: "/img/sport/a33.webp", info: "مع ليفربول ضد شيفيلد وينزداي في فبراير 1998." },
+  { cat: "رياضة", d: 3, q: "مين أصغر لاعب يسجل في نهائي دوري أبطال أوروبا، وكان عمره 18 سنة مع أياكس سنة 1995؟", a: "كلويفرت", alt: ["باتريك كلويفرت", "كلايفرت", "Kluivert"], img: "/img/sport/q34.webp", aImg: "/img/sport/a34.webp", info: "هدفه الوحيد بالنهائي أسقط ميلان." },
+  { cat: "رياضة", d: 3, q: "مين اللاعب اللي فاز بكأس أوروبا 6 مرات مع ريال مدريد بين 1956 و1966؟", a: "خينتو", alt: ["فرانسيسكو خينتو", "جينتو", "Gento"], aImg: "/img/sport/a35.webp", info: "ظل صاحب الرقم وحده لين عادله لاعبين من ريال مدريد في 2024." },
+  { cat: "رياضة", d: 3, q: "مانشستر يونايتد صار أول نادي إنجليزي يفوز بكأس أوروبا سنة 1968. مين الفريق اللي فاز عليه بالنهائي؟", a: "بنفيكا", alt: ["Benfica"], img: "/img/sport/q36.webp", aImg: "/img/sport/a36.webp", info: "فاز 4-1 في ويمبلي بعد 10 سنوات من كارثة ميونخ الجوية." },
+  { cat: "رياضة", d: 3, q: "غير رونالدو، مين اللاعب الكرواتي اللي سجل في نهائي أبطال أوروبا مع ناديين مختلفين؟", a: "ماندزوكيتش", alt: ["ماريو ماندزوكيتش", "ماندجوكيتش", "Mandzukic"], img: "/img/sport/q37.webp", aImg: "/img/sport/a37.webp", info: "سجل مع بايرن في نهائي 2013، ومع يوفنتوس في نهائي 2017 بمقصية." },
+  { cat: "رياضة", d: 3, q: "مين صاحب أسرع هدف في تاريخ كأس العالم بعد 11 ثانية تقريبًا سنة 2002؟", a: "هاكان شوكور", alt: ["هاكان سوكور", "شوكور", "Hakan Sukur"], img: "/img/sport/q38.webp", aImg: "/img/sport/a38.webp", info: "لتركيا ضد كوريا الجنوبية في مباراة المركز الثالث." },
+  { cat: "رياضة", d: 3, q: "مين أكبر لاعب سنًا يسجل في كأس العالم، وسجل بعمر 42 سنة في 1994؟", a: "روجيه ميلا", alt: ["ميلا", "روجر ميلا", "Milla"], img: "/img/sport/q39.webp", aImg: "/img/sport/a39.webp", info: "سجل للكاميرون ضد روسيا، وكان قبلها نجم بطولة 1990." },
+  { cat: "رياضة", d: 3, q: "مين سجل أسرع هاتريك في تاريخ الدوري الإنجليزي بدقيقتين و56 ثانية؟", a: "ساديو ماني", alt: ["ماني", "Mane", "Sadio Mane"], img: "/img/sport/q40.webp", aImg: "/img/sport/a40.webp", info: "لساوثهامبتون ضد أستون فيلا في مايو 2015." },
+  { cat: "رياضة", d: 3, q: "مين سجل في 11 مباراة متتالية بالدوري الإنجليزي، وهو الرقم القياسي؟", a: "جيمي فاردي", alt: ["فاردي", "Vardy"], img: "/img/sport/q41.webp", aImg: "/img/sport/a41.webp", info: "مع ليستر في موسم 2015-16 اللي فاز فيه بالدوري." },
+  { cat: "رياضة", d: 3, q: "مين آخر خصم واجهه حبيب نورمحمدوف قبل نزاله ضد كونور ماكغريغور؟", a: "إدسون باربوزا", alt: ["باربوزا", "ادسون باربوزا", "Barboza", "Edson Barboza"], img: "/img/sport/q1.webp", aImg: "/img/sport/a1.webp", info: "فاز عليه حبيب بالنقاط في UFC 219 نهاية 2017، وبعدها بعشرة أشهر واجه ماكغريغور في UFC 229." },
+  { cat: "رياضة", d: 3, q: "نزاله ضد جون جونز في UFC 151 انلغى بسبب إصابته، فانلغى الحدث كامل لأول مرة بتاريخ UFC. مين هو؟", a: "دان هندرسون", alt: ["هندرسون", "Dan Henderson", "Henderson"], img: "/img/sport/q2.webp", aImg: "/img/sport/a2.webp", info: "جونز رفض بديل بآخر لحظة، فما تواجهوا أبدًا." },
+  { cat: "رياضة", d: 2, q: "مين أخذ حزام الوزن الثقيل من بروك ليسنر؟", a: "كين فيلاسكيز", alt: ["فيلاسكيز", "كاين فيلاسكيز", "Cain Velasquez", "Velasquez"], img: "/img/sport/q3.webp", aImg: "/img/sport/a3.webp", info: "فاز بالضربة الفنية في الجولة الأولى في UFC 121 سنة 2010." },
+  { cat: "رياضة", d: 3, q: "إسرائيل أديسانيا أخذ حزام الوزن المتوسط المؤقت بعد ما فاز على مين؟", a: "كيلفن غاستيلوم", alt: ["غاستيلوم", "جاستيلوم", "كيلفن جاستيلوم", "Gastelum", "Kelvin Gastelum"], img: "/img/sport/q4.webp", aImg: "/img/sport/a4.webp", info: "في UFC 236 سنة 2019، ونزالهم يُعتبر من أفضل نزالات السنة." },
+  { cat: "رياضة", d: 3, q: "مين أول مقاتل هزم تشارلز أوليفيرا في UFC؟", a: "جيم ميلر", alt: ["ميلر", "Jim Miller"], img: "/img/sport/q5.webp", aImg: "/img/sport/a5.webp", info: "فاز عليه بالإخضاع سنة 2010، وبعدها صار أوليفيرا صاحب أكثر انتصارات بالإخضاع في تاريخ UFC." },
+  { cat: "رياضة", d: 2, q: "مين أخذ حزام وزن الويلتر من جورج سان بيير في واحدة من أكبر المفاجآت بتاريخ UFC؟", a: "مات سيرا", alt: ["سيرا", "Matt Serra"], img: "/img/sport/q6.webp", aImg: "/img/sport/a6.webp", info: "بالضربة القاضية في الجولة الأولى في UFC 69 سنة 2007، وسان بيير رجع أخذ الحزم منه بعدها بسنة." },
+  { cat: "رياضة", d: 2, q: "رافائيل دوس أنجوس أخذ حزام الوزن الخفيف من مين؟", a: "أنتوني بيتيس", alt: ["بيتيس", "انتوني بيتيس", "Pettis", "Anthony Pettis"], img: "/img/sport/q7.webp", aImg: "/img/sport/a7.webp", info: "فاز بالنقاط بسيطرة كاملة في UFC 185 سنة 2015." },
+  { cat: "رياضة", d: 3, q: "وش اسم الحركة اللي فاز فيها داستن بورييه على أنتوني بيتيس سنة 2017؟", a: "بودي ترايانقل", alt: ["Body Triangle", "بودي ترايانغل", "بادي ترايانقل", "مثلث الجسم", "المثلث الجسدي"], img: "/img/sport/q8.webp", aImg: "/img/sport/a8.webp", info: "يلف رجوله على جسم الخصم ويعصر ضلوعه، وبيتيس انسحب لأن الضغط سبب له إصابة." },
+  { cat: "رياضة", d: 1, q: "وش الرياضة القتالية الروسية اللي بدأ فيها إسلام مخاشيف وحبيب نورمحمدوف قبل UFC؟", a: "السامبو", alt: ["سامبو", "السامبو القتالي", "Sambo", "Combat Sambo"], img: "/img/sport/q9.webp", aImg: "/img/sport/a9.webp", info: "اسمها اختصار روسي معناه «الدفاع عن النفس بدون سلاح»." },
   { cat: "تقنية", d: 3, q: "كم بت بعنوان IPv4؟", a: "32", alt: ["اثنين وثلاثين", "٣٢"], info: "أربع مجموعات من 8 بتات، ونفادها دفع للانتقال إلى IPv6." },
   { cat: "تقنية", d: 2, q: "ماذا يعني اختصار RAM؟", a: "ذاكرة الوصول العشوائي", alt: ["Random Access Memory", "الذاكرة العشوائية"], info: "ذاكرة مؤقتة سريعة تفقد محتواها عند انقطاع الكهرباء." },
   { cat: "تقنية", d: 2, q: "ما أول رسالة أُرسلت عبر أربانت وانقطعت بمنتصفها؟", a: "LO", alt: ["لو", "lo"], info: "كانوا يحاولون كتابة LOGIN فانهار النظام بعد أول حرفين سنة 1969." },
@@ -3517,6 +3558,19 @@ const BANK = [
   { cat: "Engineering Questions", d: 1, q: "Brass is an alloy of copper and?", a: "Zinc", opts: ["Tin", "Lead", "Iron", "Zinc"], info: "أما البرونز فنحاس مع قصدير." },
   { cat: "Engineering Questions", d: 2, q: "Magnesium + sulphuric acid gives?", a: "Magnesium sulphate + hydrogen", opts: ["Magnesium sulphide + water", "Magnesium sulphate + hydrogen", "Magnesium sulphate + water", "Magnesium sulphide + hydrogen"], info: "فلز + حمض = ملح + هيدروجين." },
   { cat: "Engineering Questions", d: 1, q: "Why is aluminium used for aircraft parts?", a: "Low density and high strength", opts: ["Low density and high strength", "It's magnetic", "It's the best conductor", "It's the cheapest metal"], info: "خفيف وقوي ويقاوم التآكل بطبقة أكسيد رقيقة." },
+  { cat: "Engineering Questions", d: 2, q: "Two ac waves have the same frequency but differ in phase by exactly 1/20 of a cycle. What is the phase difference?", a: "18°", opts: ["18°", "20°", "36°", "5.73°"], info: "الدورة 360°، و360 ÷ 20 = 18°." },
+  { cat: "Engineering Questions", d: 3, q: "An ac signal has a frequency of 1770 Hz. What is its angular frequency?", a: "11,120 rad/s", opts: ["1770 rad/s", "11,120 rad/s", "282 rad/s", "Impossible to determine from the data given"], info: "ω = 2πf = 2π × 1770 ≈ 11,121 rad/s. والخيار 282 هو f ÷ 2π، خطأ شائع." },
+  { cat: "Engineering Questions", d: 3, q: "In a 117-V rms utility circuit, the positive peak voltage is approximately:", a: "+165 V", opts: ["+82.7 V", "+165 V", "+234 V", "+331 V"], info: "القمة = الفعالة × √2 = 117 × 1.414 ≈ 165 فولت." },
+  { cat: "Engineering Questions", d: 2, q: "A triangular wave exhibits:", a: "A defined rise and a defined decay, equal to each other", opts: ["An instantaneous rise and a defined decay", "A defined rise and an instantaneous decay", "A defined rise and a defined decay, equal to each other", "An instantaneous rise and an instantaneous decay"], info: "الصعود والهبوط بنفس الميل. لو الهبوط لحظي صارت موجة سن المنشار." },
+  { cat: "Engineering Questions", d: 3, q: "The sixth harmonic of an ac wave whose period is 1.000 ms has a frequency of:", a: "6.000 kHz", opts: ["0.006 Hz", "167.0 Hz", "7.000 kHz", "6.000 kHz"], info: "الزمن الدوري 1 ms يعني تردد أساسي 1 kHz، والتوافقية السادسة = 6 × 1 kHz." },
+  { cat: "Engineering Questions", d: 3, q: "On a spectrum analyzer, an ac signal having only one frequency component looks like:", a: "A single pip", opts: ["A single pip", "A sine wave", "A square wave", "A sawtooth wave"], info: "محلل الطيف يرسم السعة مقابل التردد، فالموجة الجيبية النقية تظهر كخط واحد عند ترددها." },
+  { cat: "Engineering Questions", d: 3, q: "If a 175-V dc source were connected in series with a 117-V rms utility outlet, the result would be:", a: "Fluctuating dc", opts: ["Smooth dc at a constant voltage", "Pure ac with equal peak voltages", "Ac with one peak voltage greater than the other", "Fluctuating dc"], info: "قمة الشبكة ±165 فولت و175 أكبر منها، فالمجموع يتذبذب بين 10 و340 فولت بدون ما يصير سالب أبدًا." },
+  { cat: "Engineering Questions", d: 2, q: "Which one of the following does NOT affect the power output available from a particular ac generator?", a: "The type of natural energy source used", opts: ["The strength of the magnet", "The number of turns in the coil", "The type of natural energy source used", "The speed of rotation of the coil or magnet"], info: "المولد ما يفرق معه وش يلفّه، ماء أو بخار أو رياح. اللي يهم قوة المغناطيس وعدد اللفات وسرعة الدوران." },
+  { cat: "Engineering Questions", d: 2, q: "What is the role of the centrifugal switch in a single-phase AC motor?", a: "Cuts out the start winding once the motor reaches speed", opts: ["Cuts out the start winding once the motor reaches speed", "Controls speed", "Regulates current flow", "Provides thermal protection"], info: "يفصل ملف التقويم عند حوالي 70–80% من السرعة، ولو علق مسكّر يحترق الملف." },
+  { cat: "Engineering Questions", d: 3, q: "Why do very heavy nuclei often undergo alpha decay?", a: "Reducing proton number reduces electrostatic repulsion", opts: ["Alpha decay increases their size", "Reducing proton number reduces electrostatic repulsion", "It creates more neutrons", "It stops gamma emission"], info: "تنافر البروتونات يزيد مع حجم النواة أسرع من قوة الربط، وخروج بروتونين يخفف الضغط." },
+  { cat: "Engineering Questions", d: 2, q: "If air density decreases while duct area stays constant, to keep mass flow rate constant, speed v must:", a: "Increase", opts: ["Decrease", "Stay the same", "Increase", "Become zero"], info: "ṁ = ρAv ثابتة، فلو قلّت الكثافة والمساحة ثابتة لازم تزيد السرعة بنفس النسبة." },
+  { cat: "Engineering Questions", d: 2, q: "A common radiation-safety concern with decay chains is that:", a: "Some daughters may also be radioactive and add radiation", opts: ["Daughters are always stable", "Some daughters may also be radioactive and add radiation", "Half-life becomes negative", "The chain changes into a chemical reaction"], info: "مثال الرادون: غاز مشع ناتج من سلسلة اليورانيوم ويتجمع في البيوت." },
+  { cat: "Engineering Questions", d: 2, q: "A key advantage of using short half-life isotopes in medical imaging is that:", a: "They decay away quickly, reducing long-term exposure", opts: ["They never emit radiation", "They decay away quickly, reducing long-term exposure", "They cannot be detected", "They make shielding unnecessary"], info: "التكنيشيوم 99m أشهرها، عمر النصف له 6 ساعات بس فيختفي من الجسم خلال يوم تقريبًا." },
 
   // ===== المغالطات المنطقية (Logical Fallacies) =====
   // --- Easy ---
@@ -3883,6 +3937,33 @@ const BANK = [
   { cat: "علوم", d: 3, q: "ما العملية التي تصنع بها بكتيريا قاع المحيط غذاءها دون ضوء الشمس؟", a: "البناء الكيميائي", alt: ["التخليق الكيميائي", "التمثيل الكيميائي"], info: "تعتمد على مواد كيميائية تخرج من الفتحات الحرارية." },
   { cat: "علوم", d: 1, q: "الفيروس ليس له خلية، فأي نوع من الأدوية لا يؤثر فيه؟", a: "المضادات الحيوية", alt: ["المضاد الحيوي", "مضادات حيوية"], info: "لذلك المضاد الحيوي لا يعالج الزكام." },
   { cat: "علوم", d: 3, q: "ما الاختبار الذي يستخدم بكتيريا السالمونيلا لكشف المواد المسرطنة؟", a: "اختبار إيمز", alt: ["إيمز", "Ames"], info: "طوّره بروس إيمز في السبعينيات." },
+  { cat: "علوم", d: 1, q: "ما اسم الزمن اللي تحتاجه الموجة المترددة عشان تكمل دورة كاملة؟", a: "الزمن الدوري", alt: ["زمن الدورة", "الدورة", "Period"], info: "يساوي 1 ÷ التردد، فشبكة 60 هرتز زمنها الدوري تقريبًا 16.7 ملي ثانية." },
+  { cat: "علوم", d: 1, q: "إذا كان تردد موجة 50 هرتز، كم زمنها الدوري بالثانية؟", a: "0.02", alt: ["٠٫٠٢", "0,02", ".02", "1/50", "20 ملي ثانية", "20ms"], info: "الزمن الدوري = 1 ÷ التردد = 1 ÷ 50 = 0.02 ثانية." },
+  { cat: "علوم", d: 2, q: "درجة الطور الواحدة تمثل كم جزء من الدورة الكاملة؟", a: "1/360", alt: ["١/٣٦٠", "واحد على 360", "جزء من 360"], info: "الدورة الكاملة 360 درجة، فكل درجة طور جزء واحد من 360 جزء." },
+  { cat: "علوم", d: 1, q: "التيار المتردد فاز على المستمر في شبكات الكهرباء لأن جهده يسهل رفعه وخفضه بجهاز واحد. وش هو؟", a: "المحول", alt: ["محول", "المحوّل", "المحولات", "Transformer", "ترانسفورمر"], info: "رفع الجهد يقلل التيار، والتيار الأقل يعني فقد حراري أقل في الأسلاك على المسافات الطويلة." },
+  { cat: "علوم", d: 1, q: "في الموجة الجيبية، القيمة من القمة للقمة تساوي كم ضعف القيمة القصوى؟", a: "2", alt: ["٢", "ضعفها", "ضعفين", "مرتين", "اثنين"], info: "من أعلى قمة موجبة لأدنى قمة سالبة، فلو القمة 10 فولت تكون من القمة للقمة 20 فولت." },
+  { cat: "علوم", d: 2, q: "في التيار ثلاثي الأطوار، كم درجة الفرق بين كل طور والطور اللي بعده؟", a: "120", alt: ["١٢٠", "120°", "120 درجة"], info: "ثلاث موجات جيبية موزعة بالتساوي على 360 درجة، وهذا اللي يخلي القدرة المنقولة شبه ثابتة." },
+  { cat: "علوم", d: 1, q: "أي خاصية موجودة في التيار المتردد وتساوي صفر دائمًا في التيار المستمر؟", a: "التردد", alt: ["تردد", "الذبذبة", "Frequency"], info: "التيار المستمر ما يغيّر اتجاهه أبدًا، فما فيه دورات تنحسب بالثانية." },
+  { cat: "علوم", d: 1, q: "موجتان جيبيتان بنفس التردد والسعة لكن متعاكستان في الطور تمامًا، كم سعة الموجة الناتجة؟", a: "صفر", alt: ["0", "٠", "تلغي بعض", "ولا شي"], info: "كل قمة تقابلها قاع بنفس الحجم فيلغون بعض، وهي نفس فكرة سماعات إلغاء الضوضاء." },
+  { cat: "علوم", d: 2, q: "قطع كربونية في الموتور الكهربائي تنقل التيار للجزء الدوار وتتآكل مع الوقت لين تحتاج تبديل، وش اسمها؟", a: "الفرش الكربونية", alt: ["الفرش", "فرش", "الفحمات", "فحمات", "البراشات", "براشات", "Brushes", "Carbon brushes"], info: "تتآكل من الاحتكاك المستمر مع المبدّل، وهي سبب الشرر اللي تشوفه داخل الدريل." },
+  { cat: "علوم", d: 2, q: "في موتور التيار المستمر، وش اسم الجزء اللي يعكس اتجاه التيار في الملف كل نص لفة عشان يستمر الدوران؟", a: "المبدّل", alt: ["المبدل", "مبدل", "الكوميوتاتور", "كوميوتاتور", "Commutator", "عاكس التيار"], info: "بدونه الملف بيلف نص لفة ويوقف، لأن القوة بتنعكس وترجعه." },
+  { cat: "علوم", d: 1, q: "وش اسم الجزء الثابت في الموتور الكهربائي اللي يولّد المجال المغناطيسي؟", a: "العضو الثابت", alt: ["الثابت", "الجزء الثابت", "الستاتور", "ستاتور", "Stator"], info: "يقابله الدوّار (الروتور) اللي يلف داخله." },
+  { cat: "علوم", d: 2, q: "ليش قلوب الموتورات والمحولات تُصنع من رقائق حديد معزولة بدل قطعة وحدة مصمتة؟ عشان تقلل وش؟", a: "التيارات الدوامية", alt: ["الدوامية", "التيارات الدوامة", "تيارات إيدي", "تيارات فوكو", "Eddy currents", "Eddy current"], info: "التيارات الدوامية تدور داخل الحديد وتضيع على شكل حرارة، والعزل بين الرقائق يقطع طريقها." },
+  { cat: "علوم", d: 1, q: "وش وحدة قياس عزم الدوران؟", a: "نيوتن متر", alt: ["نيوتن.متر", "نيوتن-متر", "نيوتن م", "N·m", "Nm", "N.m"], info: "القوة مضروبة في بعدها عن محور الدوران، فمفتاح أطول يعطيك عزم أكبر بنفس القوة." },
+  { cat: "علوم", d: 2, q: "في المراوح والمكيفات ذات الطور الواحد، وش القطعة اللي تعطي الموتور عزم البداية، ولما تخرب يطنّ الموتور وما يدور؟", a: "المكثف", alt: ["مكثف", "المكثّف", "الكباستر", "كباستر", "كباسيتور", "كاباسيتور", "Capacitor"], info: "يزيح طور التيار في ملف التقويم فيصنع مجالًا دوارًا يبدأ فيه الموتور الحركة." },
+  { cat: "علوم", d: 2, q: "وش اسم القاعدة اللي تحدد اتجاه القوة على سلك يمر فيه تيار داخل مجال مغناطيسي؟", a: "قاعدة اليد اليسرى", alt: ["اليد اليسرى", "قاعدة فلمنج لليد اليسرى", "قاعدة فليمنج لليد اليسرى", "Fleming's left hand rule", "Left hand rule"], info: "السبابة للمجال، والوسطى للتيار، والإبهام لاتجاه الحركة. ولليد اليمنى قاعدة ثانية للمولدات." },
+  { cat: "علوم", d: 1, q: "مقاومة 1.5 أوم عليها جهد 3 فولت، كم التيار بالأمبير؟", a: "2 أمبير", alt: ["2", "٢", "2A", "2 امبير"], info: "من قانون أوم: التيار = الجهد ÷ المقاومة = 3 ÷ 1.5." },
+  { cat: "علوم", d: 2, q: "مقاومة 1 أوم عليها جهد 5 فولت، كم واط تستهلك؟", a: "25 واط", alt: ["25", "٢٥", "25W", "25 وات"], info: "التيار 5 أمبير، والقدرة = الجهد × التيار = 5 × 5، أو V² ÷ R." },
+  { cat: "علوم", d: 2, q: "أي نوع من الأشعة يستخدمه الفلكيون لرسم خرائط الغبار بين النجوم؟", a: "تحت الحمراء", alt: ["الأشعة تحت الحمراء", "تحت حمراء", "Infrared", "IR"], info: "الغبار الكوني يحجب الضوء المرئي، لكنه دافئ فيشع بالأشعة تحت الحمراء. وهذا تخصص تلسكوب جيمس ويب." },
+  { cat: "علوم", d: 1, q: "وش الكمية اللي تتساوى فيها كل الموجات الكهرومغناطيسية في الفراغ، من الراديو لأشعة غاما؟", a: "السرعة", alt: ["سرعة الضوء", "سرعتها", "Speed"], info: "كلها تمشي بسرعة الضوء، تقريبًا 300 ألف كم بالثانية، والفرق بينها في الطول الموجي والتردد بس." },
+  { cat: "علوم", d: 2, q: "وش اسم قيمة الجهد المتردد اللي تعطي نفس التسخين اللي يعطيه جهد مستمر بنفس الرقم؟", a: "القيمة الفعالة", alt: ["الفعالة", "القيمة الفعّالة", "RMS", "rms", "الجذر التربيعي لمتوسط المربعات"], info: "ولهذا لما نقول الشبكة 220 فولت نقصد القيمة الفعالة، والقمة الفعلية حوالي 311 فولت." },
+  { cat: "علوم", d: 2, q: "في الموجة الجيبية، القيمة الفعالة تساوي القيمة القصوى مضروبة في كم تقريبًا؟", a: "0.707", alt: ["٠٫٧٠٧", ".707", "0.71", "1/√2", "1 على جذر 2"], info: "تساوي 1 ÷ √2، وعكسها 1.414 يحوّل من الفعالة للقصوى." },
+  { cat: "علوم", d: 2, q: "في محول الرفع، أي ملف فيه لفات أكثر: الابتدائي ولا الثانوي؟", a: "الثانوي", alt: ["الملف الثانوي", "ثانوي", "Secondary"], info: "نسبة الجهد تساوي نسبة اللفات، فلفات أكثر في الثانوي تعني جهد خارج أعلى وتيار أقل." },
+  { cat: "علوم", d: 2, q: "تحلل نووي تخسر فيه النواة بروتونين ونيوترونين دفعة وحدة، وش اسمه؟", a: "تحلل ألفا", alt: ["ألفا", "الفا", "تحلل الفا", "اضمحلال ألفا", "Alpha", "Alpha decay"], info: "الجسيم الخارج هو نواة هيليوم، فينقص العدد الكتلي 4 والعدد الذري 2." },
+  { cat: "علوم", d: 2, q: "تحلل نووي يتحول فيه نيوترون إلى بروتون ويطلع منه إلكترون، وش اسمه؟", a: "بيتا السالب", alt: ["بيتا", "تحلل بيتا", "بيتا سالب", "Beta", "Beta minus", "β-"], info: "يصير في الأنوية اللي فيها نيوترونات زيادة، فيرتفع العدد الذري واحد ويبقى العدد الكتلي نفسه." },
+  { cat: "علوم", d: 2, q: "وش اسم تسلسل التحللات اللي تمر فيه نواة غير مستقرة لين توصل لنواة مستقرة؟", a: "سلسلة التحلل", alt: ["سلسلة التحلل الإشعاعي", "سلسلة الاضمحلال", "السلسلة الإشعاعية", "Decay chain"], info: "سلسلة اليورانيوم 238 مثلًا تمر بـ 14 تحلل قبل ما تنتهي بالرصاص 206." },
+  { cat: "علوم", d: 2, q: "في سلسلة التحلل، النظير اللي ينتج من تحلل نظير آخر وش يسمونه؟", a: "النظير الوليد", alt: ["الوليد", "النواة الوليدة", "البنت", "الابنة", "Daughter", "Daughter isotope"], info: "والنظير الأصلي يسمى «الأم»، والوليد ممكن يكون مشع بنفسه ويكمل السلسلة." },
+  { cat: "علوم", d: 2, q: "استقرار النواة يعتمد بشكل كبير على نسبة النيوترونات إلى وش؟", a: "البروتونات", alt: ["بروتونات", "البروتون", "Protons"], info: "الأنوية الخفيفة تستقر عند نسبة 1:1 تقريبًا، والثقيلة تحتاج نيوترونات أكثر عشان تعادل تنافر البروتونات." },
   { cat: "سيارات", d: 1, q: "ما الشركة صاحبة شعار الحلقات الأربع المتشابكة؟", a: "أودي", alt: ["Audi"], info: "الحلقات ترمز لأربع شركات اندمجت سنة 1932." },
   { cat: "سيارات", d: 1, q: "ما الشركة صاحبة شعار الثور الهائج؟", a: "لامبورغيني", alt: ["Lamborghini"], info: "المؤسس كان برجًا فلكيًا ثورًا ومحبًا لمصارعة الثيران." },
   { cat: "سيارات", d: 1, q: "ما الشركة الألمانية صاحبة شعار النجمة الثلاثية؟", a: "مرسيدس", alt: ["Mercedes", "مرسيدس بنز"], info: "الأطراف الثلاثة ترمز للبر والبحر والجو." },
@@ -4863,6 +4944,14 @@ const BANK = [
   { cat: "ماث", d: 2, q: "lim (x→0) (csc x − cot x) has the form ∞ − ∞. What should you do?", a: "Combine into one fraction, then apply L'Hôpital", opts: ["Combine into one fraction, then apply L'Hôpital", "Apply L'Hôpital directly", "Say the limit is 0", "Use the product rule"], info: "تصير (1 − cos x)/sin x، شكل 0/0 ونهايتها صفر." },
   { cat: "ماث", d: 2, q: "If L'Hôpital's rule gives a limit of ∞, the original limit is?", a: "Also ∞", opts: ["0", "Also ∞", "Undefined", "1"], info: "القاعدة تشمل النهايات اللانهائية بعد." },
   { cat: "ماث", d: 1, q: "As x → ∞, which grows faster: ln x or x?", a: "x", opts: ["ln x", "They grow equally", "x", "Neither grows"], info: "ln x بطيء جداً: حتى ln(مليون) تقريباً 14 بس." },
+  { cat: "ماث", d: 1, q: "What is the prime factorization of 60?", a: "2² × 3 × 5", opts: ["2² × 3 × 5", "2 × 3 × 5", "2² × 5", "2 × 3² × 5"], info: "60 = 4 × 15 = 2 × 2 × 3 × 5، وكل عدد له تحليل أولي واحد بس." },
+  { cat: "ماث", d: 1, q: "Which term describes a polygon with ALL sides AND angles equal?", a: "Regular", opts: ["Regular", "Irregular", "Equilateral", "Quadrilateral"], info: "Equilateral يعني الأضلاع بس. المعين أضلاعه متساوية لكن زواياه لا، فهو مو منتظم." },
+  { cat: "ماث", d: 1, q: "15 ÷ 3 × 2 + 5 = ?", a: "15", opts: ["20", "25", "15", "10"], info: "القسمة والضرب بنفس الأولوية من اليسار لليمين: 15 ÷ 3 = 5، × 2 = 10، + 5 = 15." },
+  { cat: "ماث", d: 1, q: "Factor completely: 9x² − 16", a: "(3x + 4)(3x − 4)", opts: ["(3x − 4)²", "(3x + 4)(3x − 4)", "(9x + 4)(x − 4)", "(3x + 8)(3x − 2)"], info: "فرق مربعين: a² − b² = (a + b)(a − b)، و9x² = (3x)² و16 = 4²." },
+  { cat: "ماث", d: 1, q: "A rectangle has sides x + 3 and x + 9. What is its area?", a: "x² + 12x + 27", opts: ["x² + 27", "4x + 24", "x² + 12x + 27", "x² + 12x + 12"], info: "(x + 3)(x + 9) = x² + 9x + 3x + 27. والخيار 4x + 24 هو المحيط مو المساحة." },
+  { cat: "ماث", d: 1, q: "A rectangle's area is x² + 8x + 12. If its length is x + 2, what is its width?", a: "x + 6", opts: ["x + 3", "x + 4", "x + 6", "x + 10"], info: "نبي عددين حاصل ضربهم 12 ومجموعهم 8، وهم 2 و6." },
+  { cat: "ماث", d: 2, q: "What is the missing factor? −7y + y² − 18 = (?)(y + 2)", a: "y − 9", opts: ["y + 9", "y − 6", "y − 7", "y − 9"], info: "رتبها أول: y² − 7y − 18. نبي عددين ضربهم −18 ومجموعهم −7، وهم −9 و2." },
+  { cat: "ماث", d: 2, q: "Factor completely: k² − 2k − 24", a: "(k + 4)(k − 6)", opts: ["(k + 4)(k − 6)", "(k + 4)(k + 6)", "(k + 6)(k − 1)", "(k − 4)(k + 6)"], info: "عددين ضربهم −24 ومجموعهم −2، وهم 4 و−6. والخيار (k − 4)(k + 6) يعطي +2k بالإشارة المعكوسة." },
 ];
 
 /* ---------- مولد الرياضيات ---------- */
@@ -5396,6 +5485,7 @@ export default function App() {
         answer: h.revealed ? h.tile.q.a : null,
         alt: h.revealed ? (h.tile.q.alt || []) : null,
         info: h.revealed ? (h.tile.q.info || null) : null,
+        aImg: h.revealed ? (h.tile.q.aImg || null) : null,
       } : null,
       puActive: h.puActive || {}, puLog: (h.puLog || []).slice(-4), restPid: h.restPid || null,
       pitOn: h.pitOn || [false, false],
@@ -5670,7 +5760,7 @@ export default function App() {
     const t = h.tile;
     h.board[t.ci].tiles[t.ti].state = "locked";
     h.reveal = {
-      cat: t.cat, pts: t.pts, qText: t.q.q, qSvg: t.q.svg || null, qImg: t.q.img || null,
+      cat: t.cat, pts: t.pts, qText: t.q.q, qSvg: t.q.svg || null, qImg: t.q.aImg || t.q.img || null, aImgOn: !!t.q.aImg,
       correctText: t.q.a, log: [...(h.stealLog || []), ...log], winner,
     };
     h.stealLog = null;
@@ -5807,7 +5897,7 @@ export default function App() {
     h.stageStart = Date.now();
     h.reveal = {
       grant: grantInfo,
-      correctText: q.a, qText: q.q, qSvg: q.svg || null, qImg: q.img || null, info: q.info || null, results, pts: effPts, event: ev || null,
+      correctText: q.a, qText: q.q, qSvg: q.svg || null, qImg: q.aImg || q.img || null, aImgOn: !!q.aImg, info: q.info || null, results, pts: effPts, event: ev || null,
       rolled: ev && ev.id === "roulette" ? effPts : null, steal: stealInfo,
     };
     h.phase = "reveal";
@@ -6965,7 +7055,9 @@ export default function App() {
         {muted && <div className="hiddenQ">🛑 استريح — ما تشارك بهذا السؤال</div>}
         <div className="card jCard">
           {b.svg && <div className="qImg" dangerouslySetInnerHTML={{ __html: b.svg }} />}
-          {b.img && <div className={"qPhoto" + (b.zoom ? " zoomed" : "")}><img src={b.img} alt=""
+          {b.aImg ? <div className="qPhoto"><img key={b.aImg} src={b.aImg} alt=""
+            onError={(ev) => { ev.currentTarget.parentElement.style.display = "none"; }} /></div>
+          : b.img && <div className={"qPhoto" + (b.zoom ? " zoomed" : "")}><img src={b.img} alt=""
             onError={(ev) => { ev.currentTarget.parentElement.style.display = "none"; }}
             style={b.zoom ? {
             transform: `scale(${b.zoom.s || 2})`,
@@ -7366,7 +7458,7 @@ export default function App() {
           {r.qImg && (
             <div className="qPhoto" style={{ marginBottom: 10 }}>
               <img src={r.qImg} alt="" onError={(ev) => { ev.currentTarget.parentElement.style.display = "none"; }} />
-              <span className="badge" style={{ display: "block", textAlign: "center", marginTop: 6 }}>الصورة كاملة</span>
+              {!r.aImgOn && <span className="badge" style={{ display: "block", textAlign: "center", marginTop: 6 }}>الصورة كاملة</span>}
             </div>
           )}
           <p style={{ color: "var(--dim)", fontSize: 14 }}>{r.qText}</p>
