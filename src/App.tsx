@@ -5344,6 +5344,263 @@ const Sadu = () => (
 );
 
 /* ============================================================ */
+
+/* ---------- صوتيات الاحتفال (WebAudio — بدون ملفات صوت) ---------- */
+let _ac: any = null;
+const sfxState = { on: true };
+const getAC = () => {
+  if (!sfxState.on || typeof window === "undefined") return null;
+  try {
+    if (!_ac) _ac = new ((window as any).AudioContext || (window as any).webkitAudioContext)();
+    if (_ac.state === "suspended") _ac.resume();
+    return _ac;
+  } catch (e) { return null; }
+};
+const _noiseBuf = (c, sec) => {
+  const b = c.createBuffer(1, Math.ceil(c.sampleRate * sec), c.sampleRate);
+  const d = b.getChannelData(0);
+  for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+  return b;
+};
+const _tone = (c, f, t, dur, type = "sine", vol = 0.2, f2 = 0) => {
+  const o = c.createOscillator(), g = c.createGain(), lp = c.createBiquadFilter();
+  lp.type = "lowpass"; lp.frequency.value = 3200;
+  o.type = type; o.frequency.setValueAtTime(f, t);
+  if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + dur);
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(vol, t + 0.015);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  o.connect(lp).connect(g).connect(c.destination);
+  o.start(t); o.stop(t + dur + 0.05);
+};
+const _noise = (c, t, dur, vol, type = "highpass", freq = 1000, attack = 0.005) => {
+  const s = c.createBufferSource(); s.buffer = _noiseBuf(c, dur + 0.1);
+  const f = c.createBiquadFilter(); f.type = type; f.frequency.value = freq;
+  const g = c.createGain();
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(vol, t + attack);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  s.connect(f).connect(g).connect(c.destination);
+  s.start(t); s.stop(t + dur + 0.1);
+};
+const SFX = {
+  // نقرة خفيفة تعلى نغمتها مع كل مركز
+  tick(i = 0) { const c = getAC(); if (!c) return; const t = c.currentTime; _tone(c, 480 + i * 45, t, 0.14, "triangle", 0.16); },
+  // ارتطام المنصة + رنة
+  thud(level = 0) {
+    const c = getAC(); if (!c) return; const t = c.currentTime;
+    _tone(c, 150, t, 0.4, "sine", 0.5, 45);
+    _noise(c, t, 0.09, 0.18, "lowpass", 1600);
+    _tone(c, 660 + level * 165, t + 0.07, 0.35, "triangle", 0.13);
+  },
+  // طبول تتصاعد
+  roll(sec = 2.2) {
+    const c = getAC(); if (!c) return; const t0 = c.currentTime; const n = Math.floor(sec * 24);
+    for (let i = 0; i < n; i++) { const k = i / n; _noise(c, t0 + i / 24, 0.05, 0.03 + 0.25 * k * k, "bandpass", 700 + 500 * k); }
+  },
+  // صنج + فانفير + جمهور + فرقعات
+  fanfare() {
+    const c = getAC(); if (!c) return; const t = c.currentTime;
+    _noise(c, t, 1.8, 0.28, "highpass", 4500, 0.002);
+    const n = [523.25, 659.25, 783.99, 1046.5];
+    n.forEach((f, i) => { _tone(c, f, t + i * 0.12, 0.24, "sawtooth", 0.1); _tone(c, f / 2, t + i * 0.12, 0.24, "square", 0.035); });
+    n.forEach((f) => _tone(c, f, t + 0.52, 1.7, "sawtooth", 0.05));
+    _tone(c, 261.63, t + 0.52, 1.8, "triangle", 0.14);
+    _noise(c, t + 0.35, 2.8, 0.1, "bandpass", 1300, 0.6);
+    [0.3, 0.5, 0.75, 1.05, 1.4].forEach((d) => _noise(c, t + d, 0.06, 0.22, "highpass", 2600));
+  },
+  whoosh() { const c = getAC(); if (!c) return; const t = c.currentTime; _noise(c, t, 0.35, 0.12, "bandpass", 1800, 0.12); _tone(c, 880, t + 0.05, 0.18, "triangle", 0.08, 1320); },
+};
+
+/* ---------- قصاصات وشرائط (Canvas) ---------- */
+function Confetti({ fire }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    if (!fire) return;
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const cv = ref.current; if (!cv) return;
+    const ctx = cv.getContext("2d");
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const resize = () => { cv.width = window.innerWidth * dpr; cv.height = window.innerHeight * dpr; };
+    resize(); window.addEventListener("resize", resize);
+    const W = () => cv.width / dpr, H = () => cv.height / dpr;
+    const cols = ["#FFB13D", "#33D6B0", "#E05561", "#F5F0E6", "#8B7CF6", "#FFD84D"];
+    const P: any[] = [];
+    const burst = (x, dir, n = 90) => {
+      for (let i = 0; i < n; i++) {
+        const a = -Math.PI / 2 + dir * (0.15 + Math.random() * 0.5);
+        const sp = 10 + Math.random() * 10;
+        P.push({ k: "p", x, y: H() + 10, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, w: 6 + Math.random() * 6, h: 9 + Math.random() * 9,
+          r: Math.random() * 6, vr: (Math.random() - 0.5) * 0.35, c: cols[i % cols.length], life: Math.random() * 20 });
+      }
+    };
+    const streamer = () => ({ k: "s", x: Math.random() * W(), y: -20 - Math.random() * 120, vy: 1.8 + Math.random() * 1.8,
+      len: 55 + Math.random() * 55, ph: Math.random() * 6, amp: 6 + Math.random() * 9, c: cols[Math.floor(Math.random() * cols.length)] });
+    burst(0, 1); burst(W(), -1);
+    const tms = [setTimeout(() => { burst(W() * 0.25, 1, 60); burst(W() * 0.75, -1, 60); }, 850)];
+    const t0 = performance.now();
+    let id = 0, spawned = 0;
+    const tick = (now) => {
+      const el = now - t0;
+      while (el < 5200 && spawned < el / 70) { P.push(streamer()); spawned++; }
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, W(), H());
+      for (let i = P.length - 1; i >= 0; i--) {
+        const p = P[i];
+        if (p.k === "p") {
+          p.life++; p.vx *= 0.985; p.vy = p.vy * 0.985 + 0.3; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+          ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r); ctx.scale(1, Math.cos(p.life * 0.18));
+          ctx.fillStyle = p.c; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); ctx.restore();
+        } else {
+          p.y += p.vy; p.ph += 0.09;
+          ctx.strokeStyle = p.c; ctx.lineWidth = 4; ctx.lineCap = "round"; ctx.beginPath();
+          for (let s = 0; s <= 12; s++) {
+            const yy = p.y - (s * p.len) / 12, xx = p.x + Math.sin(p.ph + s * 0.55) * p.amp;
+            if (s) ctx.lineTo(xx, yy); else ctx.moveTo(xx, yy);
+          }
+          ctx.stroke();
+        }
+        if (p.y > H() + 140) P.splice(i, 1);
+      }
+      if (P.length || el < 5200) id = requestAnimationFrame(tick);
+      else ctx.clearRect(0, 0, W(), H());
+    };
+    id = requestAnimationFrame(tick);
+    return () => { cancelAnimationFrame(id); tms.forEach(clearTimeout); window.removeEventListener("resize", resize); };
+  }, [fire]);
+  return <canvas ref={ref} className="confettiCv" aria-hidden="true" />;
+}
+
+function CountUp({ to, on, ms = 1000 }) {
+  const [v, setV] = useState(0);
+  useEffect(() => {
+    if (!on) { setV(0); return; }
+    let id = 0; const t0 = performance.now();
+    const f = (n) => { const k = Math.min(1, (n - t0) / ms); setV(Math.round(to * (1 - Math.pow(1 - k, 3)))); if (k < 1) id = requestAnimationFrame(f); };
+    id = requestAnimationFrame(f);
+    return () => cancelAnimationFrame(id);
+  }, [on, to]);
+  return <>{v}</>;
+}
+
+/* ---------- حفل النهاية: 10 ← 4 ثم المنصة 3 ← 2 ← طبول ← 1 ---------- */
+function FinalCeremony({ board, meId }) {
+  const top = board.slice(0, 10);
+  const rest = top.slice(3);
+  const R = rest.length;
+  const [step, setStep] = useState(0);
+  const [boom, setBoom] = useState(0);
+  const [muted, setMuted] = useState(!sfxState.on);
+  const tms = useRef([]);
+  const DONE = R + 4;
+  useEffect(() => {
+    const at = (ms, fn) => tms.current.push(setTimeout(fn, ms));
+    for (let k = 1; k <= R; k++) at(700 + (k - 1) * 480, () => { setStep(k); SFX.tick(k); });
+    const base = 700 + R * 480 + 450;
+    at(base, () => { setStep(R + 1); if (top[2]) SFX.thud(0); });
+    at(base + 1150, () => { setStep(R + 2); if (top[1]) SFX.thud(1); });
+    at(base + 2100, () => { setStep(R + 3); SFX.roll(2.3); });
+    at(base + 4500, () => { setStep(DONE); setBoom((b) => b + 1); SFX.fanfare(); });
+    return () => tms.current.forEach(clearTimeout);
+  }, []);
+  const skip = () => { tms.current.forEach(clearTimeout); tms.current = []; setStep(DONE); setBoom((b) => b + 1); };
+  const toggleMute = () => { sfxState.on = !sfxState.on; setMuted(!sfxState.on); };
+  const done = step >= DONE;
+  const podOn = [step >= DONE, step >= R + 2, step >= R + 1]; // 1st, 2nd, 3rd
+  const rolling = step === R + 3;
+  const myRank = board.findIndex((p) => p.pid === meId);
+  const winner = top[0];
+  const order = [1, 0, 2]; // يمين→يسار بالـRTL: الثاني، الأول، الثالث
+  const nums = ["١", "٢", "٣"];
+  return (
+    <div className={"fin" + (done ? " done" : "")}>
+      <Confetti fire={boom} />
+      <div className="finHead">
+        <div className="finKick">النتائج النهائية</div>
+        <h2 className="disp finTitle" aria-live="polite">
+          {done && winner ? <>البطل: <span className="finWin">{winner.name}</span></> : rolling ? "والمركز الأول…" : "مين بطل الجولة؟"}
+        </h2>
+      </div>
+
+      <div className="stage">
+        <div className="beams" aria-hidden="true" />
+        {order.map((r) => {
+          const p = top[r];
+          if (!p) return <div className="pcol empty" key={"e" + r} />;
+          const on = podOn[r];
+          return (
+            <div key={p.pid} className={"pcol r" + (r + 1) + (on ? " up" : "") + (r === 0 && rolling ? " roll" : "") + (p.pid === meId ? " me" : "")}>
+              <div className="who">
+                {r === 0 && <div className="crown" aria-hidden="true">👑</div>}
+                <div className="ava">{(p.name || "?").trim().charAt(0)}</div>
+                <div className="pname">{p.name}{p.pid === meId ? " (أنت)" : ""}</div>
+                <div className="pscore"><CountUp to={p.score} on={on} /> <small>نقطة</small></div>
+              </div>
+              <div className="slot">
+                <div className="qmark" aria-hidden="true">?</div>
+                <div className="block"><span className="bnum">{nums[r]}</span></div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {R > 0 && (
+        <div className="frows">
+          {rest.map((p, j) => {
+            const on = step >= R - j;
+            const pct = winner && winner.score > 0 ? Math.max(0.04, Math.min(1, p.score / winner.score)) : 0.04;
+            return (
+              <div key={p.pid} className={"frow" + (on ? " on" : "") + (p.pid === meId ? " me" : "")}>
+                <span className="frk">{j + 4}</span>
+                <span className="fnm">{p.name}{p.pid === meId ? " (أنت)" : ""}</span>
+                <span className="fbar"><i style={{ transform: "scaleX(" + pct + ")" }} /></span>
+                <span className="fsc">{p.score}</span>
+              </div>
+            );
+          })}
+        </div>
+      )}
+      {board.length > 10 && done && <div className="fmore">+{board.length - 10} لاعب بعد التوب 10</div>}
+      {done && myRank >= 10 && <div className="fmine">مركزك: #{myRank + 1} — {board[myRank].score} نقطة</div>}
+
+      <div className="finCtl">
+        {!done ? <button className="chipBtn" onClick={skip}>تخطّي ⏭</button>
+          : <button className="chipBtn" onClick={() => { setBoom((b) => b + 1); SFX.fanfare(); }}>احتفل مرة ثانية 🎉</button>}
+        <button className="chipBtn" onClick={toggleMute} aria-pressed={muted}>{muted ? "🔇 الصوت مقفل" : "🔊 الصوت"}</button>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- التوب 10 أثناء اللعبة (الهوست يعرضه للكل) ---------- */
+function TopTenOverlay({ board, meId, isHost, onClose }) {
+  useEffect(() => { SFX.whoosh(); }, []);
+  const top = board.slice(0, 10);
+  const lead = top[0] && top[0].score > 0 ? top[0].score : 1;
+  const myRank = board.findIndex((p) => p.pid === meId);
+  return (
+    <div className="t10" role="dialog" aria-modal="true" aria-label="التوب 10">
+      <div className="t10card">
+        <div className="t10head">
+          <span className="disp t10title">التوب 10</span>
+          {isHost && <button className="chipBtn" onClick={onClose}>إخفاء ✕</button>}
+        </div>
+        {top.map((p, i) => (
+          <div key={p.pid} className={"t10row" + (i < 3 ? " m" + (i + 1) : "") + (p.pid === meId ? " me" : "")} style={{ animationDelay: i * 60 + "ms" }}>
+            <span className="t10rk">{i + 1}</span>
+            <span className="t10nm">{p.name}{p.pid === meId ? " (أنت)" : ""}</span>
+            <span className="t10bar"><i style={{ transform: "scaleX(" + Math.max(0.04, Math.min(1, p.score / lead)) + ")", animationDelay: 120 + i * 60 + "ms" }} /></span>
+            <span className="t10sc">{p.score}</span>
+          </div>
+        ))}
+        {myRank >= 10 && <div className="t10mine">مركزك: #{myRank + 1} — {board[myRank].score} نقطة</div>}
+        {!isHost && <p className="t10wait">الهوست يكمّل اللعبة…</p>}
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   const [screen, setScreen] = useState("home");
   const [role, setRole] = useState(null);
@@ -5634,6 +5891,7 @@ export default function App() {
         info: h.revealed ? (h.tile.q.info || null) : null,
         aImg: h.revealed ? (h.tile.q.aImg || null) : null,
       } : null,
+      showTop: !!h.showTop,
       puActive: h.puActive || {}, puLog: (h.puLog || []).slice(-4), restPid: h.restPid || null,
       pitOn: h.pitOn || [false, false],
       updatedAt: Date.now(),
@@ -5677,7 +5935,7 @@ export default function App() {
           }
           if (a.name) h.players[a.pid].name = a.name;
           h.seen[a.pid] = Date.now();
-          if (a.ans && a.ans.q === h.qIndex && !(a.pid in h.answers)) {
+          if (a.ans && a.ans.q === h.qIndex && h.phase === "question" && !(a.pid in h.answers)) {
             h.answers[a.pid] = { text: a.ans.text, ms: a.ans.ms || 0 };
           }
           if (a.vote && a.vote.q === h.qIndex && a.vote.cat) {
@@ -5730,7 +5988,7 @@ export default function App() {
           if (mayCloseEarly || timeUp) { await closeQuestion(); busy = false; return; }
         }
         // انتقال تلقائي عشان ما ينتظر أحد الهوست
-        if (h.autoNext !== false && h.phase === "reveal" && Date.now() - (h.stageStart || 0) > REVEAL_SEC * 1000) {
+        if (h.autoNext !== false && h.phase === "reveal" && !h.showTop && Date.now() - (h.stageStart || 0) > REVEAL_SEC * 1000) {
           await advanceTo(h.qIndex + 1); busy = false; return;
         }
         if (h.autoNext !== false && h.phase === "intro" && Date.now() - (h.stageStart || 0) > INTRO_SEC * 1000) {
@@ -6072,11 +6330,21 @@ export default function App() {
     rerender();
   }
 
+  async function toggleTop() {
+    const h = hostRef.current;
+    if (!h) return;
+    h.showTop = !h.showTop;
+    if (!h.showTop) h.stageStart = Date.now(); // يرجع عداد الانتقال من جديد
+    await broadcast();
+    rerender();
+  }
+
   async function advanceTo(idx) {
     const h = hostRef.current;
     if (!h) return;
     h.reveal = null;
     h.currentEvent = null;
+    h.showTop = false;
     if (idx >= h.total) {
       h.phase = "end";
       await broadcast();
@@ -6715,6 +6983,116 @@ export default function App() {
       font-size:11px; cursor:pointer; font-family:'Rubik',sans-serif; z-index:30;}
     .egg:hover{opacity:.9;}
     select.inp{appearance:none;}
+    /* ===== حفل النهاية ===== */
+    .fz{--ease-out:cubic-bezier(0.23,1,0.32,1); --ease-in-out:cubic-bezier(0.77,0,0.175,1);
+      --gold:linear-gradient(165deg,#FFE58A 0%,#FFC53D 38%,#E0951A 72%,#A8650B 100%);
+      --silver:linear-gradient(165deg,#FFFFFF 0%,#D3D3E2 40%,#9C9CB4 75%,#6E6E86 100%);
+      --bronze:linear-gradient(165deg,#F7C08E 0%,#D4874A 40%,#A55E27 75%,#6B3812 100%);}
+    .confettiCv{position:fixed; inset:0; width:100vw; height:100vh; pointer-events:none; z-index:60;}
+    .fin{position:relative; padding-top:18px;}
+    .finHead{text-align:center;}
+    .finKick{font-size:13px; letter-spacing:2px; color:var(--dim); font-weight:700;}
+    .finTitle{font-size:34px; margin-top:4px; min-height:48px; transition:transform .3s var(--ease-out);}
+    .finWin{color:var(--amber); text-shadow:0 0 24px rgba(255,177,61,.45);}
+    .stage{position:relative; display:flex; align-items:flex-end; justify-content:center; gap:10px;
+      margin:26px auto 0; max-width:440px; padding:0 4px; isolation:isolate;}
+    .stage::after{content:""; position:absolute; inset:auto -10px -6px; height:14px; border-radius:50%;
+      background:radial-gradient(closest-side,rgba(0,0,0,.55),transparent); z-index:-1;}
+    .beams{position:absolute; left:50%; bottom:40px; width:520px; height:520px; margin-left:-260px; z-index:-2;
+      border-radius:50%; opacity:0; transform:scale(.9);
+      background:repeating-conic-gradient(from 0deg, rgba(255,197,61,.20) 0deg 9deg, transparent 9deg 24deg);
+      -webkit-mask:radial-gradient(closest-side,#000 25%,transparent 72%); mask:radial-gradient(closest-side,#000 25%,transparent 72%);
+      transition:opacity .9s var(--ease-out), transform .9s var(--ease-out);}
+    .fin.done .beams{opacity:1; transform:scale(1); animation:beamSpin 22s linear infinite;}
+    @keyframes beamSpin{to{rotate:360deg;}}
+    .pcol{flex:1; max-width:136px; min-width:0; display:flex; flex-direction:column; align-items:center;}
+    .pcol.empty{visibility:hidden;}
+    .who{position:relative; text-align:center; width:100%; margin-bottom:10px;
+      opacity:0; transform:translateY(12px) scale(.96);
+      transition:opacity .45s var(--ease-out) .35s, transform .45s var(--ease-out) .35s;}
+    .pcol.up .who{opacity:1; transform:none;}
+    .ava{width:52px; height:52px; margin:0 auto 6px; border-radius:50%; display:grid; place-items:center;
+      font-family:'Lalezar',cursive; font-size:26px; color:var(--bg); border:3px solid var(--sur);
+      box-shadow:0 6px 18px rgba(0,0,0,.4);}
+    .r1 .ava{width:66px; height:66px; font-size:34px; background:var(--gold); box-shadow:0 0 0 3px rgba(255,197,61,.35),0 8px 26px rgba(255,177,61,.35);}
+    .r2 .ava{background:var(--silver);} .r3 .ava{background:var(--bronze);}
+    .pname{font-weight:700; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding:0 2px;}
+    .r1 .pname{font-size:17px; color:var(--amber);}
+    .pscore{font-family:'Lalezar',cursive; font-size:22px; line-height:1.1; font-variant-numeric:tabular-nums;}
+    .pscore small{font-family:'Rubik',sans-serif; font-size:11px; color:var(--dim);}
+    .pcol.me .pname::after{content:""; display:block; height:2px; margin:3px auto 0; width:28px; border-radius:2px; background:var(--teal);}
+    .crown{position:absolute; top:-30px; left:50%; font-size:30px; translate:-50% 0; opacity:0; transform:translateY(-26px) rotate(-14deg);}
+    .fin.done .r1 .crown{animation:crownDrop .7s cubic-bezier(0.34,1.56,0.64,1) .55s both;}
+    @keyframes crownDrop{from{opacity:0; transform:translateY(-26px) rotate(-14deg);} to{opacity:1; transform:translateY(0) rotate(-8deg);}}
+    .slot{position:relative; width:100%; overflow:hidden; border-radius:14px 14px 0 0;}
+    .r1 .slot{height:190px;} .r2 .slot{height:140px;} .r3 .slot{height:104px;}
+    .block{position:absolute; inset:0; border-radius:14px 14px 0 0; display:flex; justify-content:center; padding-top:14px;
+      transform:translateY(101%); transition:transform .75s var(--ease-out);
+      box-shadow:inset 0 2px 0 rgba(255,255,255,.55), inset 0 -18px 30px rgba(0,0,0,.28), 0 -6px 30px rgba(0,0,0,.35);}
+    .block::before{content:""; position:absolute; inset:0 0 auto; height:16px; border-radius:14px 14px 0 0;
+      background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,0));}
+    .block::after{content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+      background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);
+      transform:translateX(-120%);}
+    .fin.done .r1 .block::after{animation:shine 1.6s var(--ease-in-out) 1s 2;}
+    @keyframes shine{to{transform:translateX(120%);}}
+    .r1 .block{background:var(--gold);} .r2 .block{background:var(--silver);} .r3 .block{background:var(--bronze);}
+    .pcol.up .block{transform:translateY(0);}
+    .bnum{font-family:'Lalezar',cursive; font-size:58px; line-height:1; color:rgba(0,0,0,.28);
+      text-shadow:0 1px 0 rgba(255,255,255,.55);}
+    .r1 .bnum{font-size:76px;}
+    .qmark{position:absolute; inset:0; display:grid; place-items:center; font-family:'Lalezar',cursive; font-size:54px;
+      color:var(--line); border:2px dashed var(--line); border-bottom:none; border-radius:14px 14px 0 0;
+      transition:opacity .3s var(--ease-out);}
+    .pcol.up .qmark{opacity:0;}
+    .pcol.roll .qmark{color:var(--amber); border-color:var(--amber); animation:qPulse .5s ease-in-out infinite alternate;}
+    @keyframes qPulse{from{opacity:.45; transform:scale(.97);} to{opacity:1; transform:scale(1.03);}}
+    .frows{margin:18px auto 0; max-width:440px; display:flex; flex-direction:column; gap:7px;}
+    .frow{display:grid; grid-template-columns:34px 1fr 74px auto; align-items:center; gap:10px;
+      background:var(--sur); border:1px solid var(--line); border-radius:12px; padding:9px 12px;
+      opacity:0; transform:translateY(10px); transition:opacity .35s var(--ease-out), transform .35s var(--ease-out);}
+    .frow.on{opacity:1; transform:none;}
+    .frow.me{border-color:var(--teal); box-shadow:0 0 0 1px var(--teal) inset;}
+    .frk{font-family:'Lalezar',cursive; font-size:20px; color:var(--dim); text-align:center;}
+    .fnm{font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+    .fbar,.t10bar{height:6px; border-radius:6px; background:var(--sur2); overflow:hidden;}
+    .fbar i,.t10bar i{display:block; height:100%; border-radius:6px; background:var(--teal); transform-origin:right center;}
+    .fsc{font-family:'Lalezar',cursive; font-size:18px; min-width:34px; text-align:left; font-variant-numeric:tabular-nums;}
+    .fmore,.fmine{text-align:center; color:var(--dim); font-size:13px; margin-top:10px;}
+    .fmine{color:var(--teal); font-weight:700; font-size:15px;}
+    .finCtl{display:flex; gap:8px; justify-content:center; margin-top:16px; flex-wrap:wrap;}
+    .chipBtn{background:var(--sur2); color:var(--sand); border:1px solid var(--line); border-radius:999px;
+      padding:8px 14px; font-family:'Rubik',sans-serif; font-size:13px; font-weight:700; cursor:pointer;
+      transition:transform .14s var(--ease-out), background-color .2s ease;}
+    .chipBtn:active{transform:scale(.97);}
+    @media (hover:hover) and (pointer:fine){ .chipBtn:hover{background:var(--line);} }
+    /* ===== التوب 10 ===== */
+    .t10{position:fixed; inset:0; z-index:45; display:grid; place-items:center; padding:16px;
+      background:rgba(18,16,26,.86); backdrop-filter:blur(6px); animation:t10In .2s var(--ease-out) both;}
+    @keyframes t10In{from{opacity:0;}to{opacity:1;}}
+    .t10card{width:100%; max-width:460px; max-height:92vh; overflow:auto; background:var(--sur);
+      border:1px solid var(--line); border-radius:20px; padding:16px; box-shadow:0 24px 60px rgba(0,0,0,.5);
+      animation:t10Card .28s var(--ease-out) both;}
+    @keyframes t10Card{from{opacity:0; transform:translateY(12px) scale(.97);}to{opacity:1; transform:none;}}
+    .t10head{display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;}
+    .t10title{font-size:28px; color:var(--amber);}
+    .t10row{display:grid; grid-template-columns:34px 1fr 70px auto; gap:10px; align-items:center;
+      padding:9px 10px; border-radius:12px; background:var(--sur2); margin-top:6px;
+      animation:t10Row .3s var(--ease-out) both;}
+    @keyframes t10Row{from{opacity:0; transform:translateY(8px);}to{opacity:1; transform:none;}}
+    .t10bar i{animation:t10Bar .6s var(--ease-out) both;}
+    @keyframes t10Bar{from{scale:0 1;}}
+    .t10rk{font-family:'Lalezar',cursive; font-size:20px; text-align:center; color:var(--dim);}
+    .t10row.m1 .t10rk,.t10row.m2 .t10rk,.t10row.m3 .t10rk{color:var(--bg); border-radius:8px; line-height:30px;}
+    .t10row.m1 .t10rk{background:var(--gold);} .t10row.m2 .t10rk{background:var(--silver);} .t10row.m3 .t10rk{background:var(--bronze);}
+    .t10row.m1{box-shadow:inset 0 0 0 1px rgba(255,197,61,.45);}
+    .t10row.me{box-shadow:inset 0 0 0 1.5px var(--teal);}
+    .t10nm{font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+    .t10sc{font-family:'Lalezar',cursive; font-size:19px; min-width:34px; text-align:left; font-variant-numeric:tabular-nums;}
+    .t10mine{text-align:center; color:var(--teal); font-weight:700; margin-top:12px;}
+    .t10wait{text-align:center; color:var(--dim); font-size:13px; margin-top:12px;}
+    @media (max-width:380px){ .r1 .slot{height:160px;} .r2 .slot{height:118px;} .r3 .slot{height:88px;} .bnum{font-size:46px;} .r1 .bnum{font-size:60px;} .finTitle{font-size:28px;} }
+    @media (prefers-reduced-motion: reduce){ .fz .block,.fz .who,.fz .frow{transition:opacity .2s ease!important;} .fz .block{transform:none;} .fz .pcol:not(.up) .block{opacity:0;} .beams{display:none;} }
     @media (prefers-reduced-motion: reduce){ .fz *{animation:none!important; transition:none!important;} }
   `;
 
@@ -7647,6 +8025,7 @@ export default function App() {
           const left = view.autoNext ? Math.max(0, Math.ceil(REVEAL_SEC - (Date.now() - (view.stageStart || 0)) / 1000)) : null;
           return role === "host" ? (
             <div style={{ marginTop: 14 }}>
+              <button className="btn btn-ghost" style={{ marginBottom: 10 }} onClick={toggleTop}>🏆 اعرض التوب 10 للكل</button>
               <button className="btn btn-red" onClick={() => advanceTo(view.qIndex + 1)}>
                 {view.qIndex + 1 >= view.total ? "النتيجة النهائية 🏆" : `كمّل ← ${left !== null ? "(" + left + ")" : ""}`}
               </button>
@@ -7661,52 +8040,18 @@ export default function App() {
     );
   };
 
-  const End = () => {
-    const b = view.board;
-    const pod = [b[1], b[0], b[2]];
-    const heights = [90, 130, 65];
-    const colors = ["#B8B8C8", "var(--amber)", "#C98B4E"];
-    const medals = ["🥈", "🥇", "🥉"];
-    const winner = b[0];
-    return (
-      <div className="wrap">
-        <h2 className="disp" style={{ fontSize: 34, textAlign: "center", marginTop: 20 }}>خلصت اللعبة! 🏁</h2>
-        {winner && (
-          <div className="evBanner" style={{ justifyContent: "center", fontSize: 18, marginTop: 14, background: "#1E3320", borderColor: "var(--teal)", color: "var(--teal)" }}>
-            🏆 {winner.name} يفوز بـ {winner.score} نقطة!
-          </div>
-        )}
-        <Sadu />
-        <div className="podium">
-          {pod.map((p, i) => p ? (
-            <div className="pod" key={p.pid}>
-              <div style={{ fontSize: 28 }}>{medals[i]}</div>
-              <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 6, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.name}</div>
-              <div className="podBar" style={{ height: heights[i], background: colors[i] }}>{p.score}</div>
-            </div>
-          ) : <div className="pod" key={i} />)}
+  const End = () => (
+    <div className="wrap">
+      <FinalCeremony board={view.board} meId={me.pid} />
+      {role === "host" && (
+        <div style={{ marginTop: 20 }}>
+          <button className="btn btn-red" onClick={playAgain}>جولة ثانية 🔄</button>
         </div>
-        <div className="card" style={{ marginTop: 12 }}>
-          <b style={{ fontSize: 15 }}>📊 الترتيب النهائي</b>
-          <div className="plist">
-            {b.map((p, i) => (
-              <div className="prow" key={p.pid} style={{ marginTop: 8, borderInlineStart: i === 0 ? "4px solid var(--amber)" : "4px solid transparent" }}>
-                <span>{i === 0 ? "👑 " : (i + 1) + ". "}{p.name}</span>
-                <span className="ptsTile" style={{ fontSize: 18, padding: "0 10px" }}>{p.score}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-        {role === "host" && (
-          <div style={{ marginTop: 20 }}>
-            <button className="btn btn-red" onClick={playAgain}>جولة ثانية 🔄</button>
-          </div>
-        )}
-        <div style={{ height: 10 }} />
-        <button className="btn btn-ghost" onClick={leaveGame}>الرئيسية</button>
-      </div>
-    );
-  };
+      )}
+      <div style={{ height: 10 }} />
+      <button className="btn btn-ghost" onClick={leaveGame}>الرئيسية</button>
+    </div>
+  );
 
   return (
     <div className="fz">
@@ -7731,6 +8076,9 @@ export default function App() {
       )}
       {loading && (
         <div className="overlay"><div className="spin" /><div>{loading}</div></div>
+      )}
+      {screen === "game" && view && view.showTop && view.phase !== "end" && view.board && (
+        <TopTenOverlay board={view.board} meId={me.pid} isHost={role === "host"} onClose={toggleTop} />
       )}
       {toast && <div className="toast">{toast}</div>}
       <button className="egg" onClick={() => setToast("عم عبدالله يقول: بلن 😌")}>بلن عم عبدالله</button>
