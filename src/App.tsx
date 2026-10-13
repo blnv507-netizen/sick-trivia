@@ -7297,8 +7297,206 @@ function TopTenOverlay({ board, meId, isHost, onClose }) {
   );
 }
 
+const QUICK_COUNTS = [4, 6, 8];
+const QPER = 6;
+
+function buildQuickRound(cats) {
+  const out = [];
+  for (const c of cats) {
+    if (c === "رياضيات") {
+      for (let i = 0; i < QPER; i++) out.push(genMathQ(i < 2 ? 1 : i < 4 ? 2 : 3));
+      continue;
+    }
+    const pool = BANK.filter((x) => x.cat === c);
+    const used = new Set();
+    const picked = [];
+    while (picked.length < QPER && used.size < pool.length) {
+      const i = Math.floor(Math.random() * pool.length);
+      if (used.has(i)) continue;
+      used.add(i);
+      picked.push(pool[i]);
+    }
+    picked.sort((x, y) => (x.d || 1) - (y.d || 1));
+    out.push(...picked);
+  }
+  return out;
+}
+
+function QuickSetup({ onStart, onExit }) {
+  const [count, setCount] = useState(6);
+  const [sel, setSel] = useState([]);
+  const all = CATS.filter((c) => (CAT_INFO[c] || {}).img);
+
+  const toggle = (c) =>
+    setSel((p) => (p.includes(c) ? p.filter((x) => x !== c) : p.length >= count ? p : p.concat(c)));
+
+  const randomise = () => {
+    const pool = all.slice();
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+    setSel(pool.slice(0, count));
+  };
+
+  const ready = sel.length === count;
+
+  return (
+    <div className="home">
+      <div className="hBar"><button className="qBack" onClick={onExit}>← رجوع</button></div>
+
+      <div className="qHead">
+        <h1 className="qTitle">اللعب السريع</h1>
+        <p className="qSub"><span>لاعب واحد على هذا الجهاز</span><span>{QPER} أسئلة لكل فئة</span></p>
+      </div>
+
+      <div className="qBar">
+        <div className="qCounts">
+          <span className="qCountsL">كم فئة؟</span>
+          {QUICK_COUNTS.map((n) => (
+            <button key={n} className={"qCount" + (count === n ? " on" : "")}
+              onClick={() => { setCount(n); setSel((p) => p.slice(0, n)); }}>{n}</button>
+          ))}
+        </div>
+        <button className="qRand" onClick={randomise}>🎲 عشوائي</button>
+      </div>
+
+      <div className="qMeta">
+        <span className={ready ? "qOk" : ""}>اخترت <b>{sel.length}</b> من <b>{count}</b></span>
+        <span className="qDot" aria-hidden="true" />
+        <span>{count * QPER} سؤال</span>
+        {sel.length > 0 && <button className="qClear" onClick={() => setSel([])}>امسح</button>}
+      </div>
+
+      <div className="qGrid">
+        {all.map((c) => {
+          const on = sel.includes(c);
+          return (
+            <button key={c} aria-pressed={on}
+              className={"qCard" + (on ? " on" : "") + (!on && sel.length >= count ? " off" : "")}
+              onClick={() => toggle(c)}>
+              <img src={CAT_INFO[c].img} alt="" loading="lazy" decoding="async" />
+              <span className="qCardN">{c}</span>
+              {on && <span className="qTick">✓</span>}
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="qStartWrap">
+        <button className="qStart" disabled={!ready} onClick={() => onStart(sel)}>
+          {ready ? "ابدأ — " + count * QPER + " سؤال" : "اختر " + (count - sel.length) + " فئة بعد"}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function QuickPlay({ cats, onDone, onExit }) {
+  const qs = React.useMemo(() => buildQuickRound(cats), [cats]);
+  const [i, setI] = useState(0);
+  const [typed, setTyped] = useState("");
+  const [state, setState] = useState("ask");
+  const [score, setScore] = useState(0);
+  const [hits, setHits] = useState(0);
+  const inputRef = useRef(null);
+
+  const cur = qs[i];
+  const last = i >= qs.length - 1;
+
+  useEffect(() => {
+    if (state === "ask" && cur && !cur.opts && inputRef.current) inputRef.current.focus();
+  }, [i, state, cur]);
+
+  if (!cur) return null;
+
+  const settle = (ok) => {
+    if (state !== "ask") return;
+    setState(ok ? "right" : "wrong");
+    if (ok) { setScore((v) => v + (PTS[cur.d] || 200)); setHits((v) => v + 1); }
+  };
+
+  const next = () => {
+    if (last) { onDone({ score, hits, total: qs.length }); return; }
+    setI((v) => v + 1); setTyped(""); setState("ask");
+  };
+
+  return (
+    <div className="qPlay">
+      <div className="qPbar"><i style={{ width: ((i + (state === "ask" ? 0 : 1)) / qs.length) * 100 + "%" }} /></div>
+
+      <div className="qTop">
+        <button className="qBack" onClick={onExit} aria-label="خروج">✕</button>
+        <span className="qProg">السؤال <b>{i + 1}</b> من <b>{qs.length}</b></span>
+        <span className="qScore">{score}</span>
+      </div>
+
+      <div className="qStage">
+        <div className="qCatRow">
+          {(CAT_INFO[cur.cat] || {}).img && <img className="qCatImg" src={CAT_INFO[cur.cat].img} alt="" />}
+          <div>
+            <div className="qCatName">{cur.cat}</div>
+            <div className="qDiff"><span>{DLBL[cur.d] || "سهل"}</span><span>{PTS[cur.d] || 200} نقطة</span></div>
+          </div>
+        </div>
+
+        <p className="qQ">{cur.q}</p>
+
+        {state === "ask" && (cur.opts ? (
+          <div className="qOpts">
+            {cur.opts.map((o) => (
+              <button key={o} className="qOpt" onClick={() => settle(norm(o) === norm(cur.a))}>{o}</button>
+            ))}
+          </div>
+        ) : (
+          <form className="qForm" onSubmit={(e) => { e.preventDefault(); if (typed.trim()) settle(localJudge(typed, cur.a, cur.alt)); }}>
+            <input ref={inputRef} className="qInput" value={typed} autoComplete="off"
+              onChange={(e) => setTyped(e.target.value)} placeholder="اكتب جوابك…" />
+            <div className="qFormBtns">
+              <button className="qSend" type="submit" disabled={!typed.trim()}>تأكيد</button>
+              <button className="qSkip" type="button" onClick={() => settle(false)}>ما أدري</button>
+            </div>
+          </form>
+        ))}
+
+        {state !== "ask" && (
+          <div className={"qVerdict " + state}>
+            <b>{state === "right" ? "صح ✓" : "غلط ✕"}</b>
+            <div className="qAns">الجواب: <span>{cur.a}</span></div>
+            {cur.info && <p className="qInfo">{cur.info}</p>}
+            <button className="qNext" onClick={next} autoFocus>{last ? "النتيجة" : "التالي ←"}</button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function QuickDone({ result, onAgain, onHome }) {
+  const r = result || { score: 0, hits: 0, total: 1 };
+  const pct = Math.round((r.hits / Math.max(1, r.total)) * 100);
+  const line = pct >= 80 ? "وحش 🔥" : pct >= 55 ? "زين 👌" : pct >= 30 ? "مو بطال" : "محتاج تمرين 😅";
+  return (
+    <div className="home">
+      <section className="hHero qDoneHero">
+        <div className="hHeroIn">
+          <div className="qDoneK">{line}</div>
+          <div className="hLogo">{r.score}</div>
+          <p className="hTag">{r.hits} من {r.total} صح — {pct}٪</p>
+          <div className="hCtas">
+            <button className="hBtn hSolid" onClick={onAgain}>جولة ثانية</button>
+            <button className="hBtn hLine" onClick={onHome}>الرئيسية</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
 function App({ acc }) {
   const [screen, setScreen] = useState("home");
+  const [quickCats, setQuickCats] = useState([]);
+  const [quickResult, setQuickResult] = useState(null);
   const [role, setRole] = useState(null);
   const [me, setMe] = useState({ pid: genPid(), name: "" });
   const [code, setCode] = useState("");
@@ -8961,6 +9159,160 @@ function App({ acc }) {
       .hReelTrack{animation:none; transform:none;}
       .hMode:hover{transform:none;}
     }
+
+
+    /* ==========================================================
+       اللعب السريع
+       ========================================================== */
+    .hMode3{border-top-color:var(--amber);}
+    .hMode3 .hGo{color:var(--amber);}
+    @media(min-width:760px){ .hModes{grid-template-columns:repeat(3,1fr);} }
+
+    .qBack{font-family:inherit; font-size:14px; font-weight:600; cursor:pointer;
+      background:var(--sur); color:var(--sand); border:1px solid var(--line);
+      border-radius:999px; padding:9px 18px; transition:border-color .15s ease;}
+    .qBack:hover{border-color:var(--amber);}
+
+    .qHead{text-align:center; padding:10px 18px 0;}
+    .qTitle{font-family:'Lalezar',cursive; font-weight:400; color:var(--sand);
+      font-size:clamp(32px,8vw,52px); line-height:1.1; margin:0;}
+    .qSub{color:var(--dim); font-size:15px; margin:8px 0 0;}
+
+    .qBar{display:flex; flex-wrap:wrap; gap:12px; justify-content:center; align-items:center;
+      margin:22px auto 0; padding:0 18px;}
+    .qCounts{display:flex; align-items:center; gap:7px; background:var(--sur);
+      border:1px solid var(--line); border-radius:999px; padding:6px 8px 6px 16px;}
+    .qCountsL{font-size:13.5px; color:var(--dim);}
+    .qCount{font-family:'Lalezar',cursive; font-size:19px; cursor:pointer; min-width:42px;
+      height:38px; border-radius:999px; border:0; background:var(--sur2); color:var(--sand);
+      transition:background .15s ease, color .15s ease;}
+    .qCount:hover{background:var(--line);}
+    .qCount.on{background:var(--amber); color:#fff;}
+    .qRand{font-family:inherit; font-size:14.5px; font-weight:700; cursor:pointer;
+      background:var(--sur); color:var(--sand); border:1px solid var(--line);
+      border-radius:999px; padding:11px 20px; transition:border-color .15s ease;}
+    .qRand:hover{border-color:var(--teal);}
+
+    .qMeta{display:flex; gap:10px; justify-content:center; align-items:center; flex-wrap:wrap;
+      margin-top:16px; font-size:13.5px; color:var(--dim);}
+    .qMeta .qOk{color:var(--teal); font-weight:700;}
+    .qDot{opacity:.45;}
+    .qClear{font-family:inherit; font-size:13px; cursor:pointer; background:none;
+      border:0; color:var(--red); text-decoration:underline; padding:0 4px;}
+
+    .qGrid{display:grid; gap:11px; padding:20px 18px 0; max-width:1120px; margin:0 auto;
+      grid-template-columns:repeat(auto-fill,minmax(104px,1fr));}
+    .qCard{font-family:inherit; cursor:pointer; padding:8px 7px 11px; position:relative;
+      background:var(--sur); border:2px solid var(--line); border-radius:16px;
+      display:flex; flex-direction:column; align-items:center; gap:7px;
+      transition:border-color .15s ease, transform .15s ease, opacity .15s ease;}
+    .qCard:hover{transform:translateY(-2px); border-color:var(--amber);}
+    .qCard img{width:100%; aspect-ratio:1; object-fit:cover; border-radius:11px;
+      background:var(--sur2); display:block;}
+    .qCardN{font-size:12.5px; color:var(--sand); line-height:1.35; text-align:center;}
+    .qCard.on{border-color:var(--teal); background:#EAF7F3;}
+    .qCard.off{opacity:.42;}
+    .qCard.off:hover{transform:none; border-color:var(--line);}
+    .qTick{position:absolute; top:-8px; inset-inline-end:-6px; width:26px; height:26px;
+      border-radius:50%; background:var(--teal); color:#fff; font-size:14px;
+      display:grid; place-content:center; box-shadow:var(--shadow);}
+
+    .qStartWrap{position:sticky; bottom:0; padding:16px 18px 20px; margin-top:22px;
+      background:linear-gradient(to top,var(--bg) 62%,transparent);}
+    .qStart{font-family:inherit; font-weight:700; font-size:17px; cursor:pointer;
+      display:block; width:100%; max-width:440px; margin:0 auto; border:0;
+      border-radius:999px; padding:17px 24px; color:#fff;
+      background:linear-gradient(118deg,var(--red),var(--amber));
+      box-shadow:var(--shadow-lg); transition:filter .15s ease, transform .14s ease;}
+    .qStart:hover:not(:disabled){filter:brightness(1.06);}
+    .qStart:active:not(:disabled){transform:translateY(1px);}
+    .qStart:disabled{background:var(--sur2); color:var(--dim); box-shadow:none; cursor:not-allowed;}
+
+    /* ---- شاشة اللعب ---- */
+    .qPlay{min-height:100dvh; display:flex; flex-direction:column; background:var(--bg);}
+    .qPbar{height:4px; background:var(--sur2); flex:0 0 auto;}
+    .qPbar i{display:block; height:100%; background:linear-gradient(90deg,var(--amber),var(--red));
+      transition:width .35s var(--ease-out,ease);}
+    .qTop{display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:12px 18px; flex:0 0 auto;}
+    .qTop .qBack{padding:7px 14px;}
+    .qProg{font-size:13.5px; color:var(--dim); font-variant-numeric:tabular-nums;}
+    .qScore{font-family:'Lalezar',cursive; font-size:25px; color:var(--amber);
+      font-variant-numeric:tabular-nums;}
+
+    .qStage{flex:1; width:100%; max-width:660px; margin:0 auto; padding:8px 18px 36px;}
+    .qCatRow{display:flex; align-items:center; gap:12px; margin-bottom:18px;}
+    .qCatImg{width:50px; height:50px; border-radius:13px; object-fit:cover;
+      background:var(--sur2); flex:0 0 auto;}
+    .qCatName{font-family:'Lalezar',cursive; font-size:19px; color:var(--sand); line-height:1.2;}
+    .qDiff{font-size:12.5px; color:var(--dim); margin-top:2px;}
+
+    .qQ{font-size:clamp(19px,4.6vw,25px); line-height:1.7; color:var(--sand);
+      background:var(--sur); border:1px solid var(--line); border-radius:var(--radius-lg);
+      padding:22px 20px; margin:0; box-shadow:var(--shadow);}
+
+    .qOpts{display:grid; gap:10px; margin-top:16px;}
+    .qOpt{font-family:inherit; font-size:16px; cursor:pointer; text-align:start;
+      background:var(--sur); color:var(--sand); border:2px solid var(--line);
+      border-radius:14px; padding:15px 18px; line-height:1.6;
+      transition:border-color .15s ease, background .15s ease;}
+    .qOpt:hover{border-color:var(--amber); background:#FFFCF5;}
+
+    .qForm{margin-top:16px; display:grid; gap:10px;}
+    .qInput{font-family:inherit; font-size:17px; width:100%; color:var(--sand);
+      background:var(--sur); border:2px solid var(--line); border-radius:14px; padding:16px 18px;}
+    .qInput:focus{outline:none; border-color:var(--amber); box-shadow:0 0 0 3px var(--glow);}
+    .qFormBtns{display:flex; gap:10px;}
+    .qSend{font-family:inherit; font-size:16px; font-weight:700; cursor:pointer; flex:1;
+      border:0; border-radius:14px; padding:15px; color:#fff; background:var(--teal);
+      transition:filter .15s ease;}
+    .qSend:hover:not(:disabled){filter:brightness(1.07);}
+    .qSend:disabled{background:var(--sur2); color:var(--dim); cursor:not-allowed;}
+    .qSkip{font-family:inherit; font-size:15px; cursor:pointer; flex:0 0 auto;
+      background:var(--sur); color:var(--dim); border:1px solid var(--line);
+      border-radius:14px; padding:15px 20px;}
+    .qSkip:hover{border-color:var(--red); color:var(--red);}
+
+    .qVerdict{margin-top:16px; border-radius:var(--radius-lg); padding:20px;
+      border:2px solid; animation:fadeUp .25s cubic-bezier(.2,.8,.3,1) both;}
+    .qVerdict.right{border-color:var(--teal); background:#EAF7F3;}
+    .qVerdict.wrong{border-color:var(--red); background:#FBE6E8;}
+    .qVerdict b{font-family:'Lalezar',cursive; font-weight:400; font-size:28px; display:block;}
+    .qVerdict.right b{color:var(--teal);}
+    .qVerdict.wrong b{color:var(--red);}
+    .qAns{margin-top:8px; font-size:16px; color:var(--sand);}
+    .qAns span{font-weight:700;}
+    .qInfo{margin:10px 0 0; font-size:14.5px; line-height:1.85; color:var(--dim);}
+    .qNext{font-family:inherit; font-size:16px; font-weight:700; cursor:pointer;
+      margin-top:16px; width:100%; border:0; border-radius:14px; padding:15px;
+      color:#fff; background:var(--sand); transition:filter .15s ease;}
+    .qNext:hover{filter:brightness(1.3);}
+
+    .qDoneHero{margin-top:0; padding-top:72px;}
+    .qDoneK{font-family:'Lalezar',cursive; font-size:24px; color:#FFE7A8; margin-bottom:4px;}
+    .qDoneHero .hLogo{font-size:clamp(68px,18vw,124px); font-variant-numeric:tabular-nums;}
+
+    @media (prefers-reduced-motion:reduce){
+      .qCard:hover{transform:none;}
+      .qVerdict{animation:none;}
+      .qPbar i{transition:none;}
+    }
+
+
+    /* ---- إصلاح اتجاه النص والأرقام ---- */
+    .qSub{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; align-items:center;}
+    .qSub span + span::before{content:""; display:inline-block; width:4px; height:4px;
+      border-radius:50%; background:var(--line); margin-inline-end:10px; vertical-align:middle;}
+    .qProg b{font-weight:700; color:var(--sand); font-variant-numeric:tabular-nums;}
+    .qDiff{display:flex; gap:9px; align-items:center;}
+    .qDiff span + span::before{content:""; display:inline-block; width:3px; height:3px;
+      border-radius:50%; background:var(--dim); opacity:.6; margin-inline-end:9px; vertical-align:middle;}
+    .qMeta b{font-weight:700; font-variant-numeric:tabular-nums;}
+    .qDot{width:4px; height:4px; border-radius:50%; background:var(--line); display:inline-block;}
+
+    /* ---- توسيط مسرح السؤال ---- */
+    .qStage{display:flex; flex-direction:column; justify-content:center;}
+    @media(max-height:720px){ .qStage{justify-content:flex-start;} }
 `;
 
   /* ---------- الشاشات ---------- */
@@ -9023,6 +9375,12 @@ function App({ acc }) {
             <b>اللعبة الجماعية</b>
             <span className="hModeD">كل واحد على جواله. تصوّتون على الفئة، والأسرع الصح ياخذ النقاط. وكل ٣ أسئلة حدث يقلب اللعبة.</span>
             <span className="hGo">سوّ روم ←</span>
+          </button>
+          <button className="hMode hMode3" onClick={() => setScreen("quick")}>
+            <span className="hModeK">لحالك</span>
+            <b>اللعب السريع</b>
+            <span className="hModeD">بدون روم ولا كود. اختر ٤ أو ٦ أو ٨ فئات — أو خلّها عشوائي — و٦ أسئلة لكل فئة.</span>
+            <span className="hGo">العب ←</span>
           </button>
           <button className="hMode hMode2" onClick={() => { window.location.hash = "jeem"; }}>
             <span className="hModeK">شاشة وحدة</span>
@@ -9984,6 +10342,26 @@ function App({ acc }) {
       {screen === "setup" && Setup()}
       {screen === "join" && Join()}
       {screen === "editor" && Editor()}
+        {screen === "quick" && (
+          <QuickSetup
+            onStart={(c) => { setQuickCats(c); setScreen("quickplay"); }}
+            onExit={() => setScreen("home")}
+          />
+        )}
+        {screen === "quickplay" && (
+          <QuickPlay
+            cats={quickCats}
+            onDone={(r) => { setQuickResult(r); setScreen("quickdone"); }}
+            onExit={() => setScreen("home")}
+          />
+        )}
+        {screen === "quickdone" && (
+          <QuickDone
+            result={quickResult}
+            onAgain={() => setScreen("quick")}
+            onHome={() => setScreen("home")}
+          />
+        )}
       {screen === "game" && view && (
         view.phase === "board" ? BoardScreen() :
         view.phase === "bq" ? BoardQuestion() :
