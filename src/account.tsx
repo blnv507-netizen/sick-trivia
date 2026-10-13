@@ -9,9 +9,23 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { createClient } from "@supabase/supabase-js";
 
-const URL = import.meta.env.VITE_SUPABASE_URL;
-const KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
-export const supabase = URL && KEY ? createClient(URL, KEY) : null;
+// تنظيف القيم: مسافات أو علامات تنصيص زايدة تنكتب بالغلط في Render أو .env
+const clean = (v) => String(v || "").trim().replace(/^["']|["']$/g, "").trim();
+const SB_URL = clean(import.meta.env.VITE_SUPABASE_URL).replace(/\/+$/, "");
+const SB_KEY = clean(import.meta.env.VITE_SUPABASE_ANON_KEY);
+function makeClient() {
+  if (!SB_URL || !SB_KEY) return null;
+  try {
+    const u = new window.URL(SB_URL);
+    if (!/^https?:$/.test(u.protocol)) throw new Error("bad protocol");
+    return createClient(SB_URL, SB_KEY);
+  } catch (e) {
+    // إعدادات غلط ما تطيّح الموقع: اللعب يكمل بدون حسابات
+    console.error("[accounts] Supabase disabled — check VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY:", e && e.message);
+    return null;
+  }
+}
+export const supabase = makeClient();
 
 // رسائل الأخطاء بالعربي
 const errMsg = (e) => {
