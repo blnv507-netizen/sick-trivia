@@ -31,7 +31,7 @@ if (typeof window !== "undefined" && !(window as any).storage) {
 }
 
 /* ============================================================
-   SICK TRIVIA — لعبة أسئلة جماعية بين الربع
+   هات الجواب — لعبة أسئلة جماعية بين الربع
    كل سؤال: الكل يصوّت على الفئة 🗳️
    إجابات كتابية والذكاء الاصطناعي يحكم ⚡ وأحداث كل 3 أسئلة 🎲
    ============================================================ */
@@ -8853,42 +8853,202 @@ function App({ acc }) {
     @media (max-width:380px){ .r1 .slot{height:160px;} .r2 .slot{height:118px;} .r3 .slot{height:88px;} .bnum{font-size:46px;} .r1 .bnum{font-size:60px;} .finTitle{font-size:28px;} }
     @media (prefers-reduced-motion: reduce){ .fz .block,.fz .who,.fz .frow{transition:opacity .2s ease!important;} .fz .block{transform:none;} .fz .pcol:not(.up) .block{opacity:0;} .beams{display:none;} }
     @media (prefers-reduced-motion: reduce){ .fz *{animation:none!important; transition:none!important;} }
-  `;
+  
+
+    /* ==========================================================
+       الصفحة الرئيسية — تصميم جديد
+       ========================================================== */
+    .home{max-width:none; margin:0; padding:0 0 0; animation:fadeUp .4s cubic-bezier(.2,.8,.3,1) both;}
+    .hBar{display:flex; justify-content:flex-start; padding:14px 18px; position:relative; z-index:3;}
+    .hNarrow{max-width:540px; margin:0 auto; padding:0 18px;}
+
+    /* ---- الواجهة: قَصّ بيضاوي فوق تدرّج ---- */
+    .hHero{position:relative; margin-top:-62px; padding:96px 20px 74px; overflow:hidden;
+      background:linear-gradient(118deg,var(--red) 0%,#E0653C 48%,var(--amber) 100%);
+      clip-path:ellipse(135% 70% at 50% 32%);
+      backface-visibility:hidden; -webkit-backface-visibility:hidden;}
+    @media(min-width:760px){ .hHero{clip-path:ellipse(92% 74% at 50% 30%); padding:112px 20px 92px;} }
+    .hHero::after{content:""; position:absolute; inset:auto 0 0 0; height:14px; opacity:.5;
+      background:linear-gradient(135deg,transparent 33%,rgba(0,0,0,.2) 33% 66%,transparent 66%) 0 0/14px 14px;}
+    .hHeroIn{position:relative; z-index:2; max-width:640px; margin:0 auto; text-align:center;}
+    .hLogo{font-family:'Lalezar',cursive; color:#fff; line-height:1;
+      font-size:clamp(50px,13vw,96px); letter-spacing:0; text-shadow:0 3px 18px rgba(90,20,0,.22);}
+    .hLogo span{color:#FFE7A8;}
+    .hTag{color:rgba(255,255,255,.94); margin-top:12px; font-size:clamp(15px,3.4vw,19px);}
+    .hCtas{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:26px;}
+    .hBtn{font-family:inherit; font-weight:700; font-size:16px; cursor:pointer;
+      border-radius:999px; padding:14px 30px; border:2px solid transparent;
+      transition:transform .14s var(--ease-out,ease), filter .16s ease, background .16s ease;}
+    .hBtn:active{transform:translateY(1px) scale(.99);}
+    .hSolid{background:#fff; color:var(--red);}
+    .hSolid:hover{filter:brightness(.97);}
+    .hLine{background:transparent; color:#fff; border-color:rgba(255,255,255,.85);}
+    .hLine:hover{background:rgba(255,255,255,.14);}
+    .hGhost{background:var(--sur); color:var(--sand); border-color:var(--line); width:100%;}
+    .hGhost:hover{border-color:var(--amber);}
+
+    /* ---- بلاطات الأرقام ---- */
+    .hStats{display:grid; grid-template-columns:repeat(3,1fr); gap:10px;
+      max-width:640px; margin:-26px auto 0; padding:0 18px; position:relative; z-index:4;}
+    .hStat{background:var(--sur); border:1px solid var(--line); border-radius:var(--radius);
+      box-shadow:var(--shadow-lg); padding:16px 10px 14px; text-align:center; position:relative; overflow:hidden;}
+    .hStat::before{content:""; position:absolute; inset:0 0 auto 0; height:4px; background:var(--sc);}
+    .hStat b{display:block; font-family:'Lalezar',cursive; font-size:clamp(26px,6vw,38px);
+      line-height:1; color:var(--sand); font-weight:400;}
+    .hStat span{display:block; font-size:12.5px; color:var(--dim); margin-top:6px;}
+
+    /* ---- الأقسام ---- */
+    .hSec{padding:52px 0 0; max-width:1120px; margin:0 auto;}
+    .hH2{font-family:'Lalezar',cursive; font-weight:400; text-align:center; color:var(--sand);
+      font-size:clamp(28px,6vw,42px); line-height:1.2; margin:0;}
+    .hLede{text-align:center; color:var(--dim); font-size:15px; margin:8px auto 0; max-width:46ch; padding:0 18px;}
+
+    /* ---- شريط الفئات ---- */
+    .hReel{margin-top:26px; overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+      mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);}
+    .hReelTrack{display:flex; gap:14px; width:max-content; padding:4px 0 2px;
+      animation:hReel 70s linear infinite;}
+    .hReel:hover .hReelTrack{animation-play-state:paused;}
+    @keyframes hReel{from{transform:translateX(0)} to{transform:translateX(50%)}}
+    .hCat{width:132px; flex:0 0 auto; margin:0; text-align:center;}
+    .hCat img{width:132px; height:132px; object-fit:cover; border-radius:18px; display:block;
+      background:var(--sur2); box-shadow:var(--shadow);}
+    .hCat figcaption{font-size:12.5px; color:var(--dim); margin-top:8px; line-height:1.4;}
+
+    /* ---- شريط منحني خلف الأنماط ---- */
+    .hBand{position:relative; z-index:0; overflow:hidden; padding-bottom:58px; margin-top:52px;}
+    .hBand::before{content:""; position:absolute; z-index:-1; left:50%; top:50%;
+      width:330%; height:122%; transform:translate(-50%,-50%); border-radius:50%;
+      background:linear-gradient(118deg,#FFF2DE 0%,#FDE6E7 100%);}
+    @media(min-width:760px){ .hBand::before{width:150%;} }
+
+    /* ---- بطاقات الأنماط ---- */
+    .hModes{display:grid; gap:14px; margin-top:26px; padding:0 18px;
+      grid-template-columns:1fr; max-width:900px; margin-inline:auto;}
+    @media(min-width:760px){ .hModes{grid-template-columns:1fr 1fr;} }
+    .hMode{font-family:inherit; text-align:right; cursor:pointer; display:flex; flex-direction:column; gap:7px;
+      background:var(--sur); border:1px solid var(--line); border-top:5px solid var(--red);
+      border-radius:var(--radius-lg); padding:24px 22px; box-shadow:var(--shadow);
+      transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;}
+    .hMode2{border-top-color:var(--teal);}
+    .hMode:hover{transform:translateY(-3px); box-shadow:var(--shadow-lg);}
+    .hModeK{font-size:11.5px; letter-spacing:.09em; color:var(--dim);}
+    .hMode b{font-family:'Lalezar',cursive; font-weight:400; font-size:27px; line-height:1.25; color:var(--sand);}
+    .hModeD{font-size:14.5px; color:var(--dim); line-height:1.85;}
+    .hGo{font-size:14px; font-weight:700; color:var(--red); margin-top:4px;}
+    .hMode2 .hGo{color:var(--teal);}
+
+    /* ---- الخطوات ---- */
+    .hSteps{list-style:none; counter-reset:hs; display:grid; gap:12px; margin:26px auto 0;
+      padding:0 18px; max-width:760px;}
+    @media(min-width:760px){ .hSteps{grid-template-columns:repeat(3,1fr);} }
+    .hSteps li{counter-increment:hs; background:var(--sur); border:1px solid var(--line);
+      border-radius:var(--radius); padding:20px 18px 18px; position:relative;}
+    .hSteps li::before{content:counter(hs); position:absolute; top:-13px; inset-inline-start:18px;
+      width:28px; height:28px; border-radius:50%; display:grid; place-content:center;
+      font-family:'Lalezar',cursive; font-size:15px; color:#fff; background:var(--amber);}
+    .hSteps b{display:block; font-size:16px; color:var(--sand); margin-bottom:5px;}
+    .hSteps span{display:block; font-size:14px; color:var(--dim); line-height:1.8;}
+
+    /* ---- التذييل ---- */
+    .hFoot{margin-top:58px; padding:26px 18px 34px; text-align:center;
+      border-top:1px solid var(--line); background:var(--sur2);}
+    .hFoot span{display:block; margin-top:12px; font-family:'Lalezar',cursive;
+      font-size:20px; color:var(--dim);}
+
+    @media (prefers-reduced-motion:reduce){
+      .home{animation:none;}
+      .hReelTrack{animation:none; transform:none;}
+      .hMode:hover{transform:none;}
+    }
+`;
 
   /* ---------- الشاشات ---------- */
-  const Home = () => (
-    <div className="wrap">
-      <div style={{ display: "flex", justifyContent: "flex-start" }}><AccountChip acc={acc} /></div>
-      <div style={{ marginTop: 24 }}>
-        <div className="logo">SICK <span>TRIVIA</span></div>
-        <div className="tag">اكتب جوابك — الأسرع الصح ياخذها ⚡</div>
-      </div>
-      <Sadu />
+  const Home = () => {
+    const catList = CATS.filter((c) => (CAT_INFO[c] || {}).img);
+    const reel = catList.concat(catList);
+    return (
+    <div className="home">
+      <div className="hBar"><AccountChip acc={acc} /></div>
+
+      <section className="hHero">
+        <div className="hHeroIn">
+          <div className="hLogo">هات <span>الجواب</span></div>
+          <p className="hTag">اكتب جوابك — الأسرع الصح ياخذها ⚡</p>
+          <div className="hCtas">
+            <button className="hBtn hSolid" onClick={() => setScreen("setup")}>سوّ روم جديد</button>
+            <button className="hBtn hLine" onClick={() => setScreen("join")}>ادخل روم</button>
+          </div>
+        </div>
+      </section>
+
+      <section className="hStats">
+        <div className="hStat" style={{ "--sc": "var(--red)" }}><b>{BANK.length.toLocaleString("ar-EG")}</b><span>سؤال</span></div>
+        <div className="hStat" style={{ "--sc": "var(--amber)" }}><b>{catList.length}</b><span>فئة</span></div>
+        <div className="hStat" style={{ "--sc": "var(--teal)" }}><b>٢</b><span>نمط لعب</span></div>
+      </section>
+
       {storeOk === "unknown" && (
-        <div className="warnBox" style={{ borderColor: "var(--amber)", background: "#FFF0D6" }}>
-          ℹ️ ما قدرنا نتأكد من التخزين
-          <div style={{ fontWeight: 400, fontSize: 13, marginTop: 8, lineHeight: 1.8 }}>
-            جرّب عادي — غالبًا بيشتغل. ولو ما ظهر الروم:
-            <br />تأكدوا إنكم على <b>نفس الرابط المنشور</b>، ولا تفتحونه بوضع التصفح الخفي.
+        <div className="hNarrow">
+          <div className="warnBox" style={{ borderColor: "var(--amber)", background: "#FFF0D6" }}>
+            ℹ️ ما قدرنا نتأكد من التخزين
+            <div style={{ fontWeight: 400, fontSize: 13, marginTop: 8, lineHeight: 1.8 }}>
+              جرّب عادي — غالبًا بيشتغل. ولو ما ظهر الروم:
+              <br />تأكدوا إنكم على <b>نفس الرابط المنشور</b>، ولا تفتحونه بوضع التصفح الخفي.
+            </div>
           </div>
         </div>
       )}
-      <button className="jeemCta" onClick={() => { window.location.hash = "jeem"; }}>
-        <b>سيك جيم</b>
-        <span>لعبة الجمعات على شاشة وحدة: فرق، 6 فئات، ومساعدات</span>
-      </button>
-      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-        <button className="btn btn-red" onClick={() => setScreen("setup")} style={{ animation: "slideInRight .4s cubic-bezier(.2,.8,.3,1) .05s both" }}>سوّ روم جديد</button>
-        <button className="btn btn-amber" onClick={() => setScreen("join")} style={{ animation: "slideInRight .4s cubic-bezier(.2,.8,.3,1) .15s both" }}>ادخل روم</button>
-        <button className="btn btn-ghost" onClick={() => setScreen("editor")} style={{ animation: "slideInRight .4s cubic-bezier(.2,.8,.3,1) .25s both" }}>أسئلتي ({myq.length})</button>
-      </div>
-      <p style={{ color: "var(--dim)", fontSize: 13, textAlign: "center", marginTop: 30, lineHeight: 1.8 }}>
-        كل جولة تصوّتون على الفئة — الأعلى أصواتًا يفوز 🗳️
-        <br />وكل 3 أسئلة حدث يقلب اللعبة 🎲
-        <br />الفائز بسؤال الحدث ياخذ آيتم تخريب 🎒
-      </p>
+
+      <section className="hSec">
+        <h2 className="hH2">الفئات</h2>
+        <p className="hLede">{catList.length} فئة — من الأعلام والمعالم للور السولز وخمّن البوس</p>
+        <div className="hReel" aria-hidden="true">
+          <div className="hReelTrack">
+            {reel.map((c, i) => (
+              <figure className="hCat" key={c + i}>
+                <img src={CAT_INFO[c].img} alt="" loading={i < catList.length ? "eager" : "lazy"} fetchPriority="low" decoding="async" width="160" height="160" />
+                <figcaption>{c}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="hSec hBand">
+        <h2 className="hH2">نمطين للعب</h2>
+        <div className="hModes">
+          <button className="hMode" onClick={() => setScreen("setup")}>
+            <span className="hModeK">على الجوالات</span>
+            <b>اللعبة الجماعية</b>
+            <span className="hModeD">كل واحد على جواله. تصوّتون على الفئة، والأسرع الصح ياخذ النقاط. وكل ٣ أسئلة حدث يقلب اللعبة.</span>
+            <span className="hGo">سوّ روم ←</span>
+          </button>
+          <button className="hMode hMode2" onClick={() => { window.location.hash = "jeem"; }}>
+            <span className="hModeK">شاشة وحدة</span>
+            <b>الشاشة الوحدة</b>
+            <span className="hModeD">تلفزيون واحد والكل حوله. فريقين، ٦ فئات، نقاط ٢٠٠ و٤٠٠ و٦٠٠، وثلاث وسائل مساعدة.</span>
+            <span className="hGo">العب ←</span>
+          </button>
+        </div>
+      </section>
+
+      <section className="hSec">
+        <h2 className="hH2">كيف تلعبونها</h2>
+        <ol className="hSteps">
+          <li><b>سوّ روم</b><span>واحد يسوي الروم ويعطي الباقين الكود.</span></li>
+          <li><b>صوّتوا على الفئة</b><span>كل جولة تختارون الفئة — الأعلى أصواتًا يفوز.</span></li>
+          <li><b>اكتب جوابك</b><span>الأسرع الصح ياخذها. وكل ٣ أسئلة حدث يقلب اللعبة.</span></li>
+        </ol>
+        <div className="hNarrow">
+          <button className="hBtn hGhost" onClick={() => setScreen("editor")}>أسئلتي ({myq.length})</button>
+        </div>
+      </section>
+
+      <footer className="hFoot"><Sadu /><span>هات الجواب</span></footer>
     </div>
-  );
+    );
+  };
 
   const Setup = () => {
     const isBoard = cfg.mode === "board";
@@ -9090,7 +9250,7 @@ function App({ acc }) {
       </div>
       {view.mode === "board" && (
         <p className="badge" style={{ textAlign: "center", marginTop: 10, lineHeight: 1.8 }}>
-          🎯 SICKJEEM — بينقسمون على فريقين تلقائيًا بالتناوب عند البدء
+          🎯 الشاشة الوحدة — بينقسمون على فريقين تلقائيًا بالتناوب عند البدء
         </p>
       )}
       {role === "host" ? (
@@ -9278,7 +9438,7 @@ function App({ acc }) {
     return (
       <div className="wrap jWrap">
         <div className="jTop">
-          <span className="jBrand">SICK<b>JEEM</b></span>
+          <span className="jBrand">هات<b>الجواب</b></span>
           <span className="jTurn" style={{ background: view.teams[view.turn].color }}>
             دور: {view.teams[view.turn].name}
           </span>

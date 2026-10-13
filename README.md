@@ -1,6 +1,7 @@
-# SICK TRIVIA — Web Edition
+# هات الجواب (Hat Al-Jawab)
 
-This is the original SICK TRIVIA React game converted to a normal website architecture.
+Arabic group trivia for gatherings — teams, 43 categories, and lifelines.
+React + TypeScript + Vite on the front, Express on the back.
 
 ## What changed
 - `window.storage` was replaced with a backend API so different phones share the same room.

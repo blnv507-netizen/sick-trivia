@@ -66,4 +66,4 @@ app.use((req, res) => {
   res.status(404).json({ error: "not found" });
 });
 
-app.listen(PORT, () => console.log(`Sick Trivia listening on ${PORT}`));
+app.listen(PORT, () => console.log(`Hat Al-Jawab listening on ${PORT}`));
