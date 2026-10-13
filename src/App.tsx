@@ -9145,6 +9145,19 @@ function App({ acc }) {
     .hMode2 .hModeGo{background:var(--teal);}
     .hModeAlt{background:transparent; color:var(--sand); border-color:var(--line);}
     .hModeAlt:hover{border-color:var(--amber); color:var(--amber);}
+
+
+    /* ===== سهم النزول في الواجهة ===== */
+    .hScroll{display:inline-flex; align-items:center; gap:9px; margin-top:30px;
+      font-size:15.5px; font-weight:600; text-decoration:none; color:#fff;
+      background:rgba(255,255,255,.16); border:1.5px solid rgba(255,255,255,.55);
+      border-radius:999px; padding:12px 26px;
+      transition:background .16s ease, border-color .16s ease;}
+    .hScroll:hover{background:rgba(255,255,255,.26); border-color:#fff;}
+    .hScroll svg{width:17px; height:17px; animation:hNudge 2.4s ease-in-out infinite;}
+    @keyframes hNudge{0%,100%{transform:translateY(0)} 50%{transform:translateY(3px)}}
+    #modes{scroll-margin-top:16px;}
+    @media (prefers-reduced-motion:reduce){ .hScroll svg{animation:none;} }
 `;
 
   /* ---------- الشاشات ---------- */
@@ -9159,10 +9172,10 @@ function App({ acc }) {
         <div className="hHeroIn">
           <div className="hLogo">هات <span>الجواب</span></div>
           <p className="hTag">اكتب جوابك — الأسرع الصح ياخذها ⚡</p>
-          <div className="hCtas">
-            <button className="hBtn hSolid" onClick={() => setScreen("setup")}>سوّ روم جديد</button>
-            <button className="hBtn hLine" onClick={() => setScreen("join")}>ادخل روم</button>
-          </div>
+          <a className="hScroll" href="#modes">
+            اختر نمط اللعب
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
         </div>
       </section>
 
@@ -9193,7 +9206,7 @@ function App({ acc }) {
         </div>
       </section>
 
-      <section className="hSec hBand">
+      <section className="hSec hBand" id="modes">
         <h2 className="hH2">نمطين للعب</h2>
         <div className="hModes">
           <div className="hMode hMode3">
