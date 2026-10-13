@@ -9166,7 +9166,7 @@ function App({ acc }) {
        ========================================================== */
     .hMode3{border-top-color:var(--amber);}
     .hMode3 .hGo{color:var(--amber);}
-    @media(min-width:760px){ .hModes{grid-template-columns:repeat(3,1fr);} }
+    @media(min-width:760px){ .hModes{grid-template-columns:1fr 1fr; max-width:760px;} }
 
     .qBack{font-family:inherit; font-size:14px; font-weight:600; cursor:pointer;
       background:var(--sur); color:var(--sand); border:1px solid var(--line);
@@ -9313,6 +9313,44 @@ function App({ acc }) {
     /* ---- توسيط مسرح السؤال ---- */
     .qStage{display:flex; flex-direction:column; justify-content:center;}
     @media(max-height:720px){ .qStage{justify-content:flex-start;} }
+
+
+    /* ===== بطاقات الفئات — نفس شكل اللعب السريع ===== */
+    .pkGrid{grid-template-columns:repeat(auto-fill,minmax(126px,1fr)) !important; gap:11px !important;}
+    .pkCard{background:var(--sur) !important; border:2px solid var(--line) !important;
+      padding:8px 7px 10px !important; gap:7px; align-items:center !important;
+      text-align:center !important; border-radius:16px !important;}
+    .pkCard::before{display:none !important;}
+    .pkCard .catArt{height:auto !important; width:100% !important; aspect-ratio:1 !important;
+      border-radius:11px !important; overflow:hidden;}
+    .pkCard .catArt::after{display:none !important;}
+    .pkCard .catArt img{width:100%; height:100%; object-fit:cover;}
+    .pkCard:hover:not(:disabled){transform:translateY(-2px); border-color:var(--amber) !important;}
+    .pkCard.on{border-color:var(--teal) !important; background:#EAF7F3 !important;}
+    .pkBody{padding:0 2px !important; gap:2px !important; align-items:center; text-align:center;}
+    .pkBody b{font-size:12.8px !important; line-height:1.35 !important;
+      display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
+    .pkDesc{display:none !important;}
+    .pkN{margin-top:3px !important; padding-top:0 !important; font-size:11px !important; opacity:.85;}
+    .pkCheck{top:-8px !important; left:auto !important; inset-inline-end:-6px !important;
+      width:26px !important; height:26px !important; background:var(--teal) !important;
+      color:#fff !important; font-size:14px !important;}
+
+    .catGrid{grid-template-columns:repeat(auto-fill,minmax(132px,1fr)) !important; gap:11px !important;}
+    .catBtn{padding:9px 8px 11px !important; gap:8px !important; border-width:2px !important;
+      border-radius:16px !important; align-items:center !important; text-align:center !important;}
+    .catBtn .catArt{width:100%; aspect-ratio:1; height:auto; border-radius:11px; overflow:hidden;}
+    .catBtn .catArt::after{display:none;}
+    .catBtn .catArt img{width:100%; height:100%; object-fit:cover;}
+    .catBtn > span:not(.catArt):not(.voteTicks){font-size:13px; line-height:1.35; color:var(--sand);}
+    .catBtn.on{border-color:var(--teal) !important; background:#EAF7F3 !important;}
+    .voterNames{display:block; font-size:10.5px; color:var(--dim); margin-top:2px;}
+
+    @media(max-width:420px){
+      .pkGrid{grid-template-columns:repeat(3,1fr) !important;}
+      .catGrid{grid-template-columns:repeat(2,1fr) !important;}
+    }
+    @media (prefers-reduced-motion:reduce){ .pkCard:hover:not(:disabled){transform:none;} }
 `;
 
   /* ---------- الشاشات ---------- */
@@ -9370,12 +9408,6 @@ function App({ acc }) {
       <section className="hSec hBand">
         <h2 className="hH2">نمطين للعب</h2>
         <div className="hModes">
-          <button className="hMode" onClick={() => setScreen("setup")}>
-            <span className="hModeK">على الجوالات</span>
-            <b>اللعبة الجماعية</b>
-            <span className="hModeD">كل واحد على جواله. تصوّتون على الفئة، والأسرع الصح ياخذ النقاط. وكل ٣ أسئلة حدث يقلب اللعبة.</span>
-            <span className="hGo">سوّ روم ←</span>
-          </button>
           <button className="hMode hMode3" onClick={() => setScreen("quick")}>
             <span className="hModeK">لحالك</span>
             <b>اللعب السريع</b>
@@ -9383,8 +9415,8 @@ function App({ acc }) {
             <span className="hGo">العب ←</span>
           </button>
           <button className="hMode hMode2" onClick={() => { window.location.hash = "jeem"; }}>
-            <span className="hModeK">شاشة وحدة</span>
-            <b>الشاشة الوحدة</b>
+            <span className="hModeK">على شاشة وحدة</span>
+            <b>لعبة الفئات</b>
             <span className="hModeD">تلفزيون واحد والكل حوله. فريقين، ٦ فئات، نقاط ٢٠٠ و٤٠٠ و٦٠٠، وثلاث وسائل مساعدة.</span>
             <span className="hGo">العب ←</span>
           </button>
@@ -9394,9 +9426,9 @@ function App({ acc }) {
       <section className="hSec">
         <h2 className="hH2">كيف تلعبونها</h2>
         <ol className="hSteps">
-          <li><b>سوّ روم</b><span>واحد يسوي الروم ويعطي الباقين الكود.</span></li>
-          <li><b>صوّتوا على الفئة</b><span>كل جولة تختارون الفئة — الأعلى أصواتًا يفوز.</span></li>
-          <li><b>اكتب جوابك</b><span>الأسرع الصح ياخذها. وكل ٣ أسئلة حدث يقلب اللعبة.</span></li>
+          <li><b>اختر النمط</b><span>لحالك على جوالك، أو على شاشة وحدة مع الربع.</span></li>
+          <li><b>اختر الفئات</b><span>من ٤٣ فئة — أو خلّها عشوائي وشوف وش يطلع.</span></li>
+          <li><b>اكتب جوابك</b><span>تصحيح فوري، والنقاط تنحسب حسب صعوبة السؤال.</span></li>
         </ol>
         <div className="hNarrow">
           <button className="hBtn hGhost" onClick={() => setScreen("editor")}>أسئلتي ({myq.length})</button>
@@ -9495,7 +9527,7 @@ function App({ acc }) {
                   <CatArt cat={c} />
                   <span className="pkBody">
                     <b>{c}</b>
-                    <span className="pkDesc">{info.desc}</span>
+                    
                     <span className="pkN">{c === "رياضيات" ? "أسئلة تتولد" : `${CAT_COUNT[c] || 0} سؤال`}</span>
                   </span>
                   {on && <span className="pkCheck" aria-hidden="true">✓</span>}
@@ -9608,7 +9640,7 @@ function App({ acc }) {
       </div>
       {view.mode === "board" && (
         <p className="badge" style={{ textAlign: "center", marginTop: 10, lineHeight: 1.8 }}>
-          🎯 الشاشة الوحدة — بينقسمون على فريقين تلقائيًا بالتناوب عند البدء
+          🎯 لعبة الفئات — بينقسمون على فريقين تلقائيًا بالتناوب عند البدء
         </p>
       )}
       {role === "host" ? (
@@ -10020,7 +10052,7 @@ function App({ acc }) {
               const info = CAT_INFO[c];
               return (
                 <button key={c} className={"catBtn" + (myVote === c ? " on" : "")} onClick={() => castVote(c)}>
-                  <span className="catIcon">{info?.icon || "❓"}</span>
+                  <CatArt cat={c} />
                   <span>{c}</span>
                   {isVote && names.length > 0 && (
                     <span className="voteTicks">
