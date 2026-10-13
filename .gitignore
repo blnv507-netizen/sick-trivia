@@ -5,3 +5,8 @@ dist/
 
 live/
 .env
+
+# صور الفئات الأصلية (PNG 1254px، ~60 ميجا) — النسخ المحوّلة في public/img/cats/
+public/img/CAT_INFO/
+src/*.bak-*
+src/*.local-backup
