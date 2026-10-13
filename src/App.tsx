@@ -7310,7 +7310,6 @@ function App({ acc }) {
   const mySlotRef = useRef(null);
   const slotDataRef = useRef({});
   const useCounterRef = useRef(0);
-  const [myq, setMyq] = useState([]);
   const [toast, setToast] = useState("");
   const [loading, setLoading] = useState("");
   const [, forceN] = useState(0);
@@ -7355,8 +7354,6 @@ function App({ acc }) {
     (async () => {
       const savedMe = await jget("fz:me", false);
       if (savedMe && savedMe.pid) setMe(savedMe);
-      const savedQ = await jget("fz:myq", false);
-      if (Array.isArray(savedQ)) setMyq(savedQ.filter((x) => x.a));
     })();
   }, []);
 
@@ -8348,26 +8345,8 @@ function App({ acc }) {
   }
 
   /* ---------- محرر أسئلتي ---------- */
-  const [ed, setEd] = useState({ q: "", a: "", alt: "", d: 2, cat: "عام" });
-  async function saveMyQuestion() {
-    if (!ed.q.trim()) { setToast("اكتب نص السؤال"); return; }
-    if (!ed.a.trim()) { setToast("اكتب الإجابة النموذجية"); return; }
-    const item = {
-      type: "typed", q: ed.q.trim(), a: ed.a.trim(), d: ed.d, cat: ed.cat,
-      alt: ed.alt.split(/[,،]/).map((x) => x.trim()).filter(Boolean),
-    };
-    const next = [...myq, item];
-    setMyq(next);
-    await jset("fz:myq", next, false);
-    setEd({ q: "", a: "", alt: "", d: 2, cat: ed.cat });
-    setToast("انحفظ السؤال ✓");
-  }
-  async function deleteMyQuestion(i) {
-    const next = myq.filter((_, idx) => idx !== i);
-    setMyq(next);
-    await jset("fz:myq", next, false);
-  }
-
+  
+  
   /* ============================ الواجهات ============================ */
 
   const css = `
@@ -9381,46 +9360,7 @@ function App({ acc }) {
     </div>
   );
 
-  const Editor = () => (
-    <div className="wrap">
-      <button className="back" onClick={() => setScreen("home")}>→ رجوع</button>
-      <h2 className="disp" style={{ fontSize: 30 }}>أسئلتي</h2>
-      <p style={{ color: "var(--dim)", fontSize: 13 }}>أسئلة كتابية — الذكاء الاصطناعي يحكم على الإجابات بمرونة</p>
-      <Sadu />
-      <div className="card">
-        <label className="lbl">نص السؤال</label>
-        <input className="inp" value={ed.q} onChange={(e) => setEd({ ...ed, q: e.target.value })} placeholder="اكتب السؤال…" />
-        <label className="lbl">الإجابة النموذجية</label>
-        <input className="inp" value={ed.a} onChange={(e) => setEd({ ...ed, a: e.target.value })} placeholder="كلمة أو كلمتين" />
-        <label className="lbl">إجابات بديلة مقبولة (اختياري — افصل بفاصلة)</label>
-        <input className="inp" value={ed.alt} onChange={(e) => setEd({ ...ed, alt: e.target.value })} placeholder="مثال: Malenia، ماليينيا" />
-        <label className="lbl">الفئة</label>
-        <select className="inp" value={ed.cat} onChange={(e) => setEd({ ...ed, cat: e.target.value })}>
-          {CATS.filter((c) => c !== "رياضيات").map((c) => <option key={c} value={c}>{c}</option>)}
-        </select>
-        <label className="lbl">الصعوبة</label>
-        <div className="seg">
-          {[1, 2, 3].map((d) => (
-            <button key={d} className={"chip" + (ed.d === d ? " on" : "")} onClick={() => setEd({ ...ed, d })}>
-              {DLBL[d]} ({PTS[d]})
-            </button>
-          ))}
-        </div>
-        <div style={{ height: 14 }} />
-        <button className="btn btn-amber" onClick={saveMyQuestion}>احفظ السؤال</button>
-      </div>
-      {myq.map((q, i) => (
-        <div className="prow" key={i} style={{ marginTop: 8 }}>
-          <div style={{ fontSize: 14, flex: 1, marginInlineEnd: 8 }}>
-            <span className="ptsTile" style={{ fontSize: 16, padding: "0 8px", marginInlineEnd: 8 }}>{PTS[q.d]}</span>
-            <span className="badge">{q.cat} · </span>{q.q}
-          </div>
-          <button className="chip" onClick={() => deleteMyQuestion(i)}>حذف</button>
-        </div>
-      ))}
-    </div>
-  );
-
+  
   const Lobby = () => (
     <div className="wrap">
       <ExitBar />
@@ -10184,7 +10124,7 @@ function App({ acc }) {
       {screen === "home" && Home()}
       {screen === "setup" && Setup()}
       {screen === "join" && Join()}
-      {screen === "editor" && Editor()}
+      
       {screen === "game" && view && (
         view.phase === "board" ? BoardScreen() :
         view.phase === "bq" ? BoardQuestion() :
