@@ -370,7 +370,7 @@ export default function Jeem({ bank, cats, info, genMath, onExit, acc }) {
                 <CatArt name={c} icon={(info[c] || {}).icon} img={(info[c] || {}).img} />
                 <span className="sj-cat-body">
                   <b>{c}</b>
-                  
+                  <span className="sj-cat-desc">{(info[c] || {}).desc || ""}</span>
                   <span className="sj-cat-n">{count} سؤال</span>
                 </span>
               </button>
@@ -708,22 +708,6 @@ ${CAT_ART_CSS}
 .sj-cat b{font-size:16px;line-height:1.35;}
 .sj-cat-desc{font-size:13px;color:var(--dim);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 .sj-cat-n{margin-top:auto;padding-top:4px;font-size:12px;color:var(--dim);}
-.sj-catgrid{grid-template-columns:repeat(auto-fill,minmax(126px,1fr));gap:11px;}
-.sj-cat{background:var(--sur);border:2px solid var(--line);padding:8px 7px 10px;gap:7px;
-  align-items:center;text-align:center;border-radius:16px;}
-.sj-cat::before{display:none;}
-.sj-cat .catArt{height:auto;width:100%;aspect-ratio:1;border-radius:11px;overflow:hidden;}
-.sj-cat .catArt::after{display:none;}
-.sj-cat .catArt img{width:100%;height:100%;object-fit:cover;}
-.sj-cat:hover:not(:disabled){transform:translateY(-2px);border-color:var(--amber);background:var(--sur);}
-.sj-cat.on{border-color:var(--tc);background:var(--sur);box-shadow:inset 0 0 0 2px var(--tc);}
-.sj-cat-body{padding:0 2px;gap:2px;align-items:center;text-align:center;}
-.sj-cat b{font-size:12.8px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;
-  -webkit-box-orient:vertical;overflow:hidden;}
-.sj-cat-desc{display:none;}
-.sj-cat-n{margin-top:3px;padding-top:0;font-size:11px;opacity:.85;}
-@media(max-width:420px){ .sj-catgrid{grid-template-columns:repeat(3,1fr);} }
-@media (prefers-reduced-motion:reduce){ .sj-cat:hover:not(:disabled){transform:none;} }
 
 /* ---------- اللوحة ---------- */
 .sj-boardpage{min-height:100vh;display:flex;flex-direction:column;}

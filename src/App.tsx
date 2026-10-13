@@ -9096,7 +9096,7 @@ function App({ acc }) {
     .hStat span{display:block; font-size:12.5px; color:var(--dim); margin-top:6px;}
 
     /* ---- الأقسام ---- */
-    .hSec{padding:52px 0 0; max-width:1120px; margin:0 auto;}
+    .hSec{padding:62px 0 0; max-width:1120px; margin:0 auto;}
     .hH2{font-family:'Lalezar',cursive; font-weight:400; text-align:center; color:var(--sand);
       font-size:clamp(28px,6vw,42px); line-height:1.2; margin:0;}
     .hLede{text-align:center; color:var(--dim); font-size:15px; margin:8px auto 0; max-width:46ch; padding:0 18px;}
@@ -9370,12 +9370,6 @@ function App({ acc }) {
             <button className="hBtn hLine" onClick={() => setScreen("join")}>ادخل روم</button>
           </div>
         </div>
-      </section>
-
-      <section className="hStats">
-        <div className="hStat" style={{ "--sc": "var(--red)" }}><b>{BANK.length.toLocaleString("ar-EG")}</b><span>سؤال</span></div>
-        <div className="hStat" style={{ "--sc": "var(--amber)" }}><b>{catList.length}</b><span>فئة</span></div>
-        <div className="hStat" style={{ "--sc": "var(--teal)" }}><b>٢</b><span>نمط لعب</span></div>
       </section>
 
       {storeOk === "unknown" && (
