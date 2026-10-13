@@ -7297,206 +7297,8 @@ function TopTenOverlay({ board, meId, isHost, onClose }) {
   );
 }
 
-const QUICK_COUNTS = [4, 6, 8];
-const QPER = 6;
-
-function buildQuickRound(cats) {
-  const out = [];
-  for (const c of cats) {
-    if (c === "رياضيات") {
-      for (let i = 0; i < QPER; i++) out.push(genMathQ(i < 2 ? 1 : i < 4 ? 2 : 3));
-      continue;
-    }
-    const pool = BANK.filter((x) => x.cat === c);
-    const used = new Set();
-    const picked = [];
-    while (picked.length < QPER && used.size < pool.length) {
-      const i = Math.floor(Math.random() * pool.length);
-      if (used.has(i)) continue;
-      used.add(i);
-      picked.push(pool[i]);
-    }
-    picked.sort((x, y) => (x.d || 1) - (y.d || 1));
-    out.push(...picked);
-  }
-  return out;
-}
-
-function QuickSetup({ onStart, onExit }) {
-  const [count, setCount] = useState(6);
-  const [sel, setSel] = useState([]);
-  const all = CATS.filter((c) => (CAT_INFO[c] || {}).img);
-
-  const toggle = (c) =>
-    setSel((p) => (p.includes(c) ? p.filter((x) => x !== c) : p.length >= count ? p : p.concat(c)));
-
-  const randomise = () => {
-    const pool = all.slice();
-    for (let i = pool.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [pool[i], pool[j]] = [pool[j], pool[i]];
-    }
-    setSel(pool.slice(0, count));
-  };
-
-  const ready = sel.length === count;
-
-  return (
-    <div className="home">
-      <div className="hBar"><button className="qBack" onClick={onExit}>← رجوع</button></div>
-
-      <div className="qHead">
-        <h1 className="qTitle">اللعب السريع</h1>
-        <p className="qSub"><span>لاعب واحد على هذا الجهاز</span><span>{QPER} أسئلة لكل فئة</span></p>
-      </div>
-
-      <div className="qBar">
-        <div className="qCounts">
-          <span className="qCountsL">كم فئة؟</span>
-          {QUICK_COUNTS.map((n) => (
-            <button key={n} className={"qCount" + (count === n ? " on" : "")}
-              onClick={() => { setCount(n); setSel((p) => p.slice(0, n)); }}>{n}</button>
-          ))}
-        </div>
-        <button className="qRand" onClick={randomise}>🎲 عشوائي</button>
-      </div>
-
-      <div className="qMeta">
-        <span className={ready ? "qOk" : ""}>اخترت <b>{sel.length}</b> من <b>{count}</b></span>
-        <span className="qDot" aria-hidden="true" />
-        <span>{count * QPER} سؤال</span>
-        {sel.length > 0 && <button className="qClear" onClick={() => setSel([])}>امسح</button>}
-      </div>
-
-      <div className="qGrid">
-        {all.map((c) => {
-          const on = sel.includes(c);
-          return (
-            <button key={c} aria-pressed={on}
-              className={"qCard" + (on ? " on" : "") + (!on && sel.length >= count ? " off" : "")}
-              onClick={() => toggle(c)}>
-              <img src={CAT_INFO[c].img} alt="" loading="lazy" decoding="async" />
-              <span className="qCardN">{c}</span>
-              {on && <span className="qTick">✓</span>}
-            </button>
-          );
-        })}
-      </div>
-
-      <div className="qStartWrap">
-        <button className="qStart" disabled={!ready} onClick={() => onStart(sel)}>
-          {ready ? "ابدأ — " + count * QPER + " سؤال" : "اختر " + (count - sel.length) + " فئة بعد"}
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function QuickPlay({ cats, onDone, onExit }) {
-  const qs = React.useMemo(() => buildQuickRound(cats), [cats]);
-  const [i, setI] = useState(0);
-  const [typed, setTyped] = useState("");
-  const [state, setState] = useState("ask");
-  const [score, setScore] = useState(0);
-  const [hits, setHits] = useState(0);
-  const inputRef = useRef(null);
-
-  const cur = qs[i];
-  const last = i >= qs.length - 1;
-
-  useEffect(() => {
-    if (state === "ask" && cur && !cur.opts && inputRef.current) inputRef.current.focus();
-  }, [i, state, cur]);
-
-  if (!cur) return null;
-
-  const settle = (ok) => {
-    if (state !== "ask") return;
-    setState(ok ? "right" : "wrong");
-    if (ok) { setScore((v) => v + (PTS[cur.d] || 200)); setHits((v) => v + 1); }
-  };
-
-  const next = () => {
-    if (last) { onDone({ score, hits, total: qs.length }); return; }
-    setI((v) => v + 1); setTyped(""); setState("ask");
-  };
-
-  return (
-    <div className="qPlay">
-      <div className="qPbar"><i style={{ width: ((i + (state === "ask" ? 0 : 1)) / qs.length) * 100 + "%" }} /></div>
-
-      <div className="qTop">
-        <button className="qBack" onClick={onExit} aria-label="خروج">✕</button>
-        <span className="qProg">السؤال <b>{i + 1}</b> من <b>{qs.length}</b></span>
-        <span className="qScore">{score}</span>
-      </div>
-
-      <div className="qStage">
-        <div className="qCatRow">
-          {(CAT_INFO[cur.cat] || {}).img && <img className="qCatImg" src={CAT_INFO[cur.cat].img} alt="" />}
-          <div>
-            <div className="qCatName">{cur.cat}</div>
-            <div className="qDiff"><span>{DLBL[cur.d] || "سهل"}</span><span>{PTS[cur.d] || 200} نقطة</span></div>
-          </div>
-        </div>
-
-        <p className="qQ">{cur.q}</p>
-
-        {state === "ask" && (cur.opts ? (
-          <div className="qOpts">
-            {cur.opts.map((o) => (
-              <button key={o} className="qOpt" onClick={() => settle(norm(o) === norm(cur.a))}>{o}</button>
-            ))}
-          </div>
-        ) : (
-          <form className="qForm" onSubmit={(e) => { e.preventDefault(); if (typed.trim()) settle(localJudge(typed, cur.a, cur.alt)); }}>
-            <input ref={inputRef} className="qInput" value={typed} autoComplete="off"
-              onChange={(e) => setTyped(e.target.value)} placeholder="اكتب جوابك…" />
-            <div className="qFormBtns">
-              <button className="qSend" type="submit" disabled={!typed.trim()}>تأكيد</button>
-              <button className="qSkip" type="button" onClick={() => settle(false)}>ما أدري</button>
-            </div>
-          </form>
-        ))}
-
-        {state !== "ask" && (
-          <div className={"qVerdict " + state}>
-            <b>{state === "right" ? "صح ✓" : "غلط ✕"}</b>
-            <div className="qAns">الجواب: <span>{cur.a}</span></div>
-            {cur.info && <p className="qInfo">{cur.info}</p>}
-            <button className="qNext" onClick={next} autoFocus>{last ? "النتيجة" : "التالي ←"}</button>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function QuickDone({ result, onAgain, onHome }) {
-  const r = result || { score: 0, hits: 0, total: 1 };
-  const pct = Math.round((r.hits / Math.max(1, r.total)) * 100);
-  const line = pct >= 80 ? "وحش 🔥" : pct >= 55 ? "زين 👌" : pct >= 30 ? "مو بطال" : "محتاج تمرين 😅";
-  return (
-    <div className="home">
-      <section className="hHero qDoneHero">
-        <div className="hHeroIn">
-          <div className="qDoneK">{line}</div>
-          <div className="hLogo">{r.score}</div>
-          <p className="hTag">{r.hits} من {r.total} صح — {pct}٪</p>
-          <div className="hCtas">
-            <button className="hBtn hSolid" onClick={onAgain}>جولة ثانية</button>
-            <button className="hBtn hLine" onClick={onHome}>الرئيسية</button>
-          </div>
-        </div>
-      </section>
-    </div>
-  );
-}
-
 function App({ acc }) {
   const [screen, setScreen] = useState("home");
-  const [quickCats, setQuickCats] = useState([]);
-  const [quickResult, setQuickResult] = useState(null);
   const [role, setRole] = useState(null);
   const [me, setMe] = useState({ pid: genPid(), name: "" });
   const [code, setCode] = useState("");
@@ -9351,6 +9153,19 @@ function App({ acc }) {
       .catGrid{grid-template-columns:repeat(2,1fr) !important;}
     }
     @media (prefers-reduced-motion:reduce){ .pkCard:hover:not(:disabled){transform:none;} }
+
+
+    /* ===== أزرار داخل بطاقات الأنماط ===== */
+    .hMode3{cursor:default;}
+    .hModeBtns{display:flex; gap:9px; flex-wrap:wrap; margin-top:12px;}
+    .hModeGo, .hModeAlt{font-family:inherit; font-size:14.5px; font-weight:700; cursor:pointer;
+      border-radius:999px; padding:11px 22px; border:2px solid transparent;
+      transition:filter .15s ease, border-color .15s ease, background .15s ease;}
+    .hModeGo{background:var(--sand); color:#fff;}
+    .hModeGo:hover{filter:brightness(1.35);}
+    .hMode2 .hModeGo{background:var(--teal);}
+    .hModeAlt{background:transparent; color:var(--sand); border-color:var(--line);}
+    .hModeAlt:hover{border-color:var(--amber); color:var(--amber);}
 `;
 
   /* ---------- الشاشات ---------- */
@@ -9402,31 +9217,33 @@ function App({ acc }) {
       <section className="hSec hBand">
         <h2 className="hH2">نمطين للعب</h2>
         <div className="hModes">
-          <button className="hMode hMode3" onClick={() => setScreen("quick")}>
-            <span className="hModeK">لحالك</span>
+          <div className="hMode hMode3">
+            <span className="hModeK">أونلاين · يحتاج كود</span>
             <b>اللعب السريع</b>
-            <span className="hModeD">بدون روم ولا كود. اختر ٤ أو ٦ أو ٨ فئات — أو خلّها عشوائي — و٦ أسئلة لكل فئة.</span>
-            <span className="hGo">العب ←</span>
-          </button>
-          <button className="hMode hMode2" onClick={() => { window.location.hash = "jeem"; }}>
-            <span className="hModeK">على شاشة وحدة</span>
+            <span className="hModeD">كل واحد على جواله. سوّ روم، أرسل الكود لربعك، وتصوّتون على الفئة كل جولة — والأسرع الصح ياخذ النقاط.</span>
+            <div className="hModeBtns">
+              <button className="hModeGo" onClick={() => setScreen("setup")}>سوّ روم</button>
+              <button className="hModeAlt" onClick={() => setScreen("join")}>عندي كود</button>
+            </div>
+          </div>
+          <div className="hMode hMode2">
+            <span className="hModeK">محلي · بدون كود</span>
             <b>لعبة الفئات</b>
             <span className="hModeD">تلفزيون واحد والكل حوله. فريقين، ٦ فئات، نقاط ٢٠٠ و٤٠٠ و٦٠٠، وثلاث وسائل مساعدة.</span>
-            <span className="hGo">العب ←</span>
-          </button>
+            <div className="hModeBtns">
+              <button className="hModeGo" onClick={() => { window.location.hash = "jeem"; }}>افتحها</button>
+            </div>
+          </div>
         </div>
       </section>
 
       <section className="hSec">
         <h2 className="hH2">كيف تلعبونها</h2>
         <ol className="hSteps">
-          <li><b>اختر النمط</b><span>لحالك على جوالك، أو على شاشة وحدة مع الربع.</span></li>
-          <li><b>اختر الفئات</b><span>من ٤٣ فئة — أو خلّها عشوائي وشوف وش يطلع.</span></li>
+          <li><b>اختر النمط</b><span>أونلاين بكود مع ربعك، أو محلي على شاشة وحدة.</span></li>
+          <li><b>اختر الفئات</b><span>من ٤٣ فئة، وكل فئة لها طريقتها.</span></li>
           <li><b>اكتب جوابك</b><span>تصحيح فوري، والنقاط تنحسب حسب صعوبة السؤال.</span></li>
         </ol>
-        <div className="hNarrow">
-          <button className="hBtn hGhost" onClick={() => setScreen("editor")}>أسئلتي ({myq.length})</button>
-        </div>
       </section>
 
       <footer className="hFoot"><Sadu /><span>هات الجواب</span></footer>
@@ -10368,26 +10185,6 @@ function App({ acc }) {
       {screen === "setup" && Setup()}
       {screen === "join" && Join()}
       {screen === "editor" && Editor()}
-        {screen === "quick" && (
-          <QuickSetup
-            onStart={(c) => { setQuickCats(c); setScreen("quickplay"); }}
-            onExit={() => setScreen("home")}
-          />
-        )}
-        {screen === "quickplay" && (
-          <QuickPlay
-            cats={quickCats}
-            onDone={(r) => { setQuickResult(r); setScreen("quickdone"); }}
-            onExit={() => setScreen("home")}
-          />
-        )}
-        {screen === "quickdone" && (
-          <QuickDone
-            result={quickResult}
-            onAgain={() => setScreen("quick")}
-            onHome={() => setScreen("home")}
-          />
-        )}
       {screen === "game" && view && (
         view.phase === "board" ? BoardScreen() :
         view.phase === "bq" ? BoardQuestion() :
