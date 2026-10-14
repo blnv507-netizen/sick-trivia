@@ -39,6 +39,20 @@ for (const q of BANK) {
 /* نفس تطبيع الإجابة المستخدم في اللعبة (aKey) عشان العدّ يطابق boardReady */
 const aKey = (q) => String(q.a || "").trim().toLowerCase();
 
+
+/* GUARD: public/data صار المصدر الحي. لو فيه فئة موجودة هناك وما هي في
+   bank.ts، معناها انضافت مباشرة بالـJSON — وإعادة التوليد بتمسحها. */
+if (fs.existsSync(path.join(OUT, "index.json"))) {
+  const old = JSON.parse(fs.readFileSync(path.join(OUT, "index.json"), "utf8"));
+  const inBank = new Set(BANK.map((q) => q.cat));
+  const extra = old.categories.filter((c) => !inBank.has(c.name)).map((c) => c.name);
+  if (extra.length) {
+    console.error("✗ فئات موجودة في public/data وما هي في bank.ts:\n   " + extra.join("، "));
+    console.error("  إعادة التوليد بتمسحها. أضفها لـbank.ts أول، أو احذف هذا الفحص لو متأكد.");
+    process.exit(1);
+  }
+}
+
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(OUT, { recursive: true });
 

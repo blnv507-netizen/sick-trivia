@@ -2021,31 +2021,8 @@ function App({ acc }) {
           <input id="hostName" className="inp" value={me.name} onChange={(e) => setMe({ ...me, name: e.target.value })} placeholder="مثلاً: حسين" maxLength={20} />
         </section>
 
-        <section className="setupSec">
-          <div className="setupLbl">نمط اللعب</div>
-          <div className="modeCards">
-            <button className={"modeCard" + (!isBoard ? " on" : "")} onClick={() => setCfg({ ...cfg, mode: "classic" })}>
-              <span className="modeIc">⚡</span>
-              <b>سريع</b>
-              <span>كل لاعب لحاله من جواله. الأسرع الصح ياخذ النقاط، وفيه أحداث وآيتمات تخريب.</span>
-            </button>
-            <button className={"modeCard" + (isBoard ? " on" : "")} onClick={() => setCfg({ ...cfg, mode: "board", picked: cfg.picked.filter(boardReady) })}>
-              <span className="modeIc">🎯</span>
-              <b>لوحة الفريقين</b>
-              <span>فريقين ولوحة 6 فئات × 6 أسئلة. الجواب بالصوت، وأنت تحكم.</span>
-            </button>
-          </div>
-          {isBoard && (
-            <div className="teamRow">
-              {[0, 1].map((i) => (
-                <input key={i} className="inp" value={cfg.teamNames[i]} maxLength={16} aria-label={"اسم الفريق " + (i + 1)}
-                  style={{ boxShadow: `inset -5px 0 0 ${TEAM_COLORS[i]}` }}
-                  onChange={(e) => setCfg({ ...cfg, teamNames: i === 0 ? [e.target.value, cfg.teamNames[1]] : [cfg.teamNames[0], e.target.value] })}
-                  placeholder={i === 0 ? "اسم الفريق الأول" : "اسم الفريق الثاني"} />
-              ))}
-            </div>
-          )}
-        </section>
+        {/* اختيار النمط انشال: الروم دايم «سريع».
+            لوحة الفريقين صارت طور الفئات على /categories. */}
 
         {!isBoard && (
           <section className="setupSec setupOpts">

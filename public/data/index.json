@@ -1,6 +1,6 @@
 {
  "generatedAt": "2026-10-14",
- "total": 6553,
+ "total": 6586,
  "categories": [
   {
    "name": "اختراعات",
@@ -145,6 +145,12 @@
    "file": "cat-1uhhttw.json",
    "count": 113,
    "uniqueAnswers": 113
+  },
+  {
+   "name": "شخصيات أنمي",
+   "file": "anime-characters.json",
+   "count": 33,
+   "uniqueAnswers": 33
   },
   {
    "name": "شكل ورسم",
