@@ -228,7 +228,7 @@ export default function Jeem({ bank, cats, info, genMath, onExit, acc }) {
         <header className="sj-top">
           <Logo small />
           <div className="sj-tools">
-            <button className="sj-link" onClick={onExit}>اللعب الجماعي من الجوال</button>
+            <button className="sj-link" onClick={onExit}>الرئيسية</button>
             {acc && <AccountChip acc={acc} />}
           </div>
         </header>
@@ -290,7 +290,7 @@ export default function Jeem({ bank, cats, info, genMath, onExit, acc }) {
       <header className="sj-top">
         <button className="sj-link" onClick={() => set({ phase: "intro" })}>رجوع</button>
         <Logo small />
-        <span />
+        <button className="sj-link" onClick={onExit}>الرئيسية</button>
       </header>
       <h1 className="sj-h1">الفرق</h1>
       <div className="sj-teams-setup">
@@ -332,7 +332,7 @@ export default function Jeem({ bank, cats, info, genMath, onExit, acc }) {
         <header className="sj-top">
           <button className="sj-link" onClick={() => set({ phase: "setup" })}>رجوع</button>
           <Logo small />
-          <span />
+          <button className="sj-link" onClick={onExit}>الرئيسية</button>
         </header>
         <div className="sj-catbar">
           <div>
@@ -557,7 +557,7 @@ export default function Jeem({ bank, cats, info, genMath, onExit, acc }) {
         </div>
         <div className="sj-hero-cta">
           <button className="sj-btn sj-btn-main" onClick={() => { endGame(); startNew(); }}>لعبة جديدة</button>
-          <button className="sj-btn sj-btn-ghost" onClick={endGame}>الرئيسية</button>
+          <button className="sj-btn sj-btn-ghost" onClick={() => { endGame(); onExit(); }}>الرئيسية</button>
         </div>
       </div>
     );

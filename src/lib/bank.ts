@@ -22,8 +22,12 @@ let pending = null;
 
 export const bankReady = () => state === "ready";
 
+/* ملاحظة: لا تستخدم cache:"force-cache" هنا.
+   معناها «خذ النسخة المخزّنة ولا تسأل الخادم»، فأي لاعب فتح الموقع قبل
+   إضافة فئة يظل عنده بنك قديم للأبد. بدون هذا الخيار يسأل المتصفح الخادم
+   «تغيّر الملف؟» ويرد 304 لو ما تغيّر — سريع وصحيح. */
 async function fetchJSON(url) {
-  const r = await fetch(url, { cache: "force-cache" });
+  const r = await fetch(url);
   if (!r.ok) throw new Error(url + " → " + r.status);
   return r.json();
 }
