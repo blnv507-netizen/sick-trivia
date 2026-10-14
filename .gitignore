@@ -10,3 +10,6 @@ live/
 public/img/CAT_INFO/
 src/*.bak-*
 src/*.local-backup
+
+**/*.bak-*
+**/*.local-backup

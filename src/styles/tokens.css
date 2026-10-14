@@ -1,0 +1,50 @@
+/* ============================================================
+   هوية «هات الجواب» — مكان واحد لكل الألوان والخطوط
+   تُستورد من index.css، فهي متاحة لكل الصفحات.
+   الأسماء تبدأ بـ hj- عشان ما تتعارض مع توكنز الشاشات القديمة.
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&family=Readex+Pro:wght@300;400;500;600;700&display=swap");
+
+:root {
+  /* ---- الأرضية: كريمي، لأن صور الفئات مرسومة عليه ---- */
+  --hj-bg: #F6F2EA;
+  --hj-bg-2: #EFE9DE;
+  --hj-surface: #FFFFFF;
+  --hj-line: #E2D9CB;
+  --hj-line-soft: #EDE6DA;
+
+  /* ---- الحبر: برقوقي غامق بدل الأسود ---- */
+  --hj-ink: #2A1B2E;
+  --hj-ink-2: #6A5870;
+  --hj-ink-3: #94889B;
+
+  /* ---- اللون الأساسي: برقوقي.
+         مكمّل للبرتقالي على عجلة الألوان، فيخلي الرسومات الدافئة تنط. ---- */
+  --hj-plum: #6B3FA0;
+  --hj-plum-dk: #4E2C77;
+  --hj-plum-lt: #F1EAF8;
+  --hj-plum-ring: rgba(107, 63, 160, 0.22);
+
+  /* ---- الثانوي: فيروزي — اللون البارد الوحيد الموجود أصلاً في الصور ---- */
+  --hj-teal: #2E9E8F;
+  --hj-teal-dk: #1F7A6E;
+  --hj-teal-lt: #E6F4F1;
+
+  /* ---- دلالات ---- */
+  --hj-ok: #2E9E8F;
+  --hj-warn: #B5710A;
+  --hj-bad: #C03B52;
+
+  /* ---- خطوط ---- */
+  --hj-display: "Reem Kufi", "Lalezar", system-ui, sans-serif;
+  --hj-body: "Readex Pro", "Rubik", system-ui, sans-serif;
+
+  /* ---- مقاييس ---- */
+  --hj-r-sm: 6px;
+  --hj-r: 10px;
+  --hj-r-lg: 18px;
+  --hj-shadow: 0 1px 2px rgba(42, 27, 46, .05), 0 6px 20px rgba(42, 27, 46, .07);
+  --hj-shadow-lg: 0 2px 6px rgba(42, 27, 46, .07), 0 18px 46px rgba(42, 27, 46, .12);
+  --hj-ease: cubic-bezier(.22, 1, .36, 1);
+}
