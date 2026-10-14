@@ -1,0 +1,5 @@
+/* Tailwind بدون preflight عشان ما يتغير شكل الصفحات الحالية.
+   ننقل التنسيق لـ Tailwind صفحة صفحة، وبعدها نفعّل preflight. */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
