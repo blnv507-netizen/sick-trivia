@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { BANK } from "./bank";
+import { UNIQUE_ANSWERS } from "../lib/bank";
 
 /* ============================================================
    هات الجواب — لعبة أسئلة جماعية بين الربع
@@ -93,7 +93,8 @@ const POWERUPS = [
     desc: "السؤال الجاي: لو جاوبه الفريق الثاني غلط ينخصم منه نص القيمة" },
 ];
 // هل الفئة عندها أسئلة كافية للوحة؟ (6 إجابات مختلفة على الأقل)
-const boardReady = (c) => new Set(BANK.filter((b) => b.cat === c).map((b) => b.a)).size >= BOARD_VALUES.length;
+/* نقرأ العدد من public/data/index.json — متاح قبل ما تنزل الأسئلة نفسها */
+const boardReady = (c) => (UNIQUE_ANSWERS[c] || 0) >= BOARD_VALUES.length;
 
 const puById = (id) => POWERUPS.find((p) => p.id === id);
 const freshPowerUps = () => {

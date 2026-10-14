@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "start": "node server.js"
+    "start": "node server.js",
+    "split-bank": "node scripts/split-bank.mjs",
+    "check-bank": "node scripts/check-bank.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.117.3",

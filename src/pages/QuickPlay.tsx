@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { CAT_ART_CSS } from "../catArt";
 import { AccountChip } from "../account";
 import { PTS, DLBL, CATS, TYPED_SEC, BLIND_SHOW, VOTE_SEC, START_DELAY, REVEAL_SEC, EVENT_SEC, INTRO_SEC, CAT_INFO, catInfo, BOARD_CATS_N, TEAM_SEC, TEAM_COLORS, POWERUPS, boardReady, puById, freshPowerUps, buildBoard, ptsToDiff, EVENTS, ITEMS, itemById } from "../data/config";
-import { BANK } from "../data/bank";
+import { BANK } from "../lib/bank";
 import { rnd, genMathQ } from "../lib/math";
 import { jset, jget } from "../lib/net";
 import { norm, normNum, judgeTyped } from "../lib/judge";

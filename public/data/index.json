@@ -1,0 +1,258 @@
+{
+ "generatedAt": "2026-10-14",
+ "total": 6553,
+ "categories": [
+  {
+   "name": "اختراعات",
+   "file": "cat-1q5h70j.json",
+   "count": 51,
+   "uniqueAnswers": 51
+  },
+  {
+   "name": "أزياء الشخصيات",
+   "file": "cat-s569yy.json",
+   "count": 73,
+   "uniqueAnswers": 73
+  },
+  {
+   "name": "أعلام",
+   "file": "cat-ot02ks.json",
+   "count": 143,
+   "uniqueAnswers": 143
+  },
+  {
+   "name": "أفلام ومسلسلات",
+   "file": "cat-9wlfxa.json",
+   "count": 232,
+   "uniqueAnswers": 232
+  },
+  {
+   "name": "اقتصاد وأعمال",
+   "file": "cat-1p0gr92.json",
+   "count": 189,
+   "uniqueAnswers": 189
+  },
+  {
+   "name": "الأحداث العالمية",
+   "file": "cat-kwvq7z.json",
+   "count": 100,
+   "uniqueAnswers": 100
+  },
+  {
+   "name": "الأغرب",
+   "file": "cat-1opl8i3.json",
+   "count": 100,
+   "uniqueAnswers": 97
+  },
+  {
+   "name": "الرابط المشترك",
+   "file": "cat-132d8gi.json",
+   "count": 211,
+   "uniqueAnswers": 211
+  },
+  {
+   "name": "السبب والنتيجة",
+   "file": "cat-1j3rslk.json",
+   "count": 100,
+   "uniqueAnswers": 100
+  },
+  {
+   "name": "السعودية",
+   "file": "cat-yb10bt.json",
+   "count": 100,
+   "uniqueAnswers": 100
+  },
+  {
+   "name": "ألعاب فيديو",
+   "file": "cat-jnsyil.json",
+   "count": 221,
+   "uniqueAnswers": 221
+  },
+  {
+   "name": "أمثال ومصطلحات",
+   "file": "cat-c5vx2d.json",
+   "count": 212,
+   "uniqueAnswers": 212
+  },
+  {
+   "name": "إيموجي",
+   "file": "cat-1nver46.json",
+   "count": 181,
+   "uniqueAnswers": 181
+  },
+  {
+   "name": "تاريخ",
+   "file": "cat-owirp4.json",
+   "count": 213,
+   "uniqueAnswers": 213
+  },
+  {
+   "name": "تقنية",
+   "file": "cat-ox0fwt.json",
+   "count": 192,
+   "uniqueAnswers": 192
+  },
+  {
+   "name": "جغرافيا",
+   "file": "cat-x25euy.json",
+   "count": 100,
+   "uniqueAnswers": 100
+  },
+  {
+   "name": "حيوانات",
+   "file": "cat-1jnwzwt.json",
+   "count": 210,
+   "uniqueAnswers": 210
+  },
+  {
+   "name": "خمّن البوس",
+   "file": "cat-1hhmrya.json",
+   "count": 93,
+   "uniqueAnswers": 93
+  },
+  {
+   "name": "خمّن البوستر",
+   "file": "cat-1cclkuh.json",
+   "count": 70,
+   "uniqueAnswers": 70
+  },
+  {
+   "name": "خمّن الشيء",
+   "file": "cat-1hhn0vu.json",
+   "count": 71,
+   "uniqueAnswers": 71
+  },
+  {
+   "name": "خمّن اللعبة",
+   "file": "cat-ohiejr.json",
+   "count": 127,
+   "uniqueAnswers": 123
+  },
+  {
+   "name": "دليلين",
+   "file": "cat-1sinc6j.json",
+   "count": 123,
+   "uniqueAnswers": 123
+  },
+  {
+   "name": "رياضة",
+   "file": "cat-p0zght.json",
+   "count": 90,
+   "uniqueAnswers": 90
+  },
+  {
+   "name": "سيارات",
+   "file": "cat-1uhhttw.json",
+   "count": 113,
+   "uniqueAnswers": 113
+  },
+  {
+   "name": "شكل ورسم",
+   "file": "cat-ndndfq.json",
+   "count": 93,
+   "uniqueAnswers": 93
+  },
+  {
+   "name": "طب وصحة",
+   "file": "cat-k85jqw.json",
+   "count": 250,
+   "uniqueAnswers": 250
+  },
+  {
+   "name": "طعام ومطبخ",
+   "file": "cat-akvy5c.json",
+   "count": 100,
+   "uniqueAnswers": 100
+  },
+  {
+   "name": "عام",
+   "file": "cat-xw53.json",
+   "count": 200,
+   "uniqueAnswers": 200
+  },
+  {
+   "name": "علوم",
+   "file": "cat-t7b6w.json",
+   "count": 269,
+   "uniqueAnswers": 269
+  },
+  {
+   "name": "فضاء",
+   "file": "cat-tc3vz.json",
+   "count": 73,
+   "uniqueAnswers": 73
+  },
+  {
+   "name": "فلسفة ومنطق",
+   "file": "cat-m0cmk.json",
+   "count": 175,
+   "uniqueAnswers": 175
+  },
+  {
+   "name": "فيزياء",
+   "file": "cat-2380rf.json",
+   "count": 235,
+   "uniqueAnswers": 235
+  },
+  {
+   "name": "قبل ولا بعد؟",
+   "file": "cat-qi4n3s.json",
+   "count": 208,
+   "uniqueAnswers": 208
+  },
+  {
+   "name": "لعبة الحروف",
+   "file": "cat-ch0ls4.json",
+   "count": 476,
+   "uniqueAnswers": 475
+  },
+  {
+   "name": "لور السولز",
+   "file": "cat-12i63jn.json",
+   "count": 89,
+   "uniqueAnswers": 70
+  },
+  {
+   "name": "ماث",
+   "file": "cat-y50p.json",
+   "count": 124,
+   "uniqueAnswers": 124
+  },
+  {
+   "name": "معالم",
+   "file": "cat-pbohxw.json",
+   "count": 159,
+   "uniqueAnswers": 159
+  },
+  {
+   "name": "مقولات",
+   "file": "cat-3ve2v0.json",
+   "count": 100,
+   "uniqueAnswers": 92
+  },
+  {
+   "name": "منطق وألغاز",
+   "file": "cat-eqinps.json",
+   "count": 147,
+   "uniqueAnswers": 109
+  },
+  {
+   "name": "مين الشخصية؟",
+   "file": "cat-ci0q4h.json",
+   "count": 128,
+   "uniqueAnswers": 128
+  },
+  {
+   "name": "وش الغرض؟",
+   "file": "cat-am7ioh.json",
+   "count": 73,
+   "uniqueAnswers": 73
+  },
+  {
+   "name": "Engineering Questions",
+   "file": "engineering-questions-17fbhhc.json",
+   "count": 339,
+   "uniqueAnswers": 339
+  }
+ ]
+}

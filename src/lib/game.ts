@@ -1,6 +1,5 @@
 // @ts-nocheck
 import { CATS } from "../data/config";
-import { BANK } from "../data/bank";
 import { norm } from "./judge";
 
 /* ---------- عناصر مساعدة ---------- */
@@ -41,6 +40,7 @@ const drawCats = (h) => {
 };
 
 /* عدد الأسئلة بكل فئة + غلاف الفئة */
-const CAT_COUNT = BANK.reduce((m, q) => { m[q.cat] = (m[q.cat] || 0) + 1; return m; }, {});
+/* العدّادات تجي جاهزة من index.json */
+import { CAT_COUNT } from "./bank";
 
 export { shuffle, genCode, genPid, MAX_SLOTS, roomKey, slotKey, qKey, aKey, isEventSlot, NO_DIFF, noDiff, INVENTIVE, CLASSIC, VOTE_N, drawCats, CAT_COUNT };

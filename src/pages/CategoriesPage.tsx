@@ -2,7 +2,7 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import Jeem from "../Jeem";
-import { BANK } from "../data/bank";
+import { BANK } from "../lib/bank";
 import { CATS, CAT_INFO } from "../data/config";
 import { genMathQ } from "../lib/math";
 
