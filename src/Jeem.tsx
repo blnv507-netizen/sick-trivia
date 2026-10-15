@@ -94,6 +94,37 @@ export default function Jeem({ bank, cats, info, genMath, onExit, acc }) {
     return () => clearTimeout(t);
   }, [S.phase]);
 
+  // نافذة "!" بكروت الفئات: وحدة مفتوحة بس. الضغط برا يقفلها، وما يختار الكرت اللي تحته
+  const [infoCat, setInfoCat] = useState(null);
+  const swallowClick = useRef(false);
+  // مستمع دايم: الضغطة اللي قفلت النافذة تنبلع قبل ما توصل لـ React (النافذة تنقفل قبل ما توصل الضغطة)
+  useEffect(() => {
+    const click = (e) => { if (swallowClick.current) { swallowClick.current = false; e.stopPropagation(); e.preventDefault(); } };
+    document.addEventListener("click", click, true);
+    return () => document.removeEventListener("click", click, true);
+  }, []);
+  useEffect(() => {
+    if (!infoCat) return;
+    const down = (e) => {
+      if (e.target.closest(".sj-cat-pop, .sj-cat-info")) return;
+      swallowClick.current = true;
+      setTimeout(() => { swallowClick.current = false; }, 600);   // لو ما جت ضغطة (سحب مثلًا) ما نبلع اللي بعدها
+      setInfoCat(null);
+    };
+    const key = (e) => {
+      if (e.key !== "Escape") return;
+      document.querySelector(`.sj-cat-info[aria-expanded="true"]`)?.focus();
+      setInfoCat(null);
+    };
+    document.addEventListener("pointerdown", down, true);
+    document.addEventListener("keydown", key);
+    return () => {
+      document.removeEventListener("pointerdown", down, true);
+      document.removeEventListener("keydown", key);
+    };
+  }, [infoCat]);
+  useEffect(() => { if (S.phase !== "cats") setInfoCat(null); }, [S.phase]);
+
   // نبض العداد بشاشة السؤال
   useEffect(() => {
     if (S.phase !== "q") return;
@@ -364,17 +395,27 @@ export default function Jeem({ bank, cats, info, genMath, onExit, acc }) {
           {list.map((c) => {
             const i = S.picked.indexOf(c); const o = i >= 0 ? owner(i) : null;
             const count = c === "رياضيات" ? "∞" : (byCat[c] || []).length;
+            const open = infoCat === c;
+            const popId = "sj-pop-" + c.replace(/[^\p{L}\p{N}]+/gu, "-");
+            /* الكرت حاوية فيها زرين جنب بعض (زر داخل زر ما يصير): الاختيار، و"!" للمعلومات */
             return (
-              <button key={c} className={"sj-cat" + (i >= 0 ? " on" : "")} disabled={i < 0 && S.picked.length >= 6}
-                style={{ "--tc": i >= 0 ? (o != null ? S.teams[o].color : "var(--sand)") : "transparent" }}
-                onClick={() => togglePick(c)}>
-                <CatArt name={c} icon={(info[c] || {}).icon} img={(info[c] || {}).img} />
-                <span className="sj-cat-body">
+              <div key={c} className={"sj-cat" + (i >= 0 ? " on" : "") + (open ? " open" : "")}
+                style={{ "--tc": i >= 0 ? (o != null ? S.teams[o].color : "var(--sand)") : "transparent" }}>
+                <button className="sj-cat-pick" disabled={i < 0 && S.picked.length >= 6} aria-pressed={i >= 0}
+                  onClick={() => togglePick(c)}>
+                  <CatArt name={c} icon={(info[c] || {}).icon} img={(info[c] || {}).img} />
                   <b>{c}</b>
-                  <span className="sj-cat-desc">{(info[c] || {}).desc || ""}</span>
-                  <span className="sj-cat-n">{count} سؤال</span>
-                </span>
-              </button>
+                  {i >= 0 && <span className="sj-cat-check" aria-hidden="true">✓</span>}
+                </button>
+                <button className="sj-cat-info" aria-label={"معلومات عن فئة " + c} aria-expanded={open} aria-controls={open ? popId : undefined}
+                  onClick={() => setInfoCat(open ? null : c)}>!</button>
+                {open && (
+                  <div className="sj-cat-pop" id={popId} role="dialog" aria-label={c}>
+                    <p>{(info[c] || {}).desc || "أسئلة متنوعة من هذي الفئة."}</p>
+                    <span className="sj-cat-n">{count === "∞" ? "أسئلة تتولد كل مرة" : `${count} سؤال`}</span>
+                  </div>
+                )}
+              </div>
             );
           })}
         </div>
@@ -702,18 +743,37 @@ ${CAT_ART_CSS}
 .sj-search{flex:1;background:var(--sur);border:0;border-radius:12px;padding:12px 16px;color:var(--sand);font-size:16px;}
 .sj-search:focus{outline:2px solid var(--amber);}
 .sj-catgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;padding:0 clamp(16px,3vw,40px);}
-.sj-cat{position:relative;text-align:right;background:var(--bg2);box-shadow:var(--shadow);border-radius:16px;padding:0;overflow:hidden;display:flex;flex-direction:column;
-  transition:background .15s,transform .16s var(--ease);}
-.sj-cat::before{content:"";position:absolute;inset:0;z-index:1;border-radius:inherit;pointer-events:none;box-shadow:inset 0 0 0 3px var(--tc);}
-.sj-cat .catArt{height:92px;border-radius:0;--emoji:44px;}
-.sj-cat:hover:not(:disabled){background:var(--sur);}
-.sj-cat:active:not(:disabled){transform:scale(.98);}
-.sj-cat:disabled{opacity:.35;}
+/* كرت الفئة: الغلاف مربع ياخذ عرض الكرت، وتحته الاسم بس. الوصف والعدد ورا زر "!" */
+.sj-catgrid{isolation:isolate;}   /* طبقات الكروت تبقى داخل الشبكة، تحت شريط "ابدأ اللعب" الثابت */
+.sj-cat{position:relative;background:var(--bg2);box-shadow:var(--shadow);border-radius:16px;transition:background .15s,transform .16s var(--ease);}
+.sj-cat::before{content:"";position:absolute;inset:0;z-index:2;border-radius:inherit;pointer-events:none;box-shadow:inset 0 0 0 3px var(--tc);transition:box-shadow .15s;}
+.sj-cat.open{z-index:4;}
+.sj-cat-pick{display:flex;flex-direction:column;width:100%;padding:0;border:0;background:none;color:inherit;text-align:center;border-radius:inherit;overflow:hidden;cursor:pointer;}
+.sj-cat .catArt{width:100%;height:auto;aspect-ratio:1/1;border-radius:0;--emoji:64px;}
+.sj-cat .catArt img{transition:transform .25s var(--ease);}
+.sj-cat-pick b{display:block;padding:10px 10px 12px;font-size:16px;line-height:1.35;}
+.sj-cat:hover:has(.sj-cat-pick:not(:disabled)){background:var(--sur);}
+.sj-cat-pick:hover:not(:disabled) .catArt img{transform:scale(1.04);}
+.sj-cat:active:has(.sj-cat-pick:active:not(:disabled)){transform:scale(.98);}
+.sj-cat-pick:disabled{opacity:.35;cursor:not-allowed;}
+.sj-cat-pick:focus-visible,.sj-cat-info:focus-visible{outline:3px solid var(--amber);outline-offset:2px;}
+/* مختارة: حلقة أعرض بلون الفريق + علامة صح + شريط الاسم ملوّن */
 .sj-cat.on{background:var(--sur);}
-.sj-cat-body{display:flex;flex-direction:column;gap:3px;padding:10px 14px 14px;flex:1;}
-.sj-cat b{font-size:16px;line-height:1.35;}
-.sj-cat-desc{font-size:13px;color:var(--dim);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.sj-cat-n{margin-top:auto;padding-top:4px;font-size:12px;color:var(--dim);}
+.sj-cat.on::before{box-shadow:inset 0 0 0 4px var(--tc);}
+.sj-cat.on .sj-cat-pick b{background:color-mix(in srgb,var(--tc) 16%,transparent);}
+.sj-cat-check{position:absolute;top:8px;inset-inline-start:8px;z-index:3;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;
+  background:var(--tc);color:#fff;font-size:16px;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,.3);}
+/* زر "!" بالزاوية العلوية اليسرى (نهاية السطر بالعربي)، شكله 32px ومساحة اللمس 44px */
+.sj-cat-info{position:absolute;top:8px;inset-inline-end:8px;z-index:3;width:32px;height:32px;padding:0;border:0;border-radius:50%;display:grid;place-items:center;
+  background:rgba(22,17,15,.62);color:#fff;font-size:17px;font-weight:800;line-height:1;cursor:pointer;backdrop-filter:blur(4px);transition:background .15s;}
+.sj-cat-info::after{content:"";position:absolute;inset:-6px;border-radius:50%;}
+.sj-cat-info:hover,.sj-cat-info[aria-expanded="true"]{background:var(--sand);}
+.sj-cat-pop{position:absolute;top:48px;inset-inline:8px;z-index:5;padding:12px 14px;border-radius:12px;background:var(--sur);color:var(--sand);
+  box-shadow:0 0 0 1px var(--line),0 12px 32px rgba(0,0,0,.28);text-align:right;animation:sjPop .14s var(--ease);}
+.sj-cat-pop p{margin:0 0 8px;font-size:14px;line-height:1.6;}
+.sj-cat-n{font-size:12.5px;font-weight:700;color:var(--dim);}
+@keyframes sjPop{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:none;}}
+@media (prefers-reduced-motion:reduce){.sj-cat-pop{animation:none;}.sj-cat .catArt img{transition:none;}}
 
 /* ---------- اللوحة ---------- */
 .sj-boardpage{min-height:100vh;display:flex;flex-direction:column;}
@@ -841,8 +901,8 @@ ${CAT_ART_CSS}
   .sj-how ol{grid-template-columns:1fr;}
   .sj-board{grid-template-columns:1fr;}
   .sj-catgrid{grid-template-columns:repeat(2,1fr);}
-  .sj-cat .catArt{height:72px;--emoji:34px;}
-  .sj-cat-desc{display:none;}
+  .sj-cat .catArt{--emoji:48px;}
+  .sj-cat-pick b{font-size:14.5px;padding:8px 8px 10px;}
   .sj-scores{flex-wrap:wrap;}
   .sj-score{flex:1 1 40%;}
   .sj-qtop{grid-template-columns:1fr;justify-items:center;}
