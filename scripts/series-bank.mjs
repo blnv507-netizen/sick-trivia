@@ -1,10 +1,10 @@
-/* ينشر بنك مسلسل كفئة وحدة — "مسلسلات" (seriesBank.ts) أو "The Wire" (wireBank.ts):
+/* ينشر بنك مسلسل كفئة وحدة — "مسلسلات" (seriesBank.ts) أو "The Wire" (wireBank.ts) أو "Game of Thrones" (gotBank.ts):
      1) يضبط img/aImg في ملف البنك: يشيل أي مسار صورته مو موجودة، ويعبّي
         الفاضي من مجلد صور الفئة — NNN.webp للجواب و NNNq.webp للسؤال
         (NNN رقم السؤال بالبنك، يبدأ من 001). الصورة المعاد استخدامها تبقى
         تأشر على ملف سؤال ثاني (أو فئة ثانية). السؤال اللي بلا صورة ينعرض نص بس
      2) يكتب ملف الفئة في public/data ويحدّث index.json
-   شغّله: npm run series-bank    أو    npm run wire-bank
+   شغّله: npm run series-bank / wire-bank / got-bank
    (بعد إضافة صور أو تعديل ملف البنك) */
 import fs from "node:fs";
 import path from "node:path";
@@ -13,6 +13,7 @@ import { fileURLToPath } from "node:url";
 const BANKS = {
   series: { src: "src/data/seriesBank.ts", img: "series", cat: "مسلسلات", file: "series.json" },
   wire: { src: "src/data/wireBank.ts", img: "the-wire", cat: "The Wire", file: "the-wire.json" },
+  got: { src: "src/data/gotBank.ts", img: "game-of-thrones", cat: "Game of Thrones", file: "game-of-thrones.json" },
 };
 const B = BANKS[process.argv[2] || "series"];
 if (!B) throw new Error("بنك غير معروف: " + process.argv[2] + " — المتاح: " + Object.keys(BANKS).join(", "));

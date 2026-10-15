@@ -1,6 +1,6 @@
 {
  "generatedAt": "2026-10-15",
- "total": 7516,
+ "total": 7636,
  "categories": [
   {
    "name": "أحداث أفلام",
@@ -277,6 +277,12 @@
    "file": "engineering-questions-17fbhhc.json",
    "count": 339,
    "uniqueAnswers": 339
+  },
+  {
+   "name": "Game of Thrones",
+   "file": "game-of-thrones.json",
+   "count": 120,
+   "uniqueAnswers": 120
   },
   {
    "name": "The Wire",

@@ -12,7 +12,8 @@
     "anime-bank": "node scripts/anime-bank.mjs",
     "movie-plot-bank": "node scripts/movie-plot-bank.mjs",
     "series-bank": "node scripts/series-bank.mjs series",
-    "wire-bank": "node scripts/series-bank.mjs wire"
+    "wire-bank": "node scripts/series-bank.mjs wire",
+    "got-bank": "node scripts/series-bank.mjs got"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.117.3",
