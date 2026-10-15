@@ -1,9 +1,8 @@
-/* ينشر بنك الأنمي (src/data/animeBank.ts) كفئات، فئة لكل أنمي:
+/* ينشر بنك الأنمي (src/data/animeBank.ts) كفئة وحدة "أنمي":
      1) يضبط img/aImg في animeBank.ts حسب الصور الموجودة فعلاً في
         public/img/anime/<slug>/ — NN.webp للجواب و NNq.webp للسؤال
         (NN رقم السؤال داخل الأنمي، يبدأ من 01)
-     2) يكتب public/data/anime-<slug>.json ويحدّث index.json
-     3) يجهّز cover.webp لكل أنمي (نسخة من أول صورة سؤال) لو ما فيه غلاف
+     2) يكتب public/data/anime.json (كل سؤال يبدأ بـ "من أنمي X: ") ويحدّث index.json
    شغّله: npm run anime-bank    (بعد إضافة صور أو تعديل animeBank.ts) */
 import fs from "node:fs";
 import path from "node:path";
@@ -13,6 +12,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SRC = path.join(ROOT, "src/data/animeBank.ts");
 const IMG = path.join(ROOT, "public/img/anime");
 const OUT = path.join(ROOT, "public/data");
+const CAT = "أنمي", FILE = "anime.json";
 
 const raw = fs.readFileSync(SRC, "utf8");
 const { ANIME_LIST, animeSlug } = new Function(raw.replace(/export const /g, "const ") + "\nreturn { ANIME_LIST, animeSlug };")();
@@ -45,22 +45,20 @@ fs.writeFileSync(SRC, lines.join("\n"), "utf8");
 
 const aKey = (q) => String(q.a || "").trim().toLowerCase();
 const index = JSON.parse(fs.readFileSync(path.join(OUT, "index.json"), "utf8"));
-index.categories = index.categories.filter((c) => !byCat.has(c.name));
+index.categories = index.categories.filter((c) => c.name !== CAT && !byCat.has(c.name));
 
-for (const [cat, list] of byCat) {
-  const slug = animeSlug(cat);
-  const file = "anime-" + slug + ".json";
-  fs.writeFileSync(path.join(OUT, file), JSON.stringify(list), "utf8");
-  index.categories.push({ name: cat, file, count: list.length, uniqueAnswers: new Set(list.map(aKey)).size });
-
-  const cover = path.join(IMG, slug, "cover.webp");
-  const first = list.find((q) => q.img);
-  if (!fs.existsSync(cover) && first) fs.copyFileSync(path.join(ROOT, "public", first.img), cover);
+/* كل الأنميات فئة وحدة؛ cat في animeBank.ts يبقى اسم الأنمي ويصير بادئة للسؤال */
+const merged = [];
+for (const [anime, list] of byCat) {
+  for (const q of list) merged.push({ ...q, cat: CAT, q: `من أنمي ${anime}: ${q.q}` });
 
   const qi = list.filter((q) => q.img).length, ai = list.filter((q) => q.aImg).length;
   const noImg = list.map((q, i) => (q.img || q.aImg ? null : pad(i + 1))).filter(Boolean);
-  console.log(`✓ ${cat}: ${list.length} سؤال — ${qi} صورة سؤال، ${ai} صورة جواب` + (noImg.length ? ` — بلا صورة: ${noImg.join(" ")}` : ""));
+  console.log(`✓ ${anime}: ${list.length} سؤال — ${qi} صورة سؤال، ${ai} صورة جواب` + (noImg.length ? ` — بلا صورة: ${noImg.join(" ")}` : ""));
 }
+fs.writeFileSync(path.join(OUT, FILE), JSON.stringify(merged), "utf8");
+index.categories.push({ name: CAT, file: FILE, count: merged.length, uniqueAnswers: new Set(merged.map(aKey)).size });
+console.log(`✓ ${CAT}: ${merged.length} سؤال في ${FILE}`);
 
 index.categories.sort((a, b) => a.name.localeCompare(b.name, "ar"));
 index.total = index.categories.reduce((t, c) => t + c.count, 0);

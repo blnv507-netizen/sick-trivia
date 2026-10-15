@@ -75,6 +75,12 @@
    "uniqueAnswers": 212
   },
   {
+   "name": "أنمي",
+   "file": "anime.json",
+   "count": 252,
+   "uniqueAnswers": 252
+  },
+  {
    "name": "إيموجي",
    "file": "cat-1nver46.json",
    "count": 181,
@@ -255,94 +261,10 @@
    "uniqueAnswers": 73
   },
   {
-   "name": "Attack on Titan",
-   "file": "anime-attack-on-titan.json",
-   "count": 18,
-   "uniqueAnswers": 18
-  },
-  {
-   "name": "Berserk",
-   "file": "anime-berserk.json",
-   "count": 18,
-   "uniqueAnswers": 18
-  },
-  {
-   "name": "Bleach",
-   "file": "anime-bleach.json",
-   "count": 18,
-   "uniqueAnswers": 18
-  },
-  {
-   "name": "Death Note",
-   "file": "anime-death-note.json",
-   "count": 18,
-   "uniqueAnswers": 18
-  },
-  {
-   "name": "Demon Slayer",
-   "file": "anime-demon-slayer.json",
-   "count": 18,
-   "uniqueAnswers": 18
-  },
-  {
-   "name": "Dr. Stone",
-   "file": "anime-dr-stone.json",
-   "count": 18,
-   "uniqueAnswers": 18
-  },
-  {
    "name": "Engineering Questions",
    "file": "engineering-questions-17fbhhc.json",
    "count": 339,
    "uniqueAnswers": 339
-  },
-  {
-   "name": "Fairy Tail",
-   "file": "anime-fairy-tail.json",
-   "count": 18,
-   "uniqueAnswers": 18
-  },
-  {
-   "name": "Hajime no Ippo",
-   "file": "anime-hajime-no-ippo.json",
-   "count": 18,
-   "uniqueAnswers": 18
-  },
-  {
-   "name": "Hunter x Hunter",
-   "file": "anime-hunter-x-hunter.json",
-   "count": 18,
-   "uniqueAnswers": 18
-  },
-  {
-   "name": "Jujutsu Kaisen",
-   "file": "anime-jujutsu-kaisen.json",
-   "count": 18,
-   "uniqueAnswers": 18
-  },
-  {
-   "name": "Naruto",
-   "file": "anime-naruto.json",
-   "count": 18,
-   "uniqueAnswers": 18
-  },
-  {
-   "name": "One Piece",
-   "file": "anime-one-piece.json",
-   "count": 18,
-   "uniqueAnswers": 18
-  },
-  {
-   "name": "Solo Leveling",
-   "file": "anime-solo-leveling.json",
-   "count": 18,
-   "uniqueAnswers": 18
-  },
-  {
-   "name": "The Seven Deadly Sins",
-   "file": "anime-seven-deadly-sins.json",
-   "count": 18,
-   "uniqueAnswers": 18
   }
  ]
 }
