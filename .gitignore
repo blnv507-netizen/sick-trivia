@@ -13,3 +13,6 @@ src/*.local-backup
 
 **/*.bak-*
 **/*.local-backup
+
+# صور الأنمي الأصلية — النسخ المحوّلة في public/img/anime/
+raw-images/

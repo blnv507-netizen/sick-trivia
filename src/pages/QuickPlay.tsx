@@ -10,6 +10,7 @@ import { jset, jget } from "../lib/net";
 import { norm, normNum, judgeTyped } from "../lib/judge";
 import { shuffle, genCode, genPid, MAX_SLOTS, roomKey, slotKey, qKey, aKey, isEventSlot, noDiff, INVENTIVE, CLASSIC, drawCats, CAT_COUNT } from "../lib/game";
 import { CatArt, Sadu } from "../components/ui";
+import { isBoxImg } from "../data/animeBank";
 import { FinalCeremony, TopTenOverlay } from "../components/effects";
 
 function App({ acc }) {
@@ -1319,6 +1320,9 @@ function App({ acc }) {
       transition:transform .3s ease; background:var(--sur);}
     /* مع الزوم نحتاج قص عشان التقريب يبان */
     .qPhoto.zoomed img{aspect-ratio:16/10; object-fit:cover; max-height:none;}
+    /* صندوق ثابت: كل صورة بنفس العرض ومربعة، صورة 500px تطلع بحجم صورة 1000px */
+    .qPhoto.box{width:min(100%, 420px); margin-inline:auto;}
+    .qPhoto.box img{width:100%; aspect-ratio:1/1; height:auto; max-height:none; object-fit:contain; object-position:center;}
     .catPick{display:flex; flex-wrap:wrap; gap:8px; max-height:260px; overflow-y:auto;
       background:var(--sur); border:1px solid var(--line); border-radius:var(--radius); padding:var(--space-md);}
     .catPickItem{display:flex; flex-direction:column; align-items:center; gap:4px; min-width:90px; flex:0 0 auto;}
@@ -2393,9 +2397,9 @@ function App({ acc }) {
         {muted && <div className="hiddenQ">🛑 استريح — ما تشارك بهذا السؤال</div>}
         <div className="card jCard">
           {b.svg && <div className="qImg" dangerouslySetInnerHTML={{ __html: b.svg }} />}
-          {b.aImg ? <div className="qPhoto"><img key={b.aImg} src={b.aImg} alt=""
+          {b.aImg ? <div key={b.aImg} className={"qPhoto" + (isBoxImg(b.aImg) ? " box" : "")}><img src={b.aImg} alt=""
             onError={(ev) => { ev.currentTarget.parentElement.style.display = "none"; }} /></div>
-          : b.img && <div className={"qPhoto" + (b.zoom ? " zoomed" : "")}><img src={b.img} alt=""
+          : b.img && <div key={b.img} className={"qPhoto" + (b.zoom ? " zoomed" : "") + (isBoxImg(b.img) ? " box" : "")}><img src={b.img} alt=""
             onError={(ev) => { ev.currentTarget.parentElement.style.display = "none"; }}
             style={b.zoom ? {
             transform: `scale(${b.zoom.s || 2})`,
@@ -2454,7 +2458,8 @@ function App({ acc }) {
         <div className="card">
           <div className="meta"><span className="badge">{r.cat}</span><span className="ptsTile">{r.pts}</span></div>
           {r.qSvg && <div className="qImg" style={{ margin: "10px 0" }} dangerouslySetInnerHTML={{ __html: r.qSvg }} />}
-          {r.qImg && <div className="qPhoto" style={{ margin: "10px 0" }}><img src={r.qImg} alt="" /></div>}
+          {r.qImg && <div key={r.qImg} className={"qPhoto" + (isBoxImg(r.qImg) ? " box" : "")} style={{ margin: "10px auto" }}><img src={r.qImg} alt=""
+            onError={(ev) => { ev.currentTarget.parentElement.style.display = "none"; }} /></div>}
           <p style={{ color: "var(--dim)", fontSize: 14, marginTop: 8 }}>{r.qText}</p>
           <div style={{ height: 10 }} />
           <div className="correctBox">الجواب: {r.correctText}</div>
@@ -2730,7 +2735,7 @@ function App({ acc }) {
             }}>
               {q.svg && <div className="qImg" dangerouslySetInnerHTML={{ __html: q.svg }} />}
               {q.img && (
-                <div className={"qPhoto" + (q.zoom ? " zoomed" : "")}>
+                <div key={q.img} className={"qPhoto" + (q.zoom ? " zoomed" : "") + (isBoxImg(q.img) ? " box" : "")}>
                   <img src={q.img} alt="" loading="eager"
                     onError={(ev) => { ev.currentTarget.parentElement.style.display = "none"; }}
                     style={q.zoom ? {
@@ -2794,7 +2799,7 @@ function App({ acc }) {
         <div className="card">
           {r.qSvg && <div className="qImg" style={{ marginBottom: 10 }} dangerouslySetInnerHTML={{ __html: r.qSvg }} />}
           {r.qImg && (
-            <div className="qPhoto" style={{ marginBottom: 10 }}>
+            <div key={r.qImg} className={"qPhoto" + (isBoxImg(r.qImg) ? " box" : "")} style={{ marginBottom: 10 }}>
               <img src={r.qImg} alt="" onError={(ev) => { ev.currentTarget.parentElement.style.display = "none"; }} />
               {!r.aImgOn && <span className="badge" style={{ display: "block", textAlign: "center", marginTop: 6 }}>الصورة كاملة</span>}
             </div>

@@ -8,6 +8,7 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { AccountChip } from "./account";
 import CatArt, { CAT_ART_CSS, catTint } from "./catArt";
+import { isBoxImg } from "./data/animeBank";
 
 const SAVE_KEY = "sj:classic:v1";
 const SEEN_KEY = "sj:classic:seen";
@@ -475,7 +476,8 @@ export default function Jeem({ bank, cats, info, genMath, onExit, acc }) {
           <h1 className={"sj-qtext" + (opts || q.img || q.svg ? " media" : "")} dir="auto">{q.q}</h1>
           {q.svg && <div className="sj-qsvg" dangerouslySetInnerHTML={{ __html: q.svg }} />}
           {(S.reveal && q.aImg ? q.aImg : q.img) && (
-            <img className="sj-qimg" src={S.reveal && q.aImg ? q.aImg : q.img} alt="" />
+            <img key={S.reveal && q.aImg ? q.aImg : q.img} className={"sj-qimg" + (isBoxImg(S.reveal && q.aImg ? q.aImg : q.img) ? " box" : "")}
+              src={S.reveal && q.aImg ? q.aImg : q.img} alt="" onError={(ev) => { ev.currentTarget.style.display = "none"; }} />
           )}
           {opts && (
             <div className="sj-opts">
@@ -764,6 +766,7 @@ ${CAT_ART_CSS}
 .sj-qtext{font-size:clamp(26px,3.6vw,52px);font-weight:700;line-height:1.45;max-width:26ch;text-wrap:balance;}
 .sj-qtext.media{font-size:clamp(22px,2.6vw,38px);}
 .sj-qimg{max-width:min(92vw,820px);max-height:46vh;border-radius:16px;object-fit:contain;}
+.sj-qimg.box{width:min(92vw,46vh,520px);height:auto;aspect-ratio:1/1;max-width:none;max-height:none;background:var(--sur);}
 .sj-qsvg{width:min(80vw,460px);}
 .sj-qsvg svg{width:100%;height:auto;--sand:var(--hj-bg);}
 .sj-opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:min(92vw,860px);}

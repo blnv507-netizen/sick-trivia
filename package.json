@@ -8,7 +8,8 @@
     "build": "vite build",
     "start": "node server.js",
     "split-bank": "node scripts/split-bank.mjs",
-    "check-bank": "node scripts/check-bank.mjs"
+    "check-bank": "node scripts/check-bank.mjs",
+    "anime-bank": "node scripts/anime-bank.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.117.3",
@@ -21,6 +22,7 @@
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
+    "sharp": "^0.35.5",
     "typescript": "^7.0.2",
     "vite": "^8.2.1"
   }
