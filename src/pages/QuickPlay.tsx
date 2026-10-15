@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router";
 import { CAT_ART_CSS } from "../catArt";
 import { AccountChip } from "../account";
-import { PTS, DLBL, CATS, TYPED_SEC, BLIND_SHOW, VOTE_SEC, START_DELAY, REVEAL_SEC, EVENT_SEC, INTRO_SEC, CAT_INFO, catInfo, BOARD_CATS_N, TEAM_SEC, TEAM_COLORS, POWERUPS, boardReady, puById, freshPowerUps, buildBoard, ptsToDiff, EVENTS, ITEMS, itemById } from "../data/config";
+import { PTS, DLBL, CATS, HOST_JUDGED, TYPED_CATS, TYPED_SEC, BLIND_SHOW, VOTE_SEC, START_DELAY, REVEAL_SEC, EVENT_SEC, INTRO_SEC, CAT_INFO, catInfo, BOARD_CATS_N, TEAM_SEC, TEAM_COLORS, POWERUPS, boardReady, puById, freshPowerUps, buildBoard, ptsToDiff, EVENTS, ITEMS, itemById } from "../data/config";
 import { BANK } from "../lib/bank";
 import { rnd, genMathQ } from "../lib/math";
 import { jset, jget } from "../lib/net";
@@ -12,6 +12,9 @@ import { shuffle, genCode, genPid, MAX_SLOTS, roomKey, slotKey, qKey, aKey, isEv
 import { CatArt, Sadu } from "../components/ui";
 import { isBoxImg } from "../data/animeBank";
 import { FinalCeremony, TopTenOverlay } from "../components/effects";
+
+// اللعب هنا كتابي ويصححه judgeTyped، فأسئلة الفئات اللي يحكمها المضيف ما تدخل
+const typedBank = () => BANK.filter((b) => !HOST_JUDGED.includes(b.cat));
 
 function App({ acc }) {
   const navigate = useNavigate();
@@ -124,7 +127,7 @@ function App({ acc }) {
     }
     if (!cand.length) {
       // احتياطي: من فئات الروم المختارة فقط
-      const scope = h.picked && h.picked.length ? BANK.filter((b) => h.picked.includes(b.cat)) : BANK;
+      const scope = h.picked && h.picked.length ? BANK.filter((b) => h.picked.includes(b.cat)) : typedBank();
       cand = scope.map((b) => ({ type: "typed", ...b })).filter((q) => !h.used.has(qKey(q)));
     }
     if (!cand.length) cand = [genMathQ(dT)];
@@ -451,7 +454,7 @@ function App({ acc }) {
     if (!q) {
       // الاحتياطي يحترم الفئة المختارة، ثم فئات الروم، ثم الكل
       const inCat = BANK.filter((b) => b.cat === cat);
-      const inRoom = h.picked && h.picked.length ? BANK.filter((b) => h.picked.includes(b.cat)) : BANK;
+      const inRoom = h.picked && h.picked.length ? BANK.filter((b) => h.picked.includes(b.cat)) : typedBank();
       const base = inCat.length ? inCat : inRoom;
       const pool = base.filter((b) => !h.used.has(qKey(b)));
       const pick = (pool.length ? pool : base)[Math.floor(Math.random() * (pool.length || base.length))];
@@ -863,7 +866,7 @@ function App({ acc }) {
       code: c, total: cfg.count, questions: [], used: new Set(), qIndex: 0, qStart: 0, phase: "lobby",
       players: { [me.pid]: { name: me.name.trim(), score: 0 } },
       answers: {}, votes: {}, reveal: null, judging: false, currentEvent: null, eventPool: null, ver: 0,
-      items: { [me.pid]: [] }, fx: {}, itemLog: [], seen: {}, doneUses: {}, usedAns: new Set(), picked: cfg.picked || [], stageStart: 0, autoNext: true,
+      items: { [me.pid]: [] }, fx: {}, itemLog: [], seen: {}, doneUses: {}, usedAns: new Set(), picked: (cfg.picked || []).filter((c) => TYPED_CATS.includes(c)), stageStart: 0, autoNext: true,
       catMode: "vote", pickerPid: null, catOptions: [], catDeck: [], catStart: 0, chosenCat: null, rolled: 0, catCount: {},
       seenAll: new Set(Array.isArray(prevSeen) ? prevSeen : []),
       mode: cfg.mode || "classic",
@@ -2008,7 +2011,7 @@ function App({ acc }) {
   const Setup = () => {
     const isBoard = cfg.mode === "board";
     const q = norm(catQ || "");
-    const list = CATS.filter((c) => !q || norm(c).includes(q) || norm((CAT_INFO[c] || {}).desc || "").includes(q));
+    const list = TYPED_CATS.filter((c) => !q || norm(c).includes(q) || norm((CAT_INFO[c] || {}).desc || "").includes(q));
     const togglePick = (c) => setCfg({ ...cfg, picked: cfg.picked.includes(c) ? cfg.picked.filter((x) => x !== c) : [...cfg.picked, c] });
     const pickedTxt = isBoard
       ? (cfg.picked.length ? `${Math.min(cfg.picked.length, BOARD_CATS_N)} مختارة${cfg.picked.length < BOARD_CATS_N ? ` + ${BOARD_CATS_N - cfg.picked.length} عشوائية` : ""}` : `${BOARD_CATS_N} فئات عشوائية`)
@@ -2049,7 +2052,7 @@ function App({ acc }) {
             </div>
             <div className="pkActs">
               <input className="inp pkSearch" placeholder="ابحث عن فئة" value={catQ} onChange={(e) => setCatQ(e.target.value)} aria-label="ابحث عن فئة" />
-              {!isBoard && <button className="chip" onClick={() => setCfg({ ...cfg, picked: [...CATS] })}>حدد الكل</button>}
+              {!isBoard && <button className="chip" onClick={() => setCfg({ ...cfg, picked: [...TYPED_CATS] })}>حدد الكل</button>}
               <button className="chip" disabled={!cfg.picked.length} onClick={() => setCfg({ ...cfg, picked: [] })}>{isBoard ? "عشوائي" : "مسح الاختيار"}</button>
             </div>
           </div>

@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { CATS } from "../data/config";
+import { TYPED_CATS } from "../data/config";
 import { norm } from "./judge";
 
 /* ---------- عناصر مساعدة ---------- */
@@ -18,12 +18,14 @@ const NO_DIFF = ["لور السولز"];
 const noDiff = (c) => NO_DIFF.includes(c);
 
 const INVENTIVE = ["فلسفة ومنطق", "طب وصحة", "اقتصاد وأعمال", "معالم", "مقولات", "مين الشخصية؟", "خمّن البوس", "خمّن اللعبة", "خمّن الشيء", "خمّن البوستر", "لعبة الحروف", "منطق وألغاز", "أمثال ومصطلحات", "طعام ومطبخ", "حيوانات", "فضاء", "السعودية", "سيارات", "اختراعات", "أعلام", "شكل ورسم", "وش الغرض؟", "الرابط المشترك", "قبل ولا بعد؟", "إيموجي", "دليلين", "الأغرب"];
-const CLASSIC = CATS.filter((c) => !INVENTIVE.includes(c));
+// هذا الملف للعب الكتابي فقط، فالفئات اللي يحكمها المضيف ما تدخل
+const CLASSIC = TYPED_CATS.filter((c) => !INVENTIVE.includes(c));
 // خيارات التصويت تدور على كل الفئات: ما تتكرر فئة بالخيارات لين تطلع كل الفئات مرة
 // (أو كل فئات الهوست المختارة لو حدد فئات)
 const VOTE_N = 9;
 const drawCats = (h) => {
-  const pool = h.picked && h.picked.length ? h.picked : CATS;
+  const picked = (h.picked || []).filter((c) => TYPED_CATS.includes(c));
+  const pool = picked.length ? picked : TYPED_CATS;
   if (pool.length <= VOTE_N) return shuffle(pool);
   if (!Array.isArray(h.catDeck)) h.catDeck = [];
   h.catDeck = h.catDeck.filter((c) => pool.includes(c));

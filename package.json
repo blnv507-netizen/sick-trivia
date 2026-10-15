@@ -9,7 +9,8 @@
     "start": "node server.js",
     "split-bank": "node scripts/split-bank.mjs",
     "check-bank": "node scripts/check-bank.mjs",
-    "anime-bank": "node scripts/anime-bank.mjs"
+    "anime-bank": "node scripts/anime-bank.mjs",
+    "movie-plot-bank": "node scripts/movie-plot-bank.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.117.3",

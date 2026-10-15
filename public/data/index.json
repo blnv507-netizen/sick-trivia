@@ -1,7 +1,13 @@
 {
  "generatedAt": "2026-10-15",
- "total": 6892,
+ "total": 7144,
  "categories": [
+  {
+   "name": "أحداث أفلام",
+   "file": "movie-plot.json",
+   "count": 252,
+   "uniqueAnswers": 252
+  },
   {
    "name": "اختراعات",
    "file": "cat-1q5h70j.json",
