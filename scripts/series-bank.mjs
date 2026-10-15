@@ -1,19 +1,27 @@
-/* ينشر بنك المسلسلات (src/data/seriesBank.ts) كفئة وحدة "مسلسلات":
-     1) يضبط img/aImg في seriesBank.ts: يشيل أي مسار صورته مو موجودة، ويعبّي
-        الفاضي من public/img/series/ — NNN.webp للجواب و NNNq.webp للسؤال
+/* ينشر بنك مسلسل كفئة وحدة — "مسلسلات" (seriesBank.ts) أو "The Wire" (wireBank.ts):
+     1) يضبط img/aImg في ملف البنك: يشيل أي مسار صورته مو موجودة، ويعبّي
+        الفاضي من مجلد صور الفئة — NNN.webp للجواب و NNNq.webp للسؤال
         (NNN رقم السؤال بالبنك، يبدأ من 001). الصورة المعاد استخدامها تبقى
-        تأشر على ملف سؤال ثاني. السؤال اللي بلا صورة ينعرض نص بس
-     2) يكتب public/data/series.json ويحدّث index.json
-   شغّله: npm run series-bank    (بعد إضافة صور أو تعديل seriesBank.ts) */
+        تأشر على ملف سؤال ثاني (أو فئة ثانية). السؤال اللي بلا صورة ينعرض نص بس
+     2) يكتب ملف الفئة في public/data ويحدّث index.json
+   شغّله: npm run series-bank    أو    npm run wire-bank
+   (بعد إضافة صور أو تعديل ملف البنك) */
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+const BANKS = {
+  series: { src: "src/data/seriesBank.ts", img: "series", cat: "مسلسلات", file: "series.json" },
+  wire: { src: "src/data/wireBank.ts", img: "the-wire", cat: "The Wire", file: "the-wire.json" },
+};
+const B = BANKS[process.argv[2] || "series"];
+if (!B) throw new Error("بنك غير معروف: " + process.argv[2] + " — المتاح: " + Object.keys(BANKS).join(", "));
+
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const SRC = path.join(ROOT, "src/data/seriesBank.ts");
-const IMG = path.join(ROOT, "public/img/series");
+const SRC = path.join(ROOT, B.src);
+const IMG = path.join(ROOT, "public/img", B.img);
 const OUT = path.join(ROOT, "public/data");
-const CAT = "مسلسلات", FILE = "series.json";
+const CAT = B.cat, FILE = B.file;
 
 /* نفس تنسيق الملف: {"key": value, ...} بسطر واحد */
 const ser = (v) => Array.isArray(v) ? "[" + v.map(ser).join(", ") + "]"
@@ -33,7 +41,7 @@ const lines = raw.split("\n").map((line) => {
   const n = pad(list.length + 1);
   for (const [key, file] of [["img", n + "q.webp"], ["aImg", n + ".webp"]]) {
     if (q[key] && !exists(q[key])) delete q[key];
-    if (!q[key] && fs.existsSync(path.join(IMG, file))) q[key] = `/img/series/${file}`;
+    if (!q[key] && fs.existsSync(path.join(IMG, file))) q[key] = `/img/${B.img}/${file}`;
   }
   /* ترتيب ثابت للمفاتيح: الصور آخر شي */
   const { img, aImg, ...rest } = q;

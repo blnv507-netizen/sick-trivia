@@ -8,7 +8,7 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { AccountChip } from "./account";
 import CatArt, { CAT_ART_CSS, catTint } from "./catArt";
-import { isBoxImg } from "./data/animeBank";
+import { isBoxImg, boxBg } from "./data/animeBank";
 
 const SAVE_KEY = "sj:classic:v1";
 const SEEN_KEY = "sj:classic:seen";
@@ -458,6 +458,7 @@ export default function Jeem({ bank, cats, info, genMath, onExit, acc }) {
     const callLeft = S.callUntil ? Math.max(0, Math.ceil((S.callUntil - now) / 1000)) : 0;
     const pct = main > 0 ? main / S.timer : steal / 15;
     const opts = Array.isArray(q.opts) ? q.opts : null;
+    const shown = S.reveal && q.aImg ? q.aImg : q.img;
     return (
       <div className="sj-qpage">
         <header className="sj-qtop">
@@ -475,10 +476,11 @@ export default function Jeem({ bank, cats, info, genMath, onExit, acc }) {
           </div>
           <h1 className={"sj-qtext" + (opts || q.img || q.svg ? " media" : "")} dir="auto">{q.q}</h1>
           {q.svg && <div className="sj-qsvg" dangerouslySetInnerHTML={{ __html: q.svg }} />}
-          {(S.reveal && q.aImg ? q.aImg : q.img) && (
-            <img key={S.reveal && q.aImg ? q.aImg : q.img} className={"sj-qimg" + (isBoxImg(S.reveal && q.aImg ? q.aImg : q.img) ? " box" : "")}
-              src={S.reveal && q.aImg ? q.aImg : q.img} alt="" onError={(ev) => { ev.currentTarget.style.display = "none"; }} />
-          )}
+          {shown && (isBoxImg(shown)
+            ? <div key={shown} className="sj-qimg box" style={boxBg(shown)}>
+                <img src={shown} alt="" onError={(ev) => { ev.currentTarget.parentElement.style.display = "none"; }} />
+              </div>
+            : <img key={shown} className="sj-qimg" src={shown} alt="" onError={(ev) => { ev.currentTarget.style.display = "none"; }} />)}
           {opts && (
             <div className="sj-opts">
               {opts.map((o, i) => (
@@ -766,7 +768,9 @@ ${CAT_ART_CSS}
 .sj-qtext{font-size:clamp(26px,3.6vw,52px);font-weight:700;line-height:1.45;max-width:26ch;text-wrap:balance;}
 .sj-qtext.media{font-size:clamp(22px,2.6vw,38px);}
 .sj-qimg{max-width:min(92vw,820px);max-height:46vh;border-radius:16px;object-fit:contain;}
-.sj-qimg.box{width:min(92vw,46vh,520px);height:auto;aspect-ratio:1/1;max-width:none;max-height:none;background:var(--sur);}
+.sj-qimg.box{width:min(92vw,46vh,520px);height:auto;aspect-ratio:1/1;max-width:none;max-height:none;position:relative;overflow:hidden;isolation:isolate;background:#1a1512;}
+.sj-qimg.box::before{content:"";position:absolute;inset:-32px;z-index:-1;background:var(--bg) center/cover no-repeat;filter:blur(22px) brightness(.62) saturate(1.1);}
+.sj-qimg.box img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;}
 .sj-qsvg{width:min(80vw,460px);}
 .sj-qsvg svg{width:100%;height:auto;--sand:var(--hj-bg);}
 .sj-opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:min(92vw,860px);}

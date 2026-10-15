@@ -1,6 +1,6 @@
 {
  "generatedAt": "2026-10-15",
- "total": 7396,
+ "total": 7516,
  "categories": [
   {
    "name": "أحداث أفلام",
@@ -277,6 +277,12 @@
    "file": "engineering-questions-17fbhhc.json",
    "count": 339,
    "uniqueAnswers": 339
+  },
+  {
+   "name": "The Wire",
+   "file": "the-wire.json",
+   "count": 120,
+   "uniqueAnswers": 120
   }
  ]
 }

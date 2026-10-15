@@ -10,7 +10,7 @@ import { jset, jget } from "../lib/net";
 import { norm, normNum, judgeTyped } from "../lib/judge";
 import { shuffle, genCode, genPid, MAX_SLOTS, roomKey, slotKey, qKey, aKey, isEventSlot, noDiff, INVENTIVE, CLASSIC, drawCats, CAT_COUNT } from "../lib/game";
 import { CatArt, Sadu } from "../components/ui";
-import { isBoxImg } from "../data/animeBank";
+import { isBoxImg, boxBg } from "../data/animeBank";
 import { FinalCeremony, TopTenOverlay } from "../components/effects";
 
 // اللعب هنا كتابي ويصححه judgeTyped، فأسئلة الفئات اللي يحكمها المضيف ما تدخل
@@ -1324,8 +1324,11 @@ function App({ acc }) {
     /* مع الزوم نحتاج قص عشان التقريب يبان */
     .qPhoto.zoomed img{aspect-ratio:16/10; object-fit:cover; max-height:none;}
     /* صندوق ثابت: كل صورة بنفس العرض ومربعة، صورة 500px تطلع بحجم صورة 1000px */
-    .qPhoto.box{width:min(100%, 420px); margin-inline:auto;}
-    .qPhoto.box img{width:100%; aspect-ratio:1/1; height:auto; max-height:none; object-fit:contain; object-position:center;}
+    .qPhoto.box{width:min(100%, 420px); margin-inline:auto; position:relative; isolation:isolate; background:#1a1512;}
+    /* الفراغ حول الصورة اللي مو مربعة يتعبّى بنفس الصورة مغبّشة ومعتّمة — بدون أشرطة بيضاء (--bg من boxBg) */
+    .qPhoto.box::before{content:""; position:absolute; inset:-32px; z-index:-1;
+      background:var(--bg) center/cover no-repeat; filter:blur(22px) brightness(.62) saturate(1.1);}
+    .qPhoto.box img{width:100%; aspect-ratio:1/1; height:auto; max-height:none; object-fit:contain; object-position:center; background:transparent;}
     .catPick{display:flex; flex-wrap:wrap; gap:8px; max-height:260px; overflow-y:auto;
       background:var(--sur); border:1px solid var(--line); border-radius:var(--radius); padding:var(--space-md);}
     .catPickItem{display:flex; flex-direction:column; align-items:center; gap:4px; min-width:90px; flex:0 0 auto;}
@@ -2400,9 +2403,9 @@ function App({ acc }) {
         {muted && <div className="hiddenQ">🛑 استريح — ما تشارك بهذا السؤال</div>}
         <div className="card jCard">
           {b.svg && <div className="qImg" dangerouslySetInnerHTML={{ __html: b.svg }} />}
-          {b.aImg ? <div key={b.aImg} className={"qPhoto" + (isBoxImg(b.aImg) ? " box" : "")}><img src={b.aImg} alt=""
+          {b.aImg ? <div key={b.aImg} className={"qPhoto" + (isBoxImg(b.aImg) ? " box" : "")} style={boxBg(b.aImg)}><img src={b.aImg} alt=""
             onError={(ev) => { ev.currentTarget.parentElement.style.display = "none"; }} /></div>
-          : b.img && <div key={b.img} className={"qPhoto" + (b.zoom ? " zoomed" : "") + (isBoxImg(b.img) ? " box" : "")}><img src={b.img} alt=""
+          : b.img && <div key={b.img} className={"qPhoto" + (b.zoom ? " zoomed" : "") + (isBoxImg(b.img) ? " box" : "")} style={boxBg(b.img)}><img src={b.img} alt=""
             onError={(ev) => { ev.currentTarget.parentElement.style.display = "none"; }}
             style={b.zoom ? {
             transform: `scale(${b.zoom.s || 2})`,
@@ -2461,7 +2464,7 @@ function App({ acc }) {
         <div className="card">
           <div className="meta"><span className="badge">{r.cat}</span><span className="ptsTile">{r.pts}</span></div>
           {r.qSvg && <div className="qImg" style={{ margin: "10px 0" }} dangerouslySetInnerHTML={{ __html: r.qSvg }} />}
-          {r.qImg && <div key={r.qImg} className={"qPhoto" + (isBoxImg(r.qImg) ? " box" : "")} style={{ margin: "10px auto" }}><img src={r.qImg} alt=""
+          {r.qImg && <div key={r.qImg} className={"qPhoto" + (isBoxImg(r.qImg) ? " box" : "")} style={{ margin: "10px auto", ...boxBg(r.qImg) }}><img src={r.qImg} alt=""
             onError={(ev) => { ev.currentTarget.parentElement.style.display = "none"; }} /></div>}
           <p style={{ color: "var(--dim)", fontSize: 14, marginTop: 8 }}>{r.qText}</p>
           <div style={{ height: 10 }} />
@@ -2738,7 +2741,7 @@ function App({ acc }) {
             }}>
               {q.svg && <div className="qImg" dangerouslySetInnerHTML={{ __html: q.svg }} />}
               {q.img && (
-                <div key={q.img} className={"qPhoto" + (q.zoom ? " zoomed" : "") + (isBoxImg(q.img) ? " box" : "")}>
+                <div key={q.img} className={"qPhoto" + (q.zoom ? " zoomed" : "") + (isBoxImg(q.img) ? " box" : "")} style={boxBg(q.img)}>
                   <img src={q.img} alt="" loading="eager"
                     onError={(ev) => { ev.currentTarget.parentElement.style.display = "none"; }}
                     style={q.zoom ? {
@@ -2802,7 +2805,7 @@ function App({ acc }) {
         <div className="card">
           {r.qSvg && <div className="qImg" style={{ marginBottom: 10 }} dangerouslySetInnerHTML={{ __html: r.qSvg }} />}
           {r.qImg && (
-            <div key={r.qImg} className={"qPhoto" + (isBoxImg(r.qImg) ? " box" : "")} style={{ marginBottom: 10 }}>
+            <div key={r.qImg} className={"qPhoto" + (isBoxImg(r.qImg) ? " box" : "")} style={{ marginBottom: 10, ...boxBg(r.qImg) }}>
               <img src={r.qImg} alt="" onError={(ev) => { ev.currentTarget.parentElement.style.display = "none"; }} />
               {!r.aImgOn && <span className="badge" style={{ display: "block", textAlign: "center", marginTop: 6 }}>الصورة كاملة</span>}
             </div>
