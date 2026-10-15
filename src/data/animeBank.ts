@@ -5,8 +5,8 @@ export const ANIME_LIST = ["One Piece", "Naruto", "Attack on Titan", "Death Note
 
 // مجلد الصور لكل أنمي: public/img/anime/<slug>/ — "The Seven Deadly Sins" -> seven-deadly-sins
 export const animeSlug = (name) => name.toLowerCase().replace(/^the\s+/, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-// صور الأسئلة داخل مجلدات الأنمي تنعرض بصندوق مربع ثابت، مهما كانت دقتها
-export const isBoxImg = (src) => /^\/img\/anime\/[^/]+\//.test(src || "");
+// صور الأسئلة داخل مجلدات الأنمي وصور البوسترات تنعرض بصندوق مربع ثابت، مهما كانت دقتها
+export const isBoxImg = (src) => /^\/img\/(anime\/[^/]+|posters)\//.test(src || "");
 
 export const ANIME_BANK = [
   // ── One Piece

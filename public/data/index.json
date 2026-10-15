@@ -1,6 +1,6 @@
 {
  "generatedAt": "2026-10-15",
- "total": 6838,
+ "total": 6891,
  "categories": [
   {
    "name": "اختراعات",
@@ -113,8 +113,8 @@
   {
    "name": "خمّن البوستر",
    "file": "cat-1cclkuh.json",
-   "count": 70,
-   "uniqueAnswers": 70
+   "count": 123,
+   "uniqueAnswers": 123
   },
   {
    "name": "خمّن الشيء",
