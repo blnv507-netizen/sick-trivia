@@ -5,10 +5,6 @@ export const ANIME_LIST = ["One Piece", "Naruto", "Attack on Titan", "Death Note
 
 // مجلد الصور لكل أنمي: public/img/anime/<slug>/ — "The Seven Deadly Sins" -> seven-deadly-sins
 export const animeSlug = (name) => name.toLowerCase().replace(/^the\s+/, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-// صور الأسئلة داخل مجلدات الأنمي وأحداث الأفلام والمسلسلات وThe Wire وGame of Thrones وصور البوسترات تنعرض بصندوق مربع ثابت، مهما كانت دقتها
-export const isBoxImg = (src) => /^\/img\/(anime\/[^/]+|movie-plot|series|the-wire|game-of-thrones|posters)\//.test(src || "");
-// خلفية الصندوق: نفس الصورة مغبّشة ومعتّمة تعبّي الفراغ حول الصورة اللي مو مربعة (::before في CSS يقرأ --bg)
-export const boxBg = (src) => (isBoxImg(src) ? { "--bg": `url(${JSON.stringify(src)})` } : undefined);
 
 export const ANIME_BANK = [
   // ── One Piece

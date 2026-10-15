@@ -2,6 +2,7 @@
 /* غلاف الفئة: صورة الفئة إذا موجودة (CAT_INFO[c].img)، وإلا لوحة ملونة بنقشة السدو والإيموجي.
    اللون ثابت لكل فئة (محسوب من اسمها) عشان الفئة دايم تنعرف بلونها. */
 import React from "react";
+import { imgUrl } from "./lib/img";
 
 const TINTS = ["#D9494F", "#F0A32F", "#2EC4A6", "#8E7CF0", "#E07A3E", "#3E8FE0", "#C2558A", "#5BAF5B"];
 export const catTint = (name) => {
@@ -13,7 +14,7 @@ export const catTint = (name) => {
 export default function CatArt({ name, icon, img, className = "" }) {
   return (
     <span className={"catArt " + className} style={{ "--t": catTint(name) }} aria-hidden="true">
-      {img ? <img src={img} alt="" loading="lazy" /> : <span className="catEmoji">{icon || "❓"}</span>}
+      {img ? <img src={imgUrl(img)} alt="" loading="lazy" decoding="async" /> : <span className="catEmoji">{icon || "❓"}</span>}
     </span>
   );
 }

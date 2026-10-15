@@ -11,6 +11,8 @@
    BANK مصفوفة واحدة تتعبّى *في مكانها*، فكل ملف يستوردها يحصل نفس
    المرجع — ما احتجنا نغيّر منطق اللعبة. */
 
+import { loadImgManifest } from "./img";
+
 export const BANK = [];
 
 /* من index.json — متاحة قبل ما تنزل الأسئلة نفسها */
@@ -38,7 +40,8 @@ export function loadBank() {
   state = "loading";
 
   pending = (async () => {
-    const index = await fetchJSON("/data/index.json");
+    /* بصمات الصور تنزل مع الفهرس، فأول صورة تطلع برابطها النهائي (ويتخزن سنة) */
+    const [index] = await Promise.all([fetchJSON("/data/index.json"), loadImgManifest()]);
 
     for (const c of index.categories) {
       CAT_COUNT[c.name] = c.count;

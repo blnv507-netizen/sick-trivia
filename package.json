@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "node scripts/img-manifest.mjs && vite",
+    "build": "node scripts/img-manifest.mjs && vite build",
     "start": "node server.js",
     "split-bank": "node scripts/split-bank.mjs",
     "check-bank": "node scripts/check-bank.mjs",
@@ -13,12 +13,15 @@
     "movie-plot-bank": "node scripts/movie-plot-bank.mjs",
     "series-bank": "node scripts/series-bank.mjs series",
     "wire-bank": "node scripts/series-bank.mjs wire",
-    "got-bank": "node scripts/series-bank.mjs got"
+    "got-bank": "node scripts/series-bank.mjs got",
+    "optimize-images": "node scripts/optimize-images.mjs",
+    "img-manifest": "node scripts/img-manifest.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.117.3",
     "@tailwindcss/vite": "^4.3.3",
     "@vitejs/plugin-react": "^6.0.5",
+    "compression": "^1.8.1",
     "express": "^5.2.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",

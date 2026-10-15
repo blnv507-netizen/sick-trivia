@@ -8,7 +8,7 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { AccountChip } from "./account";
 import CatArt, { CAT_ART_CSS, catTint } from "./catArt";
-import { isBoxImg, boxBg } from "./data/animeBank";
+import { imgUrl, preload, isBoxImg, boxBg, markBoxReady } from "./lib/img";
 
 const SAVE_KEY = "sj:classic:v1";
 const SEEN_KEY = "sj:classic:seen";
@@ -124,6 +124,17 @@ export default function Jeem({ bank, cats, info, genMath, onExit, acc }) {
     };
   }, [infoCat]);
   useEffect(() => { if (S.phase !== "cats") setInfoCat(null); }, [S.phase]);
+
+  // تحميل مسبق: لما تطلع اللوحة تنزل صور أسئلتها بالخلفية (أولوية منخفضة، كم وحدة بنفس الوقت)،
+  // ولما ينفتح سؤال تبدأ صورة جوابه فورًا عشان الكشف يطلع بدون انتظار
+  useEffect(() => {
+    if (S.phase === "board") {
+      preload(S.board.flatMap((col) => col.cells.filter((c) => !c.done && c.q).map((c) => c.q.img)).filter(Boolean), "low");
+    } else if (S.phase === "q" && S.cur) {
+      const q = S.board[S.cur.ci].cells[S.cur.k].q;
+      if (q && q.aImg) preload(q.aImg, "auto");
+    }
+  }, [S.phase, S.board, S.cur]);
 
   // نبض العداد بشاشة السؤال
   useEffect(() => {
@@ -477,7 +488,7 @@ export default function Jeem({ bank, cats, info, genMath, onExit, acc }) {
               ))}
               <div className="sj-block-cat" style={{ "--t": catTint(col.cat) }}>
                 {(info[col.cat] || {}).img
-                  ? <img className="sj-block-img" src={info[col.cat].img} alt="" />
+                  ? <img className="sj-block-img" src={imgUrl(info[col.cat].img)} alt="" decoding="async" />
                   : <span className="sj-block-ic">{(info[col.cat] || {}).icon || "❓"}</span>}
                 <b>{col.cat}</b>
               </div>
@@ -519,9 +530,11 @@ export default function Jeem({ bank, cats, info, genMath, onExit, acc }) {
           {q.svg && <div className="sj-qsvg" dangerouslySetInnerHTML={{ __html: q.svg }} />}
           {shown && (isBoxImg(shown)
             ? <div key={shown} className="sj-qimg box" style={boxBg(shown)}>
-                <img src={shown} alt="" onError={(ev) => { ev.currentTarget.parentElement.style.display = "none"; }} />
+                <img src={imgUrl(shown)} alt="" fetchPriority="high" decoding="async" onLoad={markBoxReady}
+                  onError={(ev) => { ev.currentTarget.parentElement.style.display = "none"; }} />
               </div>
-            : <img key={shown} className="sj-qimg" src={shown} alt="" onError={(ev) => { ev.currentTarget.style.display = "none"; }} />)}
+            : <img key={shown} className="sj-qimg" src={imgUrl(shown)} alt="" fetchPriority="high" decoding="async"
+                onError={(ev) => { ev.currentTarget.style.display = "none"; }} />)}
           {opts && (
             <div className="sj-opts">
               {opts.map((o, i) => (
@@ -828,9 +841,16 @@ ${CAT_ART_CSS}
 .sj-qtext{font-size:clamp(26px,3.6vw,52px);font-weight:700;line-height:1.45;max-width:26ch;text-wrap:balance;}
 .sj-qtext.media{font-size:clamp(22px,2.6vw,38px);}
 .sj-qimg{max-width:min(92vw,820px);max-height:46vh;border-radius:16px;object-fit:contain;}
-.sj-qimg.box{width:min(92vw,46vh,520px);height:auto;aspect-ratio:1/1;max-width:none;max-height:none;position:relative;overflow:hidden;isolation:isolate;background:#1a1512;}
-.sj-qimg.box::before{content:"";position:absolute;inset:-32px;z-index:-1;background:var(--bg) center/cover no-repeat;filter:blur(22px) brightness(.62) saturate(1.1);}
-.sj-qimg.box img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;}
+.sj-qimg.box{width:min(92vw,46vh,520px);height:auto;aspect-ratio:1/1;max-width:none;max-height:none;position:relative;overflow:hidden;isolation:isolate;
+  background:linear-gradient(110deg,#1a1512 35%,#2c231d 50%,#1a1512 65%) 0 0/300% 100%;animation:sjShim 1.4s linear infinite;}
+.sj-qimg.box::before{content:"";position:absolute;inset:-32px;z-index:-1;background:var(--bg) center/cover no-repeat;filter:blur(22px) brightness(.62) saturate(1.1);opacity:0;transition:opacity .25s;}
+.sj-qimg.box img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;opacity:0;transition:opacity .18s ease;animation:sjShow 0s 4s forwards;}
+/* لين تتحمّل الصورة: خلفية داكنة تلمع بهدوء، بدون وميض أبيض. الحجم ثابت فما فيه قفزة */
+.sj-qimg.box.ready{animation:none;background:#1a1512;}
+.sj-qimg.box.ready::before,.sj-qimg.box.ready img{opacity:1;}
+@keyframes sjShim{from{background-position:100% 0;}to{background-position:0 0;}}
+@keyframes sjShow{to{opacity:1;}}
+@media (prefers-reduced-motion:reduce){.sj-qimg.box{animation:none;}}
 .sj-qsvg{width:min(80vw,460px);}
 .sj-qsvg svg{width:100%;height:auto;--sand:var(--hj-bg);}
 .sj-opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:min(92vw,860px);}

@@ -10,7 +10,7 @@ import { jset, jget } from "../lib/net";
 import { norm, normNum, judgeTyped } from "../lib/judge";
 import { shuffle, genCode, genPid, MAX_SLOTS, roomKey, slotKey, qKey, aKey, isEventSlot, noDiff, INVENTIVE, CLASSIC, drawCats, CAT_COUNT } from "../lib/game";
 import { CatArt, Sadu } from "../components/ui";
-import { isBoxImg, boxBg } from "../data/animeBank";
+import { imgUrl, preload, isBoxImg, boxBg, markBoxReady } from "../lib/img";
 import { FinalCeremony, TopTenOverlay } from "../components/effects";
 
 // اللعب هنا كتابي ويصححه judgeTyped، فأسئلة الفئات اللي يحكمها المضيف ما تدخل
@@ -49,6 +49,13 @@ function App({ acc }) {
   const hostRef = useRef(null);
 
   const [storeOk, setStoreOk] = useState("checking"); // checking | ok | unknown
+
+  // صور السؤال الجاي والجواب تنزل قبل ما تنعرض (view.pre من broadcast)
+  useEffect(() => {
+    const p = view && view.pre;
+    if (p && p.img) preload(p.img, "auto");
+    if (p && p.aImg) preload(p.aImg, "auto");
+  }, [view && view.pre && view.pre.img, view && view.pre && view.pre.aImg]);
 
   useEffect(() => {
     (async () => {
@@ -309,6 +316,9 @@ function App({ acc }) {
       pitOn: h.pitOn || [false, false],
       updatedAt: Date.now(),
       q: h.phase === "question" && q ? { q: q.q, svg: q.svg || null, img: q.img || null, zoom: q.zoom || null, nodiff: !!q.nodiff, opts: q.opts || null, pts: q.pts, d: q.d, cat: q.cat, dur: durFor(h) } : null,
+      // تحميل مسبق عند اللاعبين: صورة السؤال من شاشة شرح الفئة، وصورة الجواب بس بعد ما تنقفل الإجابات
+      // (لو انرسلت قبل، أي أحد يقدر يشوفها من أدوات المتصفح)
+      pre: ["intro", "event", "question"].includes(h.phase) && q ? { img: q.img || null, aImg: h.judging ? (q.aImg || null) : null } : null,
     };
     setView(pub); // تحديث فوري للشاشة ثم الحفظ بالخلفية
     await jset(roomKey(h.code), pub);
@@ -736,6 +746,9 @@ function App({ acc }) {
     h.answers = {};
     h.qStart = Date.now() + START_DELAY; // الكل يبدأ بنفس اللحظة
     h.phase = "question";
+    // الهوست يعرف الجواب أصلًا، فصورة الجواب تبدأ عنده فورًا
+    const cur = h.questions[idx];
+    if (cur && cur.aImg) preload(cur.aImg, "auto");
     h.reveal = null;
     localRef.current = { qIndex: idx, renderAt: h.qStart, answered: false, text: "" };
     setTypedText("");
@@ -1324,11 +1337,19 @@ function App({ acc }) {
     /* مع الزوم نحتاج قص عشان التقريب يبان */
     .qPhoto.zoomed img{aspect-ratio:16/10; object-fit:cover; max-height:none;}
     /* صندوق ثابت: كل صورة بنفس العرض ومربعة، صورة 500px تطلع بحجم صورة 1000px */
-    .qPhoto.box{width:min(100%, 420px); margin-inline:auto; position:relative; isolation:isolate; background:#1a1512;}
+    .qPhoto.box{width:min(100%, 420px); margin-inline:auto; position:relative; isolation:isolate;
+      background:linear-gradient(110deg,#1a1512 35%,#2c231d 50%,#1a1512 65%) 0 0/300% 100%; animation:qpShim 1.4s linear infinite;}
     /* الفراغ حول الصورة اللي مو مربعة يتعبّى بنفس الصورة مغبّشة ومعتّمة — بدون أشرطة بيضاء (--bg من boxBg) */
     .qPhoto.box::before{content:""; position:absolute; inset:-32px; z-index:-1;
-      background:var(--bg) center/cover no-repeat; filter:blur(22px) brightness(.62) saturate(1.1);}
-    .qPhoto.box img{width:100%; aspect-ratio:1/1; height:auto; max-height:none; object-fit:contain; object-position:center; background:transparent;}
+      background:var(--bg) center/cover no-repeat; filter:blur(22px) brightness(.62) saturate(1.1); opacity:0; transition:opacity .25s;}
+    .qPhoto.box img{width:100%; aspect-ratio:1/1; height:auto; max-height:none; object-fit:contain; object-position:center; background:transparent;
+      opacity:0; transition:opacity .18s ease; animation:qpShow 0s 4s forwards;}
+    /* لين تتحمّل الصورة: خلفية داكنة تلمع بهدوء (markBoxReady يحط ready) — بدون وميض أبيض ولا قفزة */
+    .qPhoto.box.ready{animation:none; background:#1a1512;}
+    .qPhoto.box.ready::before, .qPhoto.box.ready img{opacity:1;}
+    @keyframes qpShim{from{background-position:100% 0;} to{background-position:0 0;}}
+    @keyframes qpShow{to{opacity:1;}}
+    @media (prefers-reduced-motion:reduce){ .qPhoto.box{animation:none;} }
     .catPick{display:flex; flex-wrap:wrap; gap:8px; max-height:260px; overflow-y:auto;
       background:var(--sur); border:1px solid var(--line); border-radius:var(--radius); padding:var(--space-md);}
     .catPickItem{display:flex; flex-direction:column; align-items:center; gap:4px; min-width:90px; flex:0 0 auto;}
@@ -1939,7 +1960,7 @@ function App({ acc }) {
             {cols.map((col, ci) => (
               <div className={"nhCol nhCol--" + "abc"[ci]} key={ci}>
                 {col.map((c, i) => (
-                  <img key={c + i} src={CAT_INFO[c].img} alt=""
+                  <img key={c + i} src={imgUrl(CAT_INFO[c].img)} alt=""
                     loading={i < col.length / 2 ? "eager" : "lazy"}
                     decoding="async" width="200" height="200" />
                 ))}
@@ -1987,7 +2008,7 @@ function App({ acc }) {
         <div className="nhGrid">
           {catList.map((c) => (
             <figure className="nhCat" key={c}>
-              <img src={CAT_INFO[c].img} alt="" loading="lazy" decoding="async" width="200" height="200" />
+              <img src={imgUrl(CAT_INFO[c].img)} alt="" loading="lazy" decoding="async" width="200" height="200" />
               <figcaption>{c}</figcaption>
             </figure>
           ))}
@@ -2403,9 +2424,9 @@ function App({ acc }) {
         {muted && <div className="hiddenQ">🛑 استريح — ما تشارك بهذا السؤال</div>}
         <div className="card jCard">
           {b.svg && <div className="qImg" dangerouslySetInnerHTML={{ __html: b.svg }} />}
-          {b.aImg ? <div key={b.aImg} className={"qPhoto" + (isBoxImg(b.aImg) ? " box" : "")} style={boxBg(b.aImg)}><img src={b.aImg} alt=""
+          {b.aImg ? <div key={b.aImg} className={"qPhoto" + (isBoxImg(b.aImg) ? " box" : "")} style={boxBg(b.aImg)}><img src={imgUrl(b.aImg)} alt="" fetchPriority="high" decoding="async" onLoad={markBoxReady}
             onError={(ev) => { ev.currentTarget.parentElement.style.display = "none"; }} /></div>
-          : b.img && <div key={b.img} className={"qPhoto" + (b.zoom ? " zoomed" : "") + (isBoxImg(b.img) ? " box" : "")} style={boxBg(b.img)}><img src={b.img} alt=""
+          : b.img && <div key={b.img} className={"qPhoto" + (b.zoom ? " zoomed" : "") + (isBoxImg(b.img) ? " box" : "")} style={boxBg(b.img)}><img src={imgUrl(b.img)} alt="" fetchPriority="high" decoding="async" onLoad={markBoxReady}
             onError={(ev) => { ev.currentTarget.parentElement.style.display = "none"; }}
             style={b.zoom ? {
             transform: `scale(${b.zoom.s || 2})`,
@@ -2464,7 +2485,7 @@ function App({ acc }) {
         <div className="card">
           <div className="meta"><span className="badge">{r.cat}</span><span className="ptsTile">{r.pts}</span></div>
           {r.qSvg && <div className="qImg" style={{ margin: "10px 0" }} dangerouslySetInnerHTML={{ __html: r.qSvg }} />}
-          {r.qImg && <div key={r.qImg} className={"qPhoto" + (isBoxImg(r.qImg) ? " box" : "")} style={{ margin: "10px auto", ...boxBg(r.qImg) }}><img src={r.qImg} alt=""
+          {r.qImg && <div key={r.qImg} className={"qPhoto" + (isBoxImg(r.qImg) ? " box" : "")} style={{ margin: "10px auto", ...boxBg(r.qImg) }}><img src={imgUrl(r.qImg)} alt="" decoding="async" onLoad={markBoxReady}
             onError={(ev) => { ev.currentTarget.parentElement.style.display = "none"; }} /></div>}
           <p style={{ color: "var(--dim)", fontSize: 14, marginTop: 8 }}>{r.qText}</p>
           <div style={{ height: 10 }} />
@@ -2742,7 +2763,7 @@ function App({ acc }) {
               {q.svg && <div className="qImg" dangerouslySetInnerHTML={{ __html: q.svg }} />}
               {q.img && (
                 <div key={q.img} className={"qPhoto" + (q.zoom ? " zoomed" : "") + (isBoxImg(q.img) ? " box" : "")} style={boxBg(q.img)}>
-                  <img src={q.img} alt="" loading="eager"
+                  <img src={imgUrl(q.img)} alt="" loading="eager" fetchPriority="high" decoding="async" onLoad={markBoxReady}
                     onError={(ev) => { ev.currentTarget.parentElement.style.display = "none"; }}
                     style={q.zoom ? {
                       transform: `scale(${q.zoom.s || 2})`,
@@ -2806,7 +2827,7 @@ function App({ acc }) {
           {r.qSvg && <div className="qImg" style={{ marginBottom: 10 }} dangerouslySetInnerHTML={{ __html: r.qSvg }} />}
           {r.qImg && (
             <div key={r.qImg} className={"qPhoto" + (isBoxImg(r.qImg) ? " box" : "")} style={{ marginBottom: 10, ...boxBg(r.qImg) }}>
-              <img src={r.qImg} alt="" onError={(ev) => { ev.currentTarget.parentElement.style.display = "none"; }} />
+              <img src={imgUrl(r.qImg)} alt="" decoding="async" onLoad={markBoxReady} onError={(ev) => { ev.currentTarget.parentElement.style.display = "none"; }} />
               {!r.aImgOn && <span className="badge" style={{ display: "block", textAlign: "center", marginTop: 6 }}>الصورة كاملة</span>}
             </div>
           )}
