@@ -1,6 +1,6 @@
 {
  "generatedAt": "2026-10-15",
- "total": 7144,
+ "total": 7396,
  "categories": [
   {
    "name": "أحداث أفلام",
@@ -235,6 +235,12 @@
    "file": "cat-y50p.json",
    "count": 124,
    "uniqueAnswers": 124
+  },
+  {
+   "name": "مسلسلات",
+   "file": "series.json",
+   "count": 252,
+   "uniqueAnswers": 252
   },
   {
    "name": "معالم",
