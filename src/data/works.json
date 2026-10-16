@@ -1,0 +1,4165 @@
+{
+ "//": "الأعمال والسلاسل. franchise = أجزاء نفس العمل بس. dedicated = الفئة المخصصة للعمل. manual = وسوم يدوية بمعرّف السؤال (qid) — [] يعني السؤال مو عن عمل معيّن. بعد أي تعديل: npm run works",
+ "franchises": {
+  "avengers": {
+   "title": "Avengers"
+  },
+  "back-to-the-future": {
+   "title": "Back to the Future"
+  },
+  "before-trilogy": {
+   "title": "Before trilogy"
+  },
+  "blade-runner": {
+   "title": "Blade Runner"
+  },
+  "breaking-bad": {
+   "title": "Breaking Bad",
+   "dedicated": "Breaking Bad",
+   "main": "breaking-bad"
+  },
+  "dexter": {
+   "title": "Dexter"
+  },
+  "dollars-trilogy": {
+   "title": "Dollars Trilogy"
+  },
+  "dune": {
+   "title": "Dune"
+  },
+  "game-of-thrones": {
+   "title": "Game of Thrones",
+   "dedicated": "Game of Thrones",
+   "main": "game-of-thrones"
+  },
+  "hannibal-lecter": {
+   "title": "Hannibal Lecter films"
+  },
+  "harry-potter": {
+   "title": "Harry Potter"
+  },
+  "home-alone": {
+   "title": "Home Alone"
+  },
+  "joker": {
+   "title": "Joker (2019)"
+  },
+  "jumanji": {
+   "title": "Jumanji"
+  },
+  "jurassic-park": {
+   "title": "Jurassic Park"
+  },
+  "kill-bill": {
+   "title": "Kill Bill"
+  },
+  "mad-max": {
+   "title": "Mad Max"
+  },
+  "narcos": {
+   "title": "Narcos"
+  },
+  "pirates-of-the-caribbean": {
+   "title": "Pirates of the Caribbean"
+  },
+  "saw": {
+   "title": "Saw"
+  },
+  "scream": {
+   "title": "Scream"
+  },
+  "spider-man": {
+   "title": "Spider-Man films"
+  },
+  "star-wars": {
+   "title": "Star Wars"
+  },
+  "terminator": {
+   "title": "Terminator"
+  },
+  "the-conjuring": {
+   "title": "The Conjuring"
+  },
+  "the-dark-knight-trilogy": {
+   "title": "The Dark Knight trilogy (Nolan)"
+  },
+  "the-godfather": {
+   "title": "The Godfather"
+  },
+  "the-hangover": {
+   "title": "The Hangover"
+  },
+  "the-hunger-games": {
+   "title": "The Hunger Games"
+  },
+  "the-lord-of-the-rings": {
+   "title": "The Lord of the Rings"
+  },
+  "the-matrix": {
+   "title": "The Matrix"
+  },
+  "the-wire": {
+   "title": "The Wire",
+   "dedicated": "The Wire",
+   "main": "wire"
+  },
+  "top-gun": {
+   "title": "Top Gun"
+  },
+  "toy-story": {
+   "title": "Toy Story"
+  }
+ },
+ "separate_on_purpose": [
+  "Better Call Saul ≠ Breaking Bad",
+  "House of the Dragon ≠ Game of Thrones",
+  "A Knight of the Seven Kingdoms ≠ Game of Thrones",
+  "El Camino ≠ Breaking Bad"
+ ],
+ "works": {
+  "300": {
+   "title": "300",
+   "type": "film",
+   "aliases": []
+  },
+  "1917": {
+   "title": "1917",
+   "type": "film",
+   "aliases": [
+    "١٩١٧",
+    "Nineteen Seventeen"
+   ]
+  },
+  "10-things-i-hate-about-you": {
+   "title": "10 Things I Hate About You",
+   "type": "film",
+   "aliases": []
+  },
+  "101-dalmatians": {
+   "title": "101 Dalmatians",
+   "type": "film",
+   "aliases": []
+  },
+  "12-angry-men": {
+   "title": "12 Angry Men",
+   "type": "film",
+   "aliases": [
+    "12 رجل غاضب",
+    "اثنا عشر رجلًا غاضبًا",
+    "Twelve Angry Men",
+    "12 رجلا غاضبا",
+    "اثنا عشر رجلا غاضبا",
+    "12 رجلًا غاضبًا"
+   ]
+  },
+  "2001-a-space-odyssey": {
+   "title": "2001: A Space Odyssey",
+   "type": "film",
+   "aliases": [
+    "2001",
+    "أوديسا الفضاء",
+    "2001 A Space Odyssey",
+    "اوديسا الفضاء"
+   ]
+  },
+  "21-jump-street": {
+   "title": "21 Jump Street",
+   "type": "film",
+   "aliases": []
+  },
+  "4-months-3-weeks-and-2-days": {
+   "title": "4 Months, 3 Weeks and 2 Days",
+   "type": "film",
+   "aliases": [
+    "4 أشهر و3 أسابيع ويومان",
+    "4 Months 3 Weeks 2 Days",
+    "4 luni, 3 săptămâni și 2 zile"
+   ]
+  },
+  "500-days-of-summer": {
+   "title": "(500) Days of Summer",
+   "type": "film",
+   "aliases": [
+    "500 يوم من الصيف",
+    "500 Days of Summer",
+    "500 يوم صيف"
+   ]
+  },
+  "a-beautiful-mind": {
+   "title": "A Beautiful Mind",
+   "type": "film",
+   "aliases": [
+    "عقل جميل"
+   ]
+  },
+  "a-bronx-tale": {
+   "title": "A Bronx Tale",
+   "type": "film",
+   "aliases": [
+    "حكاية من برونكس",
+    "برونكس تيل",
+    "Bronx Tale"
+   ]
+  },
+  "a-clockwork-orange": {
+   "title": "A Clockwork Orange",
+   "type": "film",
+   "aliases": [
+    "البرتقالة الآلية",
+    "كلوك ورك أورنج",
+    "Clockwork Orange"
+   ]
+  },
+  "a-fistful-of-dollars": {
+   "title": "A Fistful of Dollars",
+   "type": null,
+   "aliases": [],
+   "franchise": "dollars-trilogy"
+  },
+  "a-knight-of-the-seven-kingdoms": {
+   "title": "A Knight of the Seven Kingdoms",
+   "type": "series",
+   "aliases": []
+  },
+  "a-place-in-the-sun": {
+   "title": "A Place in the Sun",
+   "type": "film",
+   "aliases": [
+    "مكان تحت الشمس"
+   ]
+  },
+  "a-quiet-place": {
+   "title": "A Quiet Place",
+   "type": "film",
+   "aliases": [
+    "Quiet Place",
+    "مكان هادئ",
+    "أ كوايت بليس",
+    "ا كوايت بليس",
+    "كوايت بليس"
+   ]
+  },
+  "african-queen": {
+   "title": "The African Queen",
+   "type": "film",
+   "aliases": [
+    "الملكة الأفريقية"
+   ]
+  },
+  "akira": {
+   "title": "Akira",
+   "type": "anime",
+   "aliases": []
+  },
+  "aladdin": {
+   "title": "Aladdin",
+   "type": "film",
+   "aliases": [
+    "علاء الدين",
+    "علاءالدين"
+   ]
+  },
+  "alien": {
+   "title": "Alien",
+   "type": "film",
+   "aliases": [
+    "إيليان",
+    "المخلوق"
+   ]
+  },
+  "all-about-eve": {
+   "title": "All About Eve",
+   "type": "film",
+   "aliases": [
+    "كل شي عن إيف"
+   ]
+  },
+  "all-quiet-on-the-western-front": {
+   "title": "All Quiet on the Western Front",
+   "type": "film",
+   "aliases": [
+    "كل شيء هادئ على الجبهة الغربية"
+   ]
+  },
+  "amadeus": {
+   "title": "Amadeus",
+   "type": "film",
+   "aliases": [
+    "أماديوس",
+    "اماديوس"
+   ]
+  },
+  "american-gangster": {
+   "title": "American Gangster",
+   "type": "film",
+   "aliases": [
+    "رجل العصابات الأمريكي",
+    "أمريكان غانغستر"
+   ]
+  },
+  "american-psycho": {
+   "title": "American Psycho",
+   "type": "film",
+   "aliases": [
+    "المختل الأمريكي",
+    "أمريكان سايكو",
+    "السايكو الأمريكي"
+   ]
+  },
+  "americans": {
+   "title": "The Americans",
+   "type": "series",
+   "aliases": [
+    "Americans",
+    "ذي امريكانز",
+    "ذا امريكانز",
+    "الأمريكيون",
+    "الامريكيون"
+   ]
+  },
+  "amlie": {
+   "title": "Amélie",
+   "type": "film",
+   "aliases": [
+    "أميلي",
+    "Amelie",
+    "Le Fabuleux Destin d'Amélie Poulain",
+    "اميلي"
+   ]
+  },
+  "annie-hall": {
+   "title": "Annie Hall",
+   "type": "film",
+   "aliases": [
+    "آني هول"
+   ]
+  },
+  "apartment": {
+   "title": "The Apartment",
+   "type": "film",
+   "aliases": [
+    "الشقة"
+   ]
+  },
+  "apocalypse-now": {
+   "title": "Apocalypse Now",
+   "type": "film",
+   "aliases": [
+    "القيامة الآن",
+    "أبوكاليبس ناو",
+    "نهاية العالم الآن"
+   ]
+  },
+  "arrival": {
+   "title": "Arrival",
+   "type": "film",
+   "aliases": [
+    "الوصول",
+    "أرايفل",
+    "ارايفل"
+   ]
+  },
+  "astro-boy": {
+   "title": "Astro Boy",
+   "type": "anime",
+   "aliases": []
+  },
+  "attack-on-titan": {
+   "title": "Attack on Titan",
+   "type": "anime",
+   "aliases": [
+    "هجوم العمالقة",
+    "Shingeki no Kyojin"
+   ]
+  },
+  "avatar": {
+   "title": "Avatar",
+   "type": "film",
+   "aliases": [
+    "أفاتار",
+    "افاتار",
+    "آفاتار"
+   ]
+  },
+  "avengers-endgame": {
+   "title": "Avengers: Endgame",
+   "type": "film",
+   "aliases": [
+    "إندغيم",
+    "اندقيم",
+    "Endgame",
+    "افنجرز اند قيم",
+    "المنتقمون نهاية اللعبة"
+   ],
+   "franchise": "avengers"
+  },
+  "avengers-infinity-war": {
+   "title": "Avengers: Infinity War",
+   "type": "film",
+   "aliases": [
+    "Infinity War",
+    "أفنجرز",
+    "المنتقمون"
+   ],
+   "franchise": "avengers"
+  },
+  "back-to-the-future": {
+   "title": "Back to the Future",
+   "type": "film",
+   "aliases": [
+    "العودة إلى المستقبل",
+    "باك تو ذا فيوتشر",
+    "العودة للمستقبل",
+    "باك تو فيوتشر"
+   ],
+   "franchise": "back-to-the-future"
+  },
+  "back-to-the-future-part-ii": {
+   "title": "Back to the Future Part II",
+   "type": null,
+   "aliases": [],
+   "franchise": "back-to-the-future"
+  },
+  "back-to-the-future-part-iii": {
+   "title": "Back to the Future Part III",
+   "type": null,
+   "aliases": [],
+   "franchise": "back-to-the-future"
+  },
+  "band-of-brothers": {
+   "title": "Band of Brothers",
+   "type": "series",
+   "aliases": [
+    "فرقة الأشقاء",
+    "إخوة السلاح",
+    "باند أوف براذرز"
+   ]
+  },
+  "barbie": {
+   "title": "Barbie",
+   "type": "film",
+   "aliases": [
+    "باربي"
+   ]
+  },
+  "barry": {
+   "title": "Barry",
+   "type": "series",
+   "aliases": [
+    "باري"
+   ]
+  },
+  "batman": {
+   "title": "The Batman",
+   "type": "film",
+   "aliases": []
+  },
+  "batman-begins": {
+   "title": "Batman Begins",
+   "type": "film",
+   "aliases": [],
+   "franchise": "the-dark-knight-trilogy"
+  },
+  "bear": {
+   "title": "The Bear",
+   "type": "series",
+   "aliases": [
+    "ذا بير",
+    "الدب",
+    "Bear",
+    "ذا بير مسلسل"
+   ]
+  },
+  "beauty-and-the-beast": {
+   "title": "Beauty and the Beast",
+   "type": "film",
+   "aliases": [
+    "الجميلة والوحش",
+    "جميلة والوحش",
+    "بيوتي اند ذا بيست"
+   ]
+  },
+  "beetlejuice": {
+   "title": "Beetlejuice",
+   "type": "film",
+   "aliases": []
+  },
+  "before-midnight": {
+   "title": "Before Midnight",
+   "type": null,
+   "aliases": [],
+   "franchise": "before-trilogy"
+  },
+  "before-sunrise": {
+   "title": "Before Sunrise",
+   "type": null,
+   "aliases": [],
+   "franchise": "before-trilogy"
+  },
+  "before-sunset": {
+   "title": "Before Sunset",
+   "type": "film",
+   "aliases": [
+    "قبل الغروب",
+    "بيفور سن ست"
+   ],
+   "franchise": "before-trilogy"
+  },
+  "ben-hur": {
+   "title": "Ben-Hur",
+   "type": "film",
+   "aliases": [
+    "بن هور"
+   ]
+  },
+  "berserk": {
+   "title": "Berserk",
+   "type": "anime",
+   "aliases": [
+    "بيرسيرك"
+   ]
+  },
+  "better-call-saul": {
+   "title": "Better Call Saul",
+   "type": "series",
+   "aliases": [
+    "بيتر كول سول",
+    "سول",
+    "Saul",
+    "سول قودمان",
+    "بتر كول سول"
+   ]
+  },
+  "big-bang-theory": {
+   "title": "The Big Bang Theory",
+   "type": "series",
+   "aliases": [
+    "Big Bang Theory",
+    "ذا بيغ بانغ ثيوري",
+    "بيغ بانغ ثيوري",
+    "بيج بانج ثيوري",
+    "نظرية الانفجار العظيم"
+   ]
+  },
+  "big-lebowski": {
+   "title": "The Big Lebowski",
+   "type": "film",
+   "aliases": [
+    "ليبوسكي الكبير",
+    "بيق ليبوسكي",
+    "Big Lebowski",
+    "Lebowski",
+    "ليبوفسكي الكبير"
+   ]
+  },
+  "big-short": {
+   "title": "The Big Short",
+   "type": "film",
+   "aliases": [
+    "Big Short",
+    "ذا بيغ شورت",
+    "بيغ شورت",
+    "العجز الكبير",
+    "ذا بيج شورت"
+   ]
+  },
+  "bird-box": {
+   "title": "Bird Box",
+   "type": "film",
+   "aliases": []
+  },
+  "black-mirror": {
+   "title": "Black Mirror",
+   "type": "series",
+   "aliases": [
+    "المرآة السوداء",
+    "بلاك ميرور"
+   ]
+  },
+  "black-panther": {
+   "title": "Black Panther",
+   "type": "film",
+   "aliases": [
+    "بلاك بانثر",
+    "النمر الأسود",
+    "بلاك بانذر"
+   ]
+  },
+  "black-swan": {
+   "title": "Black Swan",
+   "type": "film",
+   "aliases": [
+    "البجعة السوداء",
+    "بلاك سوان"
+   ]
+  },
+  "blade-runner": {
+   "title": "Blade Runner",
+   "type": "film",
+   "aliases": [
+    "عداء النصل",
+    "بليد رانر"
+   ],
+   "franchise": "blade-runner"
+  },
+  "blade-runner-2049": {
+   "title": "Blade Runner 2049",
+   "type": "film",
+   "aliases": [
+    "بليد رانر 2049",
+    "بليد رنر"
+   ],
+   "franchise": "blade-runner"
+  },
+  "bleach": {
+   "title": "Bleach",
+   "type": "anime",
+   "aliases": [
+    "بليتش"
+   ]
+  },
+  "blood-diamond": {
+   "title": "Blood Diamond",
+   "type": "film",
+   "aliases": [
+    "الماس الدموي",
+    "بلود دايموند"
+   ]
+  },
+  "boardwalk-empire": {
+   "title": "Boardwalk Empire",
+   "type": "series",
+   "aliases": [
+    "إمبراطورية الممشى",
+    "بوردووك إمباير",
+    "بوردووك امباير",
+    "بورد ووك امباير",
+    "امبراطورية الممر",
+    "بوردووك"
+   ]
+  },
+  "bonnie-and-clyde": {
+   "title": "Bonnie and Clyde",
+   "type": "film",
+   "aliases": [
+    "بوني وكلايد"
+   ]
+  },
+  "bourne-identity": {
+   "title": "The Bourne Identity",
+   "type": "film",
+   "aliases": []
+  },
+  "boys": {
+   "title": "The Boys",
+   "type": "series",
+   "aliases": [
+    "ذا بويز",
+    "الأولاد"
+   ]
+  },
+  "braveheart": {
+   "title": "Braveheart",
+   "type": "film",
+   "aliases": []
+  },
+  "breaking-bad": {
+   "title": "Breaking Bad",
+   "type": "series",
+   "aliases": [
+    "بريكنج باد",
+    "بريكنغ باد",
+    "بريكينق باد",
+    "بريكنق باد",
+    "والتر وايت",
+    "Heisenberg",
+    "هايزنبرغ"
+   ],
+   "franchise": "breaking-bad"
+  },
+  "brokeback-mountain": {
+   "title": "Brokeback Mountain",
+   "type": "film",
+   "aliases": []
+  },
+  "bruce-almighty": {
+   "title": "Bruce Almighty",
+   "type": "film",
+   "aliases": [
+    "بروس اولمايتي",
+    "بروس ألمايتي",
+    "بروس الخارق",
+    "Bruce"
+   ]
+  },
+  "burning": {
+   "title": "Burning",
+   "type": "film",
+   "aliases": [
+    "بيرنينغ",
+    "برنينق",
+    "بيرننج",
+    "احتراق",
+    "Burning 2018"
+   ]
+  },
+  "butch-cassidy-and-the-sundance-kid": {
+   "title": "Butch Cassidy and the Sundance Kid",
+   "type": "film",
+   "aliases": [
+    "بوتش كاسيدي"
+   ]
+  },
+  "captain-phillips": {
+   "title": "Captain Phillips",
+   "type": "film",
+   "aliases": [
+    "كابتن فيليبس",
+    "الكابتن فيليبس"
+   ]
+  },
+  "carlitos-way": {
+   "title": "Carlito's Way",
+   "type": "film",
+   "aliases": [
+    "طريق كارليتو",
+    "Carlitos Way",
+    "Carlito"
+   ]
+  },
+  "cars": {
+   "title": "Cars",
+   "type": "film",
+   "aliases": [
+    "كارز",
+    "السيارات",
+    "سيارات"
+   ]
+  },
+  "casablanca": {
+   "title": "Casablanca",
+   "type": "film",
+   "aliases": [
+    "كازابلانكا",
+    "الدار البيضاء"
+   ]
+  },
+  "casino": {
+   "title": "Casino",
+   "type": "film",
+   "aliases": [
+    "كازينو"
+   ]
+  },
+  "cast-away": {
+   "title": "Cast Away",
+   "type": "film",
+   "aliases": [
+    "كاست اواي",
+    "المنبوذ"
+   ]
+  },
+  "catch-me-if-you-can": {
+   "title": "Catch Me If You Can",
+   "type": "film",
+   "aliases": [
+    "امسكني إن استطعت",
+    "كاتش مي اف يو كان",
+    "امسكني لو تقدر"
+   ]
+  },
+  "charlie-and-the-chocolate-factory": {
+   "title": "Charlie and the Chocolate Factory",
+   "type": "film",
+   "aliases": [
+    "تشارلي ومصنع الشوكولاتة",
+    "شارلي ومصنع الشوكولاتة",
+    "تشارلي"
+   ]
+  },
+  "chernobyl": {
+   "title": "Chernobyl",
+   "type": "series",
+   "aliases": [
+    "تشيرنوبل",
+    "تشرنوبل"
+   ]
+  },
+  "chinatown": {
+   "title": "Chinatown",
+   "type": "film",
+   "aliases": [
+    "الحي الصيني",
+    "تشايناتاون",
+    "China Town"
+   ]
+  },
+  "citizen-kane": {
+   "title": "Citizen Kane",
+   "type": "film",
+   "aliases": [
+    "المواطن كين",
+    "سيتيزن كين",
+    "سيتزن كين"
+   ]
+  },
+  "city-of-god": {
+   "title": "City of God",
+   "type": "film",
+   "aliases": [
+    "مدينة الرب",
+    "مدينة الله",
+    "Cidade de Deus"
+   ]
+  },
+  "coco": {
+   "title": "Coco",
+   "type": "film",
+   "aliases": [
+    "كوكو"
+   ]
+  },
+  "code-geass": {
+   "title": "Code Geass",
+   "type": "anime",
+   "aliases": []
+  },
+  "coherence": {
+   "title": "Coherence",
+   "type": "film",
+   "aliases": [
+    "كوهيرنس",
+    "كوهرنس",
+    "التماسك",
+    "Coherence 2013"
+   ]
+  },
+  "collateral": {
+   "title": "Collateral",
+   "type": "film",
+   "aliases": [
+    "كولاترال",
+    "كولترال",
+    "ضمان جانبي",
+    "Collateral 2004"
+   ]
+  },
+  "conjuring": {
+   "title": "The Conjuring",
+   "type": "film",
+   "aliases": [],
+   "franchise": "the-conjuring"
+  },
+  "conjuring-2": {
+   "title": "The Conjuring 2",
+   "type": "film",
+   "aliases": [],
+   "franchise": "the-conjuring"
+  },
+  "cool-hand-luke": {
+   "title": "Cool Hand Luke",
+   "type": "film",
+   "aliases": [
+    "لوك صاحب اليد الباردة",
+    "كول هاند لوك"
+   ]
+  },
+  "cowboy-bebop": {
+   "title": "Cowboy Bebop",
+   "type": "anime",
+   "aliases": []
+  },
+  "crown": {
+   "title": "The Crown",
+   "type": "series",
+   "aliases": [
+    "التاج",
+    "ذا كراون"
+   ]
+  },
+  "dark": {
+   "title": "Dark",
+   "type": "series",
+   "aliases": [
+    "دارك",
+    "الظلام"
+   ]
+  },
+  "dark-knight": {
+   "title": "The Dark Knight",
+   "type": "film",
+   "aliases": [
+    "فارس الظلام",
+    "الفارس الأسود",
+    "دارك نايت",
+    "Dark Knight"
+   ],
+   "franchise": "the-dark-knight-trilogy"
+  },
+  "dark-knight-rises": {
+   "title": "The Dark Knight Rises",
+   "type": "film",
+   "aliases": [],
+   "franchise": "the-dark-knight-trilogy"
+  },
+  "darkest-hour": {
+   "title": "Darkest Hour",
+   "type": "film",
+   "aliases": [
+    "أحلك الساعات",
+    "الساعة الأكثر ظلمة",
+    "دار كيست آور"
+   ]
+  },
+  "dead-poets-society": {
+   "title": "Dead Poets Society",
+   "type": "film",
+   "aliases": [
+    "جمعية الشعراء الموتى",
+    "نادي الشعراء الموتى",
+    "Dead Poets"
+   ]
+  },
+  "deadpool": {
+   "title": "Deadpool",
+   "type": "film",
+   "aliases": [
+    "ديدبول",
+    "ديد بول",
+    "Deadpool 2016"
+   ]
+  },
+  "deadwood": {
+   "title": "Deadwood",
+   "type": "series",
+   "aliases": [
+    "ديدوود"
+   ]
+  },
+  "death-note": {
+   "title": "Death Note",
+   "type": "anime",
+   "aliases": [
+    "مذكرة الموت",
+    "ديث نوت"
+   ]
+  },
+  "death-of-stalin": {
+   "title": "The Death of Stalin",
+   "type": "film",
+   "aliases": [
+    "موت ستالين",
+    "Death of Stalin"
+   ]
+  },
+  "deer-hunter": {
+   "title": "The Deer Hunter",
+   "type": "film",
+   "aliases": [
+    "صائد الغزلان",
+    "دير هنتر",
+    "Deer Hunter"
+   ]
+  },
+  "demon-slayer": {
+   "title": "Demon Slayer",
+   "type": "anime",
+   "aliases": [
+    "قاتل الشياطين",
+    "Kimetsu no Yaiba"
+   ]
+  },
+  "departed": {
+   "title": "The Departed",
+   "type": "film",
+   "aliases": [
+    "المغادرون",
+    "الراحلون",
+    "Departed",
+    "ذا ديبارتد"
+   ]
+  },
+  "despicable-me": {
+   "title": "Despicable Me",
+   "type": "film",
+   "aliases": [
+    "أنا الحقير",
+    "ديسبيكابل مي",
+    "المينيونز",
+    "Minions"
+   ]
+  },
+  "devil-wears-prada": {
+   "title": "The Devil Wears Prada",
+   "type": "film",
+   "aliases": [
+    "Devil Wears Prada",
+    "الشيطان يرتدي برادا",
+    "ذا ديفل ويرز برادا",
+    "ديفل ويرز برادا"
+   ]
+  },
+  "devilman": {
+   "title": "Devilman",
+   "type": "anime",
+   "aliases": []
+  },
+  "dexter": {
+   "title": "Dexter",
+   "type": "series",
+   "aliases": [
+    "دكستر",
+    "ديكستر"
+   ],
+   "franchise": "dexter"
+  },
+  "dexter-new-blood": {
+   "title": "Dexter: New Blood",
+   "type": null,
+   "aliases": [],
+   "franchise": "dexter"
+  },
+  "dexter-original-sin": {
+   "title": "Dexter: Original Sin",
+   "type": null,
+   "aliases": [],
+   "franchise": "dexter"
+  },
+  "dexter-resurrection": {
+   "title": "Dexter: Resurrection",
+   "type": null,
+   "aliases": [],
+   "franchise": "dexter"
+  },
+  "dictator": {
+   "title": "The Dictator",
+   "type": "film",
+   "aliases": [
+    "الدكتاتور",
+    "الديكتاتور",
+    "Dictator"
+   ]
+  },
+  "die-hard": {
+   "title": "Die Hard",
+   "type": "film",
+   "aliases": [
+    "داي هارد",
+    "الموت الصعب",
+    "يموت بصعوبة"
+   ]
+  },
+  "district-9": {
+   "title": "District 9",
+   "type": "film",
+   "aliases": [
+    "District Nine",
+    "ديستريكت ناين",
+    "ديستركت 9",
+    "المنطقة التاسعة",
+    "المقاطعة 9"
+   ]
+  },
+  "divergent": {
+   "title": "Divergent",
+   "type": "film",
+   "aliases": []
+  },
+  "django-unchained": {
+   "title": "Django Unchained",
+   "type": "film",
+   "aliases": [
+    "جانغو",
+    "جانغو الطليق",
+    "Django",
+    "دجانغو"
+   ]
+  },
+  "dog-day-afternoon": {
+   "title": "Dog Day Afternoon",
+   "type": "film",
+   "aliases": [
+    "بعد ظهر يوم قائظ",
+    "عصر يوم حار",
+    "داق داي آفترنون",
+    "Dog Day"
+   ]
+  },
+  "donnie-darko": {
+   "title": "Donnie Darko",
+   "type": "film",
+   "aliases": [
+    "دوني داركو"
+   ]
+  },
+  "dr-stone": {
+   "title": "Dr. Stone",
+   "type": "anime",
+   "aliases": [
+    "دكتور ستون"
+   ]
+  },
+  "dr-strangelove": {
+   "title": "Dr. Strangelove",
+   "type": "film",
+   "aliases": [
+    "دكتور سترينجلوف",
+    "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb",
+    "Doctor Strangelove"
+   ]
+  },
+  "dragon-ball": {
+   "title": "Dragon Ball",
+   "type": "anime",
+   "aliases": [
+    "دراغون بول",
+    "Dragon Ball Z"
+   ]
+  },
+  "drive": {
+   "title": "Drive",
+   "type": "film",
+   "aliases": [
+    "درايف",
+    "القيادة"
+   ]
+  },
+  "dumb-and-dumber": {
+   "title": "Dumb and Dumber",
+   "type": "film",
+   "aliases": []
+  },
+  "dune": {
+   "title": "Dune",
+   "type": "film",
+   "aliases": [
+    "كثيب",
+    "ديون",
+    "دون"
+   ],
+   "franchise": "dune"
+  },
+  "dune-part-one": {
+   "title": "Dune: Part One",
+   "type": "film",
+   "aliases": [],
+   "franchise": "dune"
+  },
+  "dune-part-two": {
+   "title": "Dune: Part Two",
+   "type": "film",
+   "aliases": [],
+   "franchise": "dune"
+  },
+  "e-t-the-extra-terrestrial": {
+   "title": "E.T. the Extra-Terrestrial",
+   "type": "film",
+   "aliases": [
+    "اي تي",
+    "E.T.",
+    "ET",
+    "إي تي",
+    "E T"
+   ]
+  },
+  "easy-a": {
+   "title": "Easy A",
+   "type": "film",
+   "aliases": []
+  },
+  "easy-rider": {
+   "title": "Easy Rider",
+   "type": "film",
+   "aliases": [
+    "إيزي رايدر"
+   ]
+  },
+  "edge-of-tomorrow": {
+   "title": "Edge of Tomorrow",
+   "type": "film",
+   "aliases": [
+    "حافة الغد",
+    "إيدج أوف تومورو",
+    "ايدج اوف تومورو",
+    "Live Die Repeat"
+   ]
+  },
+  "edward-scissorhands": {
+   "title": "Edward Scissorhands",
+   "type": "film",
+   "aliases": []
+  },
+  "el-camino": {
+   "title": "El Camino",
+   "type": "series",
+   "aliases": []
+  },
+  "encanto": {
+   "title": "Encanto",
+   "type": "film",
+   "aliases": [
+    "إنكانتو",
+    "انكانتو",
+    "سحر"
+   ]
+  },
+  "equalizer": {
+   "title": "The Equalizer",
+   "type": "film",
+   "aliases": []
+  },
+  "eternal-sunshine-of-the-spotless-mind": {
+   "title": "Eternal Sunshine of the Spotless Mind",
+   "type": "film",
+   "aliases": [
+    "إشراقة أبدية لعقل نظيف",
+    "Eternal Sunshine",
+    "إترنال صنشاين",
+    "إيترنال صنشاين"
+   ]
+  },
+  "evangelion": {
+   "title": "Evangelion",
+   "type": "anime",
+   "aliases": [
+    "Neon Genesis Evangelion"
+   ]
+  },
+  "everything-everywhere-all-at-once": {
+   "title": "Everything Everywhere All at Once",
+   "type": "film",
+   "aliases": [
+    "كل شيء في كل مكان",
+    "Everything Everywhere"
+   ]
+  },
+  "ex-machina": {
+   "title": "Ex Machina",
+   "type": "film",
+   "aliases": [
+    "إكس ماكينا",
+    "اكس ماكينا",
+    "اكس ماشينا",
+    "إكس ماشينا"
+   ]
+  },
+  "fail-safe": {
+   "title": "Fail Safe",
+   "type": "film",
+   "aliases": [
+    "Fail-Safe",
+    "فيل سيف",
+    "الأمان من الفشل"
+   ]
+  },
+  "fairy-tail": {
+   "title": "Fairy Tail",
+   "type": "anime",
+   "aliases": [
+    "فيري تيل"
+   ]
+  },
+  "fargo": {
+   "title": "Fargo",
+   "type": "series",
+   "aliases": [
+    "فارغو",
+    "فارقو",
+    "فارجو"
+   ]
+  },
+  "fargo-1996": {
+   "title": "Fargo (1996)",
+   "type": "film",
+   "aliases": [],
+   "note": "الفيلم 1996 — منفصل عن مسلسل Fargo (fargo). الأسئلة عنه موسومة يدويًا"
+  },
+  "fast-and-furious": {
+   "title": "Fast & Furious",
+   "type": "film",
+   "aliases": [
+    "فاست آند فيوريس",
+    "السرعة والغضب",
+    "فاست اند فيوريس",
+    "Fast and Furious"
+   ]
+  },
+  "father": {
+   "title": "The Father",
+   "type": "film",
+   "aliases": [
+    "Father",
+    "الأب",
+    "الاب",
+    "ذا فاذر",
+    "The Father 2020"
+   ]
+  },
+  "fight-club": {
+   "title": "Fight Club",
+   "type": "film",
+   "aliases": [
+    "نادي القتال",
+    "فايت كلوب"
+   ]
+  },
+  "final-destination": {
+   "title": "Final Destination",
+   "type": "film",
+   "aliases": []
+  },
+  "finding-nemo": {
+   "title": "Finding Nemo",
+   "type": "film",
+   "aliases": [
+    "البحث عن نيمو",
+    "نيمو",
+    "Nemo"
+   ]
+  },
+  "fire-within": {
+   "title": "The Fire Within",
+   "type": "film",
+   "aliases": [
+    "النار الكامنة",
+    "Le Feu follet",
+    "النار الداخلية"
+   ]
+  },
+  "fleabag": {
+   "title": "Fleabag",
+   "type": "series",
+   "aliases": [
+    "فليباغ",
+    "فلي باغ",
+    "فليباج",
+    "Flea bag"
+   ]
+  },
+  "for-a-few-dollars-more": {
+   "title": "For a Few Dollars More",
+   "type": "film",
+   "aliases": [
+    "من أجل حفنة دولارات أكثر",
+    "لأجل دولارات قليلة أخرى",
+    "Per qualche dollaro in più"
+   ],
+   "franchise": "dollars-trilogy"
+  },
+  "ford-v-ferrari": {
+   "title": "Ford v Ferrari",
+   "type": "film",
+   "aliases": [
+    "Ford vs Ferrari",
+    "فورد ضد فيراري",
+    "فورد فيراري",
+    "فورد في فيراري",
+    "Le Mans 66"
+   ]
+  },
+  "forrest-gump": {
+   "title": "Forrest Gump",
+   "type": "film",
+   "aliases": [
+    "فورست غامب",
+    "فورست جمب"
+   ]
+  },
+  "founder": {
+   "title": "The Founder",
+   "type": "film",
+   "aliases": []
+  },
+  "free-guy": {
+   "title": "Free Guy",
+   "type": "film",
+   "aliases": []
+  },
+  "french-connection": {
+   "title": "The French Connection",
+   "type": "film",
+   "aliases": [
+    "الاتصال الفرنسي"
+   ]
+  },
+  "friday-the-13th": {
+   "title": "Friday the 13th",
+   "type": "film",
+   "aliases": []
+  },
+  "friends": {
+   "title": "Friends",
+   "type": "series",
+   "aliases": [
+    "فريندز",
+    "الأصدقاء",
+    "اصدقاء"
+   ]
+  },
+  "from-here-to-eternity": {
+   "title": "From Here to Eternity",
+   "type": "film",
+   "aliases": [
+    "من هنا إلى الأبد"
+   ]
+  },
+  "frozen": {
+   "title": "Frozen",
+   "type": "film",
+   "aliases": [
+    "فروزن",
+    "ملكة الثلج",
+    "فروزين"
+   ]
+  },
+  "full-metal-jacket": {
+   "title": "Full Metal Jacket",
+   "type": "film",
+   "aliases": [
+    "فل ميتال جاكيت",
+    "السترة المعدنية",
+    "سترة معدنية كاملة"
+   ]
+  },
+  "furiosa": {
+   "title": "Furiosa",
+   "type": null,
+   "aliases": [],
+   "franchise": "mad-max"
+  },
+  "game-of-thrones": {
+   "title": "Game of Thrones",
+   "type": "series",
+   "aliases": [
+    "صراع العروش",
+    "GOT",
+    "قيم أوف ثرونز",
+    "قيم اوف ثرونز",
+    "لعبة العروش",
+    "آل ستارك"
+   ],
+   "franchise": "game-of-thrones"
+  },
+  "gangs-of-new-york": {
+   "title": "Gangs of New York",
+   "type": "film",
+   "aliases": [
+    "عصابات نيويورك"
+   ]
+  },
+  "get-out": {
+   "title": "Get Out",
+   "type": "film",
+   "aliases": [
+    "اخرج",
+    "قت آوت",
+    "غيت آوت",
+    "قت اوت"
+   ]
+  },
+  "ghost-in-the-shell": {
+   "title": "Ghost in the Shell",
+   "type": "anime",
+   "aliases": []
+  },
+  "ghostbusters": {
+   "title": "Ghostbusters",
+   "type": "film",
+   "aliases": [
+    "غوست باسترز",
+    "جوست باسترز",
+    "غوستباسترز",
+    "صائدو الأشباح"
+   ]
+  },
+  "gladiator": {
+   "title": "Gladiator",
+   "type": "film",
+   "aliases": [
+    "المصارع",
+    "غلادييتر",
+    "جلادييتر",
+    "غلادياتور"
+   ]
+  },
+  "godfather": {
+   "title": "The Godfather",
+   "type": "film",
+   "aliases": [
+    "العراب",
+    "الأب الروحي",
+    "Godfather",
+    "الجودفاذر",
+    "دون كورليوني"
+   ],
+   "franchise": "the-godfather"
+  },
+  "godfather-part-ii": {
+   "title": "The Godfather Part II",
+   "type": "film",
+   "aliases": [
+    "العراب 2",
+    "العراب الجزء الثاني",
+    "Godfather 2",
+    "Godfather Part II",
+    "الأب الروحي 2",
+    "Godfather II"
+   ],
+   "franchise": "the-godfather"
+  },
+  "godfather-part-iii": {
+   "title": "The Godfather Part III",
+   "type": null,
+   "aliases": [],
+   "franchise": "the-godfather"
+  },
+  "gold-rush": {
+   "title": "The Gold Rush",
+   "type": "film",
+   "aliases": [
+    "حمى الذهب"
+   ]
+  },
+  "gone-girl": {
+   "title": "Gone Girl",
+   "type": "film",
+   "aliases": [
+    "قون قيرل",
+    "فتاة مفقودة",
+    "الفتاة الراحلة"
+   ]
+  },
+  "gone-with-the-wind": {
+   "title": "Gone with the Wind",
+   "type": "film",
+   "aliases": [
+    "ذهب مع الريح"
+   ]
+  },
+  "good-the-bad-and-the-ugly": {
+   "title": "The Good, the Bad and the Ugly",
+   "type": "film",
+   "aliases": [
+    "الطيب والشرس والقبيح",
+    "الطيب والسيئ والقبيح",
+    "The Good the Bad and the Ugly",
+    "Good Bad Ugly"
+   ],
+   "franchise": "dollars-trilogy"
+  },
+  "good-will-hunting": {
+   "title": "Good Will Hunting",
+   "type": "film",
+   "aliases": [
+    "قود ويل هنتنق",
+    "غود ويل هانتنغ",
+    "ويل هنتنغ",
+    "غود ويل هنتنغ",
+    "ويل هنتنغ الطيب",
+    "غود ويل هانتينغ"
+   ]
+  },
+  "goodfellas": {
+   "title": "Goodfellas",
+   "type": "film",
+   "aliases": [
+    "الرفاق الطيبون",
+    "قودفيلاز",
+    "Good Fellas",
+    "غودفيلاز",
+    "GoodFellas"
+   ]
+  },
+  "graduate": {
+   "title": "The Graduate",
+   "type": "film",
+   "aliases": [
+    "الخريج"
+   ]
+  },
+  "grand-budapest-hotel": {
+   "title": "The Grand Budapest Hotel",
+   "type": "film",
+   "aliases": [
+    "فندق بودابست الكبير",
+    "جراند بودابست",
+    "Grand Budapest Hotel",
+    "ذا غراند بودابست هوتيل"
+   ]
+  },
+  "grapes-of-wrath": {
+   "title": "The Grapes of Wrath",
+   "type": "film",
+   "aliases": [
+    "عناقيد الغضب"
+   ]
+  },
+  "grave-of-the-fireflies": {
+   "title": "Grave of the Fireflies",
+   "type": "anime",
+   "aliases": [
+    "قبر اليراعات",
+    "مقبرة اليراعات",
+    "قبر الحباحب"
+   ]
+  },
+  "great-silence": {
+   "title": "The Great Silence",
+   "type": "film",
+   "aliases": [
+    "الصمت العظيم",
+    "Il grande silenzio"
+   ]
+  },
+  "green-mile": {
+   "title": "The Green Mile",
+   "type": "film",
+   "aliases": [
+    "الميل الأخضر",
+    "جرين مايل",
+    "Green Mile",
+    "الميل الأخير"
+   ]
+  },
+  "gurren-laggan": {
+   "title": "Gurren Laggan",
+   "type": "anime",
+   "aliases": []
+  },
+  "hajime-no-ippo": {
+   "title": "Hajime no Ippo",
+   "type": "anime",
+   "aliases": []
+  },
+  "handmaiden": {
+   "title": "The Handmaiden",
+   "type": "film",
+   "aliases": [
+    "الخادمة",
+    "ذا هاندمايدن",
+    "هاندمايدن",
+    "Ah ga ssi",
+    "Agassi"
+   ]
+  },
+  "hangover": {
+   "title": "The Hangover",
+   "type": "film",
+   "aliases": [],
+   "franchise": "the-hangover"
+  },
+  "harakiri": {
+   "title": "Harakiri",
+   "type": "film",
+   "aliases": [
+    "هاراكيري",
+    "Seppuku"
+   ]
+  },
+  "harry-potter": {
+   "title": "Harry Potter",
+   "type": "film",
+   "aliases": [
+    "هاري بوتر",
+    "هاري",
+    "Harry"
+   ],
+   "franchise": "harry-potter"
+  },
+  "harry-potter-and-the-chamber-of-secrets": {
+   "title": "Harry Potter and the Chamber of Secrets",
+   "type": "film",
+   "aliases": [],
+   "franchise": "harry-potter"
+  },
+  "harry-potter-and-the-deathly-hallows-part-2": {
+   "title": "Harry Potter and the Deathly Hallows: Part 2",
+   "type": "film",
+   "aliases": [],
+   "franchise": "harry-potter"
+  },
+  "harry-potter-and-the-goblet-of-fire": {
+   "title": "Harry Potter and the Goblet of Fire",
+   "type": "film",
+   "aliases": [],
+   "franchise": "harry-potter"
+  },
+  "harry-potter-and-the-half-blood-prince": {
+   "title": "Harry Potter and the Half-Blood Prince",
+   "type": "film",
+   "aliases": [],
+   "franchise": "harry-potter"
+  },
+  "harry-potter-and-the-prisoner-of-azkaban": {
+   "title": "Harry Potter and the Prisoner of Azkaban",
+   "type": "film",
+   "aliases": [],
+   "franchise": "harry-potter"
+  },
+  "harry-potter-and-the-sorcerers-stone": {
+   "title": "Harry Potter and the Sorcerer's Stone",
+   "type": "film",
+   "aliases": [],
+   "franchise": "harry-potter"
+  },
+  "heat": {
+   "title": "Heat",
+   "type": "film",
+   "aliases": [
+    "هيت",
+    "الحرارة",
+    "حرارة"
+   ]
+  },
+  "her": {
+   "title": "Her",
+   "type": "film",
+   "aliases": [
+    "هير",
+    "هي"
+   ]
+  },
+  "high-noon": {
+   "title": "High Noon",
+   "type": "film",
+   "aliases": [
+    "الظهيرة"
+   ]
+  },
+  "home-alone": {
+   "title": "Home Alone",
+   "type": "film",
+   "aliases": [
+    "وحيد في المنزل",
+    "هوم ألون",
+    "هوم الون",
+    "وحدي في المنزل"
+   ],
+   "franchise": "home-alone"
+  },
+  "home-alone-2-lost-in-new-york": {
+   "title": "Home Alone 2: Lost in New York",
+   "type": "film",
+   "aliases": [],
+   "franchise": "home-alone"
+  },
+  "hoodlum": {
+   "title": "Hoodlum",
+   "type": "film",
+   "aliases": [
+    "هودلوم",
+    "البلطجي"
+   ]
+  },
+  "horimiya": {
+   "title": "Horimiya",
+   "type": "anime",
+   "aliases": []
+  },
+  "house-m-d": {
+   "title": "House M.D.",
+   "type": "series",
+   "aliases": [
+    "House",
+    "House MD",
+    "دكتور هاوس",
+    "هاوس",
+    "Dr House"
+   ]
+  },
+  "house-of-the-dragon": {
+   "title": "House of the Dragon",
+   "type": "series",
+   "aliases": [
+    "بيت التنين",
+    "هاوس اوف ذا دراقون"
+   ]
+  },
+  "how-to-train-your-dragon": {
+   "title": "How to Train Your Dragon",
+   "type": "film",
+   "aliases": [
+    "كيف تروض تنينك",
+    "كيف تدرب تنينك",
+    "هاو تو ترين يور دراغون",
+    "HTTYD"
+   ]
+  },
+  "hunger-games": {
+   "title": "The Hunger Games",
+   "type": "film",
+   "aliases": [
+    "مباريات الجوع",
+    "هنقر قيمز",
+    "Hunger Games",
+    "ألعاب الجوع"
+   ],
+   "franchise": "the-hunger-games"
+  },
+  "hunger-games-catching-fire": {
+   "title": "The Hunger Games: Catching Fire",
+   "type": "film",
+   "aliases": [],
+   "franchise": "the-hunger-games"
+  },
+  "hunger-games-mockingjay-part-2": {
+   "title": "The Hunger Games: Mockingjay – Part 2",
+   "type": "film",
+   "aliases": [],
+   "franchise": "the-hunger-games"
+  },
+  "hunt": {
+   "title": "The Hunt",
+   "type": "film",
+   "aliases": [
+    "الصيد",
+    "Jagten",
+    "المطاردة",
+    "ذا هنت",
+    "ذا هانت",
+    "The Hunt 2012"
+   ]
+  },
+  "hunter-x-hunter": {
+   "title": "Hunter x Hunter",
+   "type": "anime",
+   "aliases": [
+    "هنتر x هنتر"
+   ]
+  },
+  "ice-age": {
+   "title": "Ice Age",
+   "type": "film",
+   "aliases": [
+    "العصر الجليدي",
+    "آيس إيج",
+    "ايس ايج"
+   ]
+  },
+  "imitation-game": {
+   "title": "The Imitation Game",
+   "type": "film",
+   "aliases": [
+    "لعبة المحاكاة",
+    "Imitation Game",
+    "لعبة التقليد",
+    "ذا ايميتيشن قيم",
+    "ايميتيشن قيم"
+   ]
+  },
+  "in-the-name-of-the-father": {
+   "title": "In the Name of the Father",
+   "type": "film",
+   "aliases": [
+    "باسم الأب"
+   ]
+  },
+  "incendies": {
+   "title": "Incendies",
+   "type": "film",
+   "aliases": [
+    "حرائق",
+    "انسنديز",
+    "انسينديز",
+    "إنسينديز"
+   ]
+  },
+  "inception": {
+   "title": "Inception",
+   "type": "film",
+   "aliases": [
+    "إنسبشن",
+    "انسبشن",
+    "البداية",
+    "استهلال"
+   ]
+  },
+  "incredibles": {
+   "title": "The Incredibles",
+   "type": "film",
+   "aliases": [
+    "الخارقون",
+    "عائلة الخارقين",
+    "إنكريدبلز"
+   ]
+  },
+  "indiana-jones": {
+   "title": "Indiana Jones",
+   "type": "film",
+   "aliases": []
+  },
+  "inglourious-basterds": {
+   "title": "Inglourious Basterds",
+   "type": "film",
+   "aliases": [
+    "أوغاد مجهولون",
+    "انغلوريوس باستردز",
+    "Inglorious Bastards",
+    "انقلوريس باستردز"
+   ]
+  },
+  "inside-out": {
+   "title": "Inside Out",
+   "type": "film",
+   "aliases": [
+    "إنسايد آوت",
+    "انسايد اوت",
+    "قلبًا وقالبًا"
+   ]
+  },
+  "interstellar": {
+   "title": "Interstellar",
+   "type": "film",
+   "aliases": [
+    "إنترستيلر",
+    "انترستيلر",
+    "بين النجوم"
+   ]
+  },
+  "irishman": {
+   "title": "The Irishman",
+   "type": "film",
+   "aliases": [
+    "الإيرلندي",
+    "الايرلندي",
+    "Irishman"
+   ]
+  },
+  "iron-man": {
+   "title": "Iron Man",
+   "type": "film",
+   "aliases": [
+    "الرجل الحديدي",
+    "ايرون مان",
+    "آيرون مان"
+   ]
+  },
+  "it": {
+   "title": "It",
+   "type": "film",
+   "aliases": []
+  },
+  "it-happened-one-night": {
+   "title": "It Happened One Night",
+   "type": "film",
+   "aliases": [
+    "حدث ذات ليلة"
+   ]
+  },
+  "its-a-wonderful-life": {
+   "title": "It's a Wonderful Life",
+   "type": "film",
+   "aliases": [
+    "إنها حياة رائعة",
+    "Its a Wonderful Life"
+   ]
+  },
+  "jaws": {
+   "title": "Jaws",
+   "type": "film",
+   "aliases": [
+    "جوز",
+    "الفك المفترس"
+   ]
+  },
+  "john-wick": {
+   "title": "John Wick",
+   "type": "film",
+   "aliases": [
+    "جون ويك",
+    "جون وِك",
+    "جونويك",
+    "John Wick 2014"
+   ]
+  },
+  "jojo-rabbit": {
+   "title": "Jojo Rabbit",
+   "type": "film",
+   "aliases": [
+    "جوجو رابيت",
+    "جوجو ربِت",
+    "جوجو",
+    "Jojo"
+   ]
+  },
+  "jojos-bizarre-adventure": {
+   "title": "JoJo’s Bizarre Adventure",
+   "type": "anime",
+   "aliases": [
+    "JoJo's Bizarre Adventure"
+   ]
+  },
+  "joker": {
+   "title": "Joker",
+   "type": "film",
+   "aliases": [
+    "الجوكر",
+    "جوكر"
+   ],
+   "franchise": "joker"
+  },
+  "joker-folie-deux": {
+   "title": "Joker: Folie à Deux",
+   "type": "film",
+   "aliases": [
+    "جوكر 2",
+    "Joker 2",
+    "Joker Folie a Deux",
+    "جوكر فولي آ دو"
+   ],
+   "franchise": "joker"
+  },
+  "jujutsu-kaisen": {
+   "title": "Jujutsu Kaisen",
+   "type": "anime",
+   "aliases": [
+    "جوجتسو كايسن"
+   ]
+  },
+  "jumanji": {
+   "title": "Jumanji",
+   "type": "film",
+   "aliases": [
+    "جومانجي",
+    "جومانجى",
+    "Jumanji 1995"
+   ],
+   "franchise": "jumanji"
+  },
+  "jumanji-welcome-to-the-jungle": {
+   "title": "Jumanji: Welcome to the Jungle",
+   "type": "film",
+   "aliases": [],
+   "franchise": "jumanji"
+  },
+  "jurassic-park": {
+   "title": "Jurassic Park",
+   "type": "film",
+   "aliases": [
+    "جوراسيك بارك",
+    "الحديقة الجوراسية"
+   ],
+   "franchise": "jurassic-park"
+  },
+  "jurassic-world": {
+   "title": "Jurassic World",
+   "type": "film",
+   "aliases": [],
+   "franchise": "jurassic-park"
+  },
+  "kill-bill": {
+   "title": "Kill Bill",
+   "type": "film",
+   "aliases": [
+    "كيل بيل",
+    "اقتل بيل"
+   ],
+   "franchise": "kill-bill"
+  },
+  "kill-bill-vol-1": {
+   "title": "Kill Bill: Vol. 1",
+   "type": null,
+   "aliases": [],
+   "franchise": "kill-bill"
+  },
+  "kill-bill-vol-2": {
+   "title": "Kill Bill: Vol. 2",
+   "type": null,
+   "aliases": [],
+   "franchise": "kill-bill"
+  },
+  "king-kong": {
+   "title": "King Kong",
+   "type": "film",
+   "aliases": [
+    "كينغ كونغ",
+    "كنج كونج",
+    "كينج كونج"
+   ]
+  },
+  "kings-speech": {
+   "title": "The King's Speech",
+   "type": "film",
+   "aliases": [
+    "Kings Speech",
+    "خطاب الملك",
+    "ذا كينغز سبيتش",
+    "كينجز سبيتش"
+   ]
+  },
+  "knives-out": {
+   "title": "Knives Out",
+   "type": "film",
+   "aliases": [
+    "نايفز آوت",
+    "السكاكين في الخارج",
+    "نايفز اوت"
+   ]
+  },
+  "kung-fu-panda": {
+   "title": "Kung Fu Panda",
+   "type": "film",
+   "aliases": [
+    "كونغ فو باندا",
+    "كونج فو باندا",
+    "كنق فو باندا",
+    "كنغ فو باندا",
+    "كونغفو باندا",
+    "باندا"
+   ]
+  },
+  "la-haine": {
+   "title": "La Haine",
+   "type": "film",
+   "aliases": [
+    "الكراهية",
+    "لا هين",
+    "Hate"
+   ]
+  },
+  "la-la-land": {
+   "title": "La La Land",
+   "type": "film",
+   "aliases": [
+    "لا لا لاند",
+    "لالا لاند"
+   ]
+  },
+  "lady-bird": {
+   "title": "Lady Bird",
+   "type": "film",
+   "aliases": [
+    "ليدي بيرد",
+    "الدعسوقة"
+   ]
+  },
+  "last-of-us": {
+   "title": "The Last of Us",
+   "type": "series",
+   "aliases": [
+    "ذا لاست أوف أس",
+    "ذا لاست اوف اس",
+    "آخرنا"
+   ]
+  },
+  "lawrence-of-arabia": {
+   "title": "Lawrence of Arabia",
+   "type": "film",
+   "aliases": [
+    "لورنس العرب",
+    "لورانس العرب"
+   ]
+  },
+  "le-samoura": {
+   "title": "Le Samouraï",
+   "type": "film",
+   "aliases": [
+    "الساموراي",
+    "Le Samourai",
+    "The Samurai",
+    "لو ساموراي"
+   ]
+  },
+  "leftovers": {
+   "title": "The Leftovers",
+   "type": "series",
+   "aliases": [
+    "Leftovers",
+    "ذا ليفتوفرز",
+    "ليفت اوفرز",
+    "الباقون",
+    "المتبقون"
+   ]
+  },
+  "lego-movie": {
+   "title": "The Lego Movie",
+   "type": "film",
+   "aliases": [
+    "The LEGO Movie",
+    "Lego Movie",
+    "فيلم ليغو",
+    "فيلم الليغو",
+    "ليغو موفي",
+    "ليجو موفي"
+   ]
+  },
+  "life-is-beautiful": {
+   "title": "Life Is Beautiful",
+   "type": "film",
+   "aliases": [
+    "الحياة جميلة",
+    "La vita è bella",
+    "Life is Beautiful"
+   ]
+  },
+  "lighthouse": {
+   "title": "The Lighthouse",
+   "type": "film",
+   "aliases": [
+    "المنارة",
+    "ذا لايت هاوس",
+    "Lighthouse"
+   ]
+  },
+  "lion-king": {
+   "title": "The Lion King",
+   "type": "film",
+   "aliases": [
+    "الأسد الملك",
+    "ليون كنج",
+    "ليون كينغ",
+    "لايون كينج"
+   ]
+  },
+  "little-mermaid": {
+   "title": "The Little Mermaid",
+   "type": "film",
+   "aliases": [
+    "حورية البحر",
+    "الحورية الصغيرة",
+    "حورية البحر الصغيرة",
+    "ليتل ميرميد"
+   ]
+  },
+  "little-miss-sunshine": {
+   "title": "Little Miss Sunshine",
+   "type": "film",
+   "aliases": [
+    "ملكة جمال الشمس الصغيرة",
+    "ليتل ميس صنشاين"
+   ]
+  },
+  "lives-of-others": {
+   "title": "The Lives of Others",
+   "type": "film",
+   "aliases": [
+    "حياة الآخرين",
+    "حياة الاخرين",
+    "ذا لايفز اوف اذرز",
+    "Das Leben der Anderen"
+   ]
+  },
+  "lon-the-professional": {
+   "title": "Léon: The Professional",
+   "type": "film",
+   "aliases": [
+    "ليون",
+    "Leon",
+    "المحترف",
+    "The Professional"
+   ]
+  },
+  "lord-of-the-rings": {
+   "title": "The Lord of the Rings",
+   "type": "film",
+   "aliases": [
+    "سيد الخواتم",
+    "Lord of the Rings",
+    "LOTR",
+    "ملك الخواتم"
+   ],
+   "franchise": "the-lord-of-the-rings"
+  },
+  "lord-of-the-rings-the-fellowship-of-the-ring": {
+   "title": "The Lord of the Rings: The Fellowship of the Ring",
+   "type": "film",
+   "aliases": [],
+   "franchise": "the-lord-of-the-rings"
+  },
+  "lord-of-the-rings-the-return-of-the-king": {
+   "title": "The Lord of the Rings: The Return of the King",
+   "type": "film",
+   "aliases": [],
+   "franchise": "the-lord-of-the-rings"
+  },
+  "lord-of-the-rings-the-two-towers": {
+   "title": "The Lord of the Rings: The Two Towers",
+   "type": "film",
+   "aliases": [],
+   "franchise": "the-lord-of-the-rings"
+  },
+  "lord-of-war": {
+   "title": "Lord of War",
+   "type": "film",
+   "aliases": [
+    "سيد الحرب",
+    "لورد أوف وور"
+   ]
+  },
+  "lost": {
+   "title": "Lost",
+   "type": "series",
+   "aliases": [
+    "لوست",
+    "ضائعون",
+    "الضياع"
+   ]
+  },
+  "lost-in-translation": {
+   "title": "Lost in Translation",
+   "type": "film",
+   "aliases": []
+  },
+  "lucifer": {
+   "title": "Lucifer",
+   "type": "series",
+   "aliases": [
+    "لوسيفر",
+    "لوسفر"
+   ]
+  },
+  "lucy": {
+   "title": "Lucy",
+   "type": "film",
+   "aliases": []
+  },
+  "lupin-iii": {
+   "title": "Lupin III",
+   "type": "anime",
+   "aliases": []
+  },
+  "machinist": {
+   "title": "The Machinist",
+   "type": "film",
+   "aliases": []
+  },
+  "mad-max": {
+   "title": "Mad Max",
+   "type": null,
+   "aliases": [],
+   "franchise": "mad-max"
+  },
+  "mad-max-fury-road": {
+   "title": "Mad Max: Fury Road",
+   "type": "film",
+   "aliases": [
+    "ماد ماكس",
+    "طريق الغضب",
+    "Mad Max Fury Road",
+    "Fury Road"
+   ],
+   "franchise": "mad-max"
+  },
+  "mad-men": {
+   "title": "Mad Men",
+   "type": "series",
+   "aliases": [
+    "ماد مين",
+    "رجال مجانين"
+   ]
+  },
+  "maltese-falcon": {
+   "title": "The Maltese Falcon",
+   "type": "film",
+   "aliases": [
+    "الصقر المالطي"
+   ]
+  },
+  "man-on-fire": {
+   "title": "Man on Fire",
+   "type": "film",
+   "aliases": []
+  },
+  "man-who-sleeps": {
+   "title": "The Man Who Sleeps",
+   "type": "film",
+   "aliases": [
+    "الرجل الذي ينام",
+    "Un homme qui dort"
+   ]
+  },
+  "mandalorian": {
+   "title": "The Mandalorian",
+   "type": "series",
+   "aliases": [
+    "Mandalorian",
+    "ماندالوريان",
+    "ذا ماندالوريان",
+    "المندلوري",
+    "المندالوري"
+   ]
+  },
+  "margin-call": {
+   "title": "Margin Call",
+   "type": "film",
+   "aliases": []
+  },
+  "marriage-story": {
+   "title": "Marriage Story",
+   "type": "film",
+   "aliases": []
+  },
+  "martian": {
+   "title": "The Martian",
+   "type": "film",
+   "aliases": [
+    "Martian",
+    "ذا مارشن",
+    "المريخي",
+    "مارشن",
+    "ذا مارتيان"
+   ]
+  },
+  "mask": {
+   "title": "The Mask",
+   "type": "film",
+   "aliases": [
+    "Mask",
+    "ذا ماسك",
+    "ماسك",
+    "القناع"
+   ]
+  },
+  "matrix": {
+   "title": "The Matrix",
+   "type": "film",
+   "aliases": [
+    "ذا ماتريكس",
+    "ماتريكس",
+    "المصفوفة",
+    "Matrix",
+    "الماتريكس"
+   ],
+   "franchise": "the-matrix"
+  },
+  "matrix-reloaded": {
+   "title": "The Matrix Reloaded",
+   "type": null,
+   "aliases": [],
+   "franchise": "the-matrix"
+  },
+  "matrix-revolutions": {
+   "title": "The Matrix Revolutions",
+   "type": null,
+   "aliases": [],
+   "franchise": "the-matrix"
+  },
+  "maze-runner": {
+   "title": "The Maze Runner",
+   "type": "film",
+   "aliases": [
+    "عدّاء المتاهة",
+    "ميز رنر",
+    "Maze Runner"
+   ]
+  },
+  "mean-girls": {
+   "title": "Mean Girls",
+   "type": "film",
+   "aliases": []
+  },
+  "memento": {
+   "title": "Memento",
+   "type": "film",
+   "aliases": [
+    "ميمنتو",
+    "تذكار"
+   ]
+  },
+  "memories-of-murder": {
+   "title": "Memories of Murder",
+   "type": "film",
+   "aliases": [
+    "ذكريات القتل",
+    "ميموريز اوف ميردر",
+    "Memories of a Murder"
+   ]
+  },
+  "men-in-black": {
+   "title": "Men in Black",
+   "type": "film",
+   "aliases": [
+    "رجال بملابس سوداء",
+    "رجال بالأسود",
+    "مين ان بلاك",
+    "مين إن بلاك",
+    "MIB"
+   ]
+  },
+  "metropolis": {
+   "title": "Metropolis",
+   "type": "film",
+   "aliases": [
+    "متروبوليس",
+    "ميتروبوليس"
+   ]
+  },
+  "midnight-cowboy": {
+   "title": "Midnight Cowboy",
+   "type": "film",
+   "aliases": [
+    "راعي بقر منتصف الليل"
+   ]
+  },
+  "mindhunter": {
+   "title": "Mindhunter",
+   "type": "series",
+   "aliases": [
+    "صائد العقول",
+    "مايندهنتر",
+    "مايند هانتر",
+    "مايندهانتر",
+    "Mind Hunter"
+   ]
+  },
+  "minority-report": {
+   "title": "Minority Report",
+   "type": "film",
+   "aliases": []
+  },
+  "mission-impossible": {
+   "title": "Mission: Impossible",
+   "type": "film",
+   "aliases": []
+  },
+  "mist": {
+   "title": "The Mist",
+   "type": "film",
+   "aliases": []
+  },
+  "moana": {
+   "title": "Moana",
+   "type": "film",
+   "aliases": [
+    "موانا"
+   ]
+  },
+  "money-heist": {
+   "title": "Money Heist",
+   "type": "series",
+   "aliases": [
+    "La Casa de Papel",
+    "لا كاسا دي بابيل",
+    "البروفيسور",
+    "لاكاسا دي بابيل",
+    "لاكاسا دي بابل"
+   ]
+  },
+  "monsters-inc": {
+   "title": "Monsters, Inc.",
+   "type": "film",
+   "aliases": [
+    "شركة المرعبين",
+    "مونسترز إنك",
+    "Monsters Inc",
+    "شركة المرعبين المحدودة",
+    "مونسترز انك",
+    "شركة الوحوش"
+   ]
+  },
+  "mr-robot": {
+   "title": "Mr. Robot",
+   "type": "series",
+   "aliases": [
+    "مستر روبوت",
+    "Mr Robot",
+    "السيد روبوت"
+   ]
+  },
+  "mr-smith-goes-to-washington": {
+   "title": "Mr. Smith Goes to Washington",
+   "type": "film",
+   "aliases": [
+    "السيد سميث"
+   ]
+  },
+  "mrs-doubtfire": {
+   "title": "Mrs. Doubtfire",
+   "type": "film",
+   "aliases": []
+  },
+  "mulan": {
+   "title": "Mulan",
+   "type": "film",
+   "aliases": [
+    "مولان",
+    "مولن"
+   ]
+  },
+  "my-fair-lady": {
+   "title": "My Fair Lady",
+   "type": "film",
+   "aliases": [
+    "سيدتي الجميلة"
+   ]
+  },
+  "my-hero-academia": {
+   "title": "My Hero Academia",
+   "type": "anime",
+   "aliases": []
+  },
+  "nana": {
+   "title": "NANA",
+   "type": "anime",
+   "aliases": []
+  },
+  "narcos": {
+   "title": "Narcos",
+   "type": "series",
+   "aliases": [
+    "ناركوس",
+    "نركوس"
+   ],
+   "franchise": "narcos"
+  },
+  "narcos-mexico": {
+   "title": "Narcos: Mexico",
+   "type": null,
+   "aliases": [],
+   "franchise": "narcos"
+  },
+  "naruto": {
+   "title": "Naruto",
+   "type": "anime",
+   "aliases": [
+    "ناروتو"
+   ]
+  },
+  "night-at-the-museum": {
+   "title": "Night at the Museum",
+   "type": "film",
+   "aliases": [
+    "ليلة في المتحف",
+    "نايت ات ذا ميوزيوم",
+    "نايت أت ذا ميوزيوم"
+   ]
+  },
+  "nightcrawler": {
+   "title": "Nightcrawler",
+   "type": "film",
+   "aliases": [
+    "نايت كرولر",
+    "نايت كراولر",
+    "نايتكراولر",
+    "المتسلل"
+   ]
+  },
+  "no-country-for-old-men": {
+   "title": "No Country for Old Men",
+   "type": "film",
+   "aliases": [
+    "لا بلد للعجائز",
+    "لا وطن للعجائز",
+    "نو كنتري فور أولد من",
+    "نو كنتري"
+   ]
+  },
+  "north-by-northwest": {
+   "title": "North by Northwest",
+   "type": "film",
+   "aliases": [
+    "شمال شمالي غرب",
+    "نورث باي نورثويست"
+   ]
+  },
+  "obsession": {
+   "title": "Obsession",
+   "type": "film",
+   "aliases": [
+    "هوس",
+    "الهوس",
+    "أوبسيشن"
+   ]
+  },
+  "odyssey": {
+   "title": "The Odyssey",
+   "type": "film",
+   "aliases": [
+    "الأوديسة",
+    "أوديسا",
+    "Odyssey"
+   ]
+  },
+  "office": {
+   "title": "The Office",
+   "type": "series",
+   "aliases": [
+    "ذا أوفيس",
+    "المكتب"
+   ]
+  },
+  "oldboy": {
+   "title": "Oldboy",
+   "type": "film",
+   "aliases": [
+    "أولد بوي",
+    "الفتى العجوز",
+    "Old Boy"
+   ]
+  },
+  "on-the-waterfront": {
+   "title": "On the Waterfront",
+   "type": "film",
+   "aliases": [
+    "على الواجهة البحرية"
+   ]
+  },
+  "once-upon-a-time-in-hollywood": {
+   "title": "Once Upon a Time in Hollywood",
+   "type": "film",
+   "aliases": []
+  },
+  "once-upon-a-time-in-the-west": {
+   "title": "Once Upon a Time in the West",
+   "type": "film",
+   "aliases": [
+    "حدث ذات مرة في الغرب",
+    "كان يا ما كان في الغرب",
+    "C'era una volta il West"
+   ]
+  },
+  "one-flew-over-the-cuckoos-nest": {
+   "title": "One Flew Over the Cuckoo's Nest",
+   "type": "film",
+   "aliases": [
+    "طار فوق عش الوقواق",
+    "عش الوقواق",
+    "Cuckoo's Nest",
+    "أحدهم طار فوق عش الوقواق"
+   ]
+  },
+  "one-piece": {
+   "title": "One Piece",
+   "type": "anime",
+   "aliases": [
+    "ون بيس"
+   ]
+  },
+  "one-punch-man": {
+   "title": "One-Punch Man",
+   "type": "anime",
+   "aliases": []
+  },
+  "oppenheimer": {
+   "title": "Oppenheimer",
+   "type": "film",
+   "aliases": [
+    "أوبنهايمر",
+    "اوبنهايمر",
+    "أوبنهيمر"
+   ]
+  },
+  "others": {
+   "title": "The Others",
+   "type": "film",
+   "aliases": [
+    "Others",
+    "الآخرون",
+    "الاخرون",
+    "ذي اذرز",
+    "ذا اذرز"
+   ]
+  },
+  "oz": {
+   "title": "Oz",
+   "type": "series",
+   "aliases": [
+    "أوز"
+   ]
+  },
+  "ozark": {
+   "title": "Ozark",
+   "type": "series",
+   "aliases": [
+    "أوزارك",
+    "اوزارك"
+   ]
+  },
+  "pans-labyrinth": {
+   "title": "Pan's Labyrinth",
+   "type": "film",
+   "aliases": [
+    "متاهة بان",
+    "بانز لابرنث",
+    "متاهة الفون"
+   ]
+  },
+  "parasite": {
+   "title": "Parasite",
+   "type": "film",
+   "aliases": [
+    "الطفيلي",
+    "باراسايت"
+   ]
+  },
+  "past-lives": {
+   "title": "Past Lives",
+   "type": "film",
+   "aliases": [
+    "حيوات سابقة",
+    "باست لايفز"
+   ]
+  },
+  "paths-of-glory": {
+   "title": "Paths of Glory",
+   "type": "film",
+   "aliases": [
+    "دروب المجد",
+    "طرق المجد"
+   ]
+  },
+  "patton": {
+   "title": "Patton",
+   "type": "film",
+   "aliases": [
+    "باتون"
+   ]
+  },
+  "peaky-blinders": {
+   "title": "Peaky Blinders",
+   "type": "series",
+   "aliases": [
+    "بيكي بلايندرز",
+    "Peaky",
+    "بيكي بلايندر",
+    "بيكي بلايندرس"
+   ]
+  },
+  "persona": {
+   "title": "Persona",
+   "type": "film",
+   "aliases": [
+    "بيرسونا",
+    "برسونا"
+   ]
+  },
+  "pianist": {
+   "title": "The Pianist",
+   "type": "film",
+   "aliases": [
+    "عازف البيانو",
+    "البيانيست",
+    "Pianist"
+   ]
+  },
+  "pirates-of-the-caribbean": {
+   "title": "Pirates of the Caribbean",
+   "type": "film",
+   "aliases": [
+    "قراصنة الكاريبي",
+    "بايرتس اوف ذا كاريبيان",
+    "بايرتس اوف كاريبيان"
+   ],
+   "franchise": "pirates-of-the-caribbean"
+  },
+  "pirates-of-the-caribbean-at-worlds-end": {
+   "title": "Pirates of the Caribbean: At World's End",
+   "type": "film",
+   "aliases": [],
+   "franchise": "pirates-of-the-caribbean"
+  },
+  "pirates-of-the-caribbean-dead-mans-chest": {
+   "title": "Pirates of the Caribbean: Dead Man's Chest",
+   "type": "film",
+   "aliases": [],
+   "franchise": "pirates-of-the-caribbean"
+  },
+  "pirates-of-the-caribbean-the-curse-of-the-black-pearl": {
+   "title": "Pirates of the Caribbean: The Curse of the Black Pearl",
+   "type": "film",
+   "aliases": [],
+   "franchise": "pirates-of-the-caribbean"
+  },
+  "pitt": {
+   "title": "The Pitt",
+   "type": "series",
+   "aliases": [
+    "ذا بت",
+    "Pitt"
+   ]
+  },
+  "platoon": {
+   "title": "Platoon",
+   "type": "film",
+   "aliases": [
+    "الفصيلة"
+   ]
+  },
+  "point-break": {
+   "title": "Point Break",
+   "type": "film",
+   "aliases": [
+    "نقطة الانهيار",
+    "بوينت بريك"
+   ]
+  },
+  "pokmon": {
+   "title": "Pokémon",
+   "type": "anime",
+   "aliases": []
+  },
+  "poor-things": {
+   "title": "Poor Things",
+   "type": "film",
+   "aliases": []
+  },
+  "prestige": {
+   "title": "The Prestige",
+   "type": "film",
+   "aliases": [
+    "الهيبة",
+    "بريستيج",
+    "Prestige",
+    "البريستيج"
+   ]
+  },
+  "princess-mononoke": {
+   "title": "Princess Mononoke",
+   "type": "anime",
+   "aliases": [
+    "الأميرة مونونوكي",
+    "مونونوكي",
+    "Mononoke"
+   ]
+  },
+  "prison-break": {
+   "title": "Prison Break",
+   "type": "series",
+   "aliases": [
+    "بريزن بريك",
+    "الهروب من السجن",
+    "بريزون بريك"
+   ]
+  },
+  "prisoners": {
+   "title": "Prisoners",
+   "type": "film",
+   "aliases": [
+    "بريزنرز",
+    "السجناء"
+   ]
+  },
+  "psycho": {
+   "title": "Psycho",
+   "type": "film",
+   "aliases": [
+    "سايكو",
+    "المختل",
+    "المريض النفسي"
+   ]
+  },
+  "pulp-fiction": {
+   "title": "Pulp Fiction",
+   "type": "film",
+   "aliases": [
+    "بالب فيكشن"
+   ]
+  },
+  "pursuit-of-happyness": {
+   "title": "The Pursuit of Happyness",
+   "type": "film",
+   "aliases": [
+    "السعي وراء السعادة",
+    "البحث عن السعادة",
+    "Pursuit of Happiness"
+   ]
+  },
+  "queens-gambit": {
+   "title": "The Queen’s Gambit",
+   "type": "series",
+   "aliases": [
+    "Queens Gambit",
+    "ذا كوينز جامبيت",
+    "ذا كوينز قامبت",
+    "مناورة الملكة",
+    "غامبيت الملكة"
+   ]
+  },
+  "raging-bull": {
+   "title": "Raging Bull",
+   "type": "film",
+   "aliases": [
+    "الثور الهائج",
+    "رايجنق بول"
+   ]
+  },
+  "rambo": {
+   "title": "Rambo",
+   "type": "film",
+   "aliases": [
+    "رامبو",
+    "John Rambo",
+    "جون رامبو"
+   ]
+  },
+  "rashomon": {
+   "title": "Rashomon",
+   "type": "film",
+   "aliases": [
+    "راشومون"
+   ]
+  },
+  "ratatouille": {
+   "title": "Ratatouille",
+   "type": "film",
+   "aliases": [
+    "راتاتوي",
+    "الفأر الطباخ",
+    "راتاتويي",
+    "خلطبيطة بالصلصة"
+   ]
+  },
+  "re-zero": {
+   "title": "Re:Zero",
+   "type": "anime",
+   "aliases": []
+  },
+  "ready-player-one": {
+   "title": "Ready Player One",
+   "type": "film",
+   "aliases": []
+  },
+  "rear-window": {
+   "title": "Rear Window",
+   "type": "film",
+   "aliases": [
+    "النافذة الخلفية"
+   ]
+  },
+  "red-dragon": {
+   "title": "Red Dragon",
+   "type": "film",
+   "aliases": [
+    "التنين الأحمر"
+   ],
+   "franchise": "hannibal-lecter"
+  },
+  "requiem-for-a-dream": {
+   "title": "Requiem for a Dream",
+   "type": "film",
+   "aliases": [
+    "قداس لحلم",
+    "ريكويم فور ا دريم",
+    "Requiem"
+   ]
+  },
+  "reservoir-dogs": {
+   "title": "Reservoir Dogs",
+   "type": "film",
+   "aliases": [
+    "كلاب المستودع",
+    "ريزيرفوار دوقز"
+   ]
+  },
+  "revenant": {
+   "title": "The Revenant",
+   "type": "film",
+   "aliases": []
+  },
+  "rififi": {
+   "title": "Rififi",
+   "type": "film",
+   "aliases": [
+    "ريفيفي",
+    "Du rififi chez les hommes"
+   ]
+  },
+  "road": {
+   "title": "The Road",
+   "type": "film",
+   "aliases": [
+    "الطريق"
+   ]
+  },
+  "rocky": {
+   "title": "Rocky",
+   "type": "film",
+   "aliases": [
+    "روكي"
+   ]
+  },
+  "rome": {
+   "title": "Rome",
+   "type": "series",
+   "aliases": [
+    "روما"
+   ]
+  },
+  "rope": {
+   "title": "Rope",
+   "type": "film",
+   "aliases": [
+    "الحبل",
+    "روب"
+   ]
+  },
+  "rounders": {
+   "title": "Rounders",
+   "type": "film",
+   "aliases": [
+    "راوندرز",
+    "المقامرون"
+   ]
+  },
+  "sailor-moon": {
+   "title": "Sailor Moon",
+   "type": "anime",
+   "aliases": []
+  },
+  "saving-private-ryan": {
+   "title": "Saving Private Ryan",
+   "type": "film",
+   "aliases": [
+    "إنقاذ الجندي رايان",
+    "انقاذ الجندي راين"
+   ]
+  },
+  "saw": {
+   "title": "Saw",
+   "type": "film",
+   "aliases": [],
+   "franchise": "saw"
+  },
+  "scarface": {
+   "title": "Scarface",
+   "type": "film",
+   "aliases": [
+    "الوجه ذو الندبة",
+    "سكارفيس",
+    "ذو الوجه المشوه",
+    "توني مونتانا"
+   ]
+  },
+  "scent-of-a-woman": {
+   "title": "Scent of a Woman",
+   "type": "film",
+   "aliases": [
+    "عطر امرأة",
+    "سنت أوف إيه وومان"
+   ]
+  },
+  "schindlers-list": {
+   "title": "Schindler's List",
+   "type": "film",
+   "aliases": [
+    "قائمة شندلر",
+    "Schindlers List",
+    "Schindler",
+    "شندلر"
+   ]
+  },
+  "scream": {
+   "title": "Scream",
+   "type": "film",
+   "aliases": [],
+   "franchise": "scream"
+  },
+  "se7en": {
+   "title": "Se7en",
+   "type": "film",
+   "aliases": [
+    "سبعة",
+    "سيفن"
+   ]
+  },
+  "searchers": {
+   "title": "The Searchers",
+   "type": "film",
+   "aliases": [
+    "الباحثون"
+   ]
+  },
+  "seven-deadly-sins": {
+   "title": "The Seven Deadly Sins",
+   "type": "anime",
+   "aliases": [
+    "الخطايا السبع"
+   ]
+  },
+  "seven-samurai": {
+   "title": "Seven Samurai",
+   "type": "film",
+   "aliases": [
+    "الساموراي السبعة",
+    "Shichinin no Samurai",
+    "سبعة ساموراي"
+   ]
+  },
+  "seventh-seal": {
+   "title": "The Seventh Seal",
+   "type": "film",
+   "aliases": [
+    "الختم السابع",
+    "Seventh Seal",
+    "Det sjunde inseglet"
+   ]
+  },
+  "severance": {
+   "title": "Severance",
+   "type": "series",
+   "aliases": [
+    "سيفيرنس",
+    "الانفصال",
+    "سفرنس"
+   ]
+  },
+  "shawshank-redemption": {
+   "title": "The Shawshank Redemption",
+   "type": "film",
+   "aliases": [
+    "الخلاص من شاوشانك",
+    "شاوشانك",
+    "Shawshank Redemption",
+    "Shawshank"
+   ]
+  },
+  "sherlock": {
+   "title": "Sherlock",
+   "type": "series",
+   "aliases": [
+    "شيرلوك",
+    "شارلوك"
+   ]
+  },
+  "shield": {
+   "title": "The Shield",
+   "type": "series",
+   "aliases": [
+    "ذا شيلد",
+    "الدرع"
+   ]
+  },
+  "shining": {
+   "title": "The Shining",
+   "type": "film",
+   "aliases": [
+    "البريق",
+    "ذا شاينينغ",
+    "Shining",
+    "الإشراق",
+    "جاك نيكلسون"
+   ]
+  },
+  "shrek": {
+   "title": "Shrek",
+   "type": "film",
+   "aliases": [
+    "شريك",
+    "شرك"
+   ]
+  },
+  "shutter-island": {
+   "title": "Shutter Island",
+   "type": "film",
+   "aliases": [
+    "شتر آيلاند",
+    "جزيرة شاتر",
+    "شاتر آيلاند",
+    "جزيرة المغلقين",
+    "شاتر ايلند",
+    "جزيرة الرعب"
+   ]
+  },
+  "silence-of-the-lambs": {
+   "title": "The Silence of the Lambs",
+   "type": "film",
+   "aliases": [
+    "صمت الحملان",
+    "Silence of the Lambs"
+   ],
+   "franchise": "hannibal-lecter"
+  },
+  "silo": {
+   "title": "Silo",
+   "type": "series",
+   "aliases": [
+    "سايلو",
+    "سيلو",
+    "الصومعة"
+   ]
+  },
+  "simpsons": {
+   "title": "The Simpsons",
+   "type": "series",
+   "aliases": [
+    "ذا سيمبسونز"
+   ]
+  },
+  "sinners": {
+   "title": "Sinners",
+   "type": "film",
+   "aliases": [
+    "الخطاة",
+    "سينرز"
+   ]
+  },
+  "six-feet-under": {
+   "title": "Six Feet Under",
+   "type": "series",
+   "aliases": [
+    "ستة أقدام تحت الأرض",
+    "سكس فيت أندر"
+   ]
+  },
+  "sixth-sense": {
+   "title": "The Sixth Sense",
+   "type": "film",
+   "aliases": [
+    "الحاسة السادسة",
+    "سكس سنس",
+    "Sixth Sense"
+   ]
+  },
+  "skyfall": {
+   "title": "Skyfall",
+   "type": "film",
+   "aliases": [
+    "سكاي فول"
+   ]
+  },
+  "slumdog-millionaire": {
+   "title": "Slumdog Millionaire",
+   "type": "film",
+   "aliases": [
+    "سلامدوق ميلينير",
+    "مليونير من الأحياء الفقيرة"
+   ]
+  },
+  "snowpiercer": {
+   "title": "Snowpiercer",
+   "type": "film",
+   "aliases": [
+    "سنو بيرسر",
+    "سنوبييرسر",
+    "سنو بيرسير",
+    "محطم الثلج",
+    "Snow Piercer"
+   ]
+  },
+  "social-network": {
+   "title": "The Social Network",
+   "type": "film",
+   "aliases": [
+    "الشبكة الاجتماعية",
+    "سوشال نتورك",
+    "Social Network",
+    "ذا سوشال نتورك"
+   ]
+  },
+  "solo-leveling": {
+   "title": "Solo Leveling",
+   "type": "anime",
+   "aliases": []
+  },
+  "sopranos": {
+   "title": "The Sopranos",
+   "type": "series",
+   "aliases": [
+    "آل سوبرانو",
+    "السوبرانوز",
+    "Sopranos",
+    "ذا سوبرانوز",
+    "سوبرانوز"
+   ]
+  },
+  "sound-of-music": {
+   "title": "The Sound of Music",
+   "type": "film",
+   "aliases": [
+    "صوت الموسيقى"
+   ]
+  },
+  "source-code": {
+   "title": "Source Code",
+   "type": "film",
+   "aliases": []
+  },
+  "speed": {
+   "title": "Speed",
+   "type": "film",
+   "aliases": [
+    "سبيد",
+    "السرعة",
+    "Speed 1994"
+   ]
+  },
+  "spider-man": {
+   "title": "Spider-Man",
+   "type": "film",
+   "aliases": [],
+   "franchise": "spider-man"
+  },
+  "spider-man-no-way-home": {
+   "title": "Spider-Man: No Way Home",
+   "type": "film",
+   "aliases": [
+    "نو واي هوم",
+    "No Way Home",
+    "سبايدر مان نو واي هوم",
+    "سبايدرمان"
+   ],
+   "franchise": "spider-man"
+  },
+  "spirited-away": {
+   "title": "Spirited Away",
+   "type": "film",
+   "aliases": [
+    "المخطوفة",
+    "سين وتشيهيرو",
+    "Sen to Chihiro",
+    "سبيريتد أواي"
+   ]
+  },
+  "squid-game": {
+   "title": "Squid Game",
+   "type": "series",
+   "aliases": [
+    "لعبة الحبار",
+    "سكويد قيم",
+    "سكويد غيم",
+    "سكود قيم",
+    "سكويـد جيم"
+   ]
+  },
+  "stalker": {
+   "title": "Stalker",
+   "type": "film",
+   "aliases": [
+    "ستوكر",
+    "ستالكر",
+    "المطارد",
+    "Сталкер"
+   ]
+  },
+  "star-wars": {
+   "title": "Star Wars",
+   "type": "film",
+   "aliases": [
+    "حرب النجوم"
+   ],
+   "franchise": "star-wars"
+  },
+  "star-wars-a-new-hope": {
+   "title": "Star Wars: A New Hope",
+   "type": "film",
+   "aliases": [],
+   "franchise": "star-wars"
+  },
+  "star-wars-return-of-the-jedi": {
+   "title": "Star Wars: Return of the Jedi",
+   "type": "film",
+   "aliases": [],
+   "franchise": "star-wars"
+  },
+  "star-wars-revenge-of-the-sith": {
+   "title": "Star Wars: Revenge of the Sith",
+   "type": "film",
+   "aliases": [],
+   "franchise": "star-wars"
+  },
+  "star-wars-the-empire-strikes-back": {
+   "title": "Star Wars: The Empire Strikes Back",
+   "type": "film",
+   "aliases": [],
+   "franchise": "star-wars"
+  },
+  "stranger-things": {
+   "title": "Stranger Things",
+   "type": "series",
+   "aliases": [
+    "سترينجر ثينغز",
+    "سترينجر ثينقز",
+    "سترينجر ثينجز",
+    "أشياء غريبة"
+   ]
+  },
+  "succession": {
+   "title": "Succession",
+   "type": "series",
+   "aliases": [
+    "ساكسيشن",
+    "الخلافة",
+    "سكسيشن"
+   ]
+  },
+  "superbad": {
+   "title": "Superbad",
+   "type": "film",
+   "aliases": []
+  },
+  "sword-art-online": {
+   "title": "Sword Art Online",
+   "type": "anime",
+   "aliases": []
+  },
+  "taken": {
+   "title": "Taken",
+   "type": "film",
+   "aliases": []
+  },
+  "tangled": {
+   "title": "Tangled",
+   "type": "film",
+   "aliases": [
+    "تانجلد",
+    "تنجلد",
+    "رابونزل"
+   ]
+  },
+  "taxi-driver": {
+   "title": "Taxi Driver",
+   "type": "film",
+   "aliases": [
+    "سائق التاكسي",
+    "تاكسي درايفر",
+    "سائق تاكسي"
+   ]
+  },
+  "ted-lasso": {
+   "title": "Ted Lasso",
+   "type": "series",
+   "aliases": [
+    "تيد لاسو",
+    "تد لاسو"
+   ]
+  },
+  "tenet": {
+   "title": "Tenet",
+   "type": "film",
+   "aliases": []
+  },
+  "terminator": {
+   "title": "The Terminator",
+   "type": "film",
+   "aliases": [
+    "Terminator",
+    "المدمر",
+    "ترميناتور",
+    "ذا ترمينيتور",
+    "ترمينيتور",
+    "تيرمينيتور",
+    "ذا تيرمينيتور"
+   ],
+   "franchise": "terminator"
+  },
+  "terminator-2": {
+   "title": "Terminator 2",
+   "type": "film",
+   "aliases": [
+    "المدمر 2",
+    "تيرميناتور 2"
+   ],
+   "franchise": "terminator"
+  },
+  "terminator-2-judgment-day": {
+   "title": "Terminator 2: Judgment Day",
+   "type": "film",
+   "aliases": [],
+   "franchise": "terminator"
+  },
+  "there-will-be-blood": {
+   "title": "There Will Be Blood",
+   "type": "film",
+   "aliases": [
+    "سيكون هناك دم",
+    "ذير ويل بي بلود",
+    "سوف يُراق الدم",
+    "ستكون هناك دماء",
+    "سيكون هناك دماء"
+   ]
+  },
+  "titanic": {
+   "title": "Titanic",
+   "type": "film",
+   "aliases": [
+    "تايتانيك",
+    "تايتانك",
+    "تيتانيك",
+    "Jack"
+   ]
+  },
+  "to-kill-a-mockingbird": {
+   "title": "To Kill a Mockingbird",
+   "type": "film",
+   "aliases": [
+    "أن تقتل طائرًا بريئًا"
+   ]
+  },
+  "top-gun": {
+   "title": "Top Gun",
+   "type": "film",
+   "aliases": [],
+   "franchise": "top-gun"
+  },
+  "top-gun-maverick": {
+   "title": "Top Gun: Maverick",
+   "type": "film",
+   "aliases": [
+    "توب غان مافريك",
+    "توب غن",
+    "Maverick",
+    "توب قن",
+    "مافريك"
+   ],
+   "franchise": "top-gun"
+  },
+  "toradora": {
+   "title": "Toradora!",
+   "type": "anime",
+   "aliases": []
+  },
+  "toy-story": {
+   "title": "Toy Story",
+   "type": "film",
+   "aliases": [
+    "توي ستوري",
+    "حكاية لعبة",
+    "تويستوري",
+    "قصة لعبة"
+   ],
+   "franchise": "toy-story"
+  },
+  "toy-story-2": {
+   "title": "Toy Story 2",
+   "type": null,
+   "aliases": [],
+   "franchise": "toy-story"
+  },
+  "toy-story-3": {
+   "title": "Toy Story 3",
+   "type": null,
+   "aliases": [],
+   "franchise": "toy-story"
+  },
+  "toy-story-4": {
+   "title": "Toy Story 4",
+   "type": null,
+   "aliases": [],
+   "franchise": "toy-story"
+  },
+  "train-to-busan": {
+   "title": "Train to Busan",
+   "type": "film",
+   "aliases": []
+  },
+  "training-day": {
+   "title": "Training Day",
+   "type": "film",
+   "aliases": []
+  },
+  "treasure-of-the-sierra-madre": {
+   "title": "The Treasure of the Sierra Madre",
+   "type": "film",
+   "aliases": [
+    "كنز سييرا مادري",
+    "Treasure of the Sierra Madre"
+   ]
+  },
+  "trigun": {
+   "title": "Trigun",
+   "type": "anime",
+   "aliases": []
+  },
+  "troy": {
+   "title": "Troy",
+   "type": "film",
+   "aliases": []
+  },
+  "true-detective": {
+   "title": "True Detective",
+   "type": "series",
+   "aliases": [
+    "المحقق الحقيقي",
+    "ترو ديتكتف"
+   ]
+  },
+  "truman-show": {
+   "title": "The Truman Show",
+   "type": "film",
+   "aliases": [
+    "ترومان شو",
+    "عرض ترومان",
+    "Truman Show"
+   ]
+  },
+  "twilight-zone": {
+   "title": "The Twilight Zone",
+   "type": "series",
+   "aliases": [
+    "منطقة الشفق",
+    "Twilight Zone"
+   ]
+  },
+  "twin-peaks": {
+   "title": "Twin Peaks",
+   "type": "series",
+   "aliases": [
+    "توين بيكس",
+    "تون بيكس"
+   ]
+  },
+  "unforgiven": {
+   "title": "Unforgiven",
+   "type": "film",
+   "aliases": [
+    "غير المغفور له",
+    "أنفورقيفن",
+    "بلا غفران"
+   ]
+  },
+  "untouchables": {
+   "title": "The Untouchables",
+   "type": "film",
+   "aliases": [
+    "المنبوذون"
+   ]
+  },
+  "up": {
+   "title": "Up",
+   "type": "film",
+   "aliases": [
+    "أب",
+    "فوق",
+    "اب"
+   ]
+  },
+  "us": {
+   "title": "Us",
+   "type": "film",
+   "aliases": []
+  },
+  "usual-suspects": {
+   "title": "The Usual Suspects",
+   "type": "film",
+   "aliases": [
+    "المشتبه بهم المعتادون",
+    "Usual Suspects",
+    "المشتبهون المعتادون"
+   ]
+  },
+  "v-for-vendetta": {
+   "title": "V for Vendetta",
+   "type": "film",
+   "aliases": []
+  },
+  "vertigo": {
+   "title": "Vertigo",
+   "type": "film",
+   "aliases": [
+    "فيرتيغو",
+    "الدوار"
+   ]
+  },
+  "vikings": {
+   "title": "Vikings",
+   "type": "series",
+   "aliases": [
+    "الفايكنج",
+    "فايكنقز",
+    "فايكنجز",
+    "الفايكنغ",
+    "فايكينغز",
+    "فايكنغز"
+   ]
+  },
+  "walking-dead": {
+   "title": "The Walking Dead",
+   "type": "series",
+   "aliases": [
+    "الموتى السائرون",
+    "ذا ووكينغ ديد",
+    "ذا ووكنق ديد",
+    "ذا ووكنج ديد",
+    "ووكنق ديد",
+    "ذا ووكينق ديد",
+    "ذا ووكينج ديد",
+    "ووكينغ ديد"
+   ]
+  },
+  "wall-e": {
+   "title": "WALL-E",
+   "type": "film",
+   "aliases": [
+    "وول إي",
+    "والي",
+    "WALLE",
+    "Wall E",
+    "وول اي",
+    "وولاي"
+   ]
+  },
+  "war-dogs": {
+   "title": "War Dogs",
+   "type": "film",
+   "aliases": [
+    "كلاب الحرب",
+    "وور دوغز"
+   ]
+  },
+  "wednesday": {
+   "title": "Wednesday",
+   "type": "series",
+   "aliases": [
+    "وينزداي",
+    "ونزداي",
+    "الأربعاء"
+   ]
+  },
+  "westworld": {
+   "title": "Westworld",
+   "type": "series",
+   "aliases": [
+    "ويست وورلد",
+    "العالم الغربي",
+    "وست ورلد"
+   ]
+  },
+  "whiplash": {
+   "title": "Whiplash",
+   "type": "film",
+   "aliases": [
+    "ويبلاش",
+    "الصفعة"
+   ]
+  },
+  "wings-of-desire": {
+   "title": "Wings of Desire",
+   "type": "film",
+   "aliases": [
+    "أجنحة الرغبة",
+    "سماء فوق برلين",
+    "Der Himmel über Berlin",
+    "السماء فوق برلين"
+   ]
+  },
+  "wire": {
+   "title": "The Wire",
+   "type": "series",
+   "aliases": [
+    "ذا واير",
+    "السلك",
+    "Wire",
+    "التنصت"
+   ],
+   "franchise": "the-wire"
+  },
+  "wizard-of-oz": {
+   "title": "The Wizard of Oz",
+   "type": "film",
+   "aliases": [
+    "ساحر أوز"
+   ]
+  },
+  "wolf-of-wall-street": {
+   "title": "The Wolf of Wall Street",
+   "type": "film",
+   "aliases": [
+    "وولف اوف وول ستريت",
+    "ذئب وول ستريت"
+   ]
+  },
+  "yu-gi-oh": {
+   "title": "Yu-Gi-Oh!",
+   "type": "anime",
+   "aliases": []
+  },
+  "yuyu-hakusho": {
+   "title": "Yuyu Hakusho",
+   "type": "anime",
+   "aliases": []
+  },
+  "zodiac": {
+   "title": "Zodiac",
+   "type": "film",
+   "aliases": []
+  },
+  "zootopia": {
+   "title": "Zootopia",
+   "type": "film",
+   "aliases": [
+    "زوتوبيا"
+   ]
+  }
+ },
+ "manual": {
+  "2eili5kv27t": [
+   "matrix"
+  ],
+  "18ap6p5iarq": [
+   "star-wars"
+  ],
+  "2c0v7nkkgvt": [
+   "money-heist"
+  ],
+  "uae4t68wqm": [
+   "iron-man"
+  ],
+  "47ro7t2252": [
+   "one-piece"
+  ],
+  "26mmxcli95x": [
+   "star-wars"
+  ],
+  "bsln1a42k0": [
+   "naruto"
+  ],
+  "2gekuxei4cu": [
+   "deadpool"
+  ],
+  "1ypifmw1aje": [
+   "friday-the-13th"
+  ],
+  "b7rcjlyyfh": [
+   "v-for-vendetta"
+  ],
+  "1xug80usae2": [
+   "indiana-jones"
+  ],
+  "1q8rb99s87w": [
+   "pirates-of-the-caribbean"
+  ],
+  "qogmes2wye": [
+   "beetlejuice"
+  ],
+  "2gi798hs1qn": [
+   "frozen"
+  ],
+  "1vs1mltupmx": [
+   "dragon-ball"
+  ],
+  "2fn7qmtgfoh": [
+   "lord-of-the-rings"
+  ],
+  "1etbxj3beke": [
+   "harry-potter"
+  ],
+  "22m32w21vw4": [
+   "star-wars"
+  ],
+  "1nnhpc9c5o8": [
+   "scream"
+  ],
+  "1scluao3wrn": [
+   "pokmon"
+  ],
+  "24b0zgah0di": [
+   "spider-man"
+  ],
+  "20ff7gz6sd1": [
+   "no-country-for-old-men"
+  ],
+  "13tp7w973kh": [
+   "everything-everywhere-all-at-once"
+  ],
+  "149pi22olf9": [
+   "pirates-of-the-caribbean",
+   "charlie-and-the-chocolate-factory",
+   "edward-scissorhands"
+  ],
+  "1noa9b6reow": [
+   "toy-story"
+  ],
+  "1en3rntgvf1": [
+   "prestige",
+   "inception",
+   "interstellar"
+  ],
+  "1q3bx52dvv5": [
+   "casablanca",
+   "gladiator",
+   "parasite"
+  ],
+  "2g6hrwoc2y7": [
+   "harry-potter"
+  ],
+  "lkj0rgov9h": [
+   "lord-of-the-rings"
+  ],
+  "1v3nj70ybj5": [
+   "matrix",
+   "john-wick",
+   "speed"
+  ],
+  "11gxjcwzgjw": [
+   "last-of-us"
+  ],
+  "sbpr19yq0s": [
+   "breaking-bad"
+  ],
+  "45797nha5j": [
+   "iron-man"
+  ],
+  "60y3yqs73a": [
+   "game-of-thrones"
+  ],
+  "v7ytfzpy5f": [
+   "friends"
+  ],
+  "gez75zo4hb": [
+   "dragon-ball"
+  ],
+  "2cap95ro7fc": [
+   "one-piece"
+  ],
+  "fhhveqzl1r": [
+   "frozen"
+  ],
+  "1wsh39td71w": [
+   "shrek"
+  ],
+  "2bqq167ia6v": [
+   "lion-king"
+  ],
+  "1vw47zt2fr8": [
+   "finding-nemo"
+  ],
+  "zxgushj0pj": [
+   "titanic",
+   "revenant",
+   "wolf-of-wall-street"
+  ],
+  "1qrlbnn9y59": [
+   "fight-club",
+   "troy",
+   "once-upon-a-time-in-hollywood"
+  ],
+  "2523s91f4ct": [
+   "forrest-gump",
+   "cast-away",
+   "green-mile"
+  ],
+  "zqrmxzpx28": [
+   "mission-impossible",
+   "top-gun",
+   "edge-of-tomorrow"
+  ],
+  "vqz52aldz7": [
+   "american-psycho",
+   "machinist",
+   "batman-begins"
+  ],
+  "13m8j555m6p": [
+   "training-day",
+   "equalizer",
+   "man-on-fire"
+  ],
+  "1lssmmpmia8": [
+   "shawshank-redemption",
+   "se7en",
+   "bruce-almighty"
+  ],
+  "18jkc725eac": [
+   "dark-knight",
+   "brokeback-mountain",
+   "10-things-i-hate-about-you"
+  ],
+  "2gchht9auci": [
+   "good-will-hunting",
+   "bourne-identity",
+   "martian"
+  ],
+  "r8g4ol5f90": [
+   "la-la-land",
+   "easy-a",
+   "poor-things"
+  ],
+  "1j0z170zd65": [
+   "jumanji",
+   "dead-poets-society",
+   "mrs-doubtfire"
+  ],
+  "15rfoqy8wcq": [
+   "mask",
+   "truman-show",
+   "dumb-and-dumber"
+  ],
+  "1jy54lupon": [
+   "lucy",
+   "marriage-story",
+   "lost-in-translation"
+  ],
+  "1i6akdg9t3i": [
+   "last-of-us"
+  ],
+  "2fy686wp6ku": [
+   "last-of-us"
+  ],
+  "1ckeq1oty8q": [
+   "last-of-us"
+  ],
+  "1fn6rdeng17": [
+   "last-of-us"
+  ],
+  "toqvgp681u": [
+   "last-of-us"
+  ],
+  "26bdpmj8icx": [
+   "simpsons"
+  ],
+  "13ztc3ddsil": [
+   "101-dalmatians"
+  ],
+  "1bzh33ti6s5": [
+   "titanic",
+   "avatar"
+  ],
+  "146dealzkpd": [
+   "harry-potter",
+   "lord-of-the-rings"
+  ],
+  "4dsa0jwcy7": [
+   "simpsons",
+   "friends"
+  ],
+  "2coo0eopyyf": [
+   "aladdin",
+   "lion-king"
+  ],
+  "wuvis4pocc": [
+   "star-wars"
+  ],
+  "2byv1bkywjm": [
+   "last-of-us"
+  ],
+  "1tutorwwsrm": [
+   "breaking-bad",
+   "game-of-thrones"
+  ],
+  "25melkyv3rk": [
+   "walking-dead",
+   "lost"
+  ],
+  "y3wnbcgyug": [
+   "house-m-d",
+   "dexter"
+  ],
+  "8mneps3d9i": [
+   "inception",
+   "matrix"
+  ],
+  "y3mrvnijhd": [
+   "jurassic-park",
+   "toy-story"
+  ],
+  "qxgr4a9hz1": [
+   "ratatouille",
+   "finding-nemo"
+  ],
+  "24rfncswhmh": [
+   "shrek",
+   "ice-age"
+  ],
+  "sdkk1a90dp": [
+   "terminator"
+  ],
+  "xzyvk0aufh": [
+   "dark-knight"
+  ],
+  "oenwrktvt5": [
+   "lord-of-the-rings"
+  ],
+  "1goa1h87fwb": [
+   "finding-nemo"
+  ],
+  "2wobg37p0u": [
+   "toy-story"
+  ],
+  "1qfodg4b1a9": [
+   "fargo-1996"
+  ],
+  "28pvl3o7jzs": [
+   "fargo-1996"
+  ],
+  "2bhjwwen678": []
+ }
+}

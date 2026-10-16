@@ -12,6 +12,10 @@
    المرجع — ما احتجنا نغيّر منطق اللعبة. */
 
 import { loadImgManifest } from "./img";
+import { setWorksMap } from "./picker";
+
+/* مجموعة التجربة (أسئلة أول لعبة لكل حساب) — public/data/trial.json */
+export const TRIAL = { cats: {} };
 
 export const BANK = [];
 
@@ -41,7 +45,13 @@ export function loadBank() {
 
   pending = (async () => {
     /* بصمات الصور تنزل مع الفهرس، فأول صورة تطلع برابطها النهائي (ويتخزن سنة) */
-    const [index] = await Promise.all([fetchJSON("/data/index.json"), loadImgManifest()]);
+    const [index, , worksMap, trial] = await Promise.all([
+      fetchJSON("/data/index.json"), loadImgManifest(),
+      fetchJSON("/data/works-map.json").catch(() => null),   // أعمال/سلاسل: عشان نفس الفلم/المسلسل ما يتكرر باللعبة
+      fetchJSON("/data/trial.json").catch(() => null),
+    ]);
+    setWorksMap(worksMap);
+    if (trial && trial.cats) TRIAL.cats = trial.cats;
 
     for (const c of index.categories) {
       CAT_COUNT[c.name] = c.count;

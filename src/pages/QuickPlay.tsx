@@ -4,7 +4,9 @@ import { useNavigate } from "react-router";
 import { CAT_ART_CSS } from "../catArt";
 import { AccountChip } from "../account";
 import { PTS, DLBL, CATS, HOST_JUDGED, TYPED_CATS, TYPED_SEC, BLIND_SHOW, VOTE_SEC, START_DELAY, REVEAL_SEC, EVENT_SEC, INTRO_SEC, CAT_INFO, catInfo, BOARD_CATS_N, TEAM_SEC, TEAM_COLORS, POWERUPS, boardReady, puById, freshPowerUps, buildBoard, ptsToDiff, EVENTS, ITEMS, itemById } from "../data/config";
-import { BANK } from "../lib/bank";
+import { BANK, TRIAL } from "../lib/bank";
+import { qid } from "../lib/qid.js";
+import { newGame, addCategory, candidates, take, byDifficulty, trialPool } from "../lib/picker.js";
 import { rnd, genMathQ } from "../lib/math";
 import { jset, jget } from "../lib/net";
 import { norm, normNum, judgeTyped } from "../lib/judge";
@@ -117,34 +119,39 @@ function App({ acc }) {
       const q = genMathQ(dT);
       return { ...q, pts: scale(q.d) };
     }
-    let pool = [];
-    pool = pool.concat(BANK.filter((b) => b.cat === cat).map((b) => ({ type: "typed", ...b })));
-    pool = pool.filter((q) => !h.used.has(qKey(q)));
-    // النمط السريع: الصعوبة عشوائية تمامًا — أي سؤال من أي مستوى
-    let cand = pool;
-    // ما نكرر نفس الإجابة بنفس الجولة (غودريك مثلاً له أسئلة كثيرة)
-    if (h.usedAns && h.usedAns.size) {
-      const fresh = cand.filter((q) => !h.usedAns.has(aKey(q)));
-      if (fresh.length) cand = fresh;
+    // قواعد الأعمال (src/lib/picker.js): فئات الروم المسموحة تنعرف من البداية (عشان الفئة المخصصة تمنع سلسلتها
+    // من أول سؤال حتى لو ما انصوّت لها للحين)، وأي فئة تنختار بعدين تنضاف
+    if (!h.G) h.G = newGame(h.picked || []);
+    addCategory(h.G, cat);
+    const { account, played, idOf } = playedFor(h);
+    let q = null;
+    // أول لعبة للحساب: أسئلة التجربة الثابتة لهالفئة بالترتيب، وبعدها البنك العادي
+    if (h.trial) {
+      const tp = trialPool(h.G, cat, TRIAL, byQidMap(), new Set())
+        .filter((x) => !h.used.has(qKey(x)) && !(h.usedAns && h.usedAns.has(aKey(x))));
+      if (tp.length) q = { type: "typed", ...tp[0] };
     }
-    // ما نكرر أسئلة طلعت بجولات سابقة — إلا إذا خلصت كل أسئلة الفئة
-    if (h.seenAll && h.seenAll.size) {
-      const fresh = cand.filter((q) => !h.seenAll.has(qKey(q)));
-      if (fresh.length) cand = fresh;
-      else cand.forEach((q) => h.seenAll.delete(qKey(q))); // دورة جديدة لهذي الفئة
+    if (!q) {
+      let cand = BANK.filter((b) => b.cat === cat).map((b) => ({ type: "typed", ...b })).filter((x) => !h.used.has(qKey(x)));
+      // النمط السريع: الصعوبة عشوائية تمامًا — أي سؤال من أي مستوى
+      // ما نكرر نفس الإجابة بنفس الجولة (غودريك مثلاً له أسئلة كثيرة)
+      if (h.usedAns && h.usedAns.size) {
+        const fresh = cand.filter((x) => !h.usedAns.has(aKey(x)));
+        if (fresh.length) cand = fresh;
+      }
+      // نفس العمل ما يتكرر، والأسئلة اللي لعبها الحساب ما تتكرر — إلا لو خلصت الفئة
+      cand = candidates(h.G, cat, cand, played, idOf);
+      if (!cand.length) {
+        // احتياطي: من فئات الروم المختارة فقط
+        const scope = h.picked && h.picked.length ? BANK.filter((b) => h.picked.includes(b.cat)) : typedBank();
+        cand = scope.map((b) => ({ type: "typed", ...b })).filter((x) => !h.used.has(qKey(x)));
+      }
+      if (!cand.length) cand = [genMathQ(dT)];
+      q = cand[Math.floor(Math.random() * cand.length)];
     }
-    if (!cand.length) {
-      // احتياطي: من فئات الروم المختارة فقط
-      const scope = h.picked && h.picked.length ? BANK.filter((b) => h.picked.includes(b.cat)) : typedBank();
-      cand = scope.map((b) => ({ type: "typed", ...b })).filter((q) => !h.used.has(qKey(q)));
-    }
-    if (!cand.length) cand = [genMathQ(dT)];
-    const q = cand[Math.floor(Math.random() * cand.length)];
     h.used.add(qKey(q));
-    if (h.seenAll) {
-      h.seenAll.add(qKey(q));
-      jset("fz:seenQ", [...h.seenAll].slice(-1200), false); // نحفظ بالخلفية
-    }
+    take(h.G, q);
+    rememberPlayed(h, [q], account);
     if (h.usedAns) h.usedAns.add(aKey(q));
     if (noDiff(cat)) {
       // بلا تقييم صعوبة: نقاط موحّدة ترتفع مع تكرار الفئة
@@ -165,33 +172,52 @@ function App({ acc }) {
         .filter((c) => !picked.includes(c));
       picked.push(...rest.slice(0, BOARD_CATS_N - picked.length));
     }
+    // قواعد الأعمال: الفئة المخصصة تمنع سلسلتها من باقي اللوحة، وكل فلم/مسلسل/أنمي مرة وحدة (src/lib/picker.js)
+    const G = (h.G = newGame(picked));
+    const { account, played, idOf } = playedFor(h);
     const taken = new Set();
     const takenAns = new Set();   // ما نكرر نفس الجواب باللوحة كلها
+    const dealt = [];
     const pickQ = (cat, pts) => {
       const want = ptsToDiff(pts);
-      const fresh = (b) => b.cat === cat && !taken.has(qKey(b)) && !takenAns.has(aKey(b));
-      let pool = BANK.filter((b) => fresh(b) && !h.seenAll.has(qKey(b)));
-      if (!pool.length) pool = BANK.filter(fresh);
-      if (!pool.length) pool = BANK.filter((b) => b.cat === cat && !taken.has(qKey(b)));
-      if (!pool.length) return null;
-      let cand = noDiff(cat) ? pool : pool.filter((b) => b.d === want);
-      // لو ما فيه بالمستوى المطلوب، نجرب الأقرب قبل ما نفتح الكل
-      if (!cand.length && !noDiff(cat)) {
-        const near = want === 1 ? [2, 3] : want === 2 ? [1, 3] : [2, 1];
-        for (const d of near) {
-          cand = pool.filter((b) => b.d === d);
-          if (cand.length) break;
-        }
+      let q = null;
+      if (h.trial) {   // أول لعبة للحساب: أسئلة التجربة الثابتة
+        const tp = trialPool(G, cat, TRIAL, byQidMap(), new Set()).filter((b) => !taken.has(qKey(b)) && !takenAns.has(aKey(b)));
+        q = tp.find((b) => noDiff(cat) || b.d === want) || tp[0] || null;
       }
-      if (!cand.length) cand = pool;
-      const q = cand[Math.floor(Math.random() * cand.length)];
+      if (!q) {
+        const base = BANK.filter((b) => b.cat === cat && !taken.has(qKey(b)));
+        const noDup = base.filter((b) => !takenAns.has(aKey(b)));
+        // بالمستوى المطلوب، ولو ما فيه الأقرب
+        q = byDifficulty(candidates(G, cat, noDup.length ? noDup : base, played, idOf), noDiff(cat) ? 0 : want);
+      }
+      if (!q) return null;
       taken.add(qKey(q));
       takenAns.add(aKey(q));
-      h.seenAll.add(qKey(q));
+      take(G, q);
+      dealt.push(q);
       return { ...q, type: "typed" };
     };
-    jset("fz:seenQ", [...h.seenAll].slice(-1200), false);
-    return buildBoard(picked, pickQ);
+    const board = buildBoard(picked, pickQ);
+    rememberPlayed(h, dealt, account);
+    return board;
+  }
+
+  /* الأسئلة اللي لعبها: من الحساب (Supabase) لو مسجّل، وإلا من هذا الجهاز (fz:seenQ) */
+  function playedFor(h) {
+    const account = !!(acc && acc.enabled && acc.user);
+    return account ? { account, played: acc.played, idOf: qid } : { account, played: h.seenAll || null, idOf: qKey };
+  }
+  function rememberPlayed(h, qs, account) {
+    if (account) { acc.markPlayed(qs.map(qid)); return; }
+    if (!h.seenAll) return;
+    qs.forEach((q) => h.seenAll.add(qKey(q)));
+    jset("fz:seenQ", [...h.seenAll].slice(-1200), false); // نحفظ بالخلفية
+  }
+  const byQidRef = useRef(null);
+  function byQidMap() {
+    if (!byQidRef.current || byQidRef.current.size !== BANK.length) byQidRef.current = new Map(BANK.map((b) => [qid(b), b]));
+    return byQidRef.current;
   }
 
   function teamOf(h, pid) {
@@ -836,8 +862,11 @@ function App({ acc }) {
   }
 
   async function playAgain() {
-    if (acc && !(await acc.gate("room"))) return;   // الجولة الجديدة = لعبة جديدة من الرصيد
+    const ok = acc ? await acc.gate("room") : { trial: false };   // الجولة الجديدة = لعبة جديدة من الرصيد
+    if (!ok) return;
+    if (acc && acc.waitPlayed) await acc.waitPlayed();
     const h = hostRef.current;
+    h.trial = !!ok.trial; h.G = null;   // لعبة جديدة = قواعد الأعمال من جديد
     h.phase = "lobby";
     h.qIndex = 0;
     h.reveal = null;
@@ -869,7 +898,9 @@ function App({ acc }) {
   /* ---------- إنشاء روم ---------- */
   async function createRoom() {
     if (!me.name.trim()) { setToast("اكتب اسمك أول"); return; }
-    if (acc && !(await acc.gate("room"))) return;   // يخصم لعبة من رصيد الحساب
+    const ok = acc ? await acc.gate("room") : { trial: false };   // يخصم لعبة من رصيد الحساب
+    if (!ok) return;
+    if (acc && acc.waitPlayed) await acc.waitPlayed();
     setLoading("نجهّز الروم…");
     await jset("fz:me", me, false);
     const prevSeen = await jget("fz:seenQ", false);
@@ -883,6 +914,7 @@ function App({ acc }) {
       items: { [me.pid]: [] }, fx: {}, itemLog: [], seen: {}, doneUses: {}, usedAns: new Set(), picked: (cfg.picked || []).filter((c) => TYPED_CATS.includes(c)), stageStart: 0, autoNext: true,
       catMode: "vote", pickerPid: null, catOptions: [], catDeck: [], catStart: 0, chosenCat: null, rolled: 0, catCount: {},
       seenAll: new Set(Array.isArray(prevSeen) ? prevSeen : []),
+      trial: !!ok.trial, G: null,   // أول لعبة للحساب = أسئلة التجربة الثابتة · G = قواعد الأعمال لهاللعبة
       mode: cfg.mode || "classic",
       teams: [
         { name: (cfg.teamNames && cfg.teamNames[0]) || "الفريق الأول", color: TEAM_COLORS[0], score: 0, members: [], pu: freshPowerUps() },

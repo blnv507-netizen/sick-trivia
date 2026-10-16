@@ -2,11 +2,14 @@
 /* ==================================================================
    الحسابات ورصيد الألعاب (Supabase)
    - تسجيل حساب / دخول / خروج / نسيت كلمة المرور
-   - كل حساب له رصيد ألعاب. بدء لعبة يخصم وحدة من السيرفر (start_game)
-     فما أحد يقدر يلعب برصيد مو له حتى لو عدّل الكود بالمتصفح.
+   - التسجيل يرسل رمز 6 أرقام للإيميل، والحساب ما يشتغل (ولا ياخذ اللعبة المجانية) لين ينكتب الرمز
+   - كل حساب له رصيد ألعاب. بدء لعبة يخصم وحدة من السيرفر (begin_game)
+     فما أحد يقدر يلعب برصيد مو له حتى لو عدّل الكود بالمتصفح. أول لعبة = مجموعة التجربة الثابتة.
+   - الأسئلة اللي لعبها الحساب تنحفظ في Supabase (played_questions) عشان ما تتكرر حتى من جهاز ثاني.
    - إذا خلص الرصيد تطلع شاشة التجديد.
+   الإعدادات المطلوبة في Supabase: supabase/2026-10-16_otp_trial_played.sql
    ================================================================== */
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { createClient } from "@supabase/supabase-js";
 
 // تنظيف القيم: مسافات أو علامات تنصيص زايدة تنكتب بالغلط في Render أو .env
@@ -31,10 +34,13 @@ export const supabase = makeClient();
 const errMsg = (e) => {
   const m = String((e && (e.message || e.error_description)) || e || "");
   if (/Invalid login credentials/i.test(m)) return "الإيميل أو كلمة المرور غلط";
+  // رمز التأكيد: Supabase يرجع نفس الرسالة للغلط والمنتهي ("Token has expired or is invalid")
+  if (/token has expired|expired or is invalid|otp_expired|invalid.*otp/i.test(m)) return "الرمز غلط أو انتهت صلاحيته. تأكد منه أو اطلب رمز جديد.";
   if (/already registered|already been registered/i.test(m)) return "هذا الإيميل مسجّل من قبل، سجّل دخول";
   if (/Password should be at least/i.test(m)) return "كلمة المرور لازم تكون 6 أحرف أو أكثر";
   if (/Unable to validate email|invalid email|is invalid/i.test(m)) return "الإيميل مكتوب غلط";
-  if (/Email not confirmed/i.test(m)) return "افتح إيميلك وأكّد الحساب أول";
+  if (/Email not confirmed/i.test(m)) return "not_confirmed";
+  if (/security purposes|after \d+ seconds/i.test(m)) return "انتظر شوي قبل ما تطلب رمز ثاني";
   if (/rate limit|too many/i.test(m)) return "محاولات كثيرة، انتظر شوي وجرّب";
   if (/no_credits/i.test(m)) return "no_credits";
   if (/not_logged_in|JWT/i.test(m)) return "سجّل دخول أول";
@@ -70,14 +76,26 @@ export function useAccount() {
     return () => sub.subscription.unsubscribe();
   }, [loadProfile]);
 
+  /* التسجيل: لو «Confirm email» شغّال، Supabase يرسل رمز 6 أرقام والحساب ما يشتغل لين ينكتب الرمز (otp) */
   const signUp = async (name, email, password) => {
     const { data, error } = await supabase.auth.signUp({ email: email.trim(), password, options: { data: { name: name.trim() } } });
     if (error) return { error: errMsg(error) };
-    if (!data.session) return { info: "سوّينا حسابك. افتح إيميلك واضغط رابط التأكيد، وبعدها سجّل دخول." };
+    // إيميل مسجّل ومأكَّد من قبل: Supabase يرجع مستخدم بدون identities (عشان ما يكشف الإيميلات)
+    if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) return { error: "هذا الإيميل مسجّل من قبل، سجّل دخول" };
+    if (!data.session) return { otp: email.trim() };
     return { ok: true };
   };
   const signIn = async (email, password) => {
     const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+    if (error && errMsg(error) === "not_confirmed") return { unconfirmed: email.trim() };
+    return error ? { error: errMsg(error) } : { ok: true };
+  };
+  const verifyOtp = async (email, token) => {
+    const { error } = await supabase.auth.verifyOtp({ email: email.trim(), token: token.trim(), type: "signup" });
+    return error ? { error: errMsg(error) } : { ok: true };
+  };
+  const resendOtp = async (email) => {
+    const { error } = await supabase.auth.resend({ type: "signup", email: email.trim() });
     return error ? { error: errMsg(error) } : { ok: true };
   };
   const resetPassword = async (email) => {
@@ -91,21 +109,59 @@ export function useAccount() {
   const signOut = async () => { await supabase.auth.signOut(); setModal(null); };
   const refresh = () => loadProfile(user);
 
-  /* بوابة اللعب: تتأكد من الدخول وتخصم لعبة من الرصيد. ترجع true إذا يقدر يلعب */
+  /* الأسئلة اللي لعبها الحساب (Supabase: played_questions) — تنحمّل مرة عند الدخول وتتحدث محليًا */
+  const played = useRef(new Set());
+  const playedLoad = useRef(Promise.resolve());
+  const [playedReady, setPlayedReady] = useState(!supabase);
+  useEffect(() => {
+    played.current = new Set();
+    if (!supabase || !user) { setPlayedReady(!supabase); playedLoad.current = Promise.resolve(); return; }
+    let alive = true;
+    setPlayedReady(false);
+    playedLoad.current = (async () => {
+      for (let from = 0; ; from += 1000) {
+        const { data, error } = await supabase.from("played_questions").select("qid").order("qid").range(from, from + 999);
+        if (error || !data) break;                   // الجدول مو موجود (المايقريشن ما انشغّل) = نكمل بدونه
+        data.forEach((r) => played.current.add(r.qid));
+        if (data.length < 1000) break;
+      }
+      if (alive) setPlayedReady(true);
+    })();
+    return () => { alive = false; };
+  }, [user && user.id]);
+  const markPlayed = useCallback((qids) => {
+    const fresh = [...new Set(qids)].filter((id) => id && !played.current.has(id));
+    fresh.forEach((id) => played.current.add(id));
+    if (!supabase || !user || !fresh.length) return;
+    for (let i = 0; i < fresh.length; i += 500) {
+      supabase.rpc("mark_played", { p_qids: fresh.slice(i, i + 500) }).then(({ error }) => { if (error) console.warn("[played] ما انحفظ:", error.message); });
+    }
+  }, [user]);
+
+  /* بوابة اللعب: تتأكد من الدخول وتخصم لعبة من الرصيد.
+     ترجع false لو ما يقدر يلعب، وإلا { trial } — trial = أول لعبة للحساب (مجموعة التجربة الثابتة) */
   const gate = async (mode) => {
-    if (!supabase) return true;                      // الحسابات مو مفعّلة = اللعب مفتوح
+    if (!supabase) return { trial: false };          // الحسابات مو مفعّلة = اللعب مفتوح
     if (!user) { setModal("auth"); return false; }
-    const { data, error } = await supabase.rpc("start_game", { p_mode: mode });
+    let { data, error } = await supabase.rpc("begin_game", { p_mode: mode });
+    if (error && /begin_game|PGRST202|function/i.test(error.message || "") && !/no_credits|not_logged_in/.test(error.message || "")) {
+      // قبل المايقريشن: الدالة القديمة (بدون مجموعة التجربة)
+      const r = await supabase.rpc("start_game", { p_mode: mode });
+      error = r.error; data = r.error ? null : { credits: r.data, trial: false };
+    }
     if (error) {
       const m = errMsg(error);
       if (m === "no_credits") { setModal("credits"); await refresh(); return false; }
       alert(m); return false;
     }
-    setProfile((p) => (p ? { ...p, credits: data, games_played: (p.games_played || 0) + 1 } : p));
-    return true;
+    setProfile((p) => (p ? { ...p, credits: data.credits, games_played: (p.games_played || 0) + 1 } : p));
+    return { trial: !!data.trial };
   };
 
-  return { enabled: !!supabase, ready, user, profile, modal, setModal, signUp, signIn, signOut, resetPassword, updatePassword, refresh, gate };
+  return { enabled: !!supabase, ready, user, profile, modal, setModal, signUp, signIn, verifyOtp, resendOtp, signOut, resetPassword, updatePassword, refresh, gate,
+    played: played.current, playedReady, markPlayed,
+    // تنتظر تحميل قائمة «لعبها قبل» (أقصى 6 ثواني) قبل ما تنبني اللوحة
+    waitPlayed: () => Promise.race([playedLoad.current, new Promise((r) => setTimeout(r, 6000))]) };
 }
 
 /* ---------- الواجهات ---------- */
@@ -156,6 +212,7 @@ function AuthForm({ acc }) {
   const [pass, setPass] = useState("");
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState(null);
+  const [otp, setOtp] = useState(null);   // { email, sent } — شاشة إدخال الرمز
 
   const submit = async (e) => {
     e.preventDefault();
@@ -168,13 +225,21 @@ function AuthForm({ acc }) {
       : tab === "login" ? await acc.signIn(email, pass)
       : await acc.resetPassword(email);
     setBusy(false);
+    if (r.otp) return setOtp({ email: r.otp, sent: Date.now() });
+    if (r.unconfirmed) {
+      // حساب ما أكّد إيميله: نرسل رمز جديد ونوديه لشاشة الرمز
+      const s = await acc.resendOtp(r.unconfirmed);
+      return setOtp({ email: r.unconfirmed, sent: s.ok ? Date.now() : 0, note: "حسابك ما تأكد للحين. أرسلنا لك رمز جديد على الإيميل." });
+    }
     if (!r.ok) setMsg(r);
   };
+
+  if (otp) return <OtpForm acc={acc} otp={otp} back={() => { setOtp(null); setTab("login"); }} />;
 
   return (
     <form onSubmit={submit} className="ac-form" noValidate>
       <h2>{tab === "signup" ? "سوّ حسابك" : tab === "login" ? "تسجيل الدخول" : "نسيت كلمة المرور"}</h2>
-      <p className="ac-muted">{tab === "signup" ? "أول لعبة علينا. بعدها تجدد رصيدك من حسابك." : tab === "login" ? "ادخل على حسابك وكمّل اللعب." : "اكتب إيميلك ونرسل لك رابط تغيير كلمة المرور."}</p>
+      <p className="ac-muted">{tab === "signup" ? "أول لعبة علينا بعد ما تأكد إيميلك. بعدها تجدد رصيدك من حسابك." : tab === "login" ? "ادخل على حسابك وكمّل اللعب." : "اكتب إيميلك ونرسل لك رابط تغيير كلمة المرور."}</p>
       {tab !== "forgot" && (
         <div className="ac-tabs" role="tablist">
           <button type="button" role="tab" aria-selected={tab === "signup"} className={tab === "signup" ? "on" : ""} onClick={() => { setTab("signup"); setMsg(null); }}>حساب جديد</button>
@@ -197,6 +262,54 @@ function AuthForm({ acc }) {
       </button>
       {tab === "login" && <button type="button" className="ac-link" onClick={() => { setTab("forgot"); setMsg(null); }}>نسيت كلمة المرور؟</button>}
       {tab === "forgot" && <button type="button" className="ac-link" onClick={() => { setTab("login"); setMsg(null); }}>رجوع لتسجيل الدخول</button>}
+    </form>
+  );
+}
+
+/* إدخال رمز التأكيد (6 أرقام) — الحساب يشتغل ويأخذ اللعبة المجانية بعده */
+const RESEND_SEC = 60;
+function OtpForm({ acc, otp, back }) {
+  const [code, setCode] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState(otp.note ? { info: otp.note } : null);
+  const [sentAt, setSentAt] = useState(otp.sent || 0);
+  const [now, setNow] = useState(Date.now());
+  useEffect(() => { const t = setInterval(() => setNow(Date.now()), 500); return () => clearInterval(t); }, []);
+  const wait = Math.max(0, Math.ceil((sentAt + RESEND_SEC * 1000 - now) / 1000));
+  const digits = (v) => v.replace(/[٠-٩]/g, (d) => "٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d)).replace(/\D/g, "").slice(0, 6);
+
+  const verify = async (e) => {
+    e && e.preventDefault();
+    if (code.length !== 6) return setMsg({ error: "الرمز 6 أرقام" });
+    setBusy(true); setMsg(null);
+    const r = await acc.verifyOtp(otp.email, code);
+    setBusy(false);
+    if (!r.ok) { setMsg(r); setCode(""); }
+    // نجح: onAuthStateChange يدخّله ويقفل النافذة
+  };
+  const resend = async () => {
+    if (wait) return;
+    setMsg(null);
+    const r = await acc.resendOtp(otp.email);
+    if (r.ok) { setSentAt(Date.now()); setMsg({ info: "أرسلنا رمز جديد. الرمز القديم ما عاد يشتغل." }); }
+    else setMsg(r);
+  };
+
+  return (
+    <form onSubmit={verify} className="ac-form" noValidate>
+      <h2>أكّد إيميلك</h2>
+      <p className="ac-muted">أرسلنا رمز من 6 أرقام إلى:
+        <b className="ac-email" dir="ltr">{otp.email}</b>
+        اكتبه هنا عشان يشتغل حسابك وتاخذ لعبتك المجانية.</p>
+      <label className="ac-field"><span>رمز التأكيد</span>
+        <input className="ac-code" inputMode="numeric" autoComplete="one-time-code" dir="ltr" placeholder="••••••" autoFocus
+          value={code} onChange={(e) => { const v = digits(e.target.value); setCode(v); if (msg && msg.error) setMsg(null); }} aria-label="رمز التأكيد من 6 أرقام" /></label>
+      {msg && <div className={msg.error ? "ac-err" : "ac-info"} role="status">{msg.error || msg.info}</div>}
+      <button className="ac-btn" disabled={busy || code.length !== 6}>{busy ? "لحظة…" : "تأكيد"}</button>
+      <button type="button" className="ac-link" onClick={resend} disabled={!!wait}>
+        {wait ? `إعادة إرسال الرمز بعد ${wait} ث` : "ما وصلك؟ أعد إرسال الرمز"}</button>
+      <p className="ac-muted ac-small">تأكد من مجلد الرسائل غير المرغوبة (Spam).</p>
+      <button type="button" className="ac-link" onClick={back}>رجوع</button>
     </form>
   );
 }
@@ -269,7 +382,11 @@ const CSS = `
 .ac-btn:active:not(:disabled){transform:scale(.98);}
 .ac-btn:disabled{opacity:.5;}
 .ac-link{border:0;background:none;color:#6F6880;font:inherit;font-size:14px;cursor:pointer;padding:6px;}
-.ac-link:hover{color:#1F1B2A;}
+.ac-link:hover:not(:disabled){color:#1F1B2A;}
+.ac-link:disabled{opacity:.6;cursor:default;}
+.ac-code{text-align:center;letter-spacing:.5em;font-size:26px!important;font-weight:700;padding-inline-start:calc(14px + .5em)!important;}
+.ac-small{font-size:13px;text-align:center;}
+.ac-email{display:block;unicode-bidi:isolate;text-align:center;color:#1F1B2A;font-size:16px;margin:6px 0;overflow-wrap:anywhere;}
 .ac-err{background:#FBE6E8;color:#B4343F;border-radius:10px;padding:10px 12px;font-size:14px;}
 .ac-info{background:#E2F5EF;color:#0E7A64;border-radius:10px;padding:10px 12px;font-size:14px;line-height:1.7;}
 .ac-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0;}

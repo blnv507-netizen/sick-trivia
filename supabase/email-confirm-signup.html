@@ -1,0 +1,15 @@
+<!--
+  قالب إيميل «Confirm signup» في Supabase (Authentication → Emails → Templates → Confirm signup)
+  Subject:  رمز تأكيد حسابك: {{ .Token }}
+  الصق كل اللي تحت في خانة Body (Source).
+  {{ .Token }} = الرمز من 6 أرقام. ما فيه رابط — الحساب يتأكد بالرمز داخل الموقع.
+-->
+<div dir="rtl" style="font-family:Tahoma,Arial,sans-serif;background:#F6F2EA;padding:32px 16px;text-align:right;color:#2A1B2E">
+  <div style="max-width:440px;margin:0 auto;background:#FFFFFF;border-radius:16px;padding:28px 24px">
+    <h1 style="margin:0 0 8px;font-size:22px">أهلًا فيك في هات الجواب 👋</h1>
+    <p style="margin:0 0 20px;font-size:15px;line-height:1.8;color:#6A5870">هذا رمز تأكيد إيميلك. اكتبه في الموقع عشان يشتغل حسابك وتاخذ لعبتك الأولى مجانًا.</p>
+    <div dir="ltr" style="text-align:center;font-size:34px;font-weight:bold;letter-spacing:10px;background:#F1EAF8;color:#4E2C77;border-radius:12px;padding:16px 0;margin:0 0 20px">{{ .Token }}</div>
+    <p style="margin:0 0 6px;font-size:13px;line-height:1.7;color:#6A5870">الرمز ينتهي بعد 10 دقائق. لو انتهى، اضغط «أعد إرسال الرمز» في الموقع.</p>
+    <p style="margin:0;font-size:13px;line-height:1.7;color:#94889B">ما سوّيت حساب؟ تجاهل هالرسالة وما راح يصير شي.</p>
+  </div>
+</div>

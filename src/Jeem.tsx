@@ -10,6 +10,9 @@ import { AccountChip } from "./account";
 import CatArt, { CAT_ART_CSS, catTint } from "./catArt";
 import { imgUrl, preload, isBoxImg, boxBg, markBoxReady } from "./lib/img";
 import ClipPlayer from "./components/ClipPlayer";
+import { TRIAL } from "./lib/bank";
+import { qid } from "./lib/qid.js";
+import { newGame, candidates, take, byDifficulty, trialPool } from "./lib/picker.js";
 
 const SAVE_KEY = "sj:classic:v1";
 const SEEN_KEY = "sj:classic:seen";
@@ -144,32 +147,40 @@ export default function Jeem({ bank, cats, info, genMath, onExit, acc }) {
     return () => clearInterval(t);
   }, [S.phase]);
 
-  /* ---------- اختيار الأسئلة ---------- */
-  function buildBoard(picked) {
-    const seen = new Set(load(SEEN_KEY, []));
-    const takenAns = new Set();
-    const pickQ = (cat, d) => {
-      if (cat === "رياضيات" && genMath) return { ...genMath(d), cat };
-      const all = (byCat[cat] || []).filter((q) => !takenAns.has(norm(q.a)));
-      const unseen = all.filter((q) => !seen.has(qKey(q)));
-      const pool = unseen.length ? unseen : all;
-      const order = d === 1 ? [1, 2, 3] : d === 2 ? [2, 1, 3] : [3, 2, 1];
-      for (const want of order) {
-        const c = pool.filter((q) => (q.d || 2) === want);
-        if (c.length) { const q = c[Math.floor(Math.random() * c.length)]; takenAns.add(norm(q.a)); seen.add(qKey(q)); return q; }
-      }
-      const q = pool[Math.floor(Math.random() * pool.length)];
-      if (q) { takenAns.add(norm(q.a)); seen.add(qKey(q)); }
-      return q || null;
-    };
+  /* ---------- اختيار الأسئلة ----------
+     القواعد (src/lib/picker.js): نفس الفلم/المسلسل/الأنمي ما يتكرر باللعبة، والفئة المخصصة تمنع سلسلتها من باقي الفئات.
+     أول لعبة للحساب (trial) = مجموعة التجربة الثابتة (trial.json). الأسئلة اللي لعبها الحساب ما تتكرر
+     (من Supabase لو فيه حساب، وإلا من المتصفح). */
+  const byQid = useMemo(() => new Map(bank.map((q) => [qid(q), q])), [bank]);
+  function buildBoard(picked, trial = false) {
+    const account = !!(acc && acc.enabled && acc.user);
+    const played = account ? acc.played : new Set(load(SEEN_KEY, []));
+    const G = newGame(picked);
+    const dealt = [];
     const board = picked.map((cat) => {
-      takenAns.clear();
+      const taken = new Set(), takenAns = new Set();
+      const pickQ = (d) => {
+        if (cat === "رياضيات" && genMath) return { ...genMath(d), cat };
+        let q = null;
+        if (trial) {
+          const tp = trialPool(G, cat, TRIAL, byQid, taken).filter((x) => !takenAns.has(norm(x.a)));
+          q = tp.find((x) => (x.d || 2) === d) || tp[0] || null;      // نفس الأسئلة لكل حساب
+        }
+        if (!q) {
+          const all = (byCat[cat] || []).filter((x) => !taken.has(x));
+          const noDup = all.filter((x) => !takenAns.has(norm(x.a)));
+          q = byDifficulty(candidates(G, cat, noDup.length ? noDup : all, played, qid), d);
+        }
+        if (q) { taken.add(q); takenAns.add(norm(q.a)); take(G, q); dealt.push(qid(q)); }
+        return q;
+      };
       // كل قيمة مرتين: جهة يمين وجهة يسار
       const cells = [];
-      for (const side of [0, 1]) for (const v of VALUES) cells.push({ pts: v, side, q: pickQ(cat, DIFF[v]), done: false, by: null });
+      for (const side of [0, 1]) for (const v of VALUES) cells.push({ pts: v, side, q: pickQ(DIFF[v]), done: false, by: null });
       return { cat, cells };
     });
-    store(SEEN_KEY, [...seen].slice(-4000));
+    if (account) acc.markPlayed(dealt);
+    else store(SEEN_KEY, [...played, ...dealt].slice(-4000));
     return board;
   }
 
@@ -196,10 +207,11 @@ export default function Jeem({ bank, cats, info, genMath, onExit, acc }) {
   const startBoard = async () => {
     if (starting) return;
     setStarting(true);
-    const ok = acc ? await acc.gate("jeem") : true;   // يخصم لعبة من الرصيد (من السيرفر)
+    const ok = acc ? await acc.gate("jeem") : { trial: false };   // يخصم لعبة من الرصيد (من السيرفر)
+    if (ok && acc && acc.waitPlayed) await acc.waitPlayed();
     setStarting(false);
     if (!ok) return;
-    set((s) => ({ ...s, board: buildBoard(s.picked), phase: "board", turn: 0 }));
+    set((s) => ({ ...s, board: buildBoard(s.picked, ok.trial), phase: "board", turn: 0 }));
   };
 
   const openCell = (ci, k) => {
