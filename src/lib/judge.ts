@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { askClaude } from "./net";
+import { askJudge } from "./net";
 
 const AR_NUM = {
   "صفر": "0", "واحد": "1", "وحده": "1", "اثنين": "2", "اثنان": "2", "ثنين": "2",
@@ -138,9 +138,9 @@ async function judgeTyped(question, modelAnswer, entries, useAI, alts) {
   if (!useAI || !unsure.length) return map;
   // 2) الـ AI يراجع المرفوضة بس (مرادفات، أسماء بديلة، صياغة مختلفة)
   try {
-    const prompt = `احكم على إجابات لاعبين في لعبة أسئلة عربية. السؤال: "${question}". الإجابة النموذجية: "${modelAnswer}". اقبل الإجابة إذا كانت صحيحة المعنى حتى لو اختلفت الصياغة، أو كانت مرادفًا أو اسمًا بديلاً معروفًا، أو كُتبت بالإنجليزي بدل العربي أو العكس. ارفضها إذا كانت غلط. أرجع JSON فقط: [{"pid":"...","ok":true}]. الإجابات: ${JSON.stringify(unsure)}`;
-    const raw = await askClaude(prompt);
-    JSON.parse(raw).forEach((v) => { if (v && v.pid && v.ok) map[v.pid] = true; });
+    // السيرفر يرجع معرّفات اللاعبين اللي إجاباتهم صحيحة (pid)
+    const ok = await askJudge({ question, answer: modelAnswer, alts, entries: unsure.map((en) => ({ pid: en.pid, text: en.text })) });
+    ok.forEach((pid) => { map[pid] = true; });
   } catch (e) { /* نكتفي بالتصحيح المحلي */ }
   return map;
 }
