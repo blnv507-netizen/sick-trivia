@@ -21,8 +21,8 @@ export function loadImgManifest() {
 
 export const imgUrl = (src) => (src && V[src] ? `${src}?v=${V[src]}` : src);
 
-// صور الأسئلة داخل مجلدات الأنمي وأحداث الأفلام والمسلسلات وThe Wire وGame of Thrones وصور البوسترات تنعرض بصندوق مربع ثابت، مهما كانت دقتها
-export const isBoxImg = (src) => /^\/img\/(anime\/[^/]+|movie-plot|series|the-wire|game-of-thrones|posters)\//.test(src || "");
+// صور الأسئلة داخل مجلدات الأنمي وأحداث الأفلام والمسلسلات وThe Wire وGame of Thrones وBreaking Bad وصور البوسترات تنعرض بصندوق مربع ثابت، مهما كانت دقتها
+export const isBoxImg = (src) => /^\/img\/(anime\/[^/]+|movie-plot|series|the-wire|game-of-thrones|breaking-bad|posters)\//.test(src || "");
 // خلفية الصندوق: نفس الصورة مغبّشة ومعتّمة تعبّي الفراغ حول الصورة اللي مو مربعة (::before في CSS يقرأ --bg)
 export const boxBg = (src) => (isBoxImg(src) ? { "--bg": `url(${JSON.stringify(imgUrl(src))})` } : undefined);
 // لين تتحمّل الصورة، الصندوق يعرض خلفية ناعمة متحركة؛ onLoad يحط ready ويطلع الصورة بتلاشي

@@ -14,6 +14,7 @@
     "series-bank": "node scripts/series-bank.mjs series",
     "wire-bank": "node scripts/series-bank.mjs wire",
     "got-bank": "node scripts/series-bank.mjs got",
+    "bb-bank": "node scripts/series-bank.mjs bb",
     "clips-bank": "node scripts/clips-bank.mjs",
     "optimize-images": "node scripts/optimize-images.mjs",
     "img-manifest": "node scripts/img-manifest.mjs"

@@ -1,6 +1,6 @@
 {
  "generatedAt": "2026-10-16",
- "total": 7731,
+ "total": 7851,
  "categories": [
   {
    "name": "أحداث أفلام",
@@ -277,6 +277,12 @@
    "file": "cat-am7ioh.json",
    "count": 73,
    "uniqueAnswers": 73
+  },
+  {
+   "name": "Breaking Bad",
+   "file": "breaking-bad.json",
+   "count": 120,
+   "uniqueAnswers": 120
   },
   {
    "name": "Engineering Questions",
