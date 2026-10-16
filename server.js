@@ -63,19 +63,19 @@ app.post("/api/claude", async (req, res) => {
 const dist = path.join(__dirname, "dist");
 const YEAR = "public, max-age=31536000, immutable";
 // Long cache only where the URL changes whenever the content does:
-// Vite's hashed /assets files, and /img requests carrying ?v=<content hash> (see src/lib/img.ts).
+// Vite's hashed /assets files, and /img and /media requests carrying ?v=<content hash> (see src/lib/img.ts).
 // Everything else — index.html, /data/*.json, unversioned images — is revalidated on every use,
 // so a new deploy shows up immediately.
 const cacheFor = (req) =>
-  req.path.startsWith("/assets/") || (req.path.startsWith("/img/") && req.query.v) ? YEAR : "no-cache";
+  req.path.startsWith("/assets/") || (/^\/(img|media)\//.test(req.path) && req.query.v) ? YEAR : "no-cache";
 
-app.use(compression());   // JS, CSS, JSON, HTML; images are already compressed and are skipped
+app.use(compression());   // JS, CSS, JSON, HTML; images, video and audio are already compressed and are skipped
 app.use((req, res, next) => { res.setHeader("Cache-Control", cacheFor(req)); next(); });
 app.use(express.static(dist, { cacheControl: false }));
 app.use((req, res) => {
   res.setHeader("Cache-Control", "no-cache");
   // A missing file is a 404, not the app page (which would otherwise be cached under the file's URL)
-  if (req.method === "GET" && !/^\/(img|data|assets)\//.test(req.path)) {
+  if (req.method === "GET" && !/^\/(img|media|data|assets)\//.test(req.path)) {
     return res.sendFile(path.join(dist, "index.html"), { cacheControl: false });
   }
   res.status(404).json({ error: "not found" });

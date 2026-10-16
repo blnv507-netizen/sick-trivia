@@ -9,6 +9,7 @@ import React, { useState, useEffect, useRef, useMemo } from "react";
 import { AccountChip } from "./account";
 import CatArt, { CAT_ART_CSS, catTint } from "./catArt";
 import { imgUrl, preload, isBoxImg, boxBg, markBoxReady } from "./lib/img";
+import ClipPlayer from "./components/ClipPlayer";
 
 const SAVE_KEY = "sj:classic:v1";
 const SEEN_KEY = "sj:classic:seen";
@@ -21,7 +22,7 @@ const HELPERS = [
   { id: "call", icon: "📞", name: "اتصال بصديق", desc: "30 ثانية تتصلون فيها على أي أحد يساعدكم." },
 ];
 
-const qKey = (q) => (q.cat || "") + "|" + (q.q || "") + "|" + (q.img || "");
+const qKey = (q) => (q.cat || "") + "|" + (q.q || "") + "|" + (q.img || q.clip || "");
 const norm = (s) => String(s || "").trim().toLowerCase()
   .replace(/[أإآٱ]/g, "ا").replace(/[ةه]/g, "ه").replace(/[ىي]/g, "ي")
   .replace(/[\u064B-\u0652\u0640]/g, "").replace(/\s+/g, " ");
@@ -526,8 +527,9 @@ export default function Jeem({ bank, cats, info, genMath, onExit, acc }) {
           <div className={"sj-timer" + (main === 0 ? " steal" : "") + (main <= 5 && main > 0 ? " hurry" : "")} style={{ "--p": pct, "--tc": main > 0 ? team.color : "var(--amber)" }}>
             <span>{main > 0 ? main : steal}</span>
           </div>
-          <h1 className={"sj-qtext" + (opts || q.img || q.svg ? " media" : "")} dir="auto">{q.q}</h1>
+          <h1 className={"sj-qtext" + (opts || q.img || q.svg || q.clip ? " media" : "")} dir="auto">{q.q}</h1>
           {q.svg && <div className="sj-qsvg" dangerouslySetInnerHTML={{ __html: q.svg }} />}
+          {q.clip && !S.reveal && <ClipPlayer key={q.clip} base={q.clip} />}
           {shown && (isBoxImg(shown)
             ? <div key={shown} className="sj-qimg box" style={boxBg(shown)}>
                 <img src={imgUrl(shown)} alt="" fetchPriority="high" decoding="async" onLoad={markBoxReady}

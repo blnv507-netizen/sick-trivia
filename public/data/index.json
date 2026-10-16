@@ -1,6 +1,6 @@
 {
- "generatedAt": "2026-10-15",
- "total": 7636,
+ "generatedAt": "2026-10-16",
+ "total": 7731,
  "categories": [
   {
    "name": "أحداث أفلام",
@@ -247,6 +247,12 @@
    "file": "cat-pbohxw.json",
    "count": 159,
    "uniqueAnswers": 159
+  },
+  {
+   "name": "مقاطع فن أجنبي",
+   "file": "foreign-clips.json",
+   "count": 95,
+   "uniqueAnswers": 79
   },
   {
    "name": "مقولات",

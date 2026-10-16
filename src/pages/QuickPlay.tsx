@@ -11,6 +11,7 @@ import { norm, normNum, judgeTyped } from "../lib/judge";
 import { shuffle, genCode, genPid, MAX_SLOTS, roomKey, slotKey, qKey, aKey, isEventSlot, noDiff, INVENTIVE, CLASSIC, drawCats, CAT_COUNT } from "../lib/game";
 import { CatArt, Sadu } from "../components/ui";
 import { imgUrl, preload, isBoxImg, boxBg, markBoxReady } from "../lib/img";
+import ClipPlayer from "../components/ClipPlayer";
 import { FinalCeremony, TopTenOverlay } from "../components/effects";
 
 // اللعب هنا كتابي ويصححه judgeTyped، فأسئلة الفئات اللي يحكمها المضيف ما تدخل
@@ -303,7 +304,7 @@ function App({ acc }) {
       turn: h.turn, owner: h.owner, answering: h.answering,
       tile: h.tile ? { ci: h.tile.ci, ti: h.tile.ti, pts: h.tile.pts, cat: h.tile.cat } : null,
       bq: h.phase === "bq" && h.tile ? {
-        q: h.tile.q.q, svg: h.tile.q.svg || null, img: h.tile.q.img || null, zoom: h.tile.q.zoom || null,
+        q: h.tile.q.q, svg: h.tile.q.svg || null, img: h.tile.q.img || null, zoom: h.tile.q.zoom || null, clip: h.tile.q.clip || null,
         cat: h.tile.cat, pts: h.tile.pts, dur: h.qDur, opts: h.tile.q.opts || null,
         revealed: !!h.revealed, timeUp: !!h.timeUp,
         answer: h.revealed ? h.tile.q.a : null,
@@ -315,7 +316,7 @@ function App({ acc }) {
       puActive: h.puActive || {}, puLog: (h.puLog || []).slice(-4), restPid: h.restPid || null,
       pitOn: h.pitOn || [false, false],
       updatedAt: Date.now(),
-      q: h.phase === "question" && q ? { q: q.q, svg: q.svg || null, img: q.img || null, zoom: q.zoom || null, nodiff: !!q.nodiff, opts: q.opts || null, pts: q.pts, d: q.d, cat: q.cat, dur: durFor(h) } : null,
+      q: h.phase === "question" && q ? { q: q.q, svg: q.svg || null, img: q.img || null, clip: q.clip || null, zoom: q.zoom || null, nodiff: !!q.nodiff, opts: q.opts || null, pts: q.pts, d: q.d, cat: q.cat, dur: durFor(h) } : null,
       // تحميل مسبق عند اللاعبين: صورة السؤال من شاشة شرح الفئة، وصورة الجواب بس بعد ما تنقفل الإجابات
       // (لو انرسلت قبل، أي أحد يقدر يشوفها من أدوات المتصفح)
       pre: ["intro", "event", "question"].includes(h.phase) && q ? { img: q.img || null, aImg: h.judging ? (q.aImg || null) : null } : null,
@@ -2431,6 +2432,7 @@ function App({ acc }) {
             style={b.zoom ? {
             transform: `scale(${b.zoom.s || 2})`,
             transformOrigin: `${b.zoom.x != null ? b.zoom.x : 50}% ${b.zoom.y != null ? b.zoom.y : 50}%` } : undefined} /></div>}
+          {b.clip && !b.revealed && <ClipPlayer key={b.clip} base={b.clip} />}
           <p className="qtext" style={{ textAlign: "center" }}>{b.q}</p>
           {b.opts && (
             <div className="optGrid" style={{ marginTop: 14 }}>
@@ -2774,6 +2776,8 @@ function App({ acc }) {
               <p className="qtext">{q.q}</p>
             </div>
           )}
+          {/* المشغّل برّا تأثيرات الضباب والمراية عشان أزراره تنقرا */}
+          {q.clip && !cancelled && <ClipPlayer key={q.clip} base={q.clip} />}
           {q.opts ? (
             <div className="optGrid" onKeyDown={onGridKey(".optBtn", 2)}>
               {q.opts.map((o) => (

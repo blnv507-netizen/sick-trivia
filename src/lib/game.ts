@@ -9,7 +9,8 @@ const genPid = () => "p" + Math.random().toString(36).slice(2, 8);
 const MAX_SLOTS = 8;
 const roomKey = (c) => `fz:room:${c}`;
 const slotKey = (c, s) => `fz:s${s}:${c}`;   // مفتاح ثابت لكل لاعب — ما نحتاج list()
-const qKey = (q) => (q.q || "") + "|" + (q.a || "");
+// مقاطع فن أجنبي: كل الأسئلة نفس النص وبعضها نفس الجواب، فالمقطع جزء من المفتاح
+const qKey = (q) => (q.q || "") + "|" + (q.a || "") + (q.clip ? "|" + q.clip : "");
 // مفتاح الإجابة — نمنع تكرار نفس الجواب بنفس الجولة
 const aKey = (q) => norm(q.a || "");
 const isEventSlot = (idx) => idx > 0 && idx % 3 === 2;
